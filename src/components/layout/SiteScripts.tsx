@@ -87,9 +87,13 @@ const SCROLL_AND_NAV = `
   function toTop(){
     var reduce = false;
     try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
-    try {
-      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
-    } catch (e) {
+    /* Feature-test rather than try/catch: a browser without the options form
+       of scrollTo() does not throw on it, it silently does nothing — which is
+       the bug we are here to fix, one level down. */
+    var smooth = !reduce && 'scrollBehavior' in document.documentElement.style;
+    if (smooth){
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
       window.scrollTo(0, 0);
     }
   }

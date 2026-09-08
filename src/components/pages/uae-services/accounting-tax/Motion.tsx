@@ -44,8 +44,11 @@ const GROUPS: { sel: string; variant: string; stagger?: boolean }[] = [
   { sel: '.at-sec__head', variant: 'up' },
   { sel: '.at-hero__inner > *', variant: 'up', stagger: true },
   { sel: '.at-proof__item', variant: 'up', stagger: true },
-  { sel: '.at-problem__q', variant: 'up', stagger: true },
-  { sel: '.at-problem__rung', variant: 'left', stagger: true },
+  /* These two named classes the problem section never had — .at-problem__q /
+     __rung — so neither ever revealed. They are .at-q and, since the ladder
+     became a five-card build, .at-step. */
+  { sel: '.at-q', variant: 'up', stagger: true },
+  { sel: '.at-step', variant: 'up', stagger: true },
   { sel: '.at-card', variant: 'up', stagger: true },
   { sel: '.at-decide tbody tr', variant: 'fade', stagger: true },
   { sel: '.at-journey__step', variant: 'up', stagger: true },
