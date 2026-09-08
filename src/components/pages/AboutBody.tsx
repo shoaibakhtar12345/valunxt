@@ -86,7 +86,7 @@ export default function AboutBody({ page, region }: { page: PageConfig; region: 
       													</div>
       													<div className="elementor-element elementor-element-6f0d499 elementor-widget elementor-widget-heading" data-id="6f0d499" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
       														<div className="elementor-widget-container">
-      															<h5 className="elementor-heading-title elementor-size-default">Why VALUNXT Capital?</h5>
+      															<h5 className="elementor-heading-title elementor-size-default">Why VALUNXT?</h5>
       														</div>
       													</div>
       													<div className="elementor-element elementor-element-55fe71b elementor-align-left elementor-tablet-align-left elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="55fe71b" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
@@ -139,7 +139,7 @@ export default function AboutBody({ page, region }: { page: PageConfig; region: 
       											</div>
       											<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-d8eae22 elementor-invisible elementor-widget-tablet__width-inherit animated-fast elementor-widget elementor-widget-text-editor" data-id="d8eae22" data-element_type="widget" data-e-type="widget" data-settings={"{\"_animation\":\"fadeIn\",\"_animation_delay\":200}"} data-widget_type="text-editor.default">
       												<div className="elementor-widget-container">
-      													<p>VALUNXT Capital is a premium real estate wealth, capital, intelligence, and technology group supporting investors, developers, institutions, and businesses.</p>
+      													<p>VALUNXT is a premium real estate wealth, capital, intelligence, and technology group supporting investors, developers, institutions, and businesses.</p>
       													<p>We operate as an integrated platform of strategic advisory, independent research, capital solutions, and intelligent technology. Whether you are building a real estate portfolio, structuring capital, or seeking data driven market intelligence, our advisory team is here to help. Our capabilities span:</p>
       												</div>
       											</div>
@@ -261,7 +261,7 @@ export default function AboutBody({ page, region }: { page: PageConfig; region: 
       													<div className="elementor-element elementor-element-02b4fcd elementor-invisible e-con-full animated-fast e-flex e-con e-child" data-id="02b4fcd" data-element_type="container" data-e-type="container" data-settings={"{\"animation\":\"slideInUp\"}"}>
       														<div className="elementor-element elementor-element-daec1d8 elementor-widget elementor-widget-heading" data-id="daec1d8" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
       															<div className="elementor-widget-container">
-      																<span className="elementor-heading-title elementor-size-default">VALUNXT Capital</span>
+      																<span className="elementor-heading-title elementor-size-default">VALUNXT</span>
       															</div>
       														</div>
       														<div className="elementor-element elementor-element-08af19a elementor-widget elementor-widget-heading" data-id="08af19a" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
@@ -303,7 +303,7 @@ export default function AboutBody({ page, region }: { page: PageConfig; region: 
       												</div>
       												<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-b2c46c3 elementor-invisible elementor-widget-tablet__width-inherit animated-fast elementor-widget elementor-widget-text-editor" data-id="b2c46c3" data-element_type="widget" data-e-type="widget" data-settings={"{\"_animation\":\"fadeIn\",\"_animation_delay\":200}"} data-widget_type="text-editor.default">
       													<div className="elementor-widget-container">
-      														<p>VALUNXT Capital operates as a connected group of specialist companies delivering expertise across real estate, valuation, mortgage, corporate services, research, and technology. VALUNXT Corporate Services provides business setup, accounting, tax, compliance, and business advisory. Reliant Surveyors delivers valuation, advisory, research, and consultancy. HouzzHunt focuses on luxury real estate and investment advisory, while HouzzHunt Mortgage supports mortgage advisory and investment finance. Together they operate as one integrated platform serving clients across India and the UAE.</p>
+      														<p>VALUNXT operates as a connected group of specialist companies delivering expertise across real estate, valuation, mortgage, corporate services, research, and technology. VALUNXT Corporate Services provides business setup, accounting, tax, compliance, and business advisory. Reliant Surveyors delivers valuation, advisory, research, and consultancy. HouzzHunt focuses on luxury real estate and investment advisory, while HouzzHunt Mortgage supports mortgage advisory and investment finance. Together they operate as one integrated platform serving clients across India and the UAE.</p>
       													</div>
       												</div>
       											</div>
@@ -561,7 +561,7 @@ export default function AboutBody({ page, region }: { page: PageConfig; region: 
       														<form className="elementor-form" method="post" name="Subscribe" aria-label="Subscribe">
       															<input type="hidden" name="post_id" value="4557" />
       															<input type="hidden" name="form_id" value="3b33bfe" />
-      															<input type="hidden" name="referer_title" value="VALUNXT Capital" />
+      															<input type="hidden" name="referer_title" value="VALUNXT" />
 
       															<input type="hidden" name="queried_id" value="258" />
 

@@ -11,7 +11,7 @@ import { ADMIN_CSS, ADMIN_FAVICON } from '@/lib/admin/config';
 
 export const metadata: Metadata = {
   robots: 'noindex, nofollow',
-  title: 'VALUNXT Capital Admin',
+  title: 'VALUNXT Admin',
 };
 
 export default function AdminLayout({ children }: { children: ReactNode }) {

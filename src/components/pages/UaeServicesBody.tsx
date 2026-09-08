@@ -15,7 +15,7 @@
  * here because a page nobody can reach is a page nobody can review.
  */
 import { rurl, vxnServiceName, vxnServices } from '@/lib/region';
-import { MegaIcon } from '@/components/layout/MegaMenu';
+import { MegaIcon } from '@/components/layout/MegaIcons';
 import Html from '@/components/Html';
 import type { PageConfig } from '@/lib/page-config';
 

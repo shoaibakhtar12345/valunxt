@@ -408,7 +408,7 @@ export default function HouzzhuntMortgageBody({ page, region }: { page: PageConf
       													</div>
       												</div>
       											</div>
-      											<a className="elementor-element elementor-element-2d76964 e-con-full e-flex e-con e-child" data-id="2d76964" data-element_type="container" data-e-type="container" data-settings={"{\"background_background\":\"classic\"}"} href="mailto:advisory@valunxtcapital.com">
+      											<a className="elementor-element elementor-element-2d76964 e-con-full e-flex e-con e-child" data-id="2d76964" data-element_type="container" data-e-type="container" data-settings={"{\"background_background\":\"classic\"}"} href="mailto:contact@valunxt.com">
       												<div className="elementor-element elementor-element-b9673ed elementor-view-stacked elementor-shape-rounded elementor-position-inline-start elementor-widget-mobile__width-initial elementor-widget elementor-widget-icon-box" data-id="b9673ed" data-element_type="widget" data-e-type="widget" data-widget_type="icon-box.default">
       													<div className="elementor-widget-container">
       														<div className="elementor-icon-box-wrapper">
@@ -426,7 +426,7 @@ export default function HouzzhuntMortgageBody({ page, region }: { page: PageConf
       																</h6>
 
       																<p className="elementor-icon-box-description">
-      																	advisory@valunxtcapital.com </p>
+      																	contact@valunxt.com </p>
 
       															</div>
 
@@ -449,7 +449,7 @@ export default function HouzzhuntMortgageBody({ page, region }: { page: PageConf
       										<div className="elementor-element elementor-element-c9694fb elementor-invisible e-con-full animated-fast e-flex e-con e-child" data-id="c9694fb" data-element_type="container" data-e-type="container" data-settings={"{\"background_background\":\"classic\",\"animation\":\"slideInUp\",\"animation_mobile\":\"none\"}"}>
       											<div className="elementor-element elementor-element-2734fe6 elementor-widget elementor-widget-image" data-id="2734fe6" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
       												<div className="elementor-widget-container">
-      													<img loading="lazy" decoding="async" width={190} height={38} src={`${BASE}/assets/content/uploads/logo/valunxt-white.svg`} className="attachment-medium size-medium vxn-logo" alt="VALUNXT Capital" />
+      													<img loading="lazy" decoding="async" width={190} height={38} src={`${BASE}/assets/content/uploads/logo/valunxt-white.svg`} className="attachment-medium size-medium vxn-logo" alt="VALUNXT" />
       												</div>
       											</div>
       											<div className="elementor-element elementor-element-aa46181 elementor-widget elementor-widget-heading" data-id="aa46181" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
@@ -473,7 +473,7 @@ export default function HouzzhuntMortgageBody({ page, region }: { page: PageConf
       													<form className="elementor-form" method="post" name="New Form" aria-label="New Form">
       														<input type="hidden" name="post_id" value="17" />
       														<input type="hidden" name="form_id" value="5099fe1" />
-      														<input type="hidden" name="referer_title" value="VALUNXT Capital" />
+      														<input type="hidden" name="referer_title" value="VALUNXT" />
 
       														<input type="hidden" name="queried_id" value="17" />
 
@@ -517,7 +517,7 @@ export default function HouzzhuntMortgageBody({ page, region }: { page: PageConf
       											</div>
       											<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-bf7faf1 elementor-widget__width-initial elementor-widget-mobile__width-inherit elementor-widget elementor-widget-text-editor" data-id="bf7faf1" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
       												<div className="elementor-widget-container">
-      													<p>By submitting this form you agree to our <a href={rurl(region, '/privacy-policy/')}>Privacy Policy</a>. VALUNXT Capital may contact you by email or phone regarding your enquiry.</p>
+      													<p>By submitting this form you agree to our <a href={rurl(region, '/privacy-policy/')}>Privacy Policy</a>. VALUNXT may contact you by email or phone regarding your enquiry.</p>
       												</div>
       											</div>
       										</div>
@@ -554,7 +554,7 @@ export default function HouzzhuntMortgageBody({ page, region }: { page: PageConf
       																<form className="elementor-form" method="post" name="Subscribe" aria-label="Subscribe">
       																	<input type="hidden" name="post_id" value="4557" />
       																	<input type="hidden" name="form_id" value="3b33bfe" />
-      																	<input type="hidden" name="referer_title" value="VALUNXT Capital" />
+      																	<input type="hidden" name="referer_title" value="VALUNXT" />
 
       																	<input type="hidden" name="queried_id" value="17" />
 

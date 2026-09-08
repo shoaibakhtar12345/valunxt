@@ -417,7 +417,7 @@ export default function ResearchIntelligenceBody({ page, region }: { page: PageC
       														<form className="elementor-form" method="post" name="Subscribe" aria-label="Subscribe">
       															<input type="hidden" name="post_id" value="4557" />
       															<input type="hidden" name="form_id" value="3b33bfe" />
-      															<input type="hidden" name="referer_title" value="VALUNXT Capital" />
+      															<input type="hidden" name="referer_title" value="VALUNXT" />
 
       															<input type="hidden" name="queried_id" value="254" />
 

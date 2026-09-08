@@ -106,7 +106,7 @@ export default function TechnologyAiBody({ page, region }: { page: PageConfig; r
       											</div>
       											<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-65107e40 elementor-invisible elementor-widget__width-initial elementor-widget-tablet__width-inherit animated-fast elementor-widget elementor-widget-text-editor" data-id="65107e40" data-element_type="widget" data-e-type="widget" data-settings={"{\"_animation\":\"fadeIn\",\"_animation_delay\":200}"} data-widget_type="text-editor.default">
       												<div className="elementor-widget-container">
-      													<p>VALUNXT Capital develops intelligent platforms, automated valuation systems, dashboards, and analytics that improve visibility, efficiency, and decision making across the real estate investment lifecycle. Every system we build reflects the discipline of our advisory practice: data driven decisions in pursuit of long term value.</p>
+      													<p>VALUNXT develops intelligent platforms, automated valuation systems, dashboards, and analytics that improve visibility, efficiency, and decision making across the real estate investment lifecycle. Every system we build reflects the discipline of our advisory practice: data driven decisions in pursuit of long term value.</p>
       													<p>We do not simply build software. We create intelligent platforms that improve investment decisions. From predictive market analytics to enterprise SaaS and workflow automation, our technology supports investors, developers, and institutions across India, the UAE, and international markets.</p>
       												</div>
       											</div>
@@ -166,7 +166,7 @@ export default function TechnologyAiBody({ page, region }: { page: PageConfig; r
       														<form className="elementor-form" method="post" name="Subscribe" aria-label="Subscribe">
       															<input type="hidden" name="post_id" value="4557" />
       															<input type="hidden" name="form_id" value="3b33bfe" />
-      															<input type="hidden" name="referer_title" value="VALUNXT Capital" />
+      															<input type="hidden" name="referer_title" value="VALUNXT" />
 
       															<input type="hidden" name="queried_id" value="256" />
 

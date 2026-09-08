@@ -16,37 +16,34 @@ const HERO_CSS = `
 	.vxn-simplehero .elementor-divider-separator{border-top-color:rgba(255,255,255,.4) !important;}
 
 	/* ---- Brand tone (UAE services) ----------------------------------------
-	   A brand-blue wash and a woven texture over whatever photograph the page
-	   carries, so every page in the section reads as one blue banner rather than
-	   six different pictures.
+	   Every page in the section shows the same banner artwork rather than its
+	   own photograph, so the section reads as one blue banner instead of six
+	   different pictures. That artwork is BRAND_BANNER, set inline below.
 
-	   The texture is drawn here as an SVG data URI rather than fetched from a
-	   stock library: it is two hairlines and a dot, it stays crisp at any size,
-	   it adds no request and no licence to keep track of. Swap the url() for a
-	   real file if you would rather have photographic grain.
+	   Nothing is drawn over it. Two things used to be: a brand-blue wash, which
+	   existed to pull six unrelated photographs onto one colour and had nothing
+	   left to do once they became one plate; and a woven SVG texture, which put
+	   a second pattern over artwork that already has its own. The banner is the
+	   whole treatment now.
 
-	   Layered as a ::before so the page's own background-image — set inline,
-	   per page — is left alone underneath. The wash never drops below .72
-	   alpha: under the base darkening the hero already applies, that keeps
-	   white type at roughly 6.7:1 even where the photograph beneath is white.
+	   Contrast is carried by the inline scrim below. The banner's lightest
+	   passage is around #2266BD, roughly 5.7:1 against white on its own; under
+	   that scrim the whole plate stays past 7:1, so the breadcrumb line is
+	   comfortable and not only the display heading.
+
+	   The class stays on the element even with no rules of its own — it is what
+	   marks the section, and the component reads the same flag to choose the
+	   banner.
 	   ---------------------------------------------------------------------- */
-	.vxn-simplehero--brand{position:relative;}
-	.vxn-simplehero--brand::before{
-		content:"";
-		position:absolute;
-		inset:0;
-		z-index:0;
-		background-image:
-			url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.07' stroke-width='1'%3E%3Cpath d='M0 48 L48 0 M-12 12 L12 -12 M36 60 L60 36'/%3E%3C/g%3E%3Cg fill='%23ffffff' fill-opacity='.05'%3E%3Ccircle cx='12' cy='36' r='1'/%3E%3Ccircle cx='36' cy='12' r='1'/%3E%3C/g%3E%3C/svg%3E"),
-			linear-gradient(118deg, rgba(0,83,183,.78) 0%, rgba(0,83,183,.72) 42%, rgba(14,53,95,.92) 100%);
-		background-repeat:repeat, no-repeat;
-		background-size:48px 48px, cover;
-		pointer-events:none;
-	}
-	/* The content is not positioned, so without this the absolute ::before would
-	   paint over it. */
-	.vxn-simplehero--brand > .e-con-inner{position:relative;z-index:1;}
 `;
+
+/**
+ * The UAE services section's banner artwork. It replaces the page's own
+ * hero_image rather than sitting over it: the point of the brand tone is that
+ * every page in the section carries the same banner, and a photograph under an
+ * opaque plate is a download nobody sees.
+ */
+const BRAND_BANNER = '/assets/content/uploads/banners/breadcrumb-banner.png';
 
 export default function PageHeroSection({
   page,
@@ -55,12 +52,22 @@ export default function PageHeroSection({
 }: {
   page: PageConfig;
   region: string;
-  /** 'brand' adds the blue wash and texture the UAE services section uses. */
+  /** 'brand' swaps in the UAE services banner and its woven texture. */
   tone?: 'default' | 'brand';
 }) {
   const title = page.hero_title ?? page.title ?? 'Page';
   const image = page.hero_image ?? '';
   const pid = Number(page.post_id ?? 0);
+  const brand = tone === 'brand';
+
+  /* Two different jobs, so two different scrims. The default tone darkens an
+     arbitrary photograph hard enough that white type is safe on any of them.
+     The brand tone is laying type over one known plate that is already deep
+     blue, so it only needs enough to lift the lightest corner clear — heavier
+     than that and the artwork stops reading. */
+  const backgroundImage = brand
+    ? `linear-gradient(160deg,rgba(8,32,68,.30) 0%,rgba(8,32,68,.48) 100%),url('${BASE}${BRAND_BANNER}')`
+    : `linear-gradient(rgba(11,26,38,.62),rgba(11,26,38,.72)),url('${BASE}${image}')`;
 
   return (
     <>
@@ -76,15 +83,13 @@ export default function PageHeroSection({
             >
               <div
                 className={`elementor-element elementor-element-c4d353f vxn-simplehero${
-                  tone === 'brand' ? ' vxn-simplehero--brand' : ''
+                  brand ? ' vxn-simplehero--brand' : ''
                 } e-flex e-con-boxed e-con e-parent`}
                 data-id="c4d353f"
                 data-element_type="container"
                 data-e-type="container"
                 data-settings='{"background_background":"classic"}'
-                style={{
-                  backgroundImage: `linear-gradient(rgba(11,26,38,.62),rgba(11,26,38,.72)),url('${BASE}${image}')`,
-                }}
+                style={{ backgroundImage }}
               >
                 <div className="e-con-inner">
                   <div

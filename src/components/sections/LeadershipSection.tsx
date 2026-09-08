@@ -50,7 +50,7 @@ export default function LeadershipSection() {
       '@type': 'Person',
       name: p.name,
       jobTitle: p.role,
-      worksFor: { '@type': 'Organization', name: p.company ?? 'VALUNXT Capital' },
+      worksFor: { '@type': 'Organization', name: p.company ?? 'VALUNXT' },
     };
     if (p.credentials?.length) entry.hasCredential = p.credentials;
     if (p.linkedin) entry.sameAs = [p.linkedin];

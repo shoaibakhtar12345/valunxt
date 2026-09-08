@@ -23,7 +23,11 @@ import PageHeroSection from '@/components/sections/PageHeroSection';
 import SubscribeSection from '@/components/sections/SubscribeSection';
 import UaeServiceBody from '@/components/pages/UaeServiceBody';
 import ServicePageBody from '@/components/pages/uae-services/ServicePageBody';
-import { uaeServiceContent } from '@/components/pages/uae-services';
+import {
+  uaeServiceBody,
+  uaeServiceContent,
+  uaeServiceIsWritten,
+} from '@/components/pages/uae-services';
 import { buildMetadata } from '@/lib/seo';
 import { vxnRegion, vxnServiceBySlug } from '@/lib/region';
 import { uaeServiceConfig } from '@/lib/uae-service-pages';
@@ -43,7 +47,7 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const hit = resolve(region, service);
   if (!hit) return {};
   return buildMetadata(
-    uaeServiceConfig(hit.service, !!uaeServiceContent(hit.service.slug)),
+    uaeServiceConfig(hit.service, uaeServiceIsWritten(hit.service.slug)),
     hit.region,
   );
 }
@@ -53,23 +57,42 @@ export default async function UaeServicePage({ params }: Params) {
   const hit = resolve(region, service);
   if (!hit) notFound();
 
-  /* A service with a written body renders it between the breadcrumb hero and the
-     subscribe block. Everything still unwritten gets the shared coming-soon body,
-     which is those same two sections with the holding band between them. */
+  /* Three shapes, in order of specificity. A service with a body of its own
+     renders that; one with template content renders the shared five sections;
+     everything still unwritten gets the coming-soon body. The first two sit
+     between the same breadcrumb hero and subscribe block, so the section reads
+     the same however its middle is built. */
+  const Body = uaeServiceBody(hit.service.slug);
   const content = uaeServiceContent(hit.service.slug);
-  const page = uaeServiceConfig(hit.service, !!content);
+  const page = uaeServiceConfig(hit.service, uaeServiceIsWritten(hit.service.slug));
+
+  if (!Body && !content) {
+    return (
+      <PageShell page={page} region={hit.region}>
+        <UaeServiceBody page={page} region={hit.region} />
+      </PageShell>
+    );
+  }
+
+  /* A bespoke body owns its whole page: it opens its own #main-content wrapper
+     and leads with its own hero, so the shared breadcrumb band is NOT rendered
+     above it. Stacking the two put two heroes on the page — the section banner
+     with the service name, and then the written hero underneath saying the same
+     thing at greater length. The bespoke hero carries the breadcrumb itself. */
+  if (Body) {
+    return (
+      <PageShell page={page} region={hit.region}>
+        <Body region={hit.region} />
+        <SubscribeSection page={page} region={hit.region} />
+      </PageShell>
+    );
+  }
 
   return (
     <PageShell page={page} region={hit.region}>
-      {content ? (
-        <>
-          <PageHeroSection page={page} region={hit.region} tone="brand" />
-          <ServicePageBody region={hit.region} content={content} />
-          <SubscribeSection page={page} region={hit.region} />
-        </>
-      ) : (
-        <UaeServiceBody page={page} region={hit.region} />
-      )}
+      <PageHeroSection page={page} region={hit.region} tone="brand" />
+      <ServicePageBody region={hit.region} content={content!} />
+      <SubscribeSection page={page} region={hit.region} />
     </PageShell>
   );
 }

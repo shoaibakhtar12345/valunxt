@@ -94,7 +94,7 @@ export default function AdminShell({
           <div className="sidebar-head">
             <a href={adminUrl('dashboard')}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={ADMIN_LOGO_WHITE} alt="VALUNXT Capital" />
+              <img src={ADMIN_LOGO_WHITE} alt="VALUNXT" />
             </a>
           </div>
 

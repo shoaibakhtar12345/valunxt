@@ -53,7 +53,7 @@ function Bar({
                 height={35}
                 src={`${BASE}/assets/content/uploads/logo/valunxt-white.svg`}
                 className="attachment-full size-full vxn-logo vxn-logo--light"
-                alt="VALUNXT Capital"
+                alt="VALUNXT"
               />
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img

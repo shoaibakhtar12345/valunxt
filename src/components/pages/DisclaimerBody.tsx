@@ -71,7 +71,7 @@ export default function DisclaimerBody({ page, region }: { page: PageConfig; reg
       				<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-8d72be2 elementor-widget elementor-widget-text-editor" data-id="8d72be2" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
       				<div className="elementor-widget-container">
       									<p><strong>Last updated:</strong> 11 July 2026</p>
-      									<p>The information provided by Valunxt Capital Advisory Services Private Limited (&#8220;Valunxt Capital&#8221;) on valunxtcapital.com is for general informational purposes only. Please read this disclaimer carefully.</p>								</div>
+      									<p>The information provided by Valunxt Capital Advisory Services Private Limited (&#8220;Valunxt&#8221;) on valunxtcapital.com is for general informational purposes only. Please read this disclaimer carefully.</p>								</div>
       				</div>
       				<div className="elementor-element elementor-element-da2627d elementor-widget elementor-widget-heading" data-id="da2627d" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
       				<div className="elementor-widget-container">
@@ -87,7 +87,7 @@ export default function DisclaimerBody({ page, region }: { page: PageConfig; reg
       				</div>
       				<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-8d72be2 elementor-widget elementor-widget-text-editor" data-id="8d72be2" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
       				<div className="elementor-widget-container">
-      									<p>Investments in real estate, capital markets and related assets involve risk, including the possible loss of principal. Past performance is not indicative of future results, and Valunxt Capital makes no representation or warranty regarding the outcome of any investment or strategy referenced on this site.</p>								</div>
+      									<p>Investments in real estate, capital markets and related assets involve risk, including the possible loss of principal. Past performance is not indicative of future results, and Valunxt makes no representation or warranty regarding the outcome of any investment or strategy referenced on this site.</p>								</div>
       				</div>
       				<div className="elementor-element elementor-element-da2627d elementor-widget elementor-widget-heading" data-id="da2627d" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
       				<div className="elementor-widget-container">
@@ -103,7 +103,7 @@ export default function DisclaimerBody({ page, region }: { page: PageConfig; reg
       				</div>
       				<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-8d72be2 elementor-widget elementor-widget-text-editor" data-id="8d72be2" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
       				<div className="elementor-widget-container">
-      									<p>While we take care to ensure information is accurate and current at the time of publication, Valunxt Capital does not warrant that the content is complete, reliable or error-free, and we may update or amend it at any time without notice.</p>								</div>
+      									<p>While we take care to ensure information is accurate and current at the time of publication, Valunxt does not warrant that the content is complete, reliable or error-free, and we may update or amend it at any time without notice.</p>								</div>
       				</div>
       				<div className="elementor-element elementor-element-da2627d elementor-widget elementor-widget-heading" data-id="da2627d" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
       				<div className="elementor-widget-container">
@@ -119,7 +119,7 @@ export default function DisclaimerBody({ page, region }: { page: PageConfig; reg
       				</div>
       				<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-8d72be2 elementor-widget elementor-widget-text-editor" data-id="8d72be2" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
       				<div className="elementor-widget-container">
-      									<p>References to VALUNXT Corporate Services, Reliant Surveyors, HouzzHunt and HouzzHunt Mortgage describe companies within the Valunxt Capital group. Each provides its own services under its own terms.</p>								</div>
+      									<p>References to VALUNXT Corporate Services, Reliant Surveyors, HouzzHunt and HouzzHunt Mortgage describe companies within the Valunxt group. Each provides its own services under its own terms.</p>								</div>
       				</div>
       				</div>
       					</div>
@@ -158,7 +158,7 @@ export default function DisclaimerBody({ page, region }: { page: PageConfig; reg
       							<form className="elementor-form" method="post" name="Subscribe" aria-label="Subscribe">
       			<input type="hidden" name="post_id" value="4557" />
       			<input type="hidden" name="form_id" value="3b33bfe" />
-      			<input type="hidden" name="referer_title" value="VALUNXT Capital" />
+      			<input type="hidden" name="referer_title" value="VALUNXT" />
 
       							<input type="hidden" name="queried_id" value="9200" />
 

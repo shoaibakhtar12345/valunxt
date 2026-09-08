@@ -134,7 +134,7 @@ export default function ProofBand({ region }: { region: string }) {
       }
     : {
         quote: c.standin,
-        who: 'VALUNXT Capital',
+        who: 'VALUNXT',
         where: 'How we work',
         badge: 'VX',
       };

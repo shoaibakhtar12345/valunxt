@@ -28,7 +28,7 @@ import type { PageConfig } from '@/lib/page-config';
 
 export const metadata: Metadata = {
   metadataBase: new URL(vxnSeoOrigin()),
-  title: 'VALUNXT Capital',
+  title: 'VALUNXT',
 };
 
 /* Elementor ships `.elementor-invisible { visibility: hidden }` and relies on
@@ -86,7 +86,7 @@ const CMS_BODY_CLASS =
 const RE_DOCUMENT_CSS = `html,body{margin:0;padding:0;}body{background:#FCFBF8;}`;
 
 const FALLBACK: PageConfig = pageConfig('/404/') ?? {
-  title: 'VALUNXT Capital',
+  title: 'VALUNXT',
   body: '',
   post_css: ['5', '3837', '2094', '4557'],
   header: '3837',

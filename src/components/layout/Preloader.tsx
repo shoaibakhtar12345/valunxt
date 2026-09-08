@@ -1,4 +1,4 @@
-/* VALUNXT Capital intro preloader — klaygroup-style logo-mask reveal.
+/* VALUNXT intro preloader — klaygroup-style logo-mask reveal.
    The current logo is shown solid on the brand panel, then the logo becomes a
    window onto the hero video playing behind, and that window zooms up to fill
    the screen and reveal the page. Plays once per session.
@@ -186,7 +186,7 @@ export default function Preloader() {
         <img
           className="vx-solid-logo"
           src={`${BASE}/assets/content/uploads/logo/valunxt-white.svg`}
-          alt="VALUNXT Capital"
+          alt="VALUNXT"
           width={410}
           height={82}
         />

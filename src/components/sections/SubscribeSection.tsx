@@ -19,7 +19,7 @@ export default function SubscribeSection({
   page: PageConfig;
   region: string;
 }) {
-  const refererTitle = decodeURIComponent(page.post_title ?? 'VALUNXT Capital');
+  const refererTitle = decodeURIComponent(page.post_title ?? 'VALUNXT');
 
   return (
     <div

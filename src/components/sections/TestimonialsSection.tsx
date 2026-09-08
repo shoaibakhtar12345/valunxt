@@ -84,7 +84,7 @@ export default function TestimonialsSection() {
                 '@type': 'Review',
                 reviewBody: q.quote,
                 author: { '@type': 'Person', name: q.name },
-                itemReviewed: { '@type': 'Organization', name: 'VALUNXT Capital' },
+                itemReviewed: { '@type': 'Organization', name: 'VALUNXT' },
               }),
             }}
           />

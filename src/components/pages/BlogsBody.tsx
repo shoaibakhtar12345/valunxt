@@ -60,7 +60,7 @@ export default function BlogsBody({ page, region }: { page: PageConfig; region: 
       								</div>
       								<div className="elementor-element elementor-element-44a2511 elementor-invisible animated-fast elementor-widget__width-initial elementor-widget-mobile__width-inherit elementor-widget elementor-widget-theme-post-excerpt" data-id="44a2511" data-element_type="widget" data-e-type="widget" data-settings={"{\"_animation\":\"slideInUp\",\"_animation_delay\":50}"} data-widget_type="theme-post-excerpt.default">
       									<div className="elementor-widget-container">
-      										Institutional insights on real estate wealth, capital advisory, research, and technology across India and the UAE from VALUNXT Capital. </div>
+      										Institutional insights on real estate wealth, capital advisory, research, and technology across India and the UAE from VALUNXT. </div>
       								</div>
       							</div>
       						</div>
@@ -424,7 +424,7 @@ export default function BlogsBody({ page, region }: { page: PageConfig; region: 
       														<form className="elementor-form" method="post" name="Subscribe" aria-label="Subscribe">
       															<input type="hidden" name="post_id" value="4557" />
       															<input type="hidden" name="form_id" value="3b33bfe" />
-      															<input type="hidden" name="referer_title" value="VALUNXT Capital" />
+      															<input type="hidden" name="referer_title" value="VALUNXT" />
 
       															<input type="hidden" name="queried_id" value="262" />
 

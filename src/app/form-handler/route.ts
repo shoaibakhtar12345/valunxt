@@ -26,6 +26,11 @@ const SOURCE_MAP: Record<string, string> = {
      because that section is not Elementor markup and has no widget id — see
      src/real-estate/components/sections/ContactForm.tsx. */
   'real-estate': 'Real Estate',
+  /* The Accounting & Tax parent page's lead form. Named for the same reason —
+     it is written markup, not captured Elementor. Its "Service Required"
+     answer rides in the message field, so the desk can see which of the eight
+     services the enquiry names. */
+  'accounting-tax': 'Accounting & Tax',
 };
 
 function fail(message: string, status: number) {
@@ -132,7 +137,7 @@ export async function POST(req: NextRequest) {
     success: true,
     data: {
       message:
-        'Thank you for contacting VALUNXT Capital. Our advisory team will review your enquiry and respond shortly.',
+        'Thank you for contacting VALUNXT. Our advisory team will review your enquiry and respond shortly.',
       data: [],
       meta: [],
     },

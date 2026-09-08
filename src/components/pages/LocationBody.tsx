@@ -126,7 +126,7 @@ export default function LocationBody({ page, region }: { page: PageConfig; regio
                       data-widget_type="theme-post-excerpt.default"
                     >
                       <div className="elementor-widget-container">
-                        Connect with VALUNXT Capital in Dubai, Abu Dhabi and across India. Find the
+                        Connect with VALUNXT in Dubai, Abu Dhabi and across India. Find the
                         office nearest to you and start a conversation with our advisory team.{' '}
                       </div>
                     </div>

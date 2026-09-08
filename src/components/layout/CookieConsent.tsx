@@ -171,7 +171,7 @@ export default function CookieConsent({ region }: { region: string }) {
             Cookie Preferences
           </h2>
           <p className="vxn-cookie-modal__intro">
-            Choose which categories of cookies VALUNXT Capital may use. Strictly necessary cookies keep
+            Choose which categories of cookies VALUNXT may use. Strictly necessary cookies keep
             the site running and cannot be switched off.
           </p>
           <ul className="vxn-cookie-modal__list">

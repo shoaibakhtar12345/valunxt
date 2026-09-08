@@ -88,7 +88,7 @@ export default function ValunxtCorporateServicesBody({ page, region }: { page: P
       				</div>
       				<div className="elementor-element elementor-element-6f0d499 elementor-widget elementor-widget-heading" data-id="6f0d499" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
       				<div className="elementor-widget-container">
-      					<h5 className="elementor-heading-title elementor-size-default">Why VALUNXT Capital?</h5>				</div>
+      					<h5 className="elementor-heading-title elementor-size-default">Why VALUNXT?</h5>				</div>
       				</div>
       				<div className="elementor-element elementor-element-55fe71b elementor-align-left elementor-tablet-align-left elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="55fe71b" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
       				<div className="elementor-widget-container">
@@ -138,7 +138,7 @@ export default function ValunxtCorporateServicesBody({ page, region }: { page: P
       				</div>
       				<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-d8eae22 elementor-invisible elementor-widget-tablet__width-inherit animated-fast elementor-widget elementor-widget-text-editor" data-id="d8eae22" data-element_type="widget" data-e-type="widget" data-settings={"{\"_animation\":\"fadeIn\",\"_animation_delay\":200}"} data-widget_type="text-editor.default">
       				<div className="elementor-widget-container">
-      									<p>VALUNXT Capital is a premium real estate wealth, capital, intelligence, and technology group supporting investors, developers, institutions, and businesses.</p><p>We operate as an integrated platform of strategic advisory, independent research, capital solutions, and intelligent technology. Whether you are building a real estate portfolio, structuring capital, or seeking data driven market intelligence, our advisory team is here to help. Our capabilities span:</p>								</div>
+      									<p>VALUNXT is a premium real estate wealth, capital, intelligence, and technology group supporting investors, developers, institutions, and businesses.</p><p>We operate as an integrated platform of strategic advisory, independent research, capital solutions, and intelligent technology. Whether you are building a real estate portfolio, structuring capital, or seeking data driven market intelligence, our advisory team is here to help. Our capabilities span:</p>								</div>
       				</div>
       				<div className="elementor-element elementor-element-c230b4a elementor-invisible elementor-align-left elementor-tablet-align-left animated-fast elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="c230b4a" data-element_type="widget" data-e-type="widget" data-settings={"{\"_animation\":\"fadeIn\",\"_animation_delay\":250}"} data-widget_type="icon-list.default">
       				<div className="elementor-widget-container">
@@ -294,7 +294,7 @@ export default function ValunxtCorporateServicesBody({ page, region }: { page: P
       																		<div className="elementor-widget-container">
       																			<div className="elementor-icon-wrapper">
       																				<div className="elementor-icon">
-      																					<img src={`${BASE}/LOGO/icon-white.jpg`} alt="VALUNXT Capital" className="vamtam-logo-sign-img" />
+      																					<img src={`${BASE}/LOGO/icon-white.jpg`} alt="VALUNXT" className="vamtam-logo-sign-img" />
       																				</div>
       																			</div>
       																		</div>
@@ -384,7 +384,7 @@ export default function ValunxtCorporateServicesBody({ page, region }: { page: P
       																		<div className="elementor-widget-container">
       																			<div className="elementor-icon-wrapper">
       																				<div className="elementor-icon">
-      																					<img src={`${BASE}/LOGO/icon-white.jpg`} alt="VALUNXT Capital" className="vamtam-logo-sign-img" />
+      																					<img src={`${BASE}/LOGO/icon-white.jpg`} alt="VALUNXT" className="vamtam-logo-sign-img" />
       																				</div>
       																			</div>
       																		</div>
@@ -474,7 +474,7 @@ export default function ValunxtCorporateServicesBody({ page, region }: { page: P
       																		<div className="elementor-widget-container">
       																			<div className="elementor-icon-wrapper">
       																				<div className="elementor-icon">
-      																					<img src={`${BASE}/LOGO/icon-white.jpg`} alt="VALUNXT Capital" className="vamtam-logo-sign-img" />
+      																					<img src={`${BASE}/LOGO/icon-white.jpg`} alt="VALUNXT" className="vamtam-logo-sign-img" />
       																				</div>
       																			</div>
       																		</div>
@@ -673,7 +673,7 @@ export default function ValunxtCorporateServicesBody({ page, region }: { page: P
       																<form className="elementor-form" method="post" name="Subscribe" aria-label="Subscribe">
       																	<input type="hidden" name="post_id" value="4557" />
       																	<input type="hidden" name="form_id" value="3b33bfe" />
-      																	<input type="hidden" name="referer_title" value="VALUNXT Capital" />
+      																	<input type="hidden" name="referer_title" value="VALUNXT" />
 
       																	<input type="hidden" name="queried_id" value="17" />
 

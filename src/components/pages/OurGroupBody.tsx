@@ -74,7 +74,7 @@ export default function OurGroupBody({ page, region }: { page: PageConfig; regio
       								</div>
       								<div className="elementor-element elementor-element-44a2511 elementor-widget__width-initial elementor-widget-mobile__width-inherit elementor-widget elementor-widget-theme-post-excerpt" data-id="44a2511" data-element_type="widget" data-e-type="widget" data-widget_type="theme-post-excerpt.default">
       									<div className="elementor-widget-container">
-      										VALUNXT Capital operates as a group of specialist companies, each focused on a distinct discipline within the property, advisory and corporate services value chain. </div>
+      										VALUNXT operates as a group of specialist companies, each focused on a distinct discipline within the property, advisory and corporate services value chain. </div>
       								</div>
       							</div>
       						</div>

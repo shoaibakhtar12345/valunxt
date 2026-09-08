@@ -1,5 +1,5 @@
 /**
- * VALUNXT Capital — canonical site facts.
+ * VALUNXT — canonical site facts.
  *
  * Single source of truth for the details that used to be retyped page by page
  * and drifted apart: the markets statement, the office list, the group company
@@ -71,7 +71,7 @@ const OFFICES: Record<OfficeKey, Office> = {
     country: 'United Arab Emirates',
     phone: '+971 4 255 4683',
     tel: '+97142554683',
-    email: 'advisory@valunxtcapital.com',
+    email: 'contact@valunxt.com',
     hours: 'Mon – Sat, 9:00 AM – 6:00 PM GST',
     map: 'https://maps.google.com/?q=Capital+Golden+Tower,+Business+Bay,+Dubai,+United+Arab+Emirates',
   },
@@ -83,7 +83,7 @@ const OFFICES: Record<OfficeKey, Office> = {
     country: 'United Arab Emirates',
     phone: '+971 4 255 4683',
     tel: '+97142554683',
-    email: 'advisory@valunxtcapital.com',
+    email: 'contact@valunxt.com',
     hours: 'Mon – Sat, 9:00 AM – 6:00 PM GST',
     map: 'https://maps.google.com/?q=Dar+Al+Salam+02,+Liwa+Street,+Corniche,+Abu+Dhabi',
   },
@@ -96,7 +96,7 @@ const OFFICES: Record<OfficeKey, Office> = {
     country: 'India',
     phone: '+91 120 718 5322',
     tel: '+911207185322',
-    email: 'advisory@valunxtcapital.com',
+    email: 'contact@valunxt.com',
     hours: 'Mon – Sat, 9:00 AM – 6:00 PM IST',
     map: 'https://maps.google.com/?q=Platina+Tower,+Bandra+Kurla+Complex+Rd,+G+Block,+Bandra+East,+Mumbai,+Maharashtra+400051',
   },
@@ -109,7 +109,7 @@ const OFFICES: Record<OfficeKey, Office> = {
     country: 'India',
     phone: '+91 120 718 5322',
     tel: '+911207185322',
-    email: 'advisory@valunxtcapital.com',
+    email: 'contact@valunxt.com',
     hours: 'Mon – Sat, 9:00 AM – 6:00 PM IST',
     map: 'https://maps.google.com/?q=Max+Towers,+Sector+16B,+Noida',
   },
@@ -127,14 +127,14 @@ export function vxnOffice(key: string): Office | null {
 /* ---- Enquiry addresses --------------------------------------------------- */
 
 /**
- * advisory@valunxtcapital.com is the only mailbox the group actually
+ * contact@valunxt.com is the only mailbox the group actually
  * publishes, and it is where the form endpoint delivers. The Contact page used
  * to dress it up as three separate routes — "main", "careers" and "general" —
  * that all resolved here, which is worse than saying so plainly. So the site
  * now states one address once.
  */
 export function vxnEmail(): string {
-  return 'advisory@valunxtcapital.com';
+  return 'contact@valunxt.com';
 }
 
 /* ---- Group companies ----------------------------------------------------- */

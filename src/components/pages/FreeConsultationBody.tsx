@@ -141,7 +141,7 @@ export default function FreeConsultationBody({ page, region }: { page: PageConfi
       					<span className="elementor-heading-title elementor-size-default">Expect a structured conversation about your objectives, portfolio, and capital needs, followed by relevant research and considered next steps.</span>				</div>
       				</div>
       		<div className="elementor-element elementor-element-04d0fc1 e-con-full e-flex e-con e-child" data-id="04d0fc1" data-element_type="container" data-e-type="container">
-      		<a className="elementor-element elementor-element-a6db877 e-con-full e-flex e-con e-child" data-id="a6db877" data-element_type="container" data-e-type="container" data-settings={"{\"background_background\":\"classic\"}"} href="mailto:advisory@valunxtcapital.com?subject=Hello" target="_blank">
+      		<a className="elementor-element elementor-element-a6db877 e-con-full e-flex e-con e-child" data-id="a6db877" data-element_type="container" data-e-type="container" data-settings={"{\"background_background\":\"classic\"}"} href="mailto:contact@valunxt.com?subject=Hello" target="_blank">
       				<div className="elementor-element elementor-element-fbe634b elementor-view-stacked elementor-shape-rounded elementor-position-left elementor-widget-mobile__width-initial elementor-widget elementor-widget-icon-box" data-id="fbe634b" data-element_type="widget" data-e-type="widget" data-widget_type="icon-box.default">
       				<div className="elementor-widget-container">
       							<div className="elementor-icon-box-wrapper">
@@ -159,7 +159,7 @@ export default function FreeConsultationBody({ page, region }: { page: PageConfi
       					</h6>
 
       									<p className="elementor-icon-box-description">
-      						advisory@valunxtcapital.com					</p>
+      						contact@valunxt.com					</p>
 
       			</div>
 
@@ -232,7 +232,7 @@ export default function FreeConsultationBody({ page, region }: { page: PageConfi
       							<form className="elementor-form" method="post" name="Free Consultation" aria-label="Free Consultation">
       			<input type="hidden" name="post_id" value="296" />
       			<input type="hidden" name="form_id" value="e67e0ee" />
-      			<input type="hidden" name="referer_title" value="VALUNXT Capital" />
+      			<input type="hidden" name="referer_title" value="VALUNXT" />
 
       							<input type="hidden" name="queried_id" value="296" />
 
@@ -276,7 +276,7 @@ export default function FreeConsultationBody({ page, region }: { page: PageConfi
       				</div>
       				<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-b547480 elementor-widget__width-initial elementor-widget-mobile__width-inherit elementor-widget elementor-widget-text-editor" data-id="b547480" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
       				<div className="elementor-widget-container">
-      									<p>By submitting this form you agree to our <a href={rurl(region, '/privacy-policy/')}>Privacy Policy</a>. VALUNXT Capital may contact you via email or phone regarding your enquiry and scheduling.</p>								</div>
+      									<p>By submitting this form you agree to our <a href={rurl(region, '/privacy-policy/')}>Privacy Policy</a>. VALUNXT may contact you via email or phone regarding your enquiry and scheduling.</p>								</div>
       				</div>
       				</div>
       				</div>
@@ -397,7 +397,7 @@ export default function FreeConsultationBody({ page, region }: { page: PageConfi
       							<form className="elementor-form" method="post" name="Subscribe" aria-label="Subscribe">
       			<input type="hidden" name="post_id" value="4557" />
       			<input type="hidden" name="form_id" value="3b33bfe" />
-      			<input type="hidden" name="referer_title" value="VALUNXT Capital" />
+      			<input type="hidden" name="referer_title" value="VALUNXT" />
 
       							<input type="hidden" name="queried_id" value="296" />
 

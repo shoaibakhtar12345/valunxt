@@ -28,7 +28,7 @@ function configFor(row: PageRow): PageConfig {
   const slug = String(row.slug);
   const postId = 9000 + (Math.abs(hash(slug)) % 900);
   return {
-    title: row.meta_title || `${row.title} | VALUNXT Capital`,
+    title: row.meta_title || `${row.title} | VALUNXT`,
     desc: String(row.meta_description ?? ''),
     og_image: '/assets/content/uploads/2025/03/valunxt-og.png',
     body:

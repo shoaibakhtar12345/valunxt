@@ -150,7 +150,7 @@ export default function ContactBody({ page, region }: { page: PageConfig; region
       												</div>
       											</div>
       										</a>
-      										<a className="elementor-element elementor-element-24158a7 elementor-invisible e-con-full animated-fast e-flex e-con e-child" data-id="24158a7" data-element_type="container" data-e-type="container" data-settings={"{\"background_background\":\"classic\",\"animation\":\"fadeIn\",\"animation_delay\":100}"} href="mailto:advisory@valunxtcapital.com?subject=Hello">
+      										<a className="elementor-element elementor-element-24158a7 elementor-invisible e-con-full animated-fast e-flex e-con e-child" data-id="24158a7" data-element_type="container" data-e-type="container" data-settings={"{\"background_background\":\"classic\",\"animation\":\"fadeIn\",\"animation_delay\":100}"} href="mailto:contact@valunxt.com?subject=Hello">
       											<div className="elementor-element elementor-element-d80a703 elementor-view-stacked elementor-shape-rounded elementor-position-left elementor-mobile-position-left elementor-widget-mobile__width-initial elementor-widget elementor-widget-icon-box" data-id="d80a703" data-element_type="widget" data-e-type="widget" data-widget_type="icon-box.default">
       												<div className="elementor-widget-container">
       													<div className="elementor-icon-box-wrapper">
@@ -206,7 +206,7 @@ export default function ContactBody({ page, region }: { page: PageConfig; region
       												</div>
       											</div>
       											<div className="elementor-element elementor-element-d3817c2 e-con-full e-flex e-con e-child" data-id="d3817c2" data-element_type="container" data-e-type="container">
-      												<a className="elementor-element elementor-element-bf13a2c e-con-full e-flex e-con e-child" data-id="bf13a2c" data-element_type="container" data-e-type="container" data-settings={"{\"background_background\":\"classic\"}"} href="mailto:advisory@valunxtcapital.com?subject=Hello" target="_blank">
+      												<a className="elementor-element elementor-element-bf13a2c e-con-full e-flex e-con e-child" data-id="bf13a2c" data-element_type="container" data-e-type="container" data-settings={"{\"background_background\":\"classic\"}"} href="mailto:contact@valunxt.com?subject=Hello" target="_blank">
       													<div className="elementor-element elementor-element-104172f elementor-view-stacked elementor-shape-rounded elementor-position-left elementor-widget-mobile__width-initial elementor-widget elementor-widget-icon-box" data-id="104172f" data-element_type="widget" data-e-type="widget" data-widget_type="icon-box.default">
       														<div className="elementor-widget-container">
       															<div className="elementor-icon-box-wrapper">
@@ -266,7 +266,7 @@ export default function ContactBody({ page, region }: { page: PageConfig; region
       														<form className="elementor-form" method="post" name="Contact Form" aria-label="Contact Form">
       															<input type="hidden" name="post_id" value="264" />
       															<input type="hidden" name="form_id" value="7655e08" />
-      															<input type="hidden" name="referer_title" value="VALUNXT Capital" />
+      															<input type="hidden" name="referer_title" value="VALUNXT" />
 
       															<input type="hidden" name="queried_id" value="264" />
 
@@ -310,7 +310,7 @@ export default function ContactBody({ page, region }: { page: PageConfig; region
       												</div>
       												<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-38c3fa6 elementor-widget__width-initial elementor-widget-mobile__width-inherit elementor-widget elementor-widget-text-editor" data-id="38c3fa6" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
       													<div className="elementor-widget-container">
-      														<p>By submitting this form you agree to our <a href={rurl(region, '/privacy-policy/')}>Privacy Policy</a>. VALUNXT Capital may contact you via email or phone regarding your enquiry.</p>
+      														<p>By submitting this form you agree to our <a href={rurl(region, '/privacy-policy/')}>Privacy Policy</a>. VALUNXT may contact you via email or phone regarding your enquiry.</p>
       													</div>
       												</div>
       											</div>
@@ -362,7 +362,7 @@ export default function ContactBody({ page, region }: { page: PageConfig; region
       														<form className="elementor-form" method="post" name="Subscribe" aria-label="Subscribe">
       															<input type="hidden" name="post_id" value="4557" />
       															<input type="hidden" name="form_id" value="3b33bfe" />
-      															<input type="hidden" name="referer_title" value="VALUNXT Capital" />
+      															<input type="hidden" name="referer_title" value="VALUNXT" />
 
       															<input type="hidden" name="queried_id" value="264" />
 

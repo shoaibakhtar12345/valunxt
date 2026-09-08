@@ -6,7 +6,7 @@
  * objects) and internal links going through rurl() so they stay in the
  * visitor's market.
  */
-import { BASE, rurl } from '@/lib/region';
+import { rurl } from '@/lib/region';
 import type { PageConfig } from '@/lib/page-config';
 
 export default function CareersBody({ page, region }: { page: PageConfig; region: string }) {
@@ -72,13 +72,9 @@ export default function CareersBody({ page, region }: { page: PageConfig; region
       				</div>
       		<div className="elementor-element elementor-element-7d7674e e-con-full e-flex e-con e-child" data-id="7d7674e" data-element_type="container" data-e-type="container" data-settings={"{\"background_background\":\"classic\",\"animation\":\"none\"}"}>
       		<div className="elementor-element elementor-element-e8b9dab e-con-full e-flex e-con e-child" data-id="e8b9dab" data-element_type="container" data-e-type="container">
-      				<div className="elementor-element elementor-element-9003100 elementor-widget elementor-widget-image" data-id="9003100" data-element_type="widget" data-e-type="widget" data-widget_type="image.default">
-      				<div className="elementor-widget-container">
-      															<img fetchPriority="high" decoding="async" width={484} height={270} src={`${BASE}/assets/content/uploads/2025/04/stats.png`} className="attachment-large size-large wp-image-5953" alt="" srcSet={`${BASE}/assets/content/uploads/2025/04/stats.png 484w, ${BASE}/assets/content/uploads/2025/04/stats-300x167.png 300w`} sizes="(max-width: 484px) 100vw, 484px" />															</div>
-      				</div>
       				<div className="elementor-element elementor-element-ba294bb elementor-widget elementor-widget-heading" data-id="ba294bb" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
       				<div className="elementor-widget-container">
-      					<h5 className="elementor-heading-title elementor-size-default">Why Work With VALUNXT Capital?</h5>				</div>
+      					<h5 className="elementor-heading-title elementor-size-default">Why Work With VALUNXT?</h5>				</div>
       				</div>
       				<div className="elementor-element elementor-element-8713576 elementor-align-left elementor-tablet-align-left elementor-icon-list--layout-traditional elementor-list-item-link-full_width elementor-widget elementor-widget-icon-list" data-id="8713576" data-element_type="widget" data-e-type="widget" data-widget_type="icon-list.default">
       				<div className="elementor-widget-container">
@@ -124,7 +120,7 @@ export default function CareersBody({ page, region }: { page: PageConfig; region
       				</div>
       				<div className="elementor-element elementor-element-d208463 elementor-invisible elementor-widget-tablet__width-inherit animated-fast elementor-widget elementor-widget-heading" data-id="d208463" data-element_type="widget" data-e-type="widget" data-settings={"{\"_animation\":\"slideInUp\",\"_animation_delay\":50}"} data-widget_type="heading.default">
       				<div className="elementor-widget-container">
-      					<h2 className="elementor-heading-title elementor-size-default">Grow Your Career With VALUNXT Capital</h2>				</div>
+      					<h2 className="elementor-heading-title elementor-size-default">Grow Your Career With VALUNXT</h2>				</div>
       				</div>
       				<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-9c431ac elementor-invisible elementor-widget-tablet__width-inherit animated-fast elementor-widget elementor-widget-text-editor" data-id="9c431ac" data-element_type="widget" data-e-type="widget" data-settings={"{\"_animation\":\"fadeIn\",\"_animation_delay\":200}"} data-widget_type="text-editor.default">
       				<div className="elementor-widget-container">
@@ -314,7 +310,7 @@ export default function CareersBody({ page, region }: { page: PageConfig; region
       				<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-0cda4de vamtam-icon-pos-row-reverse elementor-widget elementor-widget-button" data-id="0cda4de" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
       				<div className="elementor-widget-container">
       									<div className="elementor-button-wrapper">
-      					<a className="elementor-button elementor-button-link elementor-size-sm" href="mailto:advisory@valunxtcapital.com?subject=Careers%20Enquiry">
+      					<a className="elementor-button elementor-button-link elementor-size-sm" href="mailto:contact@valunxt.com?subject=Careers%20Enquiry">
       						<span className="elementor-button-content-wrapper">
       						<span className="elementor-button-icon">
       				<i aria-hidden="true" className="vamtamtheme- vamtam-theme-arrow-right"></i>			</span>
@@ -353,7 +349,7 @@ export default function CareersBody({ page, region }: { page: PageConfig; region
       				<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-0cda4de vamtam-icon-pos-row-reverse elementor-widget elementor-widget-button" data-id="0cda4de" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
       				<div className="elementor-widget-container">
       									<div className="elementor-button-wrapper">
-      					<a className="elementor-button elementor-button-link elementor-size-sm" href="mailto:advisory@valunxtcapital.com?subject=Careers%20Enquiry">
+      					<a className="elementor-button elementor-button-link elementor-size-sm" href="mailto:contact@valunxt.com?subject=Careers%20Enquiry">
       						<span className="elementor-button-content-wrapper">
       						<span className="elementor-button-icon">
       				<i aria-hidden="true" className="vamtamtheme- vamtam-theme-arrow-right"></i>			</span>
@@ -392,7 +388,7 @@ export default function CareersBody({ page, region }: { page: PageConfig; region
       				<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-0cda4de vamtam-icon-pos-row-reverse elementor-widget elementor-widget-button" data-id="0cda4de" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
       				<div className="elementor-widget-container">
       									<div className="elementor-button-wrapper">
-      					<a className="elementor-button elementor-button-link elementor-size-sm" href="mailto:advisory@valunxtcapital.com?subject=Careers%20Enquiry">
+      					<a className="elementor-button elementor-button-link elementor-size-sm" href="mailto:contact@valunxt.com?subject=Careers%20Enquiry">
       						<span className="elementor-button-content-wrapper">
       						<span className="elementor-button-icon">
       				<i aria-hidden="true" className="vamtamtheme- vamtam-theme-arrow-right"></i>			</span>
@@ -431,7 +427,7 @@ export default function CareersBody({ page, region }: { page: PageConfig; region
       				<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-0cda4de vamtam-icon-pos-row-reverse elementor-widget elementor-widget-button" data-id="0cda4de" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
       				<div className="elementor-widget-container">
       									<div className="elementor-button-wrapper">
-      					<a className="elementor-button elementor-button-link elementor-size-sm" href="mailto:advisory@valunxtcapital.com?subject=Careers%20Enquiry">
+      					<a className="elementor-button elementor-button-link elementor-size-sm" href="mailto:contact@valunxt.com?subject=Careers%20Enquiry">
       						<span className="elementor-button-content-wrapper">
       						<span className="elementor-button-icon">
       				<i aria-hidden="true" className="vamtamtheme- vamtam-theme-arrow-right"></i>			</span>
@@ -470,7 +466,7 @@ export default function CareersBody({ page, region }: { page: PageConfig; region
       				<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-0cda4de vamtam-icon-pos-row-reverse elementor-widget elementor-widget-button" data-id="0cda4de" data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
       				<div className="elementor-widget-container">
       									<div className="elementor-button-wrapper">
-      					<a className="elementor-button elementor-button-link elementor-size-sm" href="mailto:advisory@valunxtcapital.com?subject=Careers%20Enquiry">
+      					<a className="elementor-button elementor-button-link elementor-size-sm" href="mailto:contact@valunxt.com?subject=Careers%20Enquiry">
       						<span className="elementor-button-content-wrapper">
       						<span className="elementor-button-icon">
       				<i aria-hidden="true" className="vamtamtheme- vamtam-theme-arrow-right"></i>			</span>
@@ -524,7 +520,7 @@ export default function CareersBody({ page, region }: { page: PageConfig; region
       							<form className="elementor-form" method="post" name="Subscribe" aria-label="Subscribe">
       			<input type="hidden" name="post_id" value="4557" />
       			<input type="hidden" name="form_id" value="3b33bfe" />
-      			<input type="hidden" name="referer_title" value="VALUNXT Capital" />
+      			<input type="hidden" name="referer_title" value="VALUNXT" />
 
       							<input type="hidden" name="queried_id" value="268" />
 

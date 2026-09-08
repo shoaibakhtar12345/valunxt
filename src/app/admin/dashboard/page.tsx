@@ -14,7 +14,7 @@ import { query } from '@/lib/admin/db';
 import { currentUser } from '@/lib/admin/session';
 
 export const metadata: Metadata = {
-  title: 'Dashboard — VALUNXT Capital Admin',
+  title: 'Dashboard — VALUNXT Admin',
   robots: 'noindex, nofollow',
 };
 
@@ -108,7 +108,7 @@ export default async function DashboardPage() {
           Home <span className="sep">/</span> Dashboard
         </div>
         <h1>Welcome back, {user.name.split(' ')[0]} 👋</h1>
-        <p>Here&rsquo;s what&rsquo;s happening across VALUNXT Capital today.</p>
+        <p>Here&rsquo;s what&rsquo;s happening across VALUNXT today.</p>
       </div>
 
       {/* KPI cards */}

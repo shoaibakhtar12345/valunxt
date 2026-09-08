@@ -17,7 +17,7 @@ import { currentUser } from '@/lib/admin/session';
 import LoginForm from '@/components/admin/LoginForm';
 
 export const metadata: Metadata = {
-  title: 'Sign in — VALUNXT Capital Admin',
+  title: 'Sign in — VALUNXT Admin',
   robots: 'noindex, nofollow',
 };
 
@@ -31,7 +31,7 @@ export default async function AdminLoginPage() {
       <aside className="login-brand">
         <div className="brand-logo">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={ADMIN_LOGO_WHITE} alt="VALUNXT Capital" />
+          <img src={ADMIN_LOGO_WHITE} alt="VALUNXT" />
         </div>
 
         <div className="brand-copy">
@@ -41,7 +41,7 @@ export default async function AdminLoginPage() {
           </h1>
           <p className="lede">
             Manage your advisory content, client enquiries and insights from a single, secure control
-            centre built for the VALUNXT Capital team.
+            centre built for the VALUNXT team.
           </p>
           <ul className="brand-points">
             <li>
@@ -99,7 +99,7 @@ export default async function AdminLoginPage() {
         </div>
 
         <div className="brand-foot">
-          &copy; {new Date().getFullYear()} VALUNXT Capital. All rights reserved.
+          &copy; {new Date().getFullYear()} VALUNXT. All rights reserved.
         </div>
       </aside>
 
@@ -108,11 +108,11 @@ export default async function AdminLoginPage() {
         <div className="login-card">
           <div className="form-logo">
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={ADMIN_LOGO_DARK} alt="VALUNXT Capital" />
+            <img src={ADMIN_LOGO_DARK} alt="VALUNXT" />
           </div>
 
           <h2>Welcome back</h2>
-          <p className="sub">Sign in to your VALUNXT Capital admin account.</p>
+          <p className="sub">Sign in to your VALUNXT admin account.</p>
 
           <LoginForm defaultEmail={DEFAULT_ADMIN_EMAIL} defaultPassword={DEFAULT_ADMIN_PASS} />
 

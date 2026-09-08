@@ -1367,8 +1367,8 @@ body {
   background-position: center center, center center;
   background-size: cover, cover;
   background-repeat: no-repeat, no-repeat;
-  padding: 30px 50px;
-  margin: 10px 0;
+  padding: 100px 50px;
+  /* margin: 10px 0; */
 }
 
 .elementor-3752 .elementor-element.elementor-element-c739b5b .elementor-heading-title,
@@ -2042,9 +2042,13 @@ img.vxn-blog-hero {
     background: transparent !important;
   }
 
+  /* Stops the theme tinting menu anchors. The colour longhand, not the
+     shorthand: the promo card is an anchor and sets background-size,
+     -position and -repeat of its own further down, and the shorthand would
+     reset all three — with this !important, so they could not be won back. */
   .elementor-nav-menu--main .vxn-mega__panel a:hover,
   .elementor-nav-menu--main .vxn-mega__panel a:focus {
-    background: transparent !important;
+    background-color: transparent !important;
   }
 }
 
@@ -2388,7 +2392,11 @@ img.vxn-blog-hero {
   position: relative;
   margin: 0 !important;
   padding: 22px 22px 18px !important;
-  background: linear-gradient(150deg, #0057BE 0%, #0E355F 100%) !important;
+  /* The image longhand, not the `background` shorthand: the shorthand also
+     resets background-size, -position and -repeat, and with this !important
+     it would take them from the block at the foot of this file that sets
+     them deliberately. */
+  background-image: linear-gradient(150deg, #0057BE 0%, #0E355F 100%) !important;
   border: 1px solid rgba(255, 255, 255, 0.14);
   text-decoration: none !important;
   /* Clips the drifting fields to the card's rounded corner; `isolate` is what
@@ -2409,7 +2417,8 @@ img.vxn-blog-hero {
    pointer. This selector is 0-4-0 and wins. One step brighter, so the hover
    still registers. */
 .elementor-nav-menu--main .vxn-mega__panel .vxn-mega__card:hover {
-  background: linear-gradient(150deg, #0061D4 0%, #13416F 100%) !important;
+  /* Longhand, for the same reason as the resting rule above. */
+  background-image: linear-gradient(150deg, #0061D4 0%, #13416F 100%) !important;
   border-color: rgba(255, 255, 255, 0.3);
   box-shadow: 0 14px 30px -12px rgba(0, 45, 100, .55);
 }
@@ -3510,6 +3519,14 @@ body.vxn-cookie-lock {
   visibility: visible;
   pointer-events: auto;
   transform: translate3d(0, 0, 0) !important;
+  cursor: pointer;
+}
+
+/* It carries role="button" and a tab stop (PageShell), so it needs a focus
+   ring of its own — the theme never gave the <div> one. */
+#scroll-to-top:focus-visible {
+  outline: 2px solid #0053b7;
+  outline-offset: 3px;
 }
 
 #scroll-to-top.vxn-visible:hover {
@@ -5218,9 +5235,15 @@ html.vxn-nav-open .elementor-location-header nav.elementor-nav-menu--main ul.ele
    They had drifted to six different values: 2px on the capability tiles, 5px on
    the related-article thumbs, 8px on the location media, 12px on the team,
    research and blog-hero images, 18px on the trio and proof cards, and 0 on the
-   home industries row, which had been flattened on purpose back when those
-   cards sat edge to edge — they are separated by a 16px gap now, so the corners
-   can come back.
+   home industries row.
+
+   The home industries row is the one exception and stays flat: its cards are a
+   full-bleed strip that expands under the pointer, and a rounded corner on a
+   card whose whole point is to grow edge to edge reads as an inset panel rather
+   than a photograph. It keeps its square corners in its own block below, which
+   beats this list on specificity — and since .vxn-svc-card is rendered nowhere
+   but inside that row, it is left out of the list entirely rather than named
+   here and immediately overridden.
 
    `!important` throughout, for two reasons: most of these are declared in
    component <style> blocks that render in the body, so they come after this
@@ -5234,8 +5257,6 @@ html.vxn-nav-open .elementor-location-header nav.elementor-nav-menu--main ul.ele
    ========================================================================== */
 
 .vxn-cap__tile,
-.vxn-svc-card,
-.vxn-svc-card__media,
 .vxn-trio__card,
 .vxn-trio__media,
 .vxn-proof__card,
@@ -5253,14 +5274,13 @@ img.vxn-blog-hero {
 .vxn-home-svc-section .vxn-svc-card,
 .vxn-home-svc-section .vxn-svc-card__media,
 .vxn-home-svc-section .vxn-svc-card__media img {
-  border-radius: 20px !important;
+  border-radius: 0 !important;
 }
 
 /* A radius only shows on the photograph if the box holding it clips. Most of
    these already do; the rest are named here so none is left square-cornered
    with a rounded frame around it. */
 .vxn-cap__tile,
-.vxn-svc-card,
 .vxn-trio__media,
 .vxn-com__car-fig,
 .vxn-rel__thumb,
@@ -5319,12 +5339,12 @@ img.vxn-blog-hero {
    The sheet was 46px/44px of padding around 40px type and 52px rows. Every one
    of those is trimmed; the photographs coming out of the cards does the rest. */
 .elementor-nav-menu--main .vxn-mega__panel {
-  padding: 26px 0 24px !important;
+  padding: 36px 0 34px !important;
   box-shadow: 0 26px 50px -28px rgba(6, 18, 32, .34);
 }
 
 .elementor-nav-menu--main .vxn-mega__intro {
-  margin-bottom: 12px;
+  margin-bottom: 18px;
 }
 
 .elementor-nav-menu--main .vxn-mega__head {
@@ -5344,7 +5364,7 @@ img.vxn-blog-hero {
    wash of brand blue and a small step to the right, instead of the title
    colour changing on its own. */
 .elementor-nav-menu--main .vxn-mega__panel .vxn-mega__item {
-  padding: 13px 10px 13px 10px !important;
+  padding: 16px 10px 16px 10px !important;
   transition: background-color .28s ease, transform .3s cubic-bezier(.22, .61, .36, 1);
 }
 
@@ -5381,7 +5401,8 @@ img.vxn-blog-hero {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='.08' stroke-width='1'%3E%3Cpath d='M0 40 L40 0 M-10 10 L10 -10 M30 50 L50 30'/%3E%3C/g%3E%3Cg fill='%23ffffff' fill-opacity='.06'%3E%3Ccircle cx='10' cy='30' r='1'/%3E%3Ccircle cx='30' cy='10' r='1'/%3E%3C/g%3E%3C/svg%3E") !important;
   background-repeat: repeat !important;
   background-size: 40px 40px !important;
-  background-position: 0 0 !important;
+  /* No background-position here: the block at the foot of this file sets the
+     card's own, and an !important one here would outrank it. */
   border: 1px solid rgba(255, 255, 255, .18) !important;
   border-radius: 16px !important;
   padding: 20px 20px 18px !important;
@@ -5464,7 +5485,7 @@ img.vxn-blog-hero {
 
 @media (min-width: 1025px) {
   .elementor-nav-menu--main.elementor-nav-menu__container .elementor-nav-menu>li.vxn-mega.menu-item.menu-item-has-children>ul.vxn-mega__panel.sub-menu {
-    padding: 26px 0 24px !important;
+    padding: 36px 0 34px !important;
     transform: translateY(-10px) !important;
   }
 
@@ -5509,4 +5530,890 @@ img.vxn-blog-hero {
    title and the arrow rather than stranding it in the middle. */
 .elementor-nav-menu--main .vxn-mega__panel .vxn-mega__wrap .vxn-mega__card {
   height: 100%;
+}
+
+/* ==========================================================================
+   MEGA MENU — second pass: a lit surface, and the sheet around it (2026-09-05)
+
+   Two things were asked for and they pull in the same direction: the promo
+   cards on the right wanted a richer texture with motion that never stops, and
+   the sheet around them wanted tightening up.
+
+   THE CARDS. The pass above flattened them to one brand blue with a woven SVG
+   over it, having just removed two blurred fields that drifted on 19s and 26s
+   loops. Flat solved the motion complaint but left a large blue rectangle with
+   a title at the top, an arrow at the foot and nothing between — most of the
+   card was empty. Two supplied plates fill it now, one per card, in layers:
+
+     ::before   the plate, `cover`, drifting on a slow Ken Burns that
+                `alternate`s — it eases back to where it began, so the loop
+                has no seam, and the second card runs it in reverse.
+     ::after    the two things that must stay still over a moving picture:
+                the scrim that keeps white type legible, and the glint. The
+                glint is a background layer rather than a transform, which
+                is what lets it travel while the scrim under it does not.
+     the card   nothing. No fill and no drawn texture — the plate is the
+                card, and anything else here would only ever be seen through
+                a gap in it.
+
+   INFINITE, BUT NOT WHILE CLOSED. Both loops are `infinite` and neither ever
+   restarts — but six cards animating behind a hidden panel is paint for
+   nothing, so they are declared `paused` and set `running` on the same
+   :hover/:focus-within that opens the sheet. Because pausing holds the
+   playhead rather than resetting it, reopening a menu picks the loop up mid-
+   stride instead of snapping every card back to its first frame.
+
+   THE SHEET. The index rows carried a flat rectangular wash; they get a soft
+   inset one on a radius, drawn on ::before so the row's own hairline stays
+   full width above it. The kicker and the card eyebrows get the short rule
+   that labels elsewhere on the site already use. The "view all" link draws its
+   own underline. The icons and chevrons keep the sober flat register the block
+   above argued for — no tinted tiles, no pills.
+
+   Selector depth is 0-4-0 or deeper throughout, matching the block above: the
+   theme tints menu anchors at 0-3-1 and the panel resets every radius inside
+   it with `.vxn-mega__wrap * { border-radius: 0 !important }`, so anything
+   shorter than this loses. Pseudo-elements are not matched by that `*`, which
+   is why the row wash and the aurora can hold a radius without fighting it.
+   ========================================================================== */
+
+/* ---- The sheet ----------------------------------------------------------
+   White still, but not flat white: a barely-there fall towards the foot, and a
+   shadow that reads as depth rather than as a drop. */
+.elementor-nav-menu--main .vxn-mega__panel {
+  background: linear-gradient(180deg, #FFFFFF 0%, #FBFCFE 62%, #F7FAFD 100%) !important;
+  border-top: 1px solid rgba(14, 53, 95, .09) !important;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, .9) inset,
+    0 30px 60px -34px rgba(6, 18, 32, .38) !important;
+}
+
+/* All three sheets stand the same height. Left to their own content they
+   follow the length of their link list — Services leads with six entries,
+   Insights five, Our Group four — so the sheet visibly resized as you moved
+   along the bar. This is the tallest of the three, which makes it a floor the
+   shorter menus rise to and not a cap on any of them: a seventh service still
+   pushes the sheet down. The cards stretch to meet it, and their CTA already
+   carries margin-top:auto, so the extra height opens between the title and
+   the arrow rather than stranding it mid-card.
+
+   The block above this one set `min-height: 0` to undo an earlier fixed 545px
+   slab. This is not that slab returning — the number is re-measured off the
+   longest menu each time the menus change shape, where 545 was 100px of air on
+   every one of them. It was 445 while Services listed six rows down one
+   column; folding that into two columns of three took Services to 420 with a
+   drawer open — still the tallest, Insights measuring 391 — so 420 it is, and
+   the sheet stands 490px. Anything shorter here would only mean Insights and
+   Services no longer matching. */
+.elementor-nav-menu--main .vxn-mega__inner {
+  min-height: 420px;
+}
+
+/* ---- Intro --------------------------------------------------------------
+   The kicker takes the short brand rule that section labels carry elsewhere.
+   inline-flex, so the rule centres on the cap height rather than sitting on
+   the baseline. */
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__kicker {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 10px;
+  color: var(--vxn-blue, #0053B7) !important;
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__kicker::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+  opacity: .55;
+}
+
+.elementor-nav-menu--main .vxn-mega__head {
+  font-size: 29px !important;
+  letter-spacing: -.2px;
+  margin: 0 0 9px !important;
+}
+
+/* ---- Index rows ---------------------------------------------------------
+   The wash is a ::before, inset a few pixels and set on a radius, so it reads
+   as a soft plate under the row instead of a rectangle butted up against the
+   hairline above it. It bleeds a little past the row's box left and right, so
+   the text is not sitting on the plate's edge.
+
+   The row is `display: grid`; an absolutely positioned ::before is out of
+   flow, so it claims no column. `isolation: isolate` is what lets it sit at
+   z-index -1 — above the row's own background, below all three children —
+   without any of them needing a z-index of their own. */
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__item {
+  isolation: isolate;
+  border-top-color: rgba(14, 53, 95, .09);
+  transition:
+    border-top-color .3s ease,
+    transform .34s cubic-bezier(.22, .61, .36, 1);
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__item::before {
+  content: "";
+  position: absolute;
+  inset: 5px -12px 5px -12px;
+  z-index: -1;
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(0, 83, 183, .10) 0%, rgba(0, 83, 183, .045) 52%, rgba(0, 83, 183, 0) 100%);
+  opacity: 0;
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+
+/* The flat rectangular wash from the block above, off. */
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__item:hover {
+  background: transparent !important;
+  border-top-color: rgba(0, 83, 183, .3);
+  transform: translateX(2px);
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__item:hover::before {
+  opacity: 1;
+}
+
+/* The icon carries the accent and grows a touch — flat, still no tile. */
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__ico {
+  transition: color .25s ease, transform .3s cubic-bezier(.22, .61, .36, 1);
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__item:hover .vxn-mega__ico {
+  transform: scale(1.08);
+}
+
+/* Slides in from behind the row's right edge rather than fading on the spot. */
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__chev {
+  opacity: 0;
+  transform: translateX(-5px);
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__item:hover .vxn-mega__chev {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+/* ---- "View all" ---------------------------------------------------------
+   The rule above it brightens, and the label draws its own underline from the
+   left. `__viewalltxt` had no styles of its own before this. */
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__viewall {
+  transition: color .25s ease, border-top-color .3s ease;
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__viewall:hover {
+  border-top-color: rgba(0, 83, 183, .34);
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__viewalltxt {
+  position: relative;
+  display: inline-block;
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__viewalltxt::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -3px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform .34s cubic-bezier(.22, .61, .36, 1);
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__viewall:hover .vxn-mega__viewalltxt::after {
+  transform: scaleX(1);
+}
+
+/* ---- The promo cards ----------------------------------------------------
+   The texture is photographic now — two supplied plates under
+   assets/content/uploads/banners/, one per card, in three layers:
+
+     ::before   the plate itself, `cover`, drifting on a slow Ken Burns. The
+                cycle `alternate`s, so it eases back to where it began and the
+                loop has no seam; the second card runs it in reverse so the
+                pair are never on the same beat.
+     ::after    the two things that have to stay still over a moving picture
+                — the scrim that keeps white type legible, and the glint. The
+                glint is a background layer here rather than a transform,
+                which is what lets it move while the scrim under it does not.
+     the card   nothing at all: no fill, no drawn texture. The plate is the
+                card.
+
+   The plates are ~190KB for the pair and are fetched at load (the panel is
+   `visibility: hidden`, not `display: none`), so the first hover is instant
+   rather than a blank card that fills in.
+
+   The scrim is on ::after and not stacked over the plate on ::before for a
+   reason: ::before is scaled, so anything in it is scaled too, and a scrim's
+   dark ends would be pushed outside the card exactly where the type sits. */
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__wrap .vxn-mega__card {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  /* No fill. The plate is the card; anything painted here would only ever be
+     seen through gaps in it, and there should not be any. Both declarations
+     have to be written out because two blocks above set them !important — the
+     flat brand blue with the woven SVG, and the navy gradient before that.
+     The decode-time fallback moved to ::before, under the plate, so a plate
+     that fails to load still leaves a dark card rather than white type on the
+     white sheet. */
+  background-color: transparent !important;
+  background-image: none !important;
+  border: 1px solid rgba(255, 255, 255, .16) !important;
+  border-radius: 16px !important;
+  padding: 24px 24px 20px !important;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, .18) inset,
+    0 10px 26px -18px rgba(4, 26, 62, .55);
+  transition:
+    transform .4s cubic-bezier(.22, .61, .36, 1),
+    border-color .35s ease,
+    box-shadow .4s ease;
+}
+
+/* Layer one: the plate. */
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__wrap .vxn-mega__card::before {
+  content: "" !important;
+  display: block !important;
+  position: absolute;
+  inset: 0;
+  width: auto;
+  height: auto;
+  aspect-ratio: auto;
+  filter: none;
+  z-index: -1;
+  border-radius: 0;
+  pointer-events: none;
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  will-change: transform;
+  animation: vxn-mega-plate 32s ease-in-out infinite alternate;
+  transition: filter .4s ease;
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__wrap .vxn-mega__card:nth-child(1)::before {
+  background-image: url("/assets/content/uploads/banners/texture-1.webp");
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__wrap .vxn-mega__card:nth-child(2)::before {
+  background-image: url("/assets/content/uploads/banners/texture-2.webp");
+  animation-direction: alternate-reverse;
+}
+
+/* Layer two: the scrim and the glint — neither of which may move with the plate.
+
+   The scrim is the only thing tinting the plate now that the card carries no
+   fill, so it is spent where the type is and nowhere else: .48 at the head
+   under the eyebrow and title, .58 at the foot under the Discover row, and
+   .06 through the middle, which is as near to nothing as makes no difference.
+   .48 over the brightest passage of either plate puts white type at about
+   7.8:1 and .26 — where the title's last line falls — at 5.5:1, so there is
+   no reason to spend more than that. */
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__wrap .vxn-mega__card::after {
+  content: "" !important;
+  display: block !important;
+  position: absolute;
+  inset: 0;
+  /* Same four, for the same reason as ::before above — and it matters more
+     here: a scrim that covers one corner is worse than no scrim at all. */
+  width: auto;
+  height: auto;
+  aspect-ratio: auto;
+  filter: none;
+  z-index: -1;
+  border-radius: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(100deg,
+      rgba(255, 255, 255, 0) 42%,
+      rgba(255, 255, 255, .09) 47%,
+      rgba(255, 255, 255, .20) 50%,
+      rgba(255, 255, 255, .09) 53%,
+      rgba(255, 255, 255, 0) 58%),
+    linear-gradient(180deg,
+      rgba(6, 28, 64, .48) 0%,
+      rgba(6, 28, 64, .26) 15%,
+      rgba(6, 28, 64, .06) 38%,
+      rgba(6, 28, 64, .10) 58%,
+      rgba(6, 28, 64, .58) 100%);
+  background-size: 260% 100%, 100% 100%;
+  background-repeat: no-repeat, no-repeat;
+  background-position: 118% 0, 0 0;
+  animation: vxn-mega-glint 13s ease-in-out infinite;
+  transition: opacity .4s ease;
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__wrap .vxn-mega__card:nth-child(2)::after {
+  animation-delay: -6.5s;
+}
+
+/* Paused while the sheet is closed, running while it is open. The playhead is
+   held, not reset, so a reopened menu resumes rather than restarts. */
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__wrap .vxn-mega__card::before,
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__wrap .vxn-mega__card::after {
+  animation-play-state: paused;
+}
+
+.elementor-nav-menu--main .vxn-mega:hover .vxn-mega__wrap .vxn-mega__card::before,
+.elementor-nav-menu--main .vxn-mega:hover .vxn-mega__wrap .vxn-mega__card::after,
+.elementor-nav-menu--main .vxn-mega:focus-within .vxn-mega__wrap .vxn-mega__card::before,
+.elementor-nav-menu--main .vxn-mega:focus-within .vxn-mega__wrap .vxn-mega__card::after {
+  animation-play-state: running;
+}
+
+/* A gentle push and drift, not a zoom. `alternate` returns it to the start. */
+@keyframes vxn-mega-plate {
+  from {
+    transform: scale(1.06) translate3d(-1.4%, -1.4%, 0);
+  }
+
+  to {
+    transform: scale(1.17) translate3d(1.6%, 2.2%, 0);
+  }
+}
+
+/* The band sits outside the card at both ends of the run — 118% has it clear
+   to the left, -18% clear to the right — so the jump back at the loop boundary
+   happens where there is nothing to see. Holding from 34% to the end is the
+   dark stretch that keeps this a glint rather than a shimmer. The twill and
+   the scrim are restated on every frame because background-position moves all
+   the layers at once; pinning them at 0 is what holds them still. */
+@keyframes vxn-mega-glint {
+  0% {
+    background-position: 118% 0, 0 0;
+  }
+
+  34% {
+    background-position: -18% 0, 0 0;
+  }
+
+  100% {
+    background-position: -18% 0, 0 0;
+  }
+}
+
+/* ---- Card hover ---------------------------------------------------------
+   The card lifts, the edge picks up a white hairline inside and out, and the
+   plate comes forward — brighter and a shade more saturated, with the scrim
+   easing off it. `filter` and `opacity`, never transform: ::before is already
+   running a transform, and setting a second one would jump its playhead. */
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__wrap .vxn-mega__card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(255, 255, 255, .42) !important;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, .34) inset,
+    0 0 0 1px rgba(255, 255, 255, .10),
+    0 22px 42px -20px rgba(4, 30, 74, .68);
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__wrap .vxn-mega__card:hover::before {
+  filter: saturate(1.12) brightness(1.07);
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__wrap .vxn-mega__card:hover::after {
+  opacity: .88;
+}
+
+/* ---- Card content -------------------------------------------------------
+   The eyebrow takes the same short rule as the kicker on the other side of the
+   sheet, in white this time. */
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__card .vxn-mega__eyebrow {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 9px;
+  color: rgba(255, 255, 255, .74);
+  transition: color .3s ease;
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__card .vxn-mega__eyebrow::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 18px;
+  height: 2px;
+  background: currentColor;
+  opacity: .7;
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__card:hover .vxn-mega__eyebrow {
+  color: rgba(255, 255, 255, .92);
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__cardtitle {
+  font-size: 21px !important;
+  letter-spacing: -.2px;
+  text-shadow: 0 1px 12px rgba(4, 22, 52, .35);
+  transition: transform .4s cubic-bezier(.22, .61, .36, 1);
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__card:hover .vxn-mega__cardtitle {
+  transform: translateY(-2px);
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__cardcta {
+  border-top-color: rgba(255, 255, 255, .22);
+  transition: border-top-color .3s ease;
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__card:hover .vxn-mega__cardcta {
+  border-top-color: rgba(255, 255, 255, .46);
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__cardctatxt {
+  display: inline-block;
+  transition: transform .34s cubic-bezier(.22, .61, .36, 1);
+}
+
+.elementor-nav-menu--main .vxn-mega__panel .vxn-mega__card:hover .vxn-mega__cardctatxt {
+  transform: translateX(3px);
+}
+
+/* ---- Reduced motion -----------------------------------------------------
+   The plates stay — they are the surface, not an effect. Everything that
+   moves stops, both infinite loops included.
+
+   ::after is NOT hidden here. It carries the scrim as well as the glint, and
+   without it white type would sit straight on a bright plate; stopping the
+   animation already parks the glint band off the card, which is where its
+   first frame puts it. ::before is left at scale 1, so the plate simply sits
+   still at cover. */
+@media (prefers-reduced-motion: reduce) {
+
+  .elementor-nav-menu--main .vxn-mega__panel .vxn-mega__wrap .vxn-mega__card::before,
+  .elementor-nav-menu--main .vxn-mega__panel .vxn-mega__wrap .vxn-mega__card::after,
+  .elementor-nav-menu--main .vxn-mega:hover .vxn-mega__wrap .vxn-mega__card::before,
+  .elementor-nav-menu--main .vxn-mega:hover .vxn-mega__wrap .vxn-mega__card::after,
+  .elementor-nav-menu--main .vxn-mega:focus-within .vxn-mega__wrap .vxn-mega__card::before,
+  .elementor-nav-menu--main .vxn-mega:focus-within .vxn-mega__wrap .vxn-mega__card::after {
+    animation: none !important;
+    transform: none;
+  }
+
+  .elementor-nav-menu--main .vxn-mega__panel .vxn-mega__item,
+  .elementor-nav-menu--main .vxn-mega__panel .vxn-mega__item:hover,
+  .elementor-nav-menu--main .vxn-mega__panel .vxn-mega__wrap .vxn-mega__card:hover,
+  .elementor-nav-menu--main .vxn-mega__panel .vxn-mega__card:hover .vxn-mega__cardtitle,
+  .elementor-nav-menu--main .vxn-mega__panel .vxn-mega__card:hover .vxn-mega__cardctatxt,
+  .elementor-nav-menu--main .vxn-mega__panel .vxn-mega__item:hover .vxn-mega__ico {
+    transform: none;
+  }
+
+  .elementor-nav-menu--main .vxn-mega__panel .vxn-mega__viewalltxt::after {
+    transition: none;
+  }
+}
+
+/* ==========================================================================
+   CAREERS — the "Why Work With VALUNXT?" card (2026-09-05)
+
+   The card led with assets/content/uploads/2025/04/stats.png, a stock bar
+   chart in two greens left over from the theme demo. It illustrated nothing on
+   this page — there are no statistics on it — and the greens belong to no part
+   of this palette, so on a brand-blue card it read as a mis-set image rather
+   than as artwork. It is out of the markup, and the card takes one of the blue
+   plates instead: the same two supplied files the mega-menu cards use, so the
+   textured surfaces across the site are one family rather than one per page.
+
+   texture-2 rather than texture-1: this card carries a heading, three list rows
+   and a button in 280px, and texture-2 keeps its quiet half low in the frame
+   where most of that sits. texture-1's folds run bright the whole way down.
+
+   Layered on the card's own background rather than on a pseudo-element. The
+   e-con already uses ::before for Elementor's background-overlay, and this is
+   two layers with nothing to animate, so a second element would buy nothing.
+   Scrim first in the list, which paints it over the plate.
+
+   THE TYPE. The heading was #000 and the list rgba(0,0,0,.75), on #0053B7 —
+   2.9:1 and below, which fails at any size and was failing before this change
+   too. They are white now, which the plate would have forced anyway. The button
+   was already white.
+   ========================================================================== */
+
+.elementor-268 .elementor-element.elementor-element-7d7674e:not(.elementor-motion-effects-element-type-background) {
+  background-color: #0A2E60;
+  background-image:
+    linear-gradient(180deg,
+      rgba(6, 28, 64, .42) 0%,
+      rgba(6, 28, 64, .16) 30%,
+      rgba(6, 28, 64, .34) 64%,
+      rgba(6, 28, 64, .74) 100%),
+    url("/assets/content/uploads/banners/texture-2.webp");
+  background-size: 100% 100%, cover;
+  background-position: 0 0, center center;
+  background-repeat: no-repeat, no-repeat;
+}
+
+.elementor-268 .elementor-element.elementor-element-ba294bb .elementor-heading-title {
+  color: #FFFFFF !important;
+}
+
+.elementor-268 .elementor-element.elementor-element-8713576 .elementor-icon-list-text {
+  color: rgba(255, 255, 255, .92) !important;
+}
+
+.elementor-268 .elementor-element.elementor-element-8713576 .elementor-icon-list-icon,
+.elementor-268 .elementor-element.elementor-element-8713576 .elementor-icon-list-icon i {
+  color: rgba(255, 255, 255, .8) !important;
+}
+
+/* ==========================================================================
+   MEGA MENU — the services accordion (2026-09-07)
+
+   The UAE services menu names six services and thirty pages beneath them.
+   Listing all thirty at once — the three columns of headed groups this block
+   replaces — made the sheet 671px tall and turned a menu into a page: nothing
+   was foregrounded because everything was.
+
+   So the children fold away. Six rows in two columns of three, each a service
+   with a chevron that opens its pages under it. One drawer is open at a time
+   (MegaAccordion.tsx owns which), so the sheet's height moves by one drawer
+   and never by six, and the first is open on arrival so the panel is never a
+   bare list of headings.
+
+   TWO COLUMNS, AND NO BLURB. One column of six was still most of a screen —
+   the sheet read as a page you scrolled rather than a menu you pointed at.
+   Three rows a side halves the list, and the blurb comes out with it: at half
+   the rail's width a clamped sentence truncates inside its first clause,
+   which says less than the name above it, for 18px a row. Between them and
+   the tighter row padding the sheet is ~500px against ~700px.
+
+   THE ROW IS TWO CONTROLS. The name is still the link to the service's own
+   overview page; the chevron beside it is a <button>. A row that only toggled
+   would have buried six overview pages a level deeper, and a row that only
+   linked could not open.
+
+   THE ANIMATION is `grid-template-rows: 0fr -> 1fr` on a wrapper whose child
+   clips — the one height transition to `auto` that needs neither a measured
+   pixel value nor `interpolate-size`, and the reason the markup has a clip
+   element between the drawer and the list: padding on a zero-height box is
+   still painted, so it has to sit inside what `overflow: hidden` cuts.
+
+   A collapsed drawer is `inert`, set by the component off the same boolean
+   that opens it, and NOT `visibility: hidden`. The closed sheet is held out of
+   the tab order by its own `visibility: hidden` (see "Panel" above, where the
+   comment says as much), and every descendant inherits that — so a drawer that
+   declared itself visible would punch a hole straight through it, and the five
+   children of whichever service was open would be tabbable, and hit-testable,
+   with the menu shut. `inert` does the same job from outside the visibility
+   chain, and takes the subtree out of the accessibility tree with it.
+
+   `!important` throughout, and anchors written out rather than left to
+   inherit: every link here is inside `ul.sub-menu.elementor-nav-menu--dropdown`,
+   which the theme styles as a dropdown — flex-grow, its own padding, nowrap,
+   and a background tint on hover. Selectors sit at `.vxn-mega__panel
+   .vxn-mega__wrap X` so one rule serves the desktop bar and the burger drawer
+   both, as `.vxn-mega__circ` already does.
+
+   THE DRAWER shows the children now. It could not before — thirty items
+   stacked under six services was a 35-item scroll to reach Contact — and the
+   fold is exactly what makes it affordable: closed, the drawer is six rows.
+   ========================================================================== */
+
+/* Two columns of services want more of the sheet than the flat menus' 0.82
+   gives — each column has to hold "Accounting and Tax Services" on one line
+   and two columns of children under it. The promo cards narrow to match; they
+   keep their proportion, and no two menus are ever on screen together for the
+   difference to show. */
+.elementor-nav-menu--main .vxn-mega__inner--grouped {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.58fr);
+}
+
+/* ---- Two columns --------------------------------------------------------
+   Split in the component, not here, and this is why: `columns: 2` breaks a
+   group across the gap mid-drawer, and a two-track grid shares its rows
+   between the columns — opening the drawer on the left grows the row on both
+   sides and strands a hole of white under the service on the right. Two flex
+   stacks side by side each measure themselves, so a drawer only moves what is
+   below it in its own column. */
+.vxn-mega__panel .vxn-mega__wrap .vxn-mega__list--grouped {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 40px;
+  align-items: start;
+}
+
+.vxn-mega__groupcol {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* ---- The group ----------------------------------------------------------
+   The hairline belongs to the group and not to the row inside it, so the
+   rule stays put when the drawer opens. `isolation` is what lets the row's
+   hover wash sit at z-index -1 — above the group's background, below every
+   child — without a z-index on any of them. */
+.vxn-mega__group {
+  position: relative;
+  isolation: isolate;
+  border-top: 1px solid rgba(14, 53, 95, .10);
+}
+
+/* Per column, so both columns close on a rule whether or not one of them is
+   carrying an open drawer. */
+.vxn-mega__groupcol .vxn-mega__group:last-child {
+  border-bottom: 1px solid rgba(14, 53, 95, .10);
+}
+
+.vxn-mega__grouprow {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 38px;
+  align-items: center;
+  gap: 0 8px;
+}
+
+/* The same soft plate the flat index rows carry, bled a little past the row
+   left and right so the text is not sitting on its edge. It stays lit while
+   the group is open, so the sheet says which drawer you are looking at. */
+.vxn-mega__grouprow::before {
+  content: "";
+  position: absolute;
+  inset: 4px -12px;
+  z-index: -1;
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(0, 83, 183, .10) 0%, rgba(0, 83, 183, .045) 52%, rgba(0, 83, 183, 0) 100%);
+  opacity: 0;
+  transition: opacity .3s ease;
+  pointer-events: none;
+}
+
+.vxn-mega__group:hover > .vxn-mega__grouprow::before,
+.vxn-mega__group.is-open > .vxn-mega__grouprow::before {
+  opacity: 1;
+}
+
+/* ---- The row: the service, still a link to its own page ---- */
+.vxn-mega__panel .vxn-mega__wrap .vxn-mega__grouphead {
+  display: grid !important;
+  grid-template-columns: 24px minmax(0, 1fr);
+  align-items: center;
+  gap: 0 13px;
+  flex: 0 0 auto !important;
+  min-width: 0;
+  margin: 0 !important;
+  padding: 25px 0 !important;
+  border: 0;
+  border-radius: 0;
+  background: transparent !important;
+  text-decoration: none !important;
+  white-space: normal !important;
+}
+
+.vxn-mega__groupbody {
+  display: block;
+  min-width: 0;
+}
+
+.vxn-mega__grouptitle {
+  display: block;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -.1px;
+  color: var(--e-global-color-vamtam_text, #0E355F);
+  transition: color .22s ease;
+  white-space: normal !important;
+}
+
+.vxn-mega__group:hover > .vxn-mega__grouprow .vxn-mega__grouptitle,
+.vxn-mega__group.is-open > .vxn-mega__grouprow .vxn-mega__grouptitle,
+.vxn-mega__grouphead:focus-visible .vxn-mega__grouptitle {
+  color: var(--vxn-blue, #0053B7);
+}
+
+.vxn-mega__group:hover > .vxn-mega__grouprow .vxn-mega__ico,
+.vxn-mega__group.is-open > .vxn-mega__grouprow .vxn-mega__ico {
+  color: var(--vxn-blue, #0053B7);
+}
+
+/* ---- The disclosure -----------------------------------------------------
+   A bare chevron on the sober flat register the rest of the sheet keeps — no
+   tinted tile, no pill. The button is written out because the theme has
+   never had one inside a menu to style. */
+.vxn-mega__panel .vxn-mega__wrap .vxn-mega__grouptoggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  -webkit-appearance: none;
+  appearance: none;
+  color: var(--vxn-muted, #6A7590);
+  cursor: pointer;
+  transition: color .22s ease, transform .36s cubic-bezier(.22, .61, .36, 1);
+}
+
+.vxn-mega__panel .vxn-mega__wrap .vxn-mega__grouptoggle:hover,
+.vxn-mega__group.is-open .vxn-mega__grouptoggle {
+  background: transparent;
+  color: var(--vxn-blue, #0053B7);
+}
+
+.vxn-mega__group.is-open .vxn-mega__grouptoggle {
+  transform: rotate(180deg);
+}
+
+.vxn-mega__panel .vxn-mega__wrap .vxn-mega__grouptoggle:focus-visible {
+  outline: 2px solid var(--vxn-blue, #0053B7);
+  outline-offset: -4px;
+}
+
+/* ---- The drawer ---------------------------------------------------------
+   Three elements doing three jobs: __drawer is the grid whose row animates,
+   __drawerclip is what the list is cut off against, __subs carries padding
+   that would otherwise be painted at zero height and hold the drawer open by
+   its own measure. */
+.vxn-mega__drawer {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition:
+    grid-template-rows .4s cubic-bezier(.22, .61, .36, 1),
+    opacity .22s ease;
+}
+
+.vxn-mega__group.is-open > .vxn-mega__drawer {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transition:
+    grid-template-rows .4s cubic-bezier(.22, .61, .36, 1),
+    opacity .3s ease .08s;
+}
+
+.vxn-mega__drawerclip {
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Indented to the row's text rather than to its icon, so the children read as
+   belonging to the name above them. Two columns, not three: the service
+   column is half the rail now, and a third track would put "Plant & Machinery
+   Valuation" onto three lines. Two keeps the longest child on two, and six
+   children on three rows rather than six. */
+.vxn-mega__panel .vxn-mega__wrap .vxn-mega__subs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 20px;
+  align-content: start;
+  padding: 0 0 12px 37px;
+}
+
+.vxn-mega__panel .vxn-mega__wrap .vxn-mega__sub {
+  display: block !important;
+  position: relative;
+  flex: 0 0 auto !important;
+  margin: 0 !important;
+  padding: 5px 0 !important;
+  border-radius: 0;
+  background: transparent !important;
+  text-decoration: none !important;
+  white-space: normal !important;
+  font-size: 12.75px;
+  font-weight: 400;
+  line-height: 1.45;
+  letter-spacing: 0;
+  color: var(--vxn-muted, #6A7590);
+  transition: color .2s ease, transform .26s cubic-bezier(.22, .61, .36, 1);
+}
+
+.vxn-mega__panel .vxn-mega__wrap .vxn-mega__sub:hover,
+.vxn-mega__panel .vxn-mega__wrap .vxn-mega__sub:focus-visible {
+  color: var(--vxn-blue, #0053B7);
+  transform: translateX(3px);
+}
+
+/* ---- The burger drawer --------------------------------------------------
+   The two columns fold back into one — a phone has no width to split — and
+   the children stack under each service.
+
+   The component emits the columns as two stacks of three, so unwinding them
+   here is just `display: contents` on the wrapper: the six groups rejoin the
+   list in their original order, 1..6, and nothing has to know a split
+   happened. */
+nav.elementor-nav-menu--dropdown .vxn-mega__panel .vxn-mega__list--grouped {
+  display: block !important;
+}
+
+nav.elementor-nav-menu--dropdown .vxn-mega__groupcol {
+  display: contents;
+}
+
+nav.elementor-nav-menu--dropdown .vxn-mega__group {
+  border-top-color: rgba(14, 53, 95, .09);
+}
+
+/* One stack again, so only the last of the six closes on a rule. */
+nav.elementor-nav-menu--dropdown .vxn-mega__groupcol .vxn-mega__group:last-child {
+  border-bottom: 0;
+}
+
+nav.elementor-nav-menu--dropdown .vxn-mega__list--grouped > .vxn-mega__groupcol:last-child .vxn-mega__group:last-child {
+  border-bottom: 1px solid rgba(14, 53, 95, .09);
+}
+
+nav.elementor-nav-menu--dropdown .vxn-mega__panel .vxn-mega__grouphead {
+  padding: 13px 0 !important;
+}
+
+nav.elementor-nav-menu--dropdown .vxn-mega__panel .vxn-mega__subs {
+  grid-template-columns: minmax(0, 1fr);
+  padding: 0 0 10px 37px;
+}
+
+nav.elementor-nav-menu--dropdown .vxn-mega__panel .vxn-mega__sub {
+  padding: 7px 0 !important;
+}
+
+/* The row wash is a desktop flourish; the drawer's rows are already ruled. */
+nav.elementor-nav-menu--dropdown .vxn-mega__grouprow::before {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .vxn-mega__panel .vxn-mega__wrap .vxn-mega__sub,
+  .vxn-mega__panel .vxn-mega__wrap .vxn-mega__sub:hover {
+    transform: none;
+  }
+
+  /* The fold still has to happen — it is what the button says it does — so
+     the transition goes, not the state change. */
+  .vxn-mega__drawer,
+  .vxn-mega__group.is-open > .vxn-mega__drawer {
+    transition: none;
+  }
+
+  .vxn-mega__panel .vxn-mega__wrap .vxn-mega__grouptoggle {
+    transition: color .22s ease;
+  }
+}
+
+/* ---- Height safety ------------------------------------------------------
+   The services sheet hangs from the foot of the bar, and the accordion still
+   grows by a drawer when one is opened — so on a 1366x768 laptop, where the
+   viewport is around 640px tall, the last row of services and the whole
+   "view all" line could fall off the bottom of the screen with no way to
+   reach them. The fold made this far less likely than it was when all thirty
+   children were listed at once; it did not make it impossible.
+
+   Capped to what is left below the bar, and allowed to scroll inside itself
+   past that.  shows no bar and changes nothing on a screen where the
+   sheet already fits, which is every desktop over ~770px tall; 
+   stops a flick at the end of the list scrolling the page behind it. */
+.elementor-nav-menu--main .vxn-mega__panel {
+  max-height: calc(100vh - var(--vxn-navh, 94px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }

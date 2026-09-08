@@ -55,7 +55,7 @@ export default function ServicesBody({ page, region }: { page: PageConfig; regio
       								</div>
       								<div className="elementor-element elementor-element-44a2511 elementor-invisible animated-fast elementor-widget__width-initial elementor-widget-mobile__width-inherit elementor-widget elementor-widget-theme-post-excerpt" data-id="44a2511" data-element_type="widget" data-e-type="widget" data-settings={"{\"_animation\":\"slideInUp\",\"_animation_delay\":50}"} data-widget_type="theme-post-excerpt.default">
       									<div className="elementor-widget-container">
-      										VALUNXT Capital supports investors, developers, and institutions through an integrated platform of strategic advisory, research, capital solutions, and intelligent technology. </div>
+      										VALUNXT supports investors, developers, and institutions through an integrated platform of strategic advisory, research, capital solutions, and intelligent technology. </div>
       								</div>
       							</div>
       						</div>

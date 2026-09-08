@@ -79,6 +79,27 @@ const SCROLL_AND_NAV = `
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll, { passive: true });
   update();
+
+  /* The click. The theme's own handler lives in low-priority.js, which this
+     build never loads — so the button appeared, lit up on hover and did
+     nothing. Scroll ourselves, honouring prefers-reduced-motion, and answer
+     Enter/Space too since the element is a <div> with a button role. */
+  function toTop(){
+    var reduce = false;
+    try { reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+    try {
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    } catch (e) {
+      window.scrollTo(0, 0);
+    }
+  }
+  btn.addEventListener('click', function(e){ e.preventDefault(); toTop(); });
+  btn.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar'){
+      e.preventDefault();
+      toTop();
+    }
+  });
 })();
 `;
 

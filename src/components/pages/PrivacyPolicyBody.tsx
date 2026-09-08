@@ -86,7 +86,7 @@ export default function PrivacyPolicyBody({ page, region }: { page: PageConfig; 
       				</div>
       				<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-66cdd8e elementor-widget elementor-widget-text-editor" data-id="66cdd8e" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
       				<div className="elementor-widget-container">
-      									<p>We will not be responsible for the privacy of data collected by websites not owned or managed by VALUNXT Capital, including those linked through our website.</p>								</div>
+      									<p>We will not be responsible for the privacy of data collected by websites not owned or managed by VALUNXT, including those linked through our website.</p>								</div>
       				</div>
       				<div className="elementor-element elementor-element-6710d3c elementor-widget elementor-widget-heading" data-id="6710d3c" data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
       				<div className="elementor-widget-container">
@@ -95,7 +95,7 @@ export default function PrivacyPolicyBody({ page, region }: { page: PageConfig; 
       				</div>
       				<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-ca66379 elementor-widget elementor-widget-text-editor" data-id="ca66379" data-element_type="widget" data-e-type="widget" data-widget_type="text-editor.default">
       				<div className="elementor-widget-container">
-      									<p>If you are not satisfied with the response, please contact us at <a href="mailto:advisory@valunxtcapital.com" className="__cf_email__">advisory@valunxtcapital.com</a> with the details explaining your concerns. We will review your complaint and investigate if the right procedures have been followed and respond back to you as appropriate. We aim to complete this investigation within 15 working days of receiving your complaint, however, in some cases it may take longer. If you are still unsatisfied with the response, you may contact us.</p>								</div>
+      									<p>If you are not satisfied with the response, please contact us at <a href="mailto:contact@valunxt.com" className="__cf_email__">contact@valunxt.com</a> with the details explaining your concerns. We will review your complaint and investigate if the right procedures have been followed and respond back to you as appropriate. We aim to complete this investigation within 15 working days of receiving your complaint, however, in some cases it may take longer. If you are still unsatisfied with the response, you may contact us.</p>								</div>
       				</div>
       				</div>
       					</div>
@@ -134,7 +134,7 @@ export default function PrivacyPolicyBody({ page, region }: { page: PageConfig; 
       							<form className="elementor-form" method="post" name="Subscribe" aria-label="Subscribe">
       			<input type="hidden" name="post_id" value="4557" />
       			<input type="hidden" name="form_id" value="3b33bfe" />
-      			<input type="hidden" name="referer_title" value="VALUNXT Capital" />
+      			<input type="hidden" name="referer_title" value="VALUNXT" />
 
       							<input type="hidden" name="queried_id" value="3" />
 

@@ -29,7 +29,7 @@ const DUBAI = vxnOffice('dubai')!;
 
 export const BRAND = {
   name: 'VALUNXT',
-  full: 'VALUNXT Capital',
+  full: 'VALUNXT',
   /** The practice, shown as a lockup beside the wordmark. */
   practice: 'Real Estate',
   phone: DUBAI.phone,

@@ -59,7 +59,7 @@ function config({
   written?: boolean;
 }): PageConfig {
   const id = postId(path);
-  const title = `${name} | VALUNXT Capital`;
+  const title = `${name} | VALUNXT`;
   return {
     title,
     desc,
@@ -95,8 +95,8 @@ export function uaeServiceConfig(service: Service, written = false): PageConfig 
     path: `/services/${service.slug}/`,
     heroImage: service.img,
     desc: written
-      ? `${name} in the UAE from VALUNXT Capital.`
-      : `${name} in the UAE from VALUNXT Capital — coming soon.`,
+      ? `${name} in the UAE from VALUNXT.`
+      : `${name} in the UAE from VALUNXT — coming soon.`,
     written,
   });
 }
@@ -110,6 +110,6 @@ export function uaeSubServiceConfig(service: Service, sub: SubService): PageConf
        and a placeholder per page would be thirty more images to art-direct
        before any of them has copy. */
     heroImage: service.img,
-    desc: `${sub.name} — part of ${vxnServiceName(service)} at VALUNXT Capital. Coming soon.`,
+    desc: `${sub.name} — part of ${vxnServiceName(service)} at VALUNXT. Coming soon.`,
   });
 }

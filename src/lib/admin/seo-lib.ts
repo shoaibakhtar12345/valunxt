@@ -1,5 +1,5 @@
 /**
- * VALUNXT Capital — SEO & Sitemap library.
+ * VALUNXT — SEO & Sitemap library.
  *
  * Everything the admin panel needs to manage per-page SEO metadata, page slugs
  * and the XML sitemap, so the individual admin screens stay thin. Nothing here
@@ -325,7 +325,7 @@ export async function seoEffective(row: PageRow, requestOrigin = ''): Promise<Ef
   let ogTitle = String(row.og_title ?? '').trim();
   let ogDesc = String(row.og_description ?? '').trim();
 
-  if (metaTitle === '') metaTitle = title !== '' ? `${title} | VALUNXT Capital` : 'VALUNXT Capital';
+  if (metaTitle === '') metaTitle = title !== '' ? `${title} | VALUNXT` : 'VALUNXT';
   if (canonical === '') canonical = await seoPageUrl(slug, requestOrigin);
   if (!(ROBOTS_OPTIONS as readonly string[]).includes(robots)) robots = 'index, follow';
   if (ogTitle === '') ogTitle = metaTitle;

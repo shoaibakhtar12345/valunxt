@@ -134,7 +134,7 @@ export default function Footer3425({ region }: { region: string }) {
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                               src={`${BASE}/LOGO/icon-white.jpg`}
-                              alt="VALUNXT Capital"
+                              alt="VALUNXT"
                               className="vamtam-logo-sign-img"
                             />{' '}
                           </div>
@@ -260,7 +260,7 @@ export default function Footer3425({ region }: { region: string }) {
                         <div className="elementor-widget-container">
                           <p>
                             <span className="color-accent-2">E:</span>{' '}
-                            <a href="mailto:advisory@valunxtcapital.com">advisory@valunxtcapital.com</a>
+                            <a href="mailto:contact@valunxt.com">contact@valunxt.com</a>
                           </p>
                         </div>
                       </div>
@@ -300,7 +300,7 @@ export default function Footer3425({ region }: { region: string }) {
                       <div className="elementor-widget-container">
                         <span className="elementor-heading-title elementor-size-default">
                           <a href={rurl(region, '/')}>
-                            {vxnYear()} © VALUNXT Capital. All rights reserved.
+                            {vxnYear()} © VALUNXT. All rights reserved.
                           </a>
                         </span>
                       </div>

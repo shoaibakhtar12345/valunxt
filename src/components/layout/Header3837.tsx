@@ -51,7 +51,7 @@ function Bar({
                 height={35}
                 src={`${BASE}/assets/content/uploads/logo/valunxt-dark.svg`}
                 className="attachment-full size-full vxn-logo"
-                alt="VALUNXT Capital"
+                alt="VALUNXT"
               />{' '}
             </a>
           </div>

@@ -66,7 +66,16 @@ export default function PageShell({
         {children}
         {page.canvas ? null : <SiteFooter which={page.footer} region={region} />}
       </div>
-      <div id="scroll-to-top" className="vamtam-scroll-to-top">
+      {/* A <div> because the theme's stylesheet keys off the id and the tag —
+          so it gets the button role and a tab stop by hand instead. The click
+          itself is bound in SiteScripts (SCROLL_AND_NAV). */}
+      <div
+        id="scroll-to-top"
+        className="vamtam-scroll-to-top"
+        role="button"
+        tabIndex={0}
+        aria-label="Back to top"
+      >
         <div id="scroll-to-top-text">top</div>
       </div>
       <CookieConsent region={region} />

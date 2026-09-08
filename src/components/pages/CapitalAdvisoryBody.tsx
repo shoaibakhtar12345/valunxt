@@ -302,7 +302,7 @@ export default function CapitalAdvisoryBody({ page, region }: { page: PageConfig
       													</div>
       													<div className="vamtam-has-theme-widget-styles elementor-element elementor-element-58b662f8 elementor-invisible animated-fast elementor-widget elementor-widget-text-editor" data-id="58b662f8" data-element_type="widget" data-e-type="widget" data-settings={"{\"_animation\":\"slideInUp\",\"_animation_delay\":100}"} data-widget_type="text-editor.default">
       														<div className="elementor-widget-container">
-      															<p>Capital Advisory is one of four connected verticals. Explore how VALUNXT Capital supports real estate wealth, research, and technology decisions.</p>
+      															<p>Capital Advisory is one of four connected verticals. Explore how VALUNXT supports real estate wealth, research, and technology decisions.</p>
       														</div>
       													</div>
       												</div>
@@ -416,7 +416,7 @@ export default function CapitalAdvisoryBody({ page, region }: { page: PageConfig
       														<form className="elementor-form" method="post" name="Subscribe" aria-label="Subscribe">
       															<input type="hidden" name="post_id" value="4557" />
       															<input type="hidden" name="form_id" value="3b33bfe" />
-      															<input type="hidden" name="referer_title" value="VALUNXT Capital" />
+      															<input type="hidden" name="referer_title" value="VALUNXT" />
 
       															<input type="hidden" name="queried_id" value="252" />
 

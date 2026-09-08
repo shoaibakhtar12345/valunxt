@@ -1,5 +1,5 @@
 /**
- * VALUNXT Capital — multi-region (country edition) support.
+ * VALUNXT — multi-region (country edition) support.
  *
  * The site is published as one edition per market, each mounted on its own URL
  * prefix:
@@ -251,12 +251,24 @@ export function vxnServices(slug?: string | null): Service[] {
         banner: ['banners/uae-slider-5.webp', 'banners/uae-slider-3.webp'],
         headline: 'Accounting that Inspires Confident Decisions.',
         lede: 'Bookkeeping, statutory accounts, VAT and corporate tax &mdash; numbers you can act on without second-guessing, at a fee agreed before work begins.',
+        /* The eight named in the client's parent-page document (20260905),
+           which is also what /services/accounting-tax-services/ now leads
+           with. Three of them are new; the other five keep the slugs they
+           already had rather than being renamed to match the new labels,
+           because a slug change is a dead URL and the label is the part the
+           document actually specifies. So `cfo-services` reads "Part-Time
+           CFO", `financial-reporting` reads "Financial Statements", and
+           `corporate-tax-services` / `vat-services` take the document's
+           narrower names. */
         subs: [
           { name: 'Accounting & Bookkeeping', slug: 'accounting-bookkeeping' },
-          { name: 'Corporate Tax Services', slug: 'corporate-tax-services' },
-          { name: 'VAT Services', slug: 'vat-services' },
-          { name: 'CFO Services', slug: 'cfo-services' },
-          { name: 'Financial Reporting', slug: 'financial-reporting' },
+          { name: 'Part-Time CFO', slug: 'cfo-services' },
+          { name: 'Management Reporting', slug: 'management-reporting' },
+          { name: 'Budgeting & Forecasting', slug: 'budgeting-forecasting' },
+          { name: 'Financial Statements', slug: 'financial-reporting' },
+          { name: 'External Audit Support', slug: 'external-audit-support' },
+          { name: 'Corporate Tax Filing', slug: 'corporate-tax-services' },
+          { name: 'VAT Advisory', slug: 'vat-services' },
         ],
       },
       {

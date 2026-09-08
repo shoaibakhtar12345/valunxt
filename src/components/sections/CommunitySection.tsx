@@ -32,7 +32,7 @@ const TABS = [
     key: 'partners',
     label: 'Partners &amp; Group',
     title: 'One integrated ecosystem.',
-    text: 'VALUNXT Capital is backed by a trusted group of companies spanning surveying, property, mortgage, and corporate services. Our partners plug into a single network — sharing intelligence, referrals, and on-the-ground reach across India and the UAE so clients move faster with fewer intermediaries.',
+    text: 'VALUNXT is backed by a trusted group of companies spanning surveying, property, mortgage, and corporate services. Our partners plug into a single network — sharing intelligence, referrals, and on-the-ground reach across India and the UAE so clients move faster with fewer intermediaries.',
     links: [
       { t: 'Meet the Group', h: '/our-group/' },
       { t: 'Partner With Us', h: '/partnership/' },
@@ -324,14 +324,14 @@ export default function CommunitySection({ region }: { region: string }) {
             <h2 className="vxn-com__h">What brings our community together</h2>
             <div className="vxn-com__intro-grid">
               <p className="vxn-com__lead">
-                VALUNXT Capital connects investors, families, developers, partners, and ecosystem
+                VALUNXT connects investors, families, developers, partners, and ecosystem
                 builders through advisory mandates, research, events, and the relationships that are
                 formed in between. Our community is how we describe that network — the people, the
                 group companies, and the connections that make VALUNXT work across India and the UAE.
               </p>
               <div>
                 <p>
-                  Community, for us, started as a choice. When VALUNXT Capital was founded, the belief
+                  Community, for us, started as a choice. When VALUNXT was founded, the belief
                   was that trust has to be built deliberately — real channels for investors to learn
                   from each other, and advice offered because it is right, not because a transaction
                   demands it.
@@ -503,9 +503,9 @@ export default function CommunitySection({ region }: { region: string }) {
             <p>
               All community figures shown on this page are illustrative and based on internal
               estimates; they are not independently verified and should not be relied upon as a
-              representation of assets, returns, or performance. VALUNXT Capital does not provide
+              representation of assets, returns, or performance. VALUNXT does not provide
               personalised investment advice through this website. Events and gatherings are offered at
-              VALUNXT Capital&apos;s discretion and do not confer any rights in relation to any
+              VALUNXT&apos;s discretion and do not confer any rights in relation to any
               investment.
             </p>
           </div>

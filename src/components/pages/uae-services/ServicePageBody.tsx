@@ -19,10 +19,10 @@
  * commitments and the glass panel. Deliberately not the site's scroll-reveal —
  * see the note above the @keyframes.
  */
-import { rurl } from '@/lib/region';
-import { rimgFirst } from '@/lib/region-assets';
-import { MegaIcon } from '@/components/layout/MegaMenu';
-import type { ServicePageContent } from './content';
+import { rurl } from "@/lib/region";
+import { rimgFirst } from "@/lib/region-assets";
+import { MegaIcon } from "@/components/layout/MegaIcons";
+import type { ServicePageContent } from "./content";
 
 interface Commitment {
   title: string;
@@ -34,22 +34,22 @@ interface Commitment {
 /** The firm's stated commitments, verbatim from valunxt.com. Same on every page. */
 const COMMITMENTS: Commitment[] = [
   {
-    title: 'Fixed fees agreed before work begins',
-    icon: 'ledger',
-    label: 'Free Consultation',
-    href: '/free-consultation/',
+    title: "Fixed fees agreed before work begins",
+    icon: "ledger",
+    label: "Free Consultation",
+    href: "/free-consultation/",
   },
   {
-    title: 'A partner who answers when you call',
-    icon: 'handshake',
-    label: 'Talk to Us',
-    href: '/contact/',
+    title: "A partner who answers when you call",
+    icon: "handshake",
+    label: "Talk to Us",
+    href: "/contact/",
   },
   {
-    title: 'RICS-regulated valuation through group firm Reliant Surveyors',
-    icon: 'scales',
-    label: 'Our Group',
-    href: '/our-group/reliant-surveyors/',
+    title: "RICS-regulated valuation through group firm Reliant Surveyors",
+    icon: "scales",
+    label: "Our Group",
+    href: "/our-group/reliant-surveyors/",
   },
 ];
 
@@ -287,7 +287,7 @@ const CSS = `
   box-sizing:border-box;
   max-width:560px;
   padding:38px 36px 34px;
-  border-radius:3px;
+  border-radius:20px;
   border:1px solid rgba(255,255,255,.24);
   /* A light frost, not a navy one: the panel sits on a dark ground, and navy on
      navy has no edge. This reads as glass and keeps the type at full contrast. */
@@ -506,13 +506,18 @@ export default function ServicePageBody({
           <p className="vxn-cap__lede">{content.capLede}</p>
 
           <div
-            className={`vxn-cap__grid${content.capColumns === 3 ? ' vxn-cap__grid--3' : ''}`}
+            className={`vxn-cap__grid${content.capColumns === 3 ? " vxn-cap__grid--3" : ""}`}
           >
             {content.capabilities.map((c) => (
               <figure className="vxn-cap__tile" key={c.name}>
                 {/* Decorative: the caption beside it already names the capability. */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img className="vxn-cap__img" src={rimgFirst(region, c.img)} alt="" loading="lazy" />
+                <img
+                  className="vxn-cap__img"
+                  src={rimgFirst(region, c.img)}
+                  alt=""
+                  loading="lazy"
+                />
                 <figcaption className="vxn-cap__cap">
                   <span className="vxn-cap__rule" aria-hidden="true" />
                   <span className="vxn-cap__name">{c.name}</span>
@@ -564,7 +569,10 @@ export default function ServicePageBody({
               {content.glass.head}
             </h2>
             <p className="vxn-glass__text">{content.glass.text}</p>
-            <a className="vxn-glass__link" href={rurl(region, '/free-consultation/')}>
+            <a
+              className="vxn-glass__link"
+              href={rurl(region, "/free-consultation/")}
+            >
               Free Consultation
               <i className="vxn-glass__dash" aria-hidden="true" />
             </a>

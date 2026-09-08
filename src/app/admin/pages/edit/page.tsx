@@ -18,7 +18,7 @@ import { csrfToken, currentUser, setFlash, takeFlash } from '@/lib/admin/session
 import { seoHeroImages, seoPage, seoSiteUrl } from '@/lib/admin/seo-lib';
 
 export const metadata: Metadata = {
-  title: 'Edit page — VALUNXT Capital Admin',
+  title: 'Edit page — VALUNXT Admin',
   robots: 'noindex, nofollow',
 };
 

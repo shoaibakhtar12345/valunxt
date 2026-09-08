@@ -27,7 +27,7 @@ function faqData(region: string): FaqGroup[] {
       group: 'Working with VALUNXT',
       items: [
         {
-          q: 'What does VALUNXT Capital actually do?',
+          q: 'What does VALUNXT actually do?',
           a: `<p>We are an integrated real estate wealth, capital, research and technology advisory group. In practice that means four connected practices: <a href="${u('/services/real-estate-investment-advisory/')}">Real Estate Investment Advisory</a> (portfolio strategy, acquisition and exit), <a href="${u('/services/capital-advisory/')}">Capital Advisory</a> (project funding, debt and equity structuring), <a href="${u('/services/research-intelligence/')}">Research &amp; Intelligence</a> (independent valuation and market analysis), and <a href="${u('/services/technology-ai/')}">Technology &amp; AI</a> (the analytics platform that underpins the other three).</p><p>Most clients engage one practice first and draw on the others as a mandate develops.</p>`,
         },
         {

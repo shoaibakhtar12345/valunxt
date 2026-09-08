@@ -30,7 +30,7 @@ import {
 } from '@/lib/admin/seo-lib';
 
 export const metadata: Metadata = {
-  title: 'Pages & SEO — VALUNXT Capital Admin',
+  title: 'Pages & SEO — VALUNXT Admin',
   robots: 'noindex, nofollow',
 };
 

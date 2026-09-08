@@ -69,7 +69,7 @@ export default function Footer2094({ region }: { region: string }) {
                         height={38}
                         src={`${BASE}/assets/content/uploads/logo/valunxt-white.svg`}
                         className="attachment-medium size-medium vxn-logo"
-                        alt="VALUNXT Capital"
+                        alt="VALUNXT"
                       />
                     </a>
                   </div>
@@ -296,7 +296,7 @@ export default function Footer2094({ region }: { region: string }) {
             <div className="e-con-inner">
               <h6 className="vxn-footer-disclaimer__title">Institutional Disclaimer</h6>
               <p>
-                VALUNXT Capital is an integrated real estate wealth, capital, research and technology
+                VALUNXT is an integrated real estate wealth, capital, research and technology
                 advisory group operating across valuation, investment, research and strategic advisory
                 services in India, the UAE, and international markets. Information presented on this
                 website is intended solely for general informational purposes and should not be
@@ -304,7 +304,7 @@ export default function Footer2094({ region }: { region: string }) {
               </p>
               <p>
                 While every effort is made to ensure the accuracy and reliability of the information
-                provided, VALUNXT Capital makes no representations or warranties regarding its
+                provided, VALUNXT makes no representations or warranties regarding its
                 completeness, suitability or accuracy. Users are advised to seek independent
                 professional consultation before making any investment or business decisions.
               </p>
@@ -340,7 +340,7 @@ export default function Footer2094({ region }: { region: string }) {
               >
                 <div className="elementor-widget-container">
                   <span className="elementor-heading-title elementor-size-default">
-                    <a href={rurl(region, '/')}>{vxnYear()} © VALUNXT Capital. All rights reserved.</a>
+                    <a href={rurl(region, '/')}>{vxnYear()} © VALUNXT. All rights reserved.</a>
                   </span>
                 </div>
               </div>
