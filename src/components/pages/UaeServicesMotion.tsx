@@ -37,6 +37,7 @@ import { useEffect } from 'react';
 
 /** What reveals, and how. `stagger` walks the children of one parent in turn. */
 const GROUPS: { sel: string; variant: string; stagger?: boolean }[] = [
+  { sel: '.svcx-hero__inner > *', variant: 'up', stagger: true },
   { sel: '.svcx-intro__col > *', variant: 'up', stagger: true },
   { sel: '.svcx-stat', variant: 'up', stagger: true },
   /* The figure arrives from the side it sits on, so the alternation is felt

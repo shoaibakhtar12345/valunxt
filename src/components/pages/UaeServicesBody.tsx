@@ -93,6 +93,11 @@ const TEXTURE = [
  * moment the page asks for something.
  */
 const PLATE = {
+  /* abstract-3, navy with a gold filament sweep, is the same plate the written
+     Accounting & Tax page opens on — which is the point: the two heroes are
+     meant to read as one section of the site. It is measured dark enough for
+     white type right across the copy rail, so the band needs no overlay. */
+  hero: ['services/services-hero.webp', 'homepage/abstract-3.webp', 'homepage/abstract-3.png'],
   intro: ['services/services-intro.webp', 'homepage/abstract-2.webp', 'homepage/abstract-2.png'],
   close: ['services/services-close.webp', 'homepage/abstract-3.webp', 'homepage/abstract-3.png'],
 };
@@ -231,6 +236,59 @@ const CSS = `
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
 }
 .svcx-btn--ghost:hover{background:rgba(255,255,255,.2);border-color:#fff;}
+
+/* ==========================================================================
+   HERO — the same banner the written service pages open on.
+
+   This page used the shared PageHeroSection (breadcrumb, rule, page title over
+   banners/breadcrumb-banner.png), which is the hero every other page in the
+   site gets. The section's written pages have since moved to a different one —
+   a plate, a minimal left rail, and the proposition on one line — and an index
+   that opens differently from the six pages it indexes reads as a different
+   site. So this is that hero, with the breadcrumb kept: the shared one carried
+   it, and dropping it would be taking navigation away rather than clutter.
+
+   NO OVERLAY, for the same reason the Accounting & Tax hero has none: the plate
+   is an abstract, so it is dark where it is dark at every width, and white type
+   needs nothing painted under it.
+   ========================================================================== */
+.svcx-hero{
+  position:relative;isolation:isolate;overflow:hidden;
+  background:linear-gradient(150deg,#0B4EA8 0%,#0A2A50 100%);
+  /* A banner, so its height is a min-height and the copy hangs off the bottom
+     rather than being centred in a padded block. */
+  padding:40px 0!important;
+  min-height:clamp(340px,38vw,440px);
+  display:flex;align-items:flex-end;
+}
+.svcx-hero .svcx-plate{--throw:26px;z-index:-1;}
+.svcx-hero__inner{width:100%;max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);}
+.svcx-hero__crumb{
+  display:flex;align-items:center;gap:9px;
+  margin:0 0 16px!important;
+  font-size:13px!important;font-weight:500!important;
+  color:rgba(255,255,255,.82)!important;
+}
+.svcx-hero__crumb a{
+  color:rgba(255,255,255,.82)!important;text-decoration:none!important;
+  transition:color .25s ease;
+}
+.svcx-hero__crumb a:hover{color:#fff!important;}
+.svcx-hero__crumb i{font-style:normal;color:rgba(255,255,255,.5);}
+.svcx-hero__crumb b{font-weight:500!important;color:#fff!important;}
+.svcx-hero__head{
+  font-family:"Forum",serif!important;font-weight:400!important;color:#fff!important;
+  font-size:clamp(38px,5.4vw,68px)!important;line-height:1.04!important;
+  margin:0 0 16px!important;
+}
+.svcx-hero__sub{
+  color:rgba(255,255,255,.9)!important;font-size:17px!important;line-height:1.62!important;
+  margin:0!important;max-width:54ch;
+}
+@media(max-width:680px){
+  .svcx-hero{min-height:clamp(280px,64vw,340px);}
+  .svcx-hero__sub{font-size:16px!important;}
+}
 
 /* ==========================================================================
    INTRO
@@ -609,8 +667,36 @@ export default function UaeServicesBody({
   return (
     <>
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
-      <div className="svcx">
+      {/* #main-content / #main came from PageHeroSection, which this page no
+          longer renders; the theme's scripts and stylesheet still expect them,
+          so the body provides them the way the written service pages do. */}
+      <div id="main-content">
+        <div id="main" role="main" className="vamtam-main layout-full">
+          <article className="full page type-page status-publish hentry svcx">
         <UaeServicesMotion />
+
+        {/* ---- Hero ---- */}
+        <section className="svcx-hero" aria-labelledby="svcx-hero-head">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img className="svcx-plate svcx-zoom" src={plate('hero')} alt="" />
+          <div className="svcx-hero__inner">
+            <p className="svcx-hero__crumb">
+              <a href={rurl(region, '/')}>Home</a>
+              <i aria-hidden="true">&rsaquo;</i>
+              <b>Services</b>
+            </p>
+            <h1 className="svcx-hero__head" id="svcx-hero-head">
+              Services
+            </h1>
+            {/* The proposition, moved up out of the intro band below so the two
+                do not say the same thing forty pixels apart. */}
+            <p className="svcx-hero__sub">
+              Accounting, transactions, funding, valuation, research and technology &#8212;
+              every discipline under one roof, so a decision is advised, financed and executed
+              by the same team.
+            </p>
+          </div>
+        </section>
 
         {/* ---- Intro ---- */}
         <section className="svcx-intro" aria-labelledby="svcx-intro-head">
@@ -623,12 +709,6 @@ export default function UaeServicesBody({
                 <h2 className="svcx-h2" id="svcx-intro-head">
                   Advisory Services in the UAE
                 </h2>
-                <p className="svcx-lede">
-                  Accounting, transactions, funding, valuation, research and technology &#8212;
-                  every discipline under one roof, so a decision is advised, financed and executed
-                  by the same team.
-                </p>
-
                 <ul className="svcx-jump">
                   {services.map((s) => (
                     <li key={s.slug ?? s.href}>
@@ -773,6 +853,8 @@ export default function UaeServicesBody({
             </div>
           </div>
         </section>
+          </article>
+        </div>
       </div>
     </>
   );

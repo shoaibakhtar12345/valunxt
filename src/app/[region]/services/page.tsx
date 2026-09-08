@@ -9,7 +9,6 @@
 import type { Metadata } from 'next';
 
 import PageShell from '@/components/layout/PageShell';
-import PageHeroSection from '@/components/sections/PageHeroSection';
 import SubscribeSection from '@/components/sections/SubscribeSection';
 import ServicesBody from '@/components/pages/ServicesBody';
 import UaeServicesBody from '@/components/pages/UaeServicesBody';
@@ -23,9 +22,11 @@ const PATH = '/services/';
 type Params = { params: Promise<{ region: string }> };
 
 /**
- * The UAE index renders the shared page-hero, which the captured India markup
- * draws itself — so the hero fields the registry entry never needed are added
- * here rather than to the shared declaration.
+ * The UAE index used to render the shared page-hero, and these two fields were
+ * added here rather than to the shared declaration because that hero needed
+ * them. It draws its own banner now — see UaeServicesBody — so they are only
+ * still set for buildMetadata and for anything downstream that reads a hero
+ * title off the config.
  */
 function configFor(region: string): PageConfig {
   const page = requirePageConfig(PATH);
@@ -52,7 +53,8 @@ export default async function ServicesPage({ params }: Params) {
     <PageShell page={page} region={region}>
       {region === 'en-ae' ? (
         <>
-          <PageHeroSection page={page} region={region} tone="brand" />
+          {/* No PageHeroSection: UaeServicesBody opens on its own banner, the
+              same one the six written service pages use. */}
           <UaeServicesBody page={page} region={region} />
           <SubscribeSection page={page} region={region} />
         </>
