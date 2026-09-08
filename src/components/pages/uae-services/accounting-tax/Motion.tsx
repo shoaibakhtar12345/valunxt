@@ -43,12 +43,12 @@ import { useEffect } from 'react';
 const GROUPS: { sel: string; variant: string; stagger?: boolean }[] = [
   { sel: '.at-sec__head', variant: 'up' },
   { sel: '.at-hero__inner > *', variant: 'up', stagger: true },
+  { sel: '.at-intro__copy > *', variant: 'up', stagger: true },
+  { sel: '.at-intro__item', variant: 'up', stagger: true },
   { sel: '.at-proof__item', variant: 'up', stagger: true },
-  /* These two named classes the problem section never had — .at-problem__q /
-     __rung — so neither ever revealed. They are .at-q and, since the ladder
-     became a five-card build, .at-step. */
+  /* This named a class the problem section never had — .at-problem__q — so it
+     never revealed. It is .at-q. (.at-step went with the capability ladder.) */
   { sel: '.at-q', variant: 'up', stagger: true },
-  { sel: '.at-step', variant: 'up', stagger: true },
   { sel: '.at-card', variant: 'up', stagger: true },
   { sel: '.at-decide tbody tr', variant: 'fade', stagger: true },
   { sel: '.at-journey__step', variant: 'up', stagger: true },
@@ -70,12 +70,64 @@ export default function AccountingTaxMotion() {
     const root = document.querySelector<HTMLElement>('.at-root');
     if (!root) return;
 
-    /* Asked for less motion: nothing is marked pending, so the stylesheet's
-       visible default stands and no loop ever starts. */
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    if (typeof IntersectionObserver === 'undefined') return;
-
     const cleanups: (() => void)[] = [];
+
+    /* ---------- 0. The scrolling tables ----------
+       The decision table and the comparison table are wider than a phone and
+       have always scrolled sideways; nothing said so, which on a phone looks
+       like a table with its second column cropped off rather than one you can
+       drag. This marks the wrapper .is-scrollable when the table really is
+       wider than its box — measured, not guessed from a breakpoint — which
+       turns on the edge fade and the "Swipe" line above it, and marks .is-end
+       when the reader reaches the right so the cue stops once it is spent.
+
+       IT RUNS BEFORE THE REDUCED-MOTION GUARD ON PURPOSE. This is an
+       affordance, not an animation: someone who has asked for less motion still
+       needs to be told the table scrolls. Its only moving part, the nudge on
+       the glyph, is turned off by the stylesheet's own media query. */
+    for (const wrap of root.querySelectorAll<HTMLElement>('.at-tablewrap')) {
+      const scroller = wrap.querySelector<HTMLElement>('.at-tablescroll');
+      if (!scroller) continue;
+      /* The hint is the wrapper's previous sibling where one was written. */
+      const hint = wrap.previousElementSibling?.classList.contains('at-swipe')
+        ? (wrap.previousElementSibling as HTMLElement)
+        : null;
+
+      const sync = () => {
+        const over = scroller.scrollWidth - scroller.clientWidth;
+        /* 2px, not 0: sub-pixel layout leaves a fractional overflow on tables
+           that fit, and a cue on a table nobody can scroll is worse than none. */
+        const scrollable = over > 2;
+        wrap.classList.toggle('is-scrollable', scrollable);
+        wrap.classList.toggle('is-end', scrollable && scroller.scrollLeft >= over - 2);
+        hint?.classList.toggle('is-shown', scrollable);
+      };
+
+      sync();
+      scroller.addEventListener('scroll', sync, { passive: true });
+      cleanups.push(() => scroller.removeEventListener('scroll', sync));
+
+      if (typeof ResizeObserver !== 'undefined') {
+        const ro = new ResizeObserver(sync);
+        ro.observe(scroller);
+        cleanups.push(() => ro.disconnect());
+      } else {
+        window.addEventListener('resize', sync, { passive: true });
+        cleanups.push(() => window.removeEventListener('resize', sync));
+      }
+    }
+
+    /* Asked for less motion: nothing is marked pending, so the stylesheet's
+       visible default stands and no loop ever starts. The table cues above are
+       already wired, and the cleanups collected for them still run. */
+    const stop =
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      typeof IntersectionObserver === 'undefined';
+    if (stop) {
+      return () => {
+        for (const fn of cleanups) fn();
+      };
+    }
 
     /* ---------- 1. Reveal on scroll ---------- */
 

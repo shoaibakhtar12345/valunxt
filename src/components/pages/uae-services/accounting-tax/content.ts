@@ -216,15 +216,10 @@ export const AT_PROBLEM = {
     'Are our numbers ready for VAT, Corporate Tax or audit?',
   ],
   turn: 'If accounting only tells management what happened months ago, the finance function is not doing enough.',
-  ladder: [
-    { k: 'Accounting', v: 'gives you the foundation.' },
-    { k: 'Reporting', v: 'helps you understand performance.' },
-    { k: 'Forecasting', v: 'helps you look ahead.' },
-    { k: 'Tax support', v: 'helps keep the business prepared.' },
-    { k: 'CFO support', v: 'brings senior financial judgement into bigger decisions.' },
-  ],
-  close:
-    'Accounting tells you what happened. A strong finance function helps you decide what to do next.',
+  /* `ladder` (five capabilities) and `close` were removed with the section that
+     rendered them — see the note in AccountingTaxBody where the stack used to
+     be. They are not kept here unused: dead content is content that eventually
+     gets edited by someone who thinks it is on the page. */
 };
 
 /* ---- Decision tool ------------------------------------------------------- */
@@ -379,7 +374,7 @@ export const AT_WHY: { head: string; body: string[] }[] = [
 
 export const AT_SYSTEMS = ['Zoho Books', 'QuickBooks', 'Xero', 'Odoo', 'Tally'];
 
-export const AT_WHY_CLOSE = 'One Finance Partner—from Bookkeeping to Boardroom Decisions.';
+export const AT_WHY_CLOSE = 'One Finance Partner from Bookkeeping to Boardroom Decisions.';
 
 /* ---- Comparison ---------------------------------------------------------- */
 

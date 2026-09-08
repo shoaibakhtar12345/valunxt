@@ -102,6 +102,54 @@ import {
 const SUB = "/services/accounting-tax-services/";
 
 /**
+ * A photograph per service, for the explorer's detail panel.
+ *
+ * Same candidate convention as PLATE below: a purpose-shot filename first, an
+ * existing library photograph behind it, so commissioning eight proper shots is
+ * a drop into uploads/services/ and no code change at all.
+ *
+ * The library files are picked for what they show, not for what they are called
+ * — services-2 is the one abstract of the eight because forecasting has nothing
+ * literal to photograph. accounting-and-tax-services.webp is deliberately NOT
+ * used here: it is the 6206×3888 original at 877KB, and the capability section
+ * further down already spends it.
+ */
+const EXPLORE_FIGURE: Record<string, string[]> = {
+  "accounting-bookkeeping": [
+    "services/at-explore-accounting-bookkeeping.webp",
+    "new-folder/services-1.webp",
+  ],
+  "cfo-services": [
+    "services/at-explore-cfo-services.webp",
+    "new-folder/client-success-2.webp",
+  ],
+  "management-reporting": [
+    "services/at-explore-management-reporting.webp",
+    "new-folder/services-3.webp",
+  ],
+  "budgeting-forecasting": [
+    "services/at-explore-budgeting-forecasting.webp",
+    "new-folder/services-2.webp",
+  ],
+  "financial-reporting": [
+    "services/at-explore-financial-reporting.webp",
+    "new-folder/insights-2.webp",
+  ],
+  "external-audit-support": [
+    "services/at-explore-external-audit-support.webp",
+    "new-folder/insights-3.webp",
+  ],
+  "corporate-tax-services": [
+    "services/at-explore-corporate-tax-services.webp",
+    "homepage/client-2.webp",
+  ],
+  "vat-services": [
+    "services/at-explore-vat-services.webp",
+    "new-folder/insights-1.webp",
+  ],
+};
+
+/**
  * The plates, in the order they read down the page.
  *
  * Each is a candidate list in the house convention: a purpose-shot filename
@@ -116,12 +164,28 @@ const SUB = "/services/accounting-tax-services/";
  * and stay last in the list, so nothing breaks if a .webp is ever removed.
  */
 const PLATE = {
-  /* Bright blue waves — the widest and lightest of the four, so it carries the
-     hero without fighting white type. */
+  /* Abstract, by request, in place of the Palm Jumeirah aerial: abstract-3,
+     deep navy with a gold filament sweep.
+
+     WHY THIS ONE OF THE THREE. Measured across the band the copy occupies, in
+     80px columns: abstract-2 is too bright almost everywhere; abstract-1 holds
+     4.5:1 only for its first 320px and then the filaments come up, which is
+     narrower than the headline; abstract-3 runs 5.2–11:1 the whole way across.
+
+     AND IT ENDS THE OVERLAYS. Any photograph puts unpredictable brightness
+     under white type — the aerial needed a scrim on phones, because a portrait
+     viewport always shows a landscape photo's full height, island included. An
+     abstract has no such accident in it: dark is where it is dark at every
+     width, so the hero now carries nothing over it on any screen.
+
+     It is the same plate as the rail and the close. That is deliberate — the
+     page opens and closes on it — and it is why the hero got the gold sweep
+     rather than a fourth piece of artwork nobody has seen.
+     uae-slider-1-hero.webp stays in uploads, unused. */
   hero: [
     "services/accounting-tax-hero.webp",
-    "homepage/abstract-2.webp",
-    "homepage/abstract-2.png",
+    "homepage/abstract-3.webp",
+    "homepage/abstract-3.png",
   ],
   /* Navy with a gold filament sweep. The most editorial of the four and the
      only one with a second colour in it, so it is kept for the two moments the
@@ -174,7 +238,12 @@ const CSS = `
      this page's bands run 80px wider on each side than the chrome around
      them. Everything within the page still starts and ends on one pair of
      vertical lines, which is what the scale is for. */
-  --pad:88px;
+  /* 40px, flat, at every width — the UAE services house rule the rest of the
+     section already follows (see ServicePageBody and UaeServicesBody). This page
+     was the exception at 88/72/60/52, which is why it read as a different
+     template from the five services beside it. The horizontal gutter still
+     lives on the inner wrapper, so 0 here cannot let copy touch the edge. */
+  --pad:40px;
   --gutter:24px;
   --maxw:1440px;
   --gap:24px;
@@ -193,6 +262,9 @@ const CSS = `
 .at-root,.at-root *,.at-root *::before,.at-root *::after{box-sizing:border-box;}
 
 .at-root section{padding:var(--pad) 0;}
+/* The hero is a banner rather than a band: its height comes from min-height and
+   its copy hangs off the bottom, so the 40px is what sits under the last line
+   rather than what sets the band's size. */
 /* The one container. Every band on the page uses it or copies it exactly. */
 .at-in,.at-hero__inner,.at-close__inner{
   width:100%;max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);
@@ -265,11 +337,44 @@ const CSS = `
 .at-btn:hover{gap:16px;}
 .at-btn--solid{background:var(--ny2);color:#fff!important;border:1px solid var(--ny2);}
 .at-btn--solid:hover{background:var(--ny3);border-color:var(--ny3);box-shadow:0 14px 30px -14px rgba(0,64,140,.7);}
+/* Only on the closing band, which is a navy gradient of its own — white glass
+   is right there. (It was tinted navy while it sat on the hero photograph; the
+   hero has no buttons any more.) */
 .at-btn--ghost{background:rgba(255,255,255,.1);color:#fff!important;border:1px solid rgba(255,255,255,.5);
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);}
 .at-btn--ghost:hover{background:rgba(255,255,255,.2);border-color:#fff;}
 .at-btn--line{background:transparent;color:var(--ny2)!important;border:1px solid rgba(0,83,183,.4);}
 .at-btn--line:hover{background:rgba(0,83,183,.07);border-color:var(--ny2);}
+
+/* ---- The pill CTA -------------------------------------------------------
+   Both the decision table's right column and the commercial options used
+   .at-go: blue text with an arrow after it. Read as a caption, not a control —
+   people were not seeing them as things to click, which on the options grid is
+   the entire point of the section.
+
+   This is a real button at link scale: a tinted fill, a visible border, and a
+   hover that fills solid. It is a size, not a new colour — it uses the same
+   --ny2 the ghost and line buttons do, so a page that already has three button
+   finishes does not gain a fourth palette. No transform, per the page's rule;
+   what changes is fill, border and shadow. */
+.at-pill{
+  display:inline-flex;align-items:center;justify-content:center;
+  padding:10px 20px;border-radius:999px;
+  background:rgba(0,83,183,.08);
+  border:1px solid rgba(0,83,183,.28);
+  color:var(--ny2)!important;
+  font-size:13.5px;font-weight:600;line-height:1.3;text-align:center;
+  text-decoration:none!important;
+  transition:background-color .25s ease,border-color .25s ease,color .25s ease,
+             box-shadow .3s ease;
+}
+.at-pill:hover,.at-pill:focus-visible{
+  background:var(--ny2);border-color:var(--ny2);color:#fff!important;
+  box-shadow:0 12px 26px -14px rgba(0,64,140,.85);
+}
+/* A card-width CTA: the options grid gives each card a full-width button, so
+   four cards of different copy lengths still end on one line. */
+.at-pill--block{display:flex;width:100%;}
 
 /* Inline "Explore →" links. Same rule: the gap opens, nothing moves. */
 .at-go{
@@ -285,13 +390,30 @@ const CSS = `
 .at-hero{
   position:relative;isolation:isolate;overflow:hidden;
   background:linear-gradient(150deg,#0B4EA8 0%,#0A2A50 100%);
-  /* Was 84/92 with a breadcrumb on top and the description under the h1: a
-     hero that ran past a 900px viewport before the CTAs appeared. The trail
-     is gone (the header already says where you are) and the description has
-     moved into the glass panel, so the band can close tighter too. */
-  padding:64px 0 72px!important;
+  /* A banner now, not a landing block. The proposition, the chips, the CTAs and
+     the four proof points have all moved down into .at-intro, so what is left
+     is a label, a title and one line — and the band is sized for that: a fixed
+     min-height rather than padding, with the copy sitting on the lower half so
+     it reads as a caption on the picture rather than as a slab in the middle
+     of it. */
+  padding:var(--pad) 0!important;
+  min-height:clamp(360px,42vw,480px);
+  display:flex;align-items:flex-end;
 }
-.at-hero .at-plate{--throw:26px;opacity:.42;}
+/* NO OVERLAY: the photograph runs at full strength and nothing is painted over
+   it. What keeps the white type readable is the crop — the aerial is deep open
+   water across its top band and bright sand along the bottom, so
+   object-position parks the water behind the copy and lets the island fall
+   below it. Now that the hero carries three lines instead of nine, all of them
+   sit in the top half, which is the dark half.
+
+   IF THE HERO IMAGE IS EVER SWAPPED, CHECK THIS. A picture that is light at the
+   top has nothing holding the headline up, and this page has no scrim to fall
+   back on. */
+.at-hero .at-plate{--throw:26px;opacity:1;object-position:50% 0%;}
+/* The mobile scrim that used to live here is gone with the photograph that
+   needed it: abstract-3 is dark at every width, so there is no overlay on this
+   hero at any breakpoint. */
 /* Two soft fields on long unequal cycles. 'alternate' eases each back to where
    it began, which is what removes the seam an 'infinite' loop would show. */
 .at-hero::before,.at-hero::after{
@@ -318,11 +440,21 @@ const CSS = `
 }
 /* The same badge in glass, so the hero's label and every section label below
    it are recognisably one mark in two finishes. */
+/* ---- The glass, now tinted navy rather than white --------------------------
+   THE PHOTOGRAPH IS NOT DIMMED ANY MORE, so everything written on it has to
+   carry its own contrast. A white translucent fill LIGHTENS what is behind it,
+   which is fine over an abstract navy plate and useless over pale sand — the
+   chips and the ghost button measured 1.3:1 sitting on the villas.
+
+   Same glass — same blur, same lit top edge, same hairline — with a navy fill
+   instead of a white one. It reads as glass, it holds white type at better than
+   7:1 whatever the picture does underneath, and the picture itself is left
+   completely alone. */
 .at-hero__kicker{
   display:inline-flex;align-items:center;gap:9px;
   padding:8px 16px 8px 13px!important;border-radius:999px;
-  background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.28);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.3);
+  background:rgba(6,24,52,.6);border:1px solid rgba(255,255,255,.34);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.26);
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   font-size:11px!important;font-weight:700!important;letter-spacing:.15em!important;
   text-transform:uppercase;color:#fff!important;margin:0 0 22px!important;
@@ -331,115 +463,95 @@ const CSS = `
   content:"";flex:0 0 auto;width:7px;height:7px;border-radius:50%;
   background:#8FC0FF;box-shadow:0 0 0 3px rgba(143,192,255,.28);
 }
+/* The section's own 40px is the breathing room; the inner adds only the gutter. */
 .at-hero__head{
   font-family:"Forum",serif!important;font-weight:400!important;color:#fff!important;
-  font-size:clamp(34px,4.6vw,58px)!important;line-height:1.06!important;
-  margin:0 0 20px!important;max-width:19ch;
+  font-size:clamp(32px,4.4vw,56px)!important;line-height:1.06!important;
+  margin:0 0 18px!important;max-width:20ch;
 }
 .at-hero__sub{
-  color:rgba(255,255,255,.86)!important;font-size:17px!important;line-height:1.68!important;
-  margin:0 0 26px!important;max-width:52ch;
+  color:rgba(255,255,255,.9)!important;font-size:17px!important;line-height:1.62!important;
+  margin:0!important;max-width:48ch;
 }
-.at-hero__chips{display:flex;flex-wrap:wrap;gap:12px;margin:0 0 32px;padding:0;list-style:none;}
-.at-hero__chip{
-  display:inline-flex;align-items:center;gap:9px;
-  padding:10px 18px;border-radius:999px;
-  /* The glass: a translucent fill over the moving plate, with a hairline
-     brighter on top than on the bottom so it reads as a lit edge. */
-  background:rgba(255,255,255,.13);
-  border:1px solid rgba(255,255,255,.28);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.3);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-  color:#fff;font-size:13.5px;font-weight:500;
-  transition:background-color .25s ease,border-color .25s ease;
-}
-.at-hero__chip:hover{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.5);}
-.at-hero__chip i{width:6px;height:6px;border-radius:50%;background:#8FC0FF;flex:0 0 auto;}
-/* ---- The hero's two rails ------------------------------------------------
-   Copy on the left, a glass panel on the right. The panel carries the four
-   commercial-proof points, which is why there is no longer a separate proof
-   strip below the hero: the source puts proof immediately after the hero, and
-   one statement of it beside the headline reads better than the same four
-   facts in a band of their own thirty pixels lower. */
-/* stretch, not center: the panel now carries the description as well as the
-   proof, so it is close enough in height to the copy beside it that letting
-   the two rails end on the same line reads as deliberate. */
-.at-hero__rails{
-  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.7fr);
-  gap:calc(var(--gap) * 2.2);align-items:stretch;
-}
-.at-hero__ctas{display:flex;flex-wrap:wrap;gap:14px;}
 
-/* ---- The glass panel -----------------------------------------------------
-   Three layers and each is doing one job: the frosted fill and its lit top
-   edge, a sheen that travels across it on an infinite loop, and the content.
-   The sheen is a background-position animation rather than a transform, so it
-   moves without the panel or anything in it moving — the same rule the rest of
-   the page follows. */
-.at-glass{
-  position:relative;isolation:isolate;overflow:hidden;
-  display:flex;flex-direction:column;justify-content:center;
-  padding:34px 32px;border-radius:22px;
-  background:rgba(255,255,255,.11);
-  border:1px solid rgba(255,255,255,.26);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.34),0 30px 60px -34px rgba(3,14,32,.6);
-  backdrop-filter:blur(18px) saturate(1.15);-webkit-backdrop-filter:blur(18px) saturate(1.15);
+/* ==========================================================================
+   THE INTRO BAND — what the hero used to carry.
+
+   The hero was a two-rail landing block: label, title, description, two chips,
+   two buttons, and a glass panel holding the proposition and four proof points.
+   Nine things, all fighting one photograph, and the picture lost.
+
+   Every one of them is here instead, on white where they can be read, in the
+   order a reader wants them: the proposition, the description, what it costs,
+   what to do next — and the four proof points beside it as a panel of their
+   own rather than as the hero's right-hand rail.
+
+   The hero above is now a banner: label, title, one line.
+   ========================================================================== */
+.at-intro{background:#fff;}
+.at-intro__grid{
+  display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);
+  /* Stretch, not centre: the two rails run to the same bottom line. Centring
+     was the previous fix for the proof panel being ~200px shorter, and it left
+     a gap above AND below it instead of one below. The panel now fills its
+     column and spaces its four points out over that height, so the section
+     reads as two columns of one block rather than as a block and a card. */
+  gap:calc(var(--gap) * 2.4);align-items:stretch;
 }
-.at-glass::before{
-  content:"";position:absolute;inset:-40%;z-index:-1;pointer-events:none;
-  background:linear-gradient(105deg,
-    rgba(255,255,255,0) 38%,
-    rgba(255,255,255,.16) 47%,
-    rgba(255,255,255,.34) 50%,
-    rgba(255,255,255,.16) 53%,
-    rgba(255,255,255,0) 62%);
-  background-size:280% 100%;
-  animation:at-sheen 7.5s linear infinite;
+.at-intro__copy{display:flex;flex-direction:column;}
+/* A flex child stretches across the cross axis by default, which turned the
+   kicker pill into a full-width bar. Everything else in this rail wants the
+   full width; only the badge does not. */
+.at-intro__copy > .at-kicker{align-self:flex-start;}
+/* The buttons sit on the bottom line, so whichever rail is taller sets it. */
+.at-intro__ctas{margin-top:auto;}
+.at-intro__head{
+  font-family:"Forum",serif!important;font-weight:400!important;color:var(--ny)!important;
+  font-size:clamp(27px,3.1vw,38px)!important;line-height:1.14!important;
+  margin:0 0 18px!important;max-width:22ch;
 }
-/* A second, slower field so the panel is never entirely still between sheens. */
-.at-glass::after{
-  content:"";position:absolute;width:70%;height:70%;left:-10%;bottom:-20%;
-  z-index:-1;pointer-events:none;border-radius:50%;filter:blur(46px);
-  background:radial-gradient(circle,rgba(143,192,255,.34) 0%,rgba(143,192,255,0) 70%);
-  animation:at-glasslift 16s ease-in-out infinite alternate;
+.at-intro__lede{
+  color:var(--body)!important;font-size:17px!important;line-height:1.72!important;
+  margin:0 0 26px!important;max-width:56ch;
 }
-@keyframes at-sheen{
-  from{background-position:180% 0;}
-  to{background-position:-80% 0;}
+/* The hero's chips, on white. Same shape, tinted rather than glazed — there is
+   nothing behind them to see through any more. */
+.at-intro__chips{display:flex;flex-wrap:wrap;gap:11px;margin:0 0 28px;padding:0;list-style:none;}
+.at-intro__chip{
+  display:inline-flex;align-items:center;gap:9px;
+  padding:9px 17px;border-radius:999px;
+  background:rgba(0,83,183,.06);border:1px solid rgba(0,83,183,.2);
+  color:var(--ny);font-size:13.5px;font-weight:500;
 }
-@keyframes at-glasslift{
-  from{transform:translate3d(0,0,0) scale(1);}
-  to{transform:translate3d(38%,-22%,0) scale(1.25);}
+.at-intro__chip i{
+  width:6px;height:6px;border-radius:50%;background:var(--ny2);flex:0 0 auto;
 }
-.at-glass__kick{
-  display:block;font-size:11px!important;font-weight:700!important;letter-spacing:.15em!important;
-  text-transform:uppercase;color:rgba(255,255,255,.78)!important;margin:0 0 14px!important;
+.at-intro__ctas{display:flex;flex-wrap:wrap;gap:14px;}
+
+/* The four proof points. They were a rail inside the glass panel; here they are
+   a panel in their own right, so they read as the firm's terms rather than as a
+   caption on the hero. */
+.at-intro__proof{
+  margin:0;padding:30px 28px;list-style:none;
+  display:flex;flex-direction:column;justify-content:space-around;gap:20px;
+  background:var(--tint);border:1px solid var(--line2);border-radius:var(--radius);
 }
-.at-glass__head{
-  font-family:"Forum",serif!important;font-weight:400!important;color:#fff!important;
-  font-size:clamp(21px,2.1vw,26px)!important;line-height:1.24!important;
-  margin:0 0 16px!important;
+.at-intro__item{
+  display:grid;grid-template-columns:40px minmax(0,1fr);gap:0 16px;align-items:start;
 }
-/* The description the hero used to carry. It sits between the panel's own
-   headline and the proof list, and the rule that used to close the headline
-   moves below it so the panel still reads as two parts, not three. */
-.at-glass__lede{
-  color:rgba(255,255,255,.82)!important;font-size:15px!important;line-height:1.68!important;
-  margin:0 0 22px!important;padding:0 0 22px!important;
-  border-bottom:1px solid rgba(255,255,255,.22);
+.at-intro__ico{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:50%;
+  background:rgba(0,83,183,.09);color:var(--ny2);
 }
-.at-glass__list{margin:0;padding:0;list-style:none;display:grid;gap:18px;}
-.at-glass__item{
-  display:grid;grid-template-columns:26px minmax(0,1fr);gap:0 14px;align-items:start;
+.at-intro__label{
+  display:block;font-size:12px!important;font-weight:700!important;letter-spacing:.11em!important;
+  text-transform:uppercase;color:var(--ny)!important;margin:0 0 4px!important;
 }
-.at-glass__ico{color:#B7D4FF;display:flex;}
-.at-glass__label{
-  display:block;font-size:12px!important;font-weight:700!important;letter-spacing:.1em!important;
-  text-transform:uppercase;color:#fff!important;margin:0 0 4px!important;
+.at-intro__note{
+  display:block;font-size:14px!important;line-height:1.55!important;
+  color:var(--body)!important;margin:0!important;
 }
-.at-glass__note{display:block;font-size:13.5px!important;line-height:1.55!important;color:rgba(255,255,255,.76)!important;margin:0!important;}
-.at-hero__ctas .at-btn--solid{background:#fff;color:var(--ny)!important;border-color:#fff;}
-.at-hero__ctas .at-btn--solid:hover{background:#E8F1FF;border-color:#E8F1FF;box-shadow:0 16px 32px -16px rgba(0,0,0,.55);}
 
 /* ==========================================================================
    THE PROBLEM — rebuilt.
@@ -457,24 +569,39 @@ const CSS = `
    making — each capability rests on the one under it.
    ========================================================================== */
 
-/* ---- The questions ---- */
+/* ---- The questions ------------------------------------------------------
+   Six cards, each 90px tall and carrying one short line, with a 30px serif '?'
+   above it. Three things were wrong with that. The mark repeated punctuation
+   the sentence already ends with, six times. It forced a two-line card for a
+   six-word question, so the block ran the height of a screen to say very
+   little. And a grid of identical outlined boxes each holding one generic
+   question is the shape of filler — which is exactly how it read.
+
+   They are a list now: two columns, one rule between rows, a small brand tick
+   in front of each. Same six questions, roughly a third of the height, and the
+   section reads as a stated list rather than as six cards pretending each
+   question is a product. */
 .at-qs{
-  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap);
-  margin:0 0 calc(var(--gap) * 2);padding:0;list-style:none;
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:0 calc(var(--gap) * 2);
+  margin:0 0 calc(var(--gap) * 1.6);padding:0;list-style:none;
 }
 .at-q{
-  position:relative;padding:24px 22px 22px;
-  background:#fff;border:1px solid var(--line);border-radius:var(--radius);
-  transition:border-color .35s ease,box-shadow .4s ease,background-color .3s ease;
+  position:relative;display:flex;align-items:baseline;gap:12px;
+  padding:13px 2px;border-bottom:1px solid var(--line2);
+  transition:color .25s ease;
 }
-.at-q:hover{border-color:rgba(0,83,183,.34);background:#fff;box-shadow:0 22px 40px -30px rgba(6,18,32,.34);}
-.at-q__mark{
-  display:block;font-family:"Forum",serif;font-size:30px;line-height:1;
-  color:rgba(0,83,183,.26);margin:0 0 12px;transition:color .35s ease;
+/* The first row of each column has a rule above it too, so the two columns are
+   bracketed as one block rather than reading as two loose lists. */
+.at-q:nth-child(1),.at-q:nth-child(2){border-top:1px solid var(--line);}
+.at-q::before{
+  content:"";flex:0 0 auto;width:6px;height:6px;border-radius:50%;
+  background:var(--ny2);opacity:.34;transform:translateY(-3px);
+  transition:opacity .25s ease,box-shadow .3s ease;
 }
-.at-q:hover .at-q__mark{color:var(--ny2);}
+.at-q:hover::before{opacity:1;box-shadow:0 0 0 3px rgba(0,83,183,.14);}
 .at-q__text{
-  display:block;font-size:15.5px;line-height:1.5;color:var(--ny);font-weight:500;
+  display:block;font-size:16px;line-height:1.5;color:var(--ny);font-weight:500;
 }
 
 /* ---- The turn: the section's middle, on the plate ---- */
@@ -492,70 +619,6 @@ const CSS = `
   font-family:"Forum",serif!important;font-weight:400!important;color:#fff!important;
   font-size:clamp(21px,2.5vw,30px)!important;line-height:1.28!important;
   margin:0!important;max-width:30ch;
-}
-
-/* ---- The capability stack ----
-   Was five stacked rows that each ran a little wider than the last: a taper
-   the eye read as a ragged edge rather than as an argument, with the section's
-   conclusion left hanging off the bottom of it as a loose line of serif.
-
-   Five cards across now. The sequence number carries the order, a meter under
-   it fills further on each card so the build is visible at a glance, and the
-   last card inverts to navy because it is where the argument lands. The
-   conclusion gets a band of its own underneath. */
-.at-stack{
-  margin:0;padding:0;list-style:none;
-  display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:var(--gap);
-}
-.at-step{
-  display:flex;flex-direction:column;min-width:0;
-  padding:24px 22px 26px;border-radius:var(--radius);
-  background:#fff;border:1px solid var(--line);
-  transition:border-color .35s ease,box-shadow .4s ease;
-}
-.at-step:hover{border-color:rgba(0,83,183,.34);box-shadow:0 24px 44px -32px rgba(6,18,32,.42);}
-.at-step__n{
-  font-family:"Forum",serif;font-size:15px;line-height:1;letter-spacing:.06em;
-  color:rgba(0,83,183,.55);margin:0 0 12px;transition:color .35s ease;
-}
-.at-step:hover .at-step__n{color:var(--ny2);}
-/* The meter. --fill is set per card from the index, so the ramp comes from the
-   data's own length rather than from five hand-tuned numbers. */
-.at-step__meter{
-  display:block;height:3px;border-radius:2px;overflow:hidden;
-  background:rgba(0,83,183,.12);margin:0 0 18px;
-}
-.at-step__meter i{
-  display:block;height:100%;width:var(--fill,100%);border-radius:2px;
-  background:var(--ny2);
-}
-.at-step__k{
-  font-family:"Forum",serif!important;font-weight:400!important;
-  font-size:21px!important;line-height:1.18!important;color:var(--ny)!important;
-  margin:0 0 8px!important;
-}
-.at-step__v{
-  font-size:14.5px!important;line-height:1.62!important;color:var(--body)!important;
-  margin:0!important;
-}
-/* The last capability is the one the section is arguing towards, so it is the
-   one card that is filled rather than outlined. */
-.at-step:last-child{background:#0A2A50;border-color:#0A2A50;}
-.at-step:last-child:hover{border-color:#0A2A50;box-shadow:0 28px 50px -30px rgba(6,18,32,.6);}
-.at-step:last-child .at-step__n,
-.at-step:last-child:hover .at-step__n{color:#8FC0FF;}
-.at-step:last-child .at-step__meter{background:rgba(255,255,255,.2);}
-.at-step:last-child .at-step__meter i{background:#8FC0FF;}
-.at-step:last-child .at-step__k{color:#fff!important;}
-.at-step:last-child .at-step__v{color:rgba(255,255,255,.76)!important;}
-
-.at-stack__close{
-  margin:var(--gap) 0 0!important;padding:30px 34px;
-  border-radius:var(--radius);
-  background:linear-gradient(100deg,rgba(0,83,183,.09) 0%,rgba(0,83,183,.02) 70%);
-  border:1px solid var(--line2);border-left:3px solid var(--ny2);
-  font-family:"Forum",serif!important;font-weight:400!important;color:var(--ny)!important;
-  font-size:clamp(20px,2.3vw,28px)!important;line-height:1.3!important;
 }
 
 /* The figure: a texture with the section's closing line on glass over it. */
@@ -681,6 +744,40 @@ const CSS = `
   box-shadow:0 22px 44px -34px rgba(6,18,32,.3);
 }
 .at-tablescroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+
+/* ---- Horizontal scroll, made visible -------------------------------------
+   The table has always scrolled sideways under 660px. Nothing said so: on a
+   phone it looked like a table whose second column had been cropped off, and
+   the reader had no reason to think the missing half could be reached.
+
+   Three things say it now. A hint line above the table, shown only where the
+   scroll actually exists. A fade on the right edge of the wrapper, which is
+   the standard "there is more this way" cue. And the fade is hidden the moment
+   the reader reaches the end — .is-end is set by the scroll handler in
+   Motion.tsx, so the cue stops lying once it has done its job. */
+/* Hidden until the table actually overflows. Measured rather than guessed from
+   a breakpoint: the trigger is the table being wider than its box, which is the
+   thing the reader needs telling about. */
+.at-swipe{
+  display:none;align-items:center;gap:8px;
+  margin:0 0 12px!important;
+  font-size:12.5px!important;font-weight:600!important;letter-spacing:.06em!important;
+  color:var(--muted)!important;
+}
+.at-swipe.is-shown{display:flex;}
+.at-swipe svg{flex:0 0 auto;color:var(--ny2);animation:at-swipe-nudge 1.9s ease-in-out infinite;}
+@keyframes at-swipe-nudge{
+  0%,62%,100%{transform:translateX(0);}
+  78%{transform:translateX(5px);}
+}
+@media(prefers-reduced-motion:reduce){.at-swipe svg{animation:none;}}
+.at-tablewrap::after{
+  content:"";position:absolute;z-index:2;inset:0 0 0 auto;width:56px;
+  pointer-events:none;opacity:0;transition:opacity .3s ease;
+  background:linear-gradient(to right,rgba(255,255,255,0) 0%,rgba(255,255,255,.96) 82%);
+}
+.at-tablewrap.is-scrollable::after{opacity:1;}
+.at-tablewrap.is-scrollable.is-end::after{opacity:0;}
 .at-table{width:100%;min-width:660px;border-collapse:collapse;font-size:15px;}
 .at-table th,.at-table td{
   padding:17px 22px!important;text-align:left;vertical-align:middle;
@@ -704,6 +801,9 @@ const CSS = `
 }
 .at-table tbody th{padding-left:26px!important;}
 .at-table .at-table__says{font-weight:500!important;}
+/* The pills set their own vertical padding, so the cell gives them a little
+   breathing room and nothing else. */
+.at-decide__go{padding-top:12px!important;padding-bottom:12px!important;white-space:nowrap;}
 /* The column being argued for, tinted the whole way down and given the tick. */
 .at-table--compare td:last-child{
   background:rgba(0,83,183,.055);color:var(--ny)!important;font-weight:500;
@@ -1135,7 +1235,8 @@ const CSS = `
    ========================================================================== */
 .at-close{
   position:relative;isolation:isolate;overflow:hidden;
-  background:#0A2A50;padding:96px 0!important;
+  /* 40px like every other band — the closing band was the last exception. */
+  background:#0A2A50;padding:var(--pad) 0!important;
 }
 .at-close .at-plate{--throw:26px;opacity:.72;}
 .at-close__head{
@@ -1162,52 +1263,205 @@ const CSS = `
 }
 
 /* ==========================================================================
+   THE SERVICE EXPLORER — a chooser on the left, one detail panel on the right.
+
+   The eight cards above are the summary: a headline, a sentence, who it is for.
+   This is where each of them is actually explained, and it is the first thing
+   on the page to render AtService.head and AtService.body — the long-form copy
+   that has been sitting in content.ts unread since the file was written.
+
+   NO JAVASCRIPT. Eight visually-hidden radios sit in front of the grid and the
+   panels are switched with :checked ~ , which matters on this page more than it
+   usually would: everything else here degrades to "visible but not animated" if
+   the bundle fails, and a tab widget that needs a script would have been the one
+   thing on the page that degrades to nothing. It also means the section works
+   before hydration, arrow keys move between the options for free, and the focus
+   ring is the browser's own.
+
+   The cost is the :nth-child coupling between a radio and its panel, so both
+   loops below are generated from AT_SERVICES — add a ninth service and the
+   rules, the labels and the panels all follow.
+   ========================================================================== */
+.at-exp{background:#fff;}
+.at-exp__wrap{position:relative;}
+/* Hidden from sight, not from the keyboard or the accessibility tree. */
+.at-exp__radio{
+  position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;
+}
+.at-exp__grid{
+  /* The chooser gets less than half: its longest label is 24 characters, and at
+     .86fr the rows ran 600px wide with the text sitting in the first third of
+     each one. */
+  display:grid;grid-template-columns:minmax(0,.72fr) minmax(0,1.28fr);
+  /* Stretch: the eight rows spread over the panel's height instead of stopping
+     two-thirds of the way down and leaving 190px of white under them. The
+     panel's min-height below is what makes that safe — without a fixed floor
+     the rows would resize on every switch. */
+  gap:calc(var(--gap) * 2);align-items:stretch;
+}
+
+/* ---- The chooser ---- */
+.at-exp__list{display:flex;flex-direction:column;}
+.at-exp__list .at-exp__opt{flex:1 1 0;}
+.at-exp__opt{
+  display:flex;align-items:center;gap:14px;
+  padding:14px 18px;border-radius:10px;
+  border-bottom:1px solid var(--line2);
+  color:var(--ny)!important;font-size:15.5px;font-weight:500;line-height:1.35;
+  cursor:pointer;
+  transition:background-color .28s ease,color .28s ease;
+}
+.at-exp__opt:first-child{border-top:1px solid var(--line);}
+.at-exp__opt:hover{background:rgba(0,83,183,.05);color:var(--ny2)!important;}
+.at-exp__n{
+  flex:0 0 auto;font-size:11.5px;font-weight:700;letter-spacing:.14em;
+  color:var(--muted);transition:color .28s ease;
+}
+.at-exp__opt:hover .at-exp__n{color:var(--ny2);}
+/* The chosen one is painted by the generated block at the bottom of this
+   section — the radios are not adjacent to their labels, so it cannot be
+   written once with a sibling combinator. */
+
+/* ---- The panel ---- */
+/* A floor under the panel so switching service does not resize the section and
+   shove the rest of the page up or down. 664px is the tallest of the eight at
+   this breakpoint (they run 568–664); it is a MIN, so longer copy simply grows
+   past it and the only cost of the number going stale is that a little of the
+   jump comes back.
+
+   Why not stack the eight panes in one grid cell and toggle visibility, which
+   would size itself: because a visibility:hidden pane still has a box, so all
+   eight photographs would load instead of the one on screen. display:none keeps
+   the other seven unfetched. */
+@media(min-width:901px){
+  .at-exp__panes{min-height:664px;}
+}
+.at-exp__pane{display:none;}
+/* THE CARD SITS ON THE PHOTOGRAPH, NOT BESIDE IT.
+
+   It was a 58%-wide card overlapping a 62%-wide photograph, which is the shape
+   of the reference section — and at this column width it left the card's first
+   290px hanging over bare white with nothing above or below it. Three edges in
+   the panel and no two of them agreed.
+
+   Now the photograph spans the column and the card is anchored inside its
+   lower-left corner. Every edge in the panel lines up: the photograph's left
+   edge, the card's, the paragraphs', the button's and the "Best for" line's are
+   one vertical; the photograph's right edge is the column's. */
+.at-exp__fig{
+  position:relative;isolation:isolate;margin:0 0 28px;
+}
+.at-exp__shot{
+  display:block;width:100%;height:clamp(280px,26vw,380px);
+  object-fit:cover;border-radius:12px;
+}
+.at-exp__quote{
+  position:absolute;z-index:1;left:22px;bottom:22px;
+  width:min(68%,470px);
+  padding:13px;border-radius:10px;
+  background:linear-gradient(140deg,#0B4EA8 0%,#0A2A50 100%);
+  box-shadow:0 26px 52px -28px rgba(6,18,32,.7);
+}
+.at-exp__quote p{
+  margin:0!important;padding:20px 22px;
+  border:1px solid rgba(255,255,255,.42);border-radius:5px;
+  font-family:"Forum",serif!important;font-weight:400!important;color:#fff!important;
+  font-size:clamp(17px,1.6vw,21px)!important;line-height:1.34!important;
+}
+.at-exp__body p{
+  color:var(--body)!important;font-size:16px!important;line-height:1.75!important;
+  margin:0 0 16px!important;
+}
+.at-exp__caveat{
+  margin:0 0 20px!important;padding:12px 16px;
+  border-left:3px solid rgba(0,83,183,.35);background:var(--tint);border-radius:0 8px 8px 0;
+  font-size:13.5px!important;line-height:1.55!important;color:var(--muted)!important;
+}
+.at-exp__foot{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin-top:22px;}
+.at-exp__best{
+  font-size:13.5px!important;color:var(--muted)!important;margin:0!important;
+}
+.at-exp__best b{color:var(--ny)!important;font-weight:600!important;}
+
+/* ---- The generated half: which radio lights which option and shows which
+        panel. One block per service, written from AT_SERVICES. ---- */
+${AT_SERVICES.map(
+  (s, i) => `
+#at-exp-${s.slug}:checked ~ .at-exp__grid .at-exp__list .at-exp__opt:nth-of-type(${i + 1}){
+  background:linear-gradient(140deg,#0B4EA8 0%,#0A2A50 100%);color:#fff!important;
+}
+#at-exp-${s.slug}:checked ~ .at-exp__grid .at-exp__list .at-exp__opt:nth-of-type(${i + 1}) .at-exp__n{
+  color:#8FC0FF;
+}
+#at-exp-${s.slug}:focus-visible ~ .at-exp__grid .at-exp__list .at-exp__opt:nth-of-type(${i + 1}){
+  outline:2px solid var(--ny2);outline-offset:2px;
+}
+#at-exp-${s.slug}:checked ~ .at-exp__grid .at-exp__panes .at-exp__pane:nth-of-type(${i + 1}){
+  display:block;animation:at-exp-in .45s cubic-bezier(.22,.61,.36,1) both;
+}`,
+).join('')}
+@keyframes at-exp-in{
+  from{opacity:0;transform:translate3d(0,10px,0);}
+  to{opacity:1;transform:none;}
+}
+@media(prefers-reduced-motion:reduce){
+  .at-exp__pane{animation:none!important;}
+}
+
+/* ==========================================================================
    RESPONSIVE — three steps, and the scale tokens do most of the work.
    ========================================================================== */
 @media(max-width:1180px){
-  .at-root{--pad:72px;--gap:20px;--cardpad:24px;--headgap:36px;}
+  .at-root{--gap:20px;--cardpad:24px;--headgap:36px;}
   .at-cards,.at-options__grid,.at-journey__grid{grid-template-columns:repeat(2,minmax(0,1fr));}
   .at-proc__grid,.at-dep{grid-template-columns:repeat(3,minmax(0,1fr));}
   .at-pos{grid-template-columns:repeat(3,minmax(0,1fr));}
   /* The stem only makes sense while the columns sit on one line. */
   .at-dep__item::after{display:none;}
   .at-dep__spine{display:none;}
-  .at-hero__rails{grid-template-columns:minmax(0,1fr);gap:calc(var(--gap) * 1.6);align-items:start;}
+  .at-intro__grid{grid-template-columns:minmax(0,1fr);gap:calc(var(--gap) * 1.6);}
   .at-problem__grid,.at-tax__grid,.at-cap__grid{grid-template-columns:minmax(0,1fr);gap:var(--gap);}
+  /* The chooser goes over the panel rather than beside it: below this the
+     eight labels are narrower than the words in them. */
+  .at-exp__grid{grid-template-columns:minmax(0,1fr);gap:calc(var(--gap) * 1.5);}
   .at-figure{min-height:340px;}
-  /* Five across needs ~200px a card to stay readable; below that it is three
-     then two, and the meter ramp still reads across the rows. */
-  .at-stack{grid-template-columns:repeat(3,minmax(0,1fr));}
 }
 @media(max-width:900px){
-  .at-root{--pad:60px;}
-  .at-why__grid,.at-ind__grid,.at-qs,.at-stack{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .at-root{--headgap:30px;}
+  .at-why__grid,.at-ind__grid{grid-template-columns:repeat(2,minmax(0,1fr));}
   .at-turn{padding:34px 30px;}
-  .at-stack__close{padding:26px 28px;}
+  .at-exp__quote{width:min(76%,470px);}
   .at-dep__base{padding:32px;}
   .at-rail{padding:30px;}
   .at-form__panel{padding:32px;}
 }
 @media(max-width:640px){
-  .at-root{--pad:52px;--gutter:20px;--cardpad:22px;--radius:16px;--headgap:30px;}
-  .at-hero{padding:56px 0 64px!important;}
+  .at-root{--gutter:20px;--cardpad:22px;--radius:16px;--headgap:26px;}
   .at-cards,.at-options__grid,.at-journey__grid,.at-why__grid,.at-ind__grid,
-  .at-proc__grid,.at-form__grid,.at-qs,.at-dep,.at-stack{grid-template-columns:minmax(0,1fr);}
-  /* One column of cards: the meter still ramps, so the sequence survives the
-     stack. The roster loses its centre rule with its second column. */
-  .at-step{padding:20px 18px 22px;}
+  .at-proc__grid,.at-form__grid,.at-qs,.at-dep{grid-template-columns:minmax(0,1fr);}
+  /* One column: every question keeps its own rule, so the list still reads as
+     a list rather than as six loose lines. */
+  .at-q:nth-child(2){border-top:0;}
   .at-cap__roles{grid-template-columns:minmax(0,1fr);}
   .at-cap__role:nth-child(odd){border-right:0;padding-right:14px;}
   .at-cap__role:nth-child(even){padding-left:2px;}
   .at-cap__panel{padding:22px 20px 24px;}
   .at-turn{padding:28px 22px;}
+  /* The card would cover most of a 200px photograph, so it steps out below it
+     and keeps the overlap as a 40px bite rather than as a takeover. */
+  .at-exp__fig{margin-bottom:20px;}
+  .at-exp__shot{height:200px;}
+  .at-exp__quote{position:relative;left:0;bottom:0;width:auto;margin:-40px 14px 0;}
+  .at-exp__quote p{padding:17px 18px;}
+  .at-exp__opt{padding:14px;font-size:15px;gap:11px;}
   .at-dep__base{padding:26px 22px;}
   /* Two columns of one-line statements read better than one column of five. */
   .at-pos{grid-template-columns:repeat(2,minmax(0,1fr));}
   .at-problem__rung{grid-template-columns:minmax(0,1fr);gap:4px;}
-  .at-rail,.at-form__panel,.at-glass{padding:24px 20px;}
+  .at-rail,.at-form__panel{padding:24px 20px;}
+  .at-intro__proof{padding:22px 20px;}
   .at-figure{min-height:280px;padding:20px;}
-  .at-close{padding:64px 0!important;}
   .at-table th,.at-table td{padding:15px 18px!important;}
   .at-table thead th:first-child,.at-table tbody th{padding-left:20px!important;}
 }
@@ -1243,6 +1497,29 @@ const CSS = `
 `;
 
 /** The arrow that ends every CTA on the page. */
+/** The swipe cue's glyph: a hand with a motion trail, pointing right. */
+function SwipeIcon() {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="17"
+      height="17"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path d="M3 9h4M4 13h3" />
+      <path d="M11 12V6.5a1.5 1.5 0 0 1 3 0V12" />
+      <path d="M14 10.5a1.5 1.5 0 0 1 3 0V12" />
+      <path d="M17 11.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1.2a4 4 0 0 1-3.1-1.5L7 16.5" />
+    </svg>
+  );
+}
+
 function Arrow() {
   return (
     <svg
@@ -1299,70 +1576,80 @@ export default function AccountingTaxBody({ region }: { region: string }) {
           <style dangerouslySetInnerHTML={{ __html: CSS }} />
           <AccountingTaxMotion />
 
-          {/* ---- 1. HERO ---- */}
+          {/* ---- 1. HERO — a banner: label, title, one line ----
+              Everything else it used to carry is section 2 below. */}
           <section className="at-hero" aria-labelledby="at-hero-head">
-            {/* Decorative throughout: the artwork carries no information the
-                headings beside it do not already state. */}
+            {/* Decorative: the artwork carries no information the headings
+                over it do not already state. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className="at-plate at-zoom" src={plate("hero")} alt="" />
             <div className="at-hero__inner">
-              <div className="at-hero__rails">
-                <div>
               <span className="at-hero__kicker">{AT_HERO.eyebrow}</span>
               <h1 className="at-hero__head" id="at-hero-head">
                 {AT_HERO.head}
               </h1>
               <p className="at-hero__sub">{AT_HERO.sub}</p>
-              <ul className="at-hero__chips">
-                {AT_HERO.chips.map((c) => (
-                  <li className="at-hero__chip" key={c}>
-                    <i aria-hidden="true" />
-                    {c}
-                  </li>
-                ))}
-              </ul>
-              <div className="at-hero__ctas">
-                <a
-                  className="at-btn at-btn--solid"
-                  href={rurl(region, AT_HERO.primary.href)}
-                >
-                  {AT_HERO.primary.label}
-                  <Arrow />
-                </a>
-                <a
-                  className="at-btn at-btn--ghost"
-                  href={AT_HERO.secondary.href}
-                >
-                  {AT_HERO.secondary.label}
-                  <Arrow />
-                </a>
-              </div>
-                </div>
+            </div>
+          </section>
 
-                {/* The glass panel. Its sheen and lift run on infinite CSS
-                    loops with nothing observing them, so it is moving before
-                    any script has run and keeps moving if none ever does. */}
-                <aside className="at-glass" aria-label="What working with ValuNxt means">
-                  <span className="at-glass__kick">Working with ValuNxt</span>
-                  <p className="at-glass__head">{AT_WHY_CLOSE}</p>
-                  {/* The hero's description. It sat under the h1 and pushed
-                      the CTAs most of a screen down; over here it fills the
-                      panel's own dead space and the two rails end level. */}
-                  <p className="at-glass__lede">{AT_HERO.lede}</p>
-                  <ul className="at-glass__list">
-                    {AT_PROOF.map((pr) => (
-                      <li className="at-glass__item" key={pr.label}>
-                        <span className="at-glass__ico" aria-hidden="true">
-                          <MegaIcon token={pr.icon} />
-                        </span>
-                        <span>
-                          <span className="at-glass__label">{pr.label}</span>
-                          <span className="at-glass__note">{pr.note}</span>
-                        </span>
+          {/* ---- 2. THE INTRO BAND ----
+              The proposition, the description, the chips, the two CTAs and the
+              four proof points — all of it lifted out of the hero, and all of
+              it the same AT_HERO / AT_PROOF / AT_WHY_CLOSE content it was
+              before. Nothing here is new copy. */}
+          <section className="at-intro" aria-labelledby="at-intro-head">
+            <div className="at-in">
+              <div className="at-intro__grid">
+                <div className="at-intro__copy">
+                  <span className="at-kicker">Working with ValuNxt</span>
+                  <h2 className="at-intro__head" id="at-intro-head">
+                    {AT_WHY_CLOSE}
+                  </h2>
+                  <p className="at-intro__lede">{AT_HERO.lede}</p>
+
+                  <ul className="at-intro__chips">
+                    {AT_HERO.chips.map((c) => (
+                      <li className="at-intro__chip" key={c}>
+                        <i aria-hidden="true" />
+                        {c}
                       </li>
                     ))}
                   </ul>
-                </aside>
+
+                  <div className="at-intro__ctas">
+                    <a
+                      className="at-btn at-btn--solid"
+                      href={rurl(region, AT_HERO.primary.href)}
+                    >
+                      {AT_HERO.primary.label}
+                      <Arrow />
+                    </a>
+                    <a
+                      className="at-btn at-btn--line"
+                      href={AT_HERO.secondary.href}
+                    >
+                      {AT_HERO.secondary.label}
+                      <Arrow />
+                    </a>
+                  </div>
+                </div>
+
+                <ul
+                  className="at-intro__proof"
+                  aria-label="What working with ValuNxt means"
+                >
+                  {AT_PROOF.map((pr) => (
+                    <li className="at-intro__item" key={pr.label}>
+                      <span className="at-intro__ico" aria-hidden="true">
+                        <MegaIcon token={pr.icon} />
+                      </span>
+                      <span>
+                        <span className="at-intro__label">{pr.label}</span>
+                        <span className="at-intro__note">{pr.note}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
           </section>
@@ -1381,9 +1668,6 @@ export default function AccountingTaxBody({ region }: { region: string }) {
               <ul className="at-qs">
                 {AT_PROBLEM.questions.map((q) => (
                   <li className="at-q" key={q}>
-                    <span className="at-q__mark" aria-hidden="true">
-                      ?
-                    </span>
                     <span className="at-q__text">{q}</span>
                   </li>
                 ))}
@@ -1399,38 +1683,11 @@ export default function AccountingTaxBody({ region }: { region: string }) {
                 />
                 <p className="at-turn__text">{AT_PROBLEM.turn}</p>
               </div>
-
-              {/* Five capabilities, read left to right as a build rather than
-                  top to bottom as a taper. Still a definition list — five
-                  terms and what each one gives you — but each is now a card
-                  with its place in the sequence on it, and the meter under the
-                  number fills further along the row, so the "each rests on the
-                  one under it" argument is carried by the cards themselves
-                  instead of by five ragged right edges. */}
-              <dl className="at-stack">
-                {AT_PROBLEM.ladder.map((r, i) => (
-                  <div
-                    className="at-step"
-                    key={r.k}
-                    style={{
-                      ["--fill" as string]: `${((i + 1) * 100) / AT_PROBLEM.ladder.length}%`,
-                    }}
-                  >
-                    <span className="at-step__n" aria-hidden="true">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <span className="at-step__meter" aria-hidden="true">
-                      <i />
-                    </span>
-                    <dt className="at-step__k">{r.k}</dt>
-                    <dd className="at-step__v">{r.v}</dd>
-                  </div>
-                ))}
-              </dl>
-
-              {/* The section's conclusion, given a band of its own so it stops
-                  reading as a caption on the last card. */}
-              <p className="at-stack__close">{AT_PROBLEM.close}</p>
+              {/* The five-card capability ladder and its closing band used to
+                  sit here. Removed by request: it restated in five cards what
+                  the eight service cards two sections down say with links on
+                  them, and the section reached the commercial content faster
+                  without it. `turn` is the section's ending now. */}
             </div>
           </section>
 
@@ -1469,14 +1726,17 @@ export default function AccountingTaxBody({ region }: { region: string }) {
                     <h3 className="at-card__head">{s.cardHead}</h3>
                     <p className="at-card__text">{s.cardText}</p>
 
+                    {/* "Business outcome" and its sentence used to follow
+                        "Best for" here. Removed by request: two label/value
+                        pairs on an eight-card grid made every card a wall of
+                        small text, and the outcome mostly restated the headline
+                        above it. The `outcome` field stays in content.ts,
+                        unrendered — the same as `head` and `body`, which this
+                        card has never shown either. */}
                     <span className="at-card__meta">
                       <span className="at-card__row">
                         <span className="at-card__k">Best for</span>
                         <span className="at-card__v">{s.bestFor}</span>
-                      </span>
-                      <span className="at-card__row">
-                        <span className="at-card__k">Business outcome</span>
-                        <span className="at-card__v">{s.outcome}</span>
                       </span>
                     </span>
 
@@ -1496,6 +1756,100 @@ export default function AccountingTaxBody({ region }: { region: string }) {
             </div>
           </section>
 
+          {/* ---- 4b. THE SERVICE EXPLORER ----
+              The cards above are the summary; this is where each of the eight
+              is explained. Radios and :checked do the switching — see the CSS
+              note — so the section works with the bundle blocked and before
+              hydration. Every word in it is AtService.head / .body / .bestFor,
+              already written and until now never rendered. */}
+          <section className="at-exp" aria-labelledby="at-exp-head">
+            <div className="at-in">
+              <div className="at-sec__head">
+                <span className="at-kicker">In detail</span>
+                <h2 className="at-h2" id="at-exp-head">
+                  What each service actually covers
+                </h2>
+                <p className="at-lede">
+                  Choose a service to see what it involves, who it is for, and
+                  what changes for the business once it is in place.
+                </p>
+              </div>
+
+              <div
+                className="at-exp__wrap"
+                role="group"
+                aria-label="Choose a service to read about"
+              >
+                {/* All eight radios first: the panels are their following
+                    siblings, which is what makes :checked ~ reach them. */}
+                {AT_SERVICES.map((s, i) => (
+                  <input
+                    className="at-exp__radio"
+                    type="radio"
+                    name="at-explore"
+                    id={`at-exp-${s.slug}`}
+                    key={`r-${s.slug}`}
+                    defaultChecked={i === 0}
+                  />
+                ))}
+
+                <div className="at-exp__grid">
+                  <div className="at-exp__list">
+                    {AT_SERVICES.map((s, i) => (
+                      <label
+                        className="at-exp__opt"
+                        htmlFor={`at-exp-${s.slug}`}
+                        key={`l-${s.slug}`}
+                      >
+                        <span className="at-exp__n" aria-hidden="true">
+                          {String(i + 1).padStart(2, "0")}
+                        </span>
+                        {s.name}
+                      </label>
+                    ))}
+                  </div>
+
+                  <div className="at-exp__panes">
+                    {AT_SERVICES.map((s) => (
+                      <div className="at-exp__pane" key={`p-${s.slug}`}>
+                        <div className="at-exp__fig">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            className="at-exp__shot"
+                            src={rimgFirst(region, EXPLORE_FIGURE[s.slug] ?? [])}
+                            alt=""
+                            loading="lazy"
+                          />
+                          {/* The panel's own promise, on the navy card. */}
+                          <div className="at-exp__quote">
+                            <p>{s.head}</p>
+                          </div>
+                        </div>
+
+                        <div className="at-exp__body">
+                          {s.body.map((para) => (
+                            <p key={para.slice(0, 32)}>{para}</p>
+                          ))}
+                          {s.caveat ? (
+                            <p className="at-exp__caveat">{s.caveat}</p>
+                          ) : null}
+                          <div className="at-exp__foot">
+                            <a className="at-pill" href={sub(s.slug)}>
+                              Explore {s.name}
+                            </a>
+                            <p className="at-exp__best">
+                              <b>Best for</b> {s.bestFor}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* ---- 5. SERVICE DECISION TOOL ---- */}
           <section aria-labelledby="at-decide-head">
             <div className="at-in">
@@ -1506,23 +1860,32 @@ export default function AccountingTaxBody({ region }: { region: string }) {
                 </h2>
               </div>
 
+              {/* Shown only when the table is actually wider than its box —
+                  Motion measures it and sets .is-shown. */}
+              <p className="at-swipe" aria-hidden="true">
+                <SwipeIcon />
+                Swipe to see where to start
+              </p>
+
               <div className="at-tablewrap">
                 <div className="at-tablescroll">
                   <table className="at-table at-decide">
                     <thead>
                       <tr>
                         <th scope="col">If this sounds like your business…</th>
-                        <th scope="col">Start here</th>
+                        <th scope="col">For more details click below given links</th>
                       </tr>
                     </thead>
                     <tbody>
                       {AT_DECISION.map((d) => (
                         <tr key={d.slug}>
                           <td className="at-table__says">{d.says}</td>
-                          <td>
-                            <a className="at-go" href={sub(d.slug)}>
+                          {/* A pill, not an arrow link: eight rows of blue text
+                              with a chevron read as labels rather than as the
+                              eight destinations the column exists to offer. */}
+                          <td className="at-decide__go">
+                            <a className="at-pill" href={sub(d.slug)}>
                               {d.label}
-                              <Arrow />
                             </a>
                           </td>
                         </tr>
@@ -1695,6 +2058,14 @@ export default function AccountingTaxBody({ region }: { region: string }) {
                 </h2>
               </div>
 
+              {/* The comparison table scrolls sideways on a phone for exactly
+                  the same reason the decision table does, so it says so the
+                  same way. The edge fade comes free with .at-tablewrap. */}
+              <p className="at-swipe" aria-hidden="true">
+                <SwipeIcon />
+                Swipe to compare
+              </p>
+
               <div className="at-tablewrap">
                 <div className="at-tablescroll">
                   <table className="at-table at-table--compare at-compare">
@@ -1757,10 +2128,16 @@ export default function AccountingTaxBody({ region }: { region: string }) {
                     <span className="at-option__label">{o.label}</span>
                     <span className="at-option__price">{o.price}</span>
                     <p className="at-option__note">{o.note}</p>
+                    {/* Was an .at-go text link. On a grid of four priced cards
+                        the one thing that has to look pressable is the thing
+                        that starts the conversation, and blue text with an
+                        arrow was not doing it. */}
                     <span className="at-option__cta">
-                      <a className="at-go" href={rurl(region, o.href)}>
+                      <a
+                        className="at-pill at-pill--block"
+                        href={rurl(region, o.href)}
+                      >
                         {o.cta}
-                        <Arrow />
                       </a>
                     </span>
                   </div>
