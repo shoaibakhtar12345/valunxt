@@ -658,7 +658,7 @@ export default function HeadAssets({ page }: { page: PageConfig }) {
       <link rel="stylesheet" href={`${BASE}/assets/css/valunxt-brand.css?v=157`} media="all" />
       {/* Landing-page feature blocks. Purely additive — after the brand sheet so
           it can build on its tokens without overriding any of its rules. */}
-      <link rel="stylesheet" href={`${BASE}/assets/css/valunxt-landing.css?v=4`} media="all" />
+      <link rel="stylesheet" href={`${BASE}/assets/css/valunxt-landing.css?v=21`} media="all" />
       {/* intl-tel-input: international phone field with country code + flag dropdown (lead-capture forms) */}
       <link
         rel="stylesheet"

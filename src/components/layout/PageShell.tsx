@@ -25,6 +25,7 @@ import Header3134 from './Header3134';
 import Header3837 from './Header3837';
 import Footer2094 from './Footer2094';
 import Footer3425 from './Footer3425';
+import FooterUae from './FooterUae';
 import CookieConsent from './CookieConsent';
 import SiteScripts from './SiteScripts';
 
@@ -44,6 +45,7 @@ function SiteHeader({
 function SiteFooter({ which, region }: { which: string; region: string }) {
   if (which === '2094') return <Footer2094 region={region} />;
   if (which === '3425') return <Footer3425 region={region} />;
+  if (which === 'uae') return <FooterUae region={region} />;
   return null;
 }
 

@@ -11,6 +11,13 @@
      3. .vxn-whyus   the glass banner
      4. .vxn-proof   the proof band that follows the services section
 
+   And four more, added 2026-09, that only /en-ae/ renders:
+
+     5. .vxn-impact     the dark impact strip
+     6. .vxn-spotlight  one practice, copy beside artwork
+     7. .vxn-mosaic     a tall card beside two stacked
+     8. .vxn-careers    the split careers band
+
    The recurring device is the wordmark's "x" used as a window onto a
    photograph — see components/brand/LogoX.tsx for why the glyph is taken from
    the logo outline rather than drawn.
@@ -821,4 +828,1400 @@
   .vxn-proof__card:hover {
     transform: none;
   }
+}
+
+/* ==========================================================================
+   5-8. The UAE feature bands
+   components/sections/UaeImpactBands.tsx
+
+   Four blocks that run between the services accordion and the insights
+   carousel on /en-ae/ only. The layouts came from supplied reference artwork;
+   the palette is this build's own — every surface is mixed from the tokens in
+   valunxt-brand.css, and the artwork is the abstract/texture set already in
+   uploads.
+
+     5. .vxn-impact     the dark impact strip
+     6. .vxn-spotlight  one practice, copy beside artwork
+     7. .vxn-mosaic     a tall card beside two stacked
+     8. .vxn-careers    the split careers band
+
+   Self-contained: the responsive and reduced-motion rules for these four are
+   at the foot of this block rather than folded into the media queries above,
+   so the set can be lifted out in one piece.
+   ========================================================================== */
+:root {
+  /* The dark card surface. Deeper than --vxn-navy-2 so the texture washed over
+     it still reads as texture rather than as a second colour. */
+  --vxn-band-dark: #0B2C56;
+  /* The tinted band behind the spotlight — the blue at the far end of its own
+     ramp, light enough to sit between two cream sections without banding. */
+  --vxn-band-tint: #EAF1FC;
+}
+
+/* The two shared pieces: the eyebrow and the pill CTA. */
+.vxn-band__eyebrow {
+  display: block;
+  margin-bottom: 14px;
+  color: var(--vxn-blue);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.vxn-band__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform .25s var(--vxn-ease), background-color .25s var(--vxn-ease),
+    border-color .25s var(--vxn-ease), color .25s var(--vxn-ease);
+}
+
+.vxn-band__pill i {
+  font-size: 13px;
+  line-height: 1;
+  transition: transform .25s var(--vxn-ease);
+}
+
+.vxn-band__pill:hover i,
+.vxn-band__pill:focus-visible i {
+  transform: translateX(3px);
+}
+
+/* Every `color` below is asserted. The brand sheet carries `.elementor-kit-5 a`
+   { color: #fff }, which is a class plus a type and so outranks a single class
+   of ours — without !important an <a> pill takes white, which is invisible on
+   the ghost variant and close to it on the accent. The <span> pills inside the
+   mosaic cards are unaffected either way; this keeps the two spellings of the
+   same pill rendering identically. */
+
+/* On the dark surfaces — the sky tint is the only value in the palette bright
+   enough to carry a small uppercase label against --vxn-band-dark. */
+.vxn-band__pill--accent {
+    background: #0053b7;
+    color: #fff !important;
+}
+
+.vxn-band__pill--accent:hover,
+.vxn-band__pill--accent:focus-visible {
+  background: #FFFFFF;
+  color: var(--vxn-ink) !important;
+}
+
+/* On the light surfaces. */
+.vxn-band__pill--solid {
+  background: var(--vxn-blue);
+  color: #FFFFFF !important;
+}
+
+.vxn-band__pill--solid:hover,
+.vxn-band__pill--solid:focus-visible {
+  background: var(--vxn-blue-dark);
+  color: #FFFFFF !important;
+}
+
+.vxn-band__pill--ghost {
+  background: transparent;
+  border-color: rgba(11, 44, 86, .35);
+  color: var(--vxn-ink) !important;
+}
+
+.vxn-band__pill--ghost:hover,
+.vxn-band__pill--ghost:focus-visible {
+  border-color: var(--vxn-blue);
+  color: var(--vxn-blue) !important;
+}
+
+/* --------------------------------------------------------------------------
+   5. .vxn-impact — the dark impact strip
+   -------------------------------------------------------------------------- */
+.vxn-impact {
+  padding: clamp(26px, 3vw, 44px) clamp(16px, 4vw, 48px) 0;
+  background: #fff;
+}
+
+.vxn-impact__card {
+  position: relative;
+  max-width: 1520px;
+  margin: 0 auto;
+  padding: clamp(22px, 2.4vw, 34px) clamp(24px, 3.2vw, 52px);
+  border-radius: 24px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--vxn-band-dark);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 56px);
+  align-items: center;
+}
+
+/* Washed right back: it is a surface, not a picture. */
+.vxn-impact__texture {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  /* !important: Elementor's `.elementor img { height: auto }` is a class plus a
+     type and outranks a single class of ours, which would leave the artwork at
+     its own aspect ratio instead of filling the box. Same for every other
+     cover image in this block. */
+  height: 100% !important;
+  object-fit: cover;
+  opacity: .5;
+  /* Fades out under the headline so the type never sits on the busiest part. */
+  -webkit-mask-image: linear-gradient(100deg, transparent 6%, #000 62%);
+  mask-image: linear-gradient(100deg, transparent 6%, #000 62%);
+}
+
+.vxn-impact__title {
+  margin: 0;
+  color: #FFFFFF !important;
+  font-family: "Forum", serif !important;
+  font-weight: 400 !important;
+  font-size: clamp(28px, 2.9vw, 44px) !important;
+  line-height: 1.14 !important;
+}
+
+.vxn-impact__side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: clamp(14px, 1.6vw, 22px);
+}
+
+.vxn-impact__copy {
+  margin: 0;
+  color: rgba(255, 255, 255, .84);
+  font-size: 15px;
+  line-height: 1.62;
+}
+
+/* --------------------------------------------------------------------------
+   6. .vxn-spotlight — one practice, copy beside artwork
+   -------------------------------------------------------------------------- */
+.vxn-spotlight {
+  padding: clamp(34px, 3.8vw, 60px) clamp(16px, 4vw, 48px);
+  margin-top: clamp(26px, 3vw, 44px);
+  background: var(--vxn-band-tint);
+}
+
+.vxn-spotlight__inner {
+  max-width: 1520px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
+  gap: clamp(28px, 4vw, 72px);
+  align-items: stretch;
+}
+
+.vxn-spotlight__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* The reference sets the CTA at the foot of the column rather than under the
+   paragraph — the gap is the point, so it is pushed, not margined. */
+.vxn-spotlight__copy .vxn-band__pill {
+  margin-top: auto;
+}
+
+.vxn-spotlight__title {
+  margin: 0 0 14px;
+  color: var(--vxn-ink) !important;
+  font-family: "Forum", serif !important;
+  font-weight: 400 !important;
+  font-size: clamp(30px, 3.1vw, 48px) !important;
+  line-height: 1.12 !important;
+}
+
+.vxn-spotlight__lede {
+  margin: 0 0 clamp(20px, 2.2vw, 32px);
+  max-width: 52ch;
+  color: var(--vxn-text);
+  font-size: 15px;
+  line-height: 1.68;
+}
+
+.vxn-spotlight__media {
+  position: relative;
+  margin: 0;
+  border-radius: 16px;
+  overflow: hidden;
+  isolation: isolate;
+  /* Sets the height of the whole band: the copy column is shorter, and its CTA
+     is pushed to the foot to meet this. Lower it and the band gets shorter. */
+  min-height: clamp(220px, 23vw, 330px);
+}
+
+.vxn-spotlight__media img {
+  display: block;
+  width: 100%;
+  height: 100% !important;
+  object-fit: cover;
+}
+
+/* The wordmark's x, dropped in the corner the way the service panels use it. */
+.vxn-spotlight__x {
+  position: absolute;
+  right: 18px;
+  bottom: 16px;
+  width: clamp(38px, 4vw, 58px);
+  color: #FFFFFF;
+  opacity: .5;
+  pointer-events: none;
+}
+
+.vxn-spotlight__x svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* --------------------------------------------------------------------------
+   7. .vxn-mosaic — a tall card beside two stacked
+   -------------------------------------------------------------------------- */
+.vxn-mosaic {
+  padding: clamp(44px, 5.5vw, 86px) clamp(16px, 4vw, 48px) 0;
+  background: #fff;
+}
+
+.vxn-mosaic__grid {
+  max-width: 1520px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.04fr) minmax(0, 1fr);
+  gap: 20px;
+}
+
+.vxn-mosaic__stack {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 20px;
+  min-width: 0;
+}
+
+.vxn-mosaic__card {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 264px;
+  padding: clamp(22px, 2.4vw, 34px);
+  border-radius: 18px;
+  overflow: hidden;
+  isolation: isolate;
+  text-decoration: none;
+  background: var(--vxn-band-dark);
+  transition: transform .3s var(--vxn-ease), box-shadow .3s var(--vxn-ease);
+}
+
+.vxn-mosaic__card--lead {
+  min-height: clamp(360px, 38vw, 548px);
+}
+
+.vxn-mosaic__card--grad {
+  background: var(--vxn-grad-card);
+}
+
+.vxn-mosaic__card:hover,
+.vxn-mosaic__card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: 0 22px 48px rgba(11, 44, 86, .22);
+}
+
+.vxn-mosaic__media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  /* Without !important this loses to `.elementor img { height: auto }` and the
+     photograph sits at its own aspect ratio across the top of the card, leaving
+     the card's own dark fill showing as a solid block behind the copy. */
+  height: 100% !important;
+  object-fit: cover;
+  transition: transform .6s var(--vxn-ease);
+}
+
+.vxn-mosaic__card:hover .vxn-mosaic__media {
+  transform: scale(1.04);
+}
+
+/* The scrim that holds white type over a photograph — an overlay on the picture
+   rather than a panel under the copy, so the image reads the whole height of
+   the card. The stops are not eyeballed: banners/clients.webp is a high-key
+   photograph whose lower half measures ~0.42-0.50 relative luminance, and white
+   needs the backdrop under ~0.18 to clear 4.5:1. That puts the overlay near .62
+   where the eyebrow sits and .71 under the title, falling to nothing by 78% so
+   the top half of the picture is untouched. The gradient card gets a weaker one
+   — it is already dark — so the copy sits at the same weight in all three. */
+.vxn-mosaic__card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(to top,
+      rgba(8, 25, 48, .88) 0%,
+      rgba(8, 25, 48, .74) 20%,
+      rgba(8, 25, 48, .60) 35%,
+      rgba(8, 25, 48, .28) 55%,
+      rgba(8, 25, 48, 0) 78%);
+  pointer-events: none;
+}
+
+.vxn-mosaic__card--grad::after {
+  background: linear-gradient(to top, rgba(8, 25, 48, .34) 0%, rgba(8, 25, 48, 0) 62%);
+  /* background: #0053b7; */
+}
+
+.vxn-mosaic__x {
+  position: absolute;
+  right: -18px;
+  top: -14px;
+  z-index: -1;
+  width: clamp(120px, 14vw, 190px);
+  color: #FFFFFF;
+  opacity: .14;
+  pointer-events: none;
+}
+
+.vxn-mosaic__x svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.vxn-mosaic__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Nearly solid: at 11px over a photograph the .78 this started at measured
+   4.1:1, just under the threshold. */
+.vxn-mosaic__body .vxn-band__eyebrow {
+  color: rgba(255, 255, 255, .92);
+  margin-bottom: 10px;
+}
+
+.vxn-mosaic__title {
+  margin: 0 0 20px;
+  max-width: 100%;
+  color: #FFFFFF !important;
+  font-family: "Forum", serif !important;
+  font-weight: 400 !important;
+  font-size: clamp(22px, 2.1vw, 32px) !important;
+  line-height: 1.16 !important;
+}
+
+/* Set to the right, as in the reference, without needing its own row wrapper. */
+.vxn-mosaic__body .vxn-band__pill {
+  align-self: flex-end;
+}
+
+/* --------------------------------------------------------------------------
+   8. .vxn-careers — the split careers band
+   -------------------------------------------------------------------------- */
+.vxn-careers {
+  display: grid;
+  /* 65/35 — the copy carries the section, the artwork is the accent. */
+  grid-template-columns: minmax(0, 60fr) minmax(0, 40fr);
+  margin-top: clamp(44px, 5.5vw, 86px);
+  background: var(--vxn-cream);
+}
+
+.vxn-careers__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(40px, 5vw, 88px) clamp(20px, 4.5vw, 96px);
+}
+
+.vxn-careers__title {
+  margin: 0 0 20px;
+  max-width: 16ch;
+  color: var(--vxn-ink) !important;
+  font-family: "Forum", serif !important;
+  font-weight: 400 !important;
+  font-size: clamp(30px, 3.1vw, 48px) !important;
+  line-height: 1.12 !important;
+}
+
+.vxn-careers__lede {
+  margin: 0 0 30px;
+  max-width: 100%;
+  color: var(--vxn-text);
+  font-size: 15px;
+  line-height: 1.68;
+}
+
+.vxn-careers__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  width: 100%;
+  justify-content: end;
+}
+
+.elementor-kit-5 img{
+  border-radius: 0 !important;
+}
+
+.vxn-careers__media {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: clamp(320px, 34vw, 470px);
+  overflow: hidden;
+}
+
+.vxn-careers__texture {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100% !important;
+  object-fit: cover;
+}
+
+/* The framed photograph sitting over the texture. Square corners — at this size
+   a radius reads as a rounding error rather than a decision. Wider share of the
+   column than before, because the column itself is now 35%. */
+.vxn-careers__inset {
+  position: relative;
+  width: min(80%, 360px);
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  height: auto !important;
+  border: 10px solid #FFFFFF;
+  /* !important: the kit sheet rounds every image to 8px via `.elementor-kit-5
+     img`, which outranks a single class. */
+  border-radius: 0 !important;
+  box-shadow: 0 24px 54px rgba(8, 25, 48, .32);
+}
+
+/* --------------------------------------------------------------------------
+   The bands — responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+
+  .vxn-impact__card,
+  .vxn-spotlight__inner,
+  .vxn-mosaic__grid,
+  .vxn-careers {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vxn-impact__side {
+    align-items: flex-start;
+  }
+
+  /* One column, so the fade would run across the copy rather than away from
+     it — take it back to a flat wash. */
+  .vxn-impact__texture {
+    -webkit-mask-image: none;
+    mask-image: none;
+    opacity: .34;
+  }
+
+  .vxn-spotlight__copy .vxn-band__pill {
+    margin-top: 0;
+  }
+
+  .vxn-spotlight__lede {
+    margin-bottom: 26px;
+  }
+
+  .vxn-mosaic__stack {
+    grid-template-rows: none;
+  }
+
+  .vxn-mosaic__card--lead {
+    min-height: clamp(300px, 52vw, 420px);
+  }
+
+  .vxn-careers__media {
+    min-height: clamp(280px, 56vw, 380px);
+  }
+}
+
+@media (max-width: 767px) {
+
+  .vxn-impact__card {
+    padding: 26px 22px 30px;
+    border-radius: 18px;
+  }
+
+  .vxn-mosaic__card {
+    min-height: 232px;
+  }
+
+  .vxn-mosaic__title {
+    max-width: none;
+  }
+
+  /* Two full-width pills would read as a stack of buttons; keep them inline
+     and let them shrink instead. */
+  .vxn-band__pill {
+    padding: 11px 18px;
+    letter-spacing: .08em;
+  }
+
+  .vxn-careers__inset {
+    width: min(74%, 300px);
+    border-width: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .vxn-band__pill,
+  .vxn-band__pill i,
+  .vxn-mosaic__card,
+  .vxn-mosaic__media {
+    transition: none !important;
+  }
+
+  .vxn-mosaic__card:hover,
+  .vxn-mosaic__card:focus-visible {
+    transform: none;
+  }
+
+  .vxn-mosaic__card:hover .vxn-mosaic__media {
+    transform: none;
+  }
+}
+
+/* ==========================================================================
+   9-12. UAE home page — services override, insights, closing bands, footer
+
+     9.  .vxn-klay--six    the UAE services band, without the x and the numbers
+     10. .vxn-insights-round  rounded post thumbnails, this page only
+     11. .vxn-ready       "Ready when you are"
+     12. .vxn-sub         the newsletter card
+     13. .vxn-foot        the UAE home footer
+
+   Every rule here is reached only from /en-ae/: .vxn-klay--six, .vxn-foot and
+   the rest are classes no other template carries, so the India home and the
+   interior pages are untouched.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   9. .vxn-klay--six — the UAE services band
+
+   Same layout as the shared band; the difference is that this edition drops the
+   index number and the x motif (both gone from the markup) and treats the
+   collapsed panels as frosted glass rather than as a flat dark wash.
+
+   The photograph now runs at nearly full strength and a blurred, translucent
+   sheet sits over it — so the picture is still legible as a picture, which the
+   old .30-opacity-over-navy treatment had killed. The labels keep the accent
+   colours the shared band gives them; the frost is what makes them readable.
+   -------------------------------------------------------------------------- */
+.vxn-klay--six {
+  /* Near-neutral, not navy: the panels read as glass over a photograph rather
+     than as a blue filter. A trace of the brand blue is kept so the band still
+     belongs to the page. */
+  background: linear-gradient(115deg, #0D1622 0%, #080D15 100%);
+}
+
+/* Close to full strength — the glass above does the work. */
+.vxn-klay--six .vxn-klay__panel:not(.is-active) .vxn-klay__bg img {
+  opacity: .92;
+  filter: grayscale(.22) brightness(.9) saturate(.95);
+}
+
+/* The glass.
+
+   The tint is a neutral charcoal rather than the saturated navy it was, which
+   is what takes the blue cast off the photographs. It is weighted hard to the
+   foot and light at the head: the top of a closed panel sits at .24, where the
+   picture reads clearly, and only the band the label crosses is dense.
+
+   That density is not a style choice. With the chips gone the accents sit
+   directly on the sheet, and #FF3B9A is the binding case — its relative
+   luminance is .267, so it needs the backdrop under .021 to clear 4.5:1.
+   Against the actual mortgages photograph that resolves to ~.80 through the
+   label's span, which is what the first three stops hold. */
+.vxn-klay--six .vxn-klay__panel:not(.is-active)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  -webkit-backdrop-filter: blur(7px) saturate(105%);
+  backdrop-filter: blur(7px) saturate(105%);
+  background: linear-gradient(to top,
+      rgba(16, 20, 28, .88) 0%,
+      rgba(16, 20, 28, .84) 20%,
+      rgba(17, 22, 31, .78) 40%,
+      rgba(18, 24, 34, .45) 62%,
+      rgba(20, 27, 38, .24) 100%);
+  border-left: 1px solid rgba(255, 255, 255, .10);
+  pointer-events: none;
+  transition: backdrop-filter .6s cubic-bezier(.4, 0, .2, 1);
+}
+
+/* Without backdrop-filter the sheet is a flat film over a sharp photograph, so
+   the head of the panel is brought up to carry the label on its own. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .vxn-klay--six .vxn-klay__panel:not(.is-active)::after {
+    background: linear-gradient(to top,
+        rgba(16, 20, 28, .92) 0%,
+        rgba(16, 20, 28, .89) 20%,
+        rgba(17, 22, 31, .84) 40%,
+        rgba(18, 24, 34, .62) 62%,
+        rgba(20, 27, 38, .48) 100%);
+  }
+}
+
+/* Hovering a closed panel clears the frost, which is what tells you it is a
+   live target. The tint is untouched — thinning that would take the pink under
+   the threshold, and a hover state is still text someone has to read. */
+.vxn-klay--six .vxn-klay__panel:not(.is-active):hover::after {
+  -webkit-backdrop-filter: blur(3px) saturate(110%);
+  backdrop-filter: blur(3px) saturate(110%);
+}
+
+/* Text only — no chip. The accent colours are exactly what the brand sheet
+   sets; all this adds is a shadow to hold the letterforms' edges against the
+   photograph, and the z-index that keeps the label out of the sheet's backdrop
+   (::after is the panel's last child, so without it the label would be painted
+   over and blurred along with the picture). */
+.vxn-klay--six .vxn-klay__panel .vxn-klay__label {
+  z-index: 2;
+  text-shadow: 0 1px 14px rgba(6, 10, 18, .85), 0 0 4px rgba(6, 10, 18, .6);
+}
+
+/* --------------------------------------------------------------------------
+   10. .vxn-insights-round — the post thumbnails in the insights carousel
+   -------------------------------------------------------------------------- */
+.vxn-insights-round .elementor-widget-theme-post-featured-image img,
+.vxn-insights-round .elementor-widget-image img {
+  border-radius: 16px !important;
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   11. .vxn-ready — "Ready when you are"
+
+   Copy on the left, three ways to start on the right, over a pale wash. The
+   two blooms drift on long offset loops; nothing else on the page animates
+   continuously, so they are kept slow and very low contrast.
+   -------------------------------------------------------------------------- */
+/* Cream on the left running to a pale blue on the right, as in the reference —
+   the texture on top supplies the bands. */
+.vxn-ready {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(44px, 5vw, 84px) clamp(16px, 4vw, 48px);
+  background: linear-gradient(105deg, #F6F4EF 0%, #F1F1F5 42%, #E6E9F7 100%);
+}
+
+.vxn-ready__wash {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* The drawn ribbons. Stretched past the section on every side so the blur has
+   somewhere to fall off and the drift never exposes an edge. */
+.vxn-ready__waves {
+  position: absolute;
+  top: -14%;
+  left: -8%;
+  width: 116%;
+  height: 128%;
+  display: block;
+  transform-origin: 60% 40%;
+  will-change: transform;
+  animation: vxn-wash-drift 46s ease-in-out infinite alternate;
+}
+
+.vxn-ready__bloom {
+  position: absolute;
+  display: block;
+  right: -16%;
+  bottom: -34%;
+  width: 58vw;
+  height: 58vw;
+  border-radius: 50%;
+  background: radial-gradient(circle at 52% 46%, rgba(0, 83, 183, .20), rgba(0, 83, 183, 0) 68%);
+  filter: blur(70px);
+  will-change: transform;
+  animation: vxn-bloom-a 30s ease-in-out infinite alternate;
+}
+
+@keyframes vxn-bloom-a {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to   { transform: translate3d(-6%, -7%, 0) scale(1.12); }
+}
+
+@keyframes vxn-wash-drift {
+  from { transform: translate3d(0, 0, 0) scale(1.02) rotate(0deg); }
+  to   { transform: translate3d(-3%, 2%, 0) scale(1.10) rotate(1.6deg); }
+}
+
+.vxn-ready__inner {
+  max-width: 1520px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 42fr) minmax(0, 58fr);
+  gap: clamp(28px, 4vw, 76px);
+  align-items: center;
+}
+
+.vxn-ready__eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  color: var(--vxn-blue);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+/* The rule that precedes the label in the reference. */
+.vxn-ready__eyebrow::before {
+  content: "";
+  width: 22px;
+  height: 2px;
+  background: currentColor;
+  flex: none;
+}
+
+.vxn-ready__title {
+  margin: 0 0 16px;
+  max-width: 18ch;
+  color: var(--vxn-ink) !important;
+  font-size: clamp(26px, 2.6vw, 38px) !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  letter-spacing: -.015em;
+}
+
+.vxn-ready__lede {
+  margin: 0;
+  max-width: 44ch;
+  color: var(--vxn-text);
+  font-size: 15px;
+  line-height: 1.68;
+}
+
+.vxn-ready__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.vxn-ready__card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  border-radius: 14px;
+  background: #FFFFFF;
+  border: 1px solid rgba(11, 44, 86, .07);
+  box-shadow: 0 2px 10px rgba(11, 44, 86, .05);
+  text-decoration: none !important;
+  transition: transform .3s var(--vxn-ease), box-shadow .3s var(--vxn-ease),
+    border-color .3s var(--vxn-ease);
+}
+
+.vxn-ready__card:hover,
+.vxn-ready__card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 36px rgba(11, 44, 86, .13);
+  border-color: rgba(0, 83, 183, .26);
+}
+
+.vxn-ready__icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: none;
+  border-radius: 11px;
+  background: var(--vxn-blue);
+  color: #FFFFFF;
+}
+
+.vxn-ready__icon svg {
+  width: 21px;
+  height: 21px;
+  display: block;
+}
+
+.vxn-ready__text {
+  display: block;
+  min-width: 0;
+}
+
+.vxn-ready__name {
+  display: block;
+  margin-bottom: 3px;
+  color: var(--vxn-ink) !important;
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.vxn-ready__note {
+  display: block;
+  color: var(--vxn-muted);
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+.vxn-ready__go {
+  display: grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border-radius: 50%;
+  color: var(--vxn-blue);
+  transition: transform .3s var(--vxn-ease), background-color .3s var(--vxn-ease),
+    color .3s var(--vxn-ease);
+}
+
+.vxn-ready__go svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+}
+
+.vxn-ready__card:hover .vxn-ready__go {
+  transform: translate(2px, -2px);
+  background: var(--vxn-blue);
+  color: #FFFFFF;
+}
+
+/* The staggered reveal. Guarded: where `animation-timeline` is unsupported the
+   cards are simply already in place, because nothing outside this block sets
+   their opacity. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .vxn-ready__item {
+      animation: vxn-ready-in linear both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 26%;
+    }
+  }
+}
+
+@keyframes vxn-ready-in {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* --------------------------------------------------------------------------
+   12. .vxn-sub — the newsletter card
+   -------------------------------------------------------------------------- */
+/* The dark colour stays only as the ground the artwork is laid over — if the
+   image is slow or missing, the section still reads as a deep navy field
+   rather than as a hole in the page. */
+.vxn-sub {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(30px, 3.4vw, 52px) clamp(16px, 4vw, 48px) clamp(40px, 4.4vw, 70px);
+  background: #071E3C;
+}
+
+/* Renamed from .vxn-sub__field: that name was also on the form's email field
+   group, so this rule was absolutely positioning the input to fill the card —
+   which is why the white pill spanned the whole width behind the copy. The form
+   has gone, and the name is now unambiguous. */
+.vxn-sub__ground {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100% !important;
+  object-fit: cover;
+  object-position: center 55%;
+  opacity: .85;
+}
+
+/* Holds the artwork back from the card's edges so the card still reads as a
+   distinct object sitting on the field. */
+/* .vxn-sub::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(120% 90% at 50% 50%, rgba(4, 16, 34, .30) 0%, rgba(4, 16, 34, .74) 100%);
+  pointer-events: none;
+} */
+
+.vxn-sub__card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  max-width: 1520px;
+  margin: 0 auto;
+  padding: clamp(26px, 3vw, 46px) clamp(24px, 3.4vw, 56px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  background: linear-gradient(100deg, #1E44D6 0%, #1230CC 44%, #2A16B6 100%);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 52px);
+  align-items: center;
+}
+
+/* The faceted artwork is the point here, not a wash — it carries the card the
+   way the reference does. `screen` was lifting it to a pale haze; at normal
+   blending and this opacity the folds read as folds, and the gradient beneath
+   still sets the colour from blue at the left to indigo at the right. */
+.vxn-sub__texture {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100% !important;
+  object-fit: cover;
+  object-position: center 38%;
+  opacity: .72;
+  mix-blend-mode: normal;
+}
+
+/* Keeps the copy side legible over the busiest part of the artwork. */
+.vxn-sub__card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(9, 26, 120, .62) 0%, rgba(9, 26, 120, .28) 42%, rgba(9, 26, 120, 0) 68%);
+  pointer-events: none;
+}
+
+.vxn-sub__copy {
+  margin: 0;
+  max-width: 34ch;
+  color: #FFFFFF;
+  font-size: clamp(15px, 1.35vw, 18px);
+  font-weight: 600;
+  line-height: 1.55;
+}
+
+/* The CTA that replaced the inline form. Sized like a pill with the round
+   arrow kept as its trailing mark, so the card keeps its shape without the
+   field beside it. */
+.vxn-sub__cta {
+  justify-self: end;
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  padding: 7px 7px 7px 26px;
+  border-radius: 999px;
+  background: #FFFFFF;
+  text-decoration: none !important;
+  transition: transform .25s var(--vxn-ease), box-shadow .25s var(--vxn-ease);
+}
+
+.vxn-sub__cta:hover,
+.vxn-sub__cta:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(4, 16, 34, .34);
+}
+
+.vxn-sub__cta-label {
+  color: var(--vxn-ink) !important;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.vxn-sub__cta-go {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--vxn-violet);
+  color: #FFFFFF;
+  transition: background-color .25s var(--vxn-ease), transform .25s var(--vxn-ease);
+}
+
+.vxn-sub__cta-go svg {
+  width: 17px;
+  height: 17px;
+  display: block;
+}
+
+.vxn-sub__cta:hover .vxn-sub__cta-go {
+  background: #B01DF2;
+  transform: rotate(45deg);
+}
+
+/* --------------------------------------------------------------------------
+   13. .vxn-foot — the UAE home footer
+   -------------------------------------------------------------------------- */
+/* border-box stated outright: the theme leaves <footer> on content-box, so
+   `width: 100%` plus the side padding put the blue panel 96px wider than its
+   container. */
+.vxn-foot {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: clamp(38px, 4.4vw, 72px) clamp(16px, 4vw, 48px) clamp(26px, 3vw, 44px);
+  background: #0B2DBE;
+  color: #FFFFFF;
+}
+
+.vxn-foot *,
+.vxn-foot *::before,
+.vxn-foot *::after {
+  box-sizing: border-box;
+}
+
+.vxn-foot__inner {
+  max-width: 1520px;
+  margin: 0 auto;
+}
+
+.vxn-foot__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px 40px;
+}
+
+.vxn-foot__logo img {
+  display: block;
+  width: auto;
+  height: 34px !important;
+  border-radius: 0 !important;
+}
+
+.vxn-foot__nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 34px;
+}
+
+.vxn-foot__nav a {
+  color: #FFFFFF !important;
+  font-size: 14.5px;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none !important;
+  transition: opacity .2s ease;
+}
+
+.vxn-foot__nav a:hover,
+.vxn-foot__nav a:focus-visible {
+  opacity: .72;
+  text-decoration: underline !important;
+}
+
+.vxn-foot__rule {
+  margin: clamp(20px, 2.4vw, 34px) 0;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, .28);
+}
+
+.vxn-foot__mid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px 48px;
+}
+
+.vxn-foot__blurb {
+  margin: 0;
+  max-width: 66ch;
+  color: rgba(255, 255, 255, .94);
+  font-size: clamp(15px, 1.2vw, 17px);
+  line-height: 1.62;
+}
+
+/* The social widget's own stylesheet sizes and colours these; on this ground
+   they need to be plain white marks with no chip behind them. */
+.vxn-foot__social .elementor-social-icons-wrapper {
+  display: flex;
+  gap: 22px;
+}
+
+.vxn-foot__social .elementor-grid-item {
+  display: block;
+}
+
+.vxn-foot__social .elementor-social-icon {
+  display: grid !important;
+  place-items: center;
+  width: 26px !important;
+  height: 26px !important;
+  padding: 0 !important;
+  background: transparent !important;
+  background-image: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  color: #FFFFFF !important;
+  transition: opacity .2s ease;
+}
+
+.vxn-foot__social .elementor-social-icon svg {
+  width: 22px;
+  height: 22px;
+  fill: #FFFFFF;
+}
+
+.vxn-foot__social .elementor-social-icon:hover {
+  opacity: .72;
+}
+
+.vxn-foot__legal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px clamp(28px, 5vw, 88px);
+  margin-top: clamp(28px, 3.4vw, 52px);
+}
+
+.vxn-foot__legal a {
+  color: rgba(255, 255, 255, .92) !important;
+  font-size: 14px;
+  line-height: 1.4;
+  text-decoration: none !important;
+}
+
+.vxn-foot__legal a:hover,
+.vxn-foot__legal a:focus-visible {
+  text-decoration: underline !important;
+}
+
+.vxn-foot__copy {
+  margin: clamp(18px, 2vw, 26px) 0 0;
+  color: rgba(255, 255, 255, .8);
+  font-size: 13.5px;
+  line-height: 1.4;
+}
+
+/* --------------------------------------------------------------------------
+   9-13 — responsive
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+
+  .vxn-ready__inner,
+  .vxn-sub__card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vxn-ready__title {
+    max-width: none;
+  }
+
+  .vxn-sub__cta {
+    justify-self: start;
+  }
+
+  .vxn-foot__mid {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 767px) {
+
+  .vxn-ready__card {
+    padding: 15px 16px;
+    gap: 13px;
+  }
+
+  .vxn-ready__icon {
+    width: 38px;
+    height: 38px;
+  }
+
+  /* The arrow is decoration next to a full-width tap target; at this width the
+     row is tight enough that the label needs the space more. */
+  .vxn-ready__go {
+    display: none;
+  }
+
+  .vxn-sub__cta {
+    padding: 6px 6px 6px 20px;
+    gap: 12px;
+  }
+
+  .vxn-sub__cta-go {
+    width: 36px;
+    height: 36px;
+  }
+
+  .vxn-foot__nav {
+    gap: 12px 22px;
+  }
+
+  .vxn-foot__legal {
+    gap: 12px 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .vxn-ready__bloom,
+  .vxn-ready__waves {
+    animation: none !important;
+  }
+
+  .vxn-ready__card,
+  .vxn-ready__go,
+  .vxn-sub__cta,
+  .vxn-sub__cta-go {
+    transition: none !important;
+  }
+
+  .vxn-ready__card:hover,
+  .vxn-ready__card:focus-visible,
+  .vxn-sub__cta:hover,
+  .vxn-sub__cta:hover .vxn-sub__cta-go {
+    transform: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   14. The "Who We Are" trio, UAE only
+
+   .vxn-trio-solo is the wrapper the UAE home puts round WhoWeAreTrio; the India
+   home renders the same component inside its own section and is unaffected. The
+   brand card's shared fill runs blue -> violet -> magenta; this edition keeps it
+   in the blues.
+   -------------------------------------------------------------------------- */
+.vxn-trio-solo .vxn-trio__card--brand {
+  background: linear-gradient(150deg, #0E3FA8 0%, #1436D8 48%, #0B2DBE 100%);
+}
+
+.vxn-trio-solo .vxn-trio__card--brand:hover {
+  background: linear-gradient(150deg, #1549BE 0%, #1B44E6 48%, #1237D6 100%);
+  box-shadow: 0 20px 50px rgba(11, 45, 190, .34);
+}
+
+/* The corner arrow went violet on hover to pick up the magenta stop that is no
+   longer there. */
+.vxn-trio-solo .vxn-trio__card--brand:hover .vxn-trio__go {
+  color: var(--vxn-blue);
+}
+
+/* ==========================================================================
+   15. /en-ae/ — one section rhythm
+
+   Every section on the page gets `padding: 40px 0`. The horizontal inset that
+   used to live on the section moves onto its inner wrapper, so the shorthand is
+   literally 40px 0 and the content still never touches the viewport edge —
+   without that move, every band would run flush to the screen on a phone.
+
+   The old rhythm was built from per-section clamps (38-70px) plus margins that
+   stacked on top of them, so the gaps between sections ran anywhere from 38px
+   to 152px. Those margins are zeroed here; the padding is now the only thing
+   setting the spacing.
+
+   Scoped to .vxn-ae-home because .vxn-home-svc-section, the two insights
+   containers and .elementor-17 are all shared with the India home.
+   ========================================================================== */
+.vxn-ae-home {
+  /* One inset for the whole page, so every band lines up down the left edge. */
+  --vxn-gutter: clamp(16px, 4vw, 48px);
+}
+
+.vxn-ae-home .vxn-trio-solo,
+.vxn-ae-home .vxn-home-svc-section,
+.vxn-ae-home .vxn-impact,
+.vxn-ae-home .vxn-spotlight,
+.vxn-ae-home .vxn-mosaic,
+.vxn-ae-home .vxn-careers,
+.vxn-ae-home .vxn-ready,
+.vxn-ae-home .vxn-sub,
+.vxn-ae-home .elementor-element-c50d7c9,
+.vxn-ae-home .elementor-element-413d07d {
+  padding: 40px 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+/* The insights heading and its carousel are two containers making one section,
+   so they share a single 40px band rather than stacking two. */
+.vxn-ae-home .elementor-element-c50d7c9 {
+  padding-bottom: 0 !important;
+}
+
+.vxn-ae-home .elementor-element-413d07d {
+  padding-top: 0 !important;
+}
+
+/* ---- The inset, moved inward ----------------------------------------------
+   max-width stays 1520px and the gutter is taken out of the available width, so
+   the content column is exactly what it was before — the padding simply lives
+   on a different box. */
+.vxn-ae-home .vxn-impact__card,
+.vxn-ae-home .vxn-spotlight__inner,
+.vxn-ae-home .vxn-mosaic__grid,
+.vxn-ae-home .vxn-ready__inner,
+.vxn-ae-home .vxn-sub__card,
+.vxn-ae-home .vxn-trio-solo .vxn-trio {
+  max-width: min(1520px, calc(100% - var(--vxn-gutter) * 2));
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* The insights containers keep their own Elementor inner, which already
+   centres; they only need the gutter. */
+.vxn-ae-home .elementor-element-c50d7c9 > .e-con-inner,
+.vxn-ae-home .elementor-element-413d07d > .e-con-inner {
+  padding-left: var(--vxn-gutter);
+  padding-right: var(--vxn-gutter);
+}
+
+/* The trio carried its spacing as a bottom padding on the section. */
+.vxn-ae-home .vxn-trio-solo .vxn-trio {
+  margin-top: 0;
+}
+
+/* .vxn-careers is a two-column split whose right half is artwork. With the
+   section padded, that artwork is inset from the band's top and bottom edges
+   rather than bleeding to them — the panel now sits in the cream rather than
+   filling it. */
+.vxn-ae-home .vxn-careers__copy {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* The services band is full-bleed horizontally and sets its own height, so it
+   takes the vertical rhythm from its wrapper and nothing else. */
+.vxn-ae-home .vxn-home-svc-section .vxn-klay {
+  margin-top: 40px;
+}
+
+/* The brand sheet caps .vxn-trio-solo at 1200px and centres it, which stacked
+   a 32px auto-margin under this page's gutter and left the trio's cards 81px
+   in while every other band starts at 48px. The cap is released here so the
+   trio takes the same width rule as the rest of the page and the left edges
+   line up. */
+.vxn-ae-home .vxn-trio-solo {
+  max-width: none;
 }
