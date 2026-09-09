@@ -102,7 +102,7 @@ export default function HomeAeBody({ page, region }: { page: PageConfig; region:
       		   section showing, which is what tells the visitor there is more below.
       		   The 560px floor is for short landscape viewports, where 97vh is not
       		   enough room for the headline, the CTA row and the tab strip. */
-      		min-height: max(560px, 93vh);
+      		min-height: max(560px, 100vh);
       		/* No pull-up: the header now cancels its own reserved height (see
       		   valunxt-brand.css), so the hero already begins under the bar. It only
       		   needs the top padding that keeps the copy clear of it. */

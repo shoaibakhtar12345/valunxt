@@ -79,11 +79,18 @@ export default async function UaeServicePage({ params }: Params) {
      above it. Stacking the two put two heroes on the page — the section banner
      with the service name, and then the written hero underneath saying the same
      thing at greater length. The bespoke hero carries the breadcrumb itself. */
+  /* NO SUBSCRIBE BAND UNDER A BESPOKE BODY. "Stay Ahead. Subscribe for Market
+     Intelligence." and the striped divider under it are Elementor template
+     4557; removed by request. A written page closes on its own terms — this
+     one ends on "Talk to an Expert" and then the footer.
+
+     The template-driven and coming-soon branches below still carry it, so the
+     five services that have not been written keep the pre-footer they share
+     with the rest of the site. 4557 stays in POST_CSS for them. */
   if (Body) {
     return (
       <PageShell page={page} region={hit.region}>
         <Body region={hit.region} />
-        <SubscribeSection page={page} region={hit.region} />
       </PageShell>
     );
   }

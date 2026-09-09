@@ -1,65 +1,67 @@
 /**
- * The newsletter card on /en-ae/.
+ * The newsletter section on /en-ae/.
  *
- * No form here any more. The card states what the list is and sends people to
- * /contact/ to ask for it, so there is one lead route on this page rather than
- * an inline field that posts somewhere else. The Elementor form markup this
- * used to carry — the `.elementor-form` wrapper, the hidden post_id/form_id and
- * `form_fields[email]` — is gone with it; /form-handler/ is untouched and still
- * serves every other form on the site.
+ * Half brand gradient, half photograph, with a frosted bar overlapping the two
+ * near the bottom — the label and the headline on the coloured half, the line
+ * of copy and the email field on the bar.
+ *
+ * THE HEADLINE COPY IS THE SENTENCE THAT WAS ALREADY HERE, split across the
+ * slots the layout gives it. It read as one paragraph — "Subscribe to Valunxt
+ * Insights — our monthly look at the accounting, bookkeeping and reporting
+ * issues facing UAE businesses." — and it is the same words now: the name is
+ * the label, what the list covers is the headline, and the instruction is the
+ * line on the bar.
+ *
+ * THE INLINE FIELD IS BACK, by request. This section had dropped it so the page
+ * carried one lead route; it now takes an email again and the button submits
+ * rather than linking to /contact/.
+ *
+ * THE FIELD LIVES IN UaeSubscribeForm, a client component, because it has to
+ * post itself — see the note there for why leaning on Elementor's form handler
+ * did not work. This file stays a server component so it can keep resolving its
+ * photograph through rimgFirst(), which reads the filesystem.
  *
  * Styles: assets/css/valunxt-landing.css (.vxn-sub).
  */
-import { rurl } from '@/lib/region';
-import { rimg } from '@/lib/region-assets';
+import { rimgFirst } from '@/lib/region-assets';
+
+import UaeSubscribeForm from './UaeSubscribeForm';
 
 export default function UaeSubscribeBand({ region }: { region: string }) {
   return (
     <section className="vxn-sub" aria-labelledby="vxn-sub-title">
-      {/* The field the card sits on. It was a flat #071E3C; this is the same
-          depth of navy carried by artwork instead, so the section reads as part
-          of the same family as the card rather than as a plain dark gap. */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        className="vxn-sub__ground"
-        src={rimg(region, 'banners/breadcrumb-banner.png')}
-        alt=""
-        aria-hidden="true"
-        loading="lazy"
-      />
+      <div className="vxn-sub__panel">
+        <span className="vxn-sub__eyebrow">ValuNxt Insights</span>
+        <h2 className="vxn-sub__head" id="vxn-sub-title">
+          Our monthly look at the accounting, bookkeeping and reporting issues
+          facing UAE businesses.
+        </h2>
+      </div>
 
-      <div className="vxn-sub__card">
+      {/* Decorative: the headline beside it is what the section says. The
+          purpose-shot filename comes first in the house convention, so dropping
+          banners/uae-insights-subscribe.webp in replaces the stand-in with no
+          change here. */}
+      <div className="vxn-sub__shot" aria-hidden="true">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          className="vxn-sub__texture"
-          src={rimg(region, 'homepage/abstract-2.webp')}
+          className="vxn-sub__ground"
+          src={rimgFirst(region, [
+            'banners/uae-insights-subscribe.webp',
+            'new-folder/about-us-1.webp',
+          ])}
           alt=""
-          aria-hidden="true"
           loading="lazy"
         />
+      </div>
 
-        <p id="vxn-sub-title" className="vxn-sub__copy">
-          Subscribe to Valunxt Insights &mdash; our monthly look at the accounting, bookkeeping and
-          reporting issues facing UAE businesses.
-        </p>
+      {/* The bar sits ON the join, crossing from the gradient into the
+          photograph — which is the whole reason the two halves meet at a hard
+          edge rather than blending. */}
+      <div className="vxn-sub__bar">
+        <p className="vxn-sub__copy">Subscribe to ValuNxt Insights</p>
 
-        {/* Labelled rather than a bare arrow: the round button used to make
-            sense beside an input, but on its own it would not say where it
-            goes. */}
-        <a className="vxn-sub__cta" href={rurl(region, '/contact/')}>
-          <span className="vxn-sub__cta-label">Subscribe</span>
-          <span className="vxn-sub__cta-go" aria-hidden="true">
-            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M4.5 11.5L11.5 4.5M11.5 4.5H5.5M11.5 4.5V10.5"
-                stroke="currentColor"
-                strokeWidth="1.7"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
-        </a>
+        <UaeSubscribeForm />
       </div>
     </section>
   );

@@ -50,6 +50,7 @@ function config({
   heroImage,
   desc,
   written = false,
+  extraCss = [],
 }: {
   name: string;
   path: string;
@@ -57,6 +58,8 @@ function config({
   desc: string;
   /** True once the page has a body of its own rather than the coming-soon one. */
   written?: boolean;
+  /** Captured stylesheets this one page needs on top of POST_CSS. */
+  extraCss?: string[];
 }): PageConfig {
   const id = postId(path);
   const title = `${name} | VALUNXT`;
@@ -65,9 +68,12 @@ function config({
     desc,
     og_image: '/assets/content/uploads/2025/03/valunxt-og.png',
     body: bodyClass(id),
-    post_css: POST_CSS,
+    post_css: [...POST_CSS, ...extraCss],
     header: '3837',
-    footer: '2094',
+    /* The UAE home page's footer, not the shared 2094 one. Every page under
+       /en-ae/services/ is a UAE page, so they all take the market's own
+       footer — see FooterUae, which /en-ae/ already selects the same way. */
+    footer: 'uae',
     canvas: false,
     post_id: id,
     post_title: encodeURIComponent(title),
@@ -87,6 +93,23 @@ function config({
   };
 }
 
+/**
+ * Stylesheets a single service page needs beyond the shared five.
+ *
+ * Accounting & Tax carries the "Find the Right Solution" tab block, which is
+ * the home page's section reused verbatim — so it needs the home page's own
+ * captured stylesheet (17) and the blur-background template inside it (7162),
+ * exactly as /our-group/valunxt-corporate-services/ does for the same block.
+ * Both are scoped under .elementor-17 / .elementor-7162, so they reach nothing
+ * outside the markup that asks for them.
+ *
+ * Keyed by slug rather than added to POST_CSS because post-17.css is 250KB and
+ * the other five UAE service pages have no use for it.
+ */
+const EXTRA_CSS: Record<string, string[]> = {
+  'accounting-tax-services': ['17', '7162'],
+};
+
 /** The page at /services/<service>/. */
 export function uaeServiceConfig(service: Service, written = false): PageConfig {
   const name = vxnServiceName(service);
@@ -94,6 +117,7 @@ export function uaeServiceConfig(service: Service, written = false): PageConfig 
     name,
     path: `/services/${service.slug}/`,
     heroImage: service.img,
+    extraCss: service.slug ? EXTRA_CSS[service.slug] : undefined,
     desc: written
       ? `${name} in the UAE from VALUNXT.`
       : `${name} in the UAE from VALUNXT — coming soon.`,

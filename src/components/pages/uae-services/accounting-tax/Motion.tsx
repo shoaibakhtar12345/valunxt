@@ -42,27 +42,26 @@ import { useEffect } from 'react';
 /** What reveals, and how. `stagger` walks siblings of one parent in sequence. */
 const GROUPS: { sel: string; variant: string; stagger?: boolean }[] = [
   { sel: '.at-sec__head', variant: 'up' },
-  { sel: '.at-hero__inner > *', variant: 'up', stagger: true },
-  { sel: '.at-intro__copy > *', variant: 'up', stagger: true },
-  { sel: '.at-intro__item', variant: 'up', stagger: true },
+  { sel: '.at-hero__copy > *', variant: 'up', stagger: true },
+  { sel: '.at-intro__top > *', variant: 'up', stagger: true },
+  { sel: '.at-intro__point', variant: 'up', stagger: true },
+  { sel: '.at-intro__chips, .at-intro__ctas', variant: 'up', stagger: true },
+  { sel: '.at-intro__figure', variant: 'right' },
   { sel: '.at-proof__item', variant: 'up', stagger: true },
-  /* This named a class the problem section never had — .at-problem__q — so it
-     never revealed. It is .at-q. (.at-step went with the capability ladder.) */
-  { sel: '.at-q', variant: 'up', stagger: true },
-  { sel: '.at-card', variant: 'up', stagger: true },
-  { sel: '.at-decide tbody tr', variant: 'fade', stagger: true },
-  { sel: '.at-journey__step', variant: 'up', stagger: true },
-  { sel: '.at-journey__rail', variant: 'scale' },
-  { sel: '.at-tax__point', variant: 'left', stagger: true },
-  { sel: '.at-why__item', variant: 'up', stagger: true },
-  { sel: '.at-sys__chip', variant: 'fade', stagger: true },
-  { sel: '.at-compare tbody tr', variant: 'fade', stagger: true },
-  { sel: '.at-option', variant: 'up', stagger: true },
-  { sel: '.at-cap__role', variant: 'fade', stagger: true },
-  { sel: '.at-ind__item', variant: 'up', stagger: true },
-  { sel: '.at-proc__step', variant: 'up', stagger: true },
-  { sel: '.at-faq__item', variant: 'up', stagger: true },
-  { sel: '.at-close__inner > *', variant: 'up', stagger: true },
+  /* The banner's three things. (.at-prob__q went with the six questions, .at-q
+     with the three-block layout before it, .at-step with the ladder.) */
+  { sel: '.at-prob__panel > *', variant: 'up', stagger: true },
+  /* THE INNER, NOT THE PANEL. Revealing .at-acc__panel put data-anim on the
+     element that owns the strip's flex-grow transition, and [data-anim='in']
+     sets the whole `transition` shorthand at equal specificity from further
+     down the stylesheet — so it replaced 'flex-grow 1.35s' with the reveal's
+     own list and the panel snapped open with no transition at all. Revealing
+     the inner keeps the staggered entrance and leaves the panel's transition
+     to the panel. */
+  { sel: '.at-acc__inner', variant: 'up', stagger: true },
+  { sel: '.at-rel__card', variant: 'up', stagger: true },
+  { sel: '.at-talk__fig', variant: 'left' },
+  { sel: '.at-talk__copy > *', variant: 'up', stagger: true },
 ];
 
 export default function AccountingTaxMotion() {

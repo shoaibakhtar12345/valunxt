@@ -176,7 +176,6 @@ export const AT_SERVICES: AtService[] = [
 /* ---- Hero ---------------------------------------------------------------- */
 
 export const AT_HERO = {
-  eyebrow: 'Accounting & Tax Services | Dubai, UAE',
   head: 'Accounting & Tax Services in Dubai for Growing Businesses',
   lede: 'From monthly bookkeeping and financial reporting to VAT, Corporate Tax, forecasting and CFO-level support, ValuNxt brings the finance capabilities growing UAE businesses need together under one team.',
   sub: 'Get the books right. Understand the numbers. Plan ahead. Stay tax-ready. Add senior finance support when you need it.',
@@ -202,66 +201,23 @@ export const AT_PROOF: { label: string; note: string; icon: string }[] = [
   },
 ];
 
-/* ---- The problem --------------------------------------------------------- */
+/* ---- The banner ----------------------------------------------------------
+   AT_PROBLEM — the head, the lede, the six questions and the turn — was removed
+   with the section that rendered it. The section is a banner card now: one
+   heading, one paragraph, one button. Keeping the questions here unrendered
+   would be dead content, which is content someone eventually edits believing it
+   is on the page.
 
-export const AT_PROBLEM = {
-  head: 'Your finance function should do more than record transactions',
-  lede: 'Your business makes decisions every day.',
-  questions: [
-    'Can we afford to hire?',
-    'Why did margins fall?',
-    'Who still owes us money?',
-    'Where is cash going?',
-    'What will the next six months look like?',
-    'Are our numbers ready for VAT, Corporate Tax or audit?',
-  ],
-  turn: 'If accounting only tells management what happened months ago, the finance function is not doing enough.',
-  /* `ladder` (five capabilities) and `close` were removed with the section that
-     rendered them — see the note in AccountingTaxBody where the stack used to
-     be. They are not kept here unused: dead content is content that eventually
-     gets edited by someone who thinks it is on the page. */
+   PLACEHOLDER, AWAITING CLIENT COPY. Both strings below say only what the page
+   already says elsewhere, sized to the banner's shape — a title and a single
+   paragraph of roughly forty words. Replace them here and the section follows;
+   nothing else reads these two fields. */
+export const AT_BANNER = {
+  head: 'The Finance Agenda from the ValuNxt Accounting & Tax Team',
+  body:
+    'Our accounting and tax practice brings bookkeeping, reporting, VAT and Corporate Tax together under one team, so a growing UAE business has a single finance function behind it rather than a set of separate suppliers.',
+  cta: { label: 'Learn more', href: '#at-services' },
 };
-
-/* ---- Decision tool ------------------------------------------------------- */
-
-export const AT_DECISION: { says: string; slug: string; label: string }[] = [
-  {
-    says: '“We need someone to manage our books each month.”',
-    slug: 'accounting-bookkeeping',
-    label: 'Accounting & Bookkeeping Outsourcing',
-  },
-  { says: '“We need senior finance guidance.”', slug: 'cfo-services', label: 'Part-Time CFO' },
-  {
-    says: '“Management needs better numbers.”',
-    slug: 'management-reporting',
-    label: 'Management Reporting',
-  },
-  {
-    says: '“We need to plan the next 6–12 months.”',
-    slug: 'budgeting-forecasting',
-    label: 'Budgeting & Forecasting',
-  },
-  {
-    says: '“We need reliable financial statements.”',
-    slug: 'financial-reporting',
-    label: 'Financial Statement Preparation & Review',
-  },
-  {
-    says: '“An external audit is coming.”',
-    slug: 'external-audit-support',
-    label: 'External Audit Support',
-  },
-  {
-    says: '“We need Corporate Tax filing support.”',
-    slug: 'corporate-tax-services',
-    label: 'Corporate Tax Return Filing',
-  },
-  {
-    says: '“We need VAT advice or compliance support.”',
-    slug: 'vat-services',
-    label: 'VAT Advisory',
-  },
-];
 
 /* ---- The finance journey ------------------------------------------------- */
 
@@ -302,367 +258,42 @@ export const AT_JOURNEY_RAIL = {
   close: 'One Financial Foundation. More Capability as You Grow.',
 };
 
-/* ---- Tax position -------------------------------------------------------- */
+/* ---- Find the right solution --------------------------------------------
+   The three-tab chooser. It carries NO COPY OF ITS OWN: the tab labels are the
+   journey's own heads, each intro is that stage's own note, and the items are
+   AT_SERVICES entries named by slug — so editing a service's card text edits
+   it here too and the two can never drift apart.
 
-export const AT_TAX = {
-  head: "Your tax position starts with your accounting",
-  /* The source states these as five sentences:
-       "VAT starts with transactions."
-       "Corporate Tax starts with financial information."
-       "Financial statements depend on the books."
-       "Management reports use the same underlying numbers."
-       "Audit support relies on the records and evidence behind them."
-     They are split into subject / link / source because the page draws them as
-     a dependency map — five things and the one place each of them starts —
-     rather than setting them as a list of sentences. Recombining a row in
-     order gives the sentence back verbatim. */
-  points: [
-    { subject: "VAT", link: "starts with", source: "transactions" },
-    { subject: "Corporate Tax", link: "starts with", source: "financial information" },
-    { subject: "Financial statements", link: "depend on", source: "the books" },
-    { subject: "Management reports", link: "use", source: "the same underlying numbers" },
-    {
-      subject: "Audit support",
-      link: "relies on",
-      source: "the records and evidence behind them",
-    },
-  ],
-  body: [
-    "These are connected finance processes.",
-    "The stronger the financial foundation, the easier it becomes to report, review and manage everything built on top of it.",
-  ],
-  close:
-    "Tax Compliance Doesn’t Start With the Return. It Starts With the Records Behind It.",
-};
+   THE GROUPING IS THE ONE JUDGEMENT IN THIS BLOCK. The source document gives
+   eight services and four journey stages; it does not group them into three.
+   Books-and-reporting, tax-and-audit, planning-and-leadership is the split that
+   falls out of the journey — Foundation and Visibility together, the tax rail
+   that runs alongside them, then Planning and Leadership. It is the thing to
+   change if the client wants a different set of tabs.
 
-/* ---- Why VALUNXT --------------------------------------------------------- */
-
-export const AT_WHY: { head: string; body: string[] }[] = [
+   Two items in the last tab, not three, because that is how many services the
+   document puts there. The template renders what the array holds. */
+export const AT_SOLUTION: { tab: string; intro: string; slugs: string[] }[] = [
   {
-    head: 'One Finance Partner',
-    body: [
-      'Accounting, reporting, VAT, Corporate Tax and CFO-level support available through one wider team.',
-    ],
+    tab: AT_JOURNEY[0].head,
+    intro: `${AT_JOURNEY[0].note} ${AT_JOURNEY[1].note}`,
+    slugs: ['accounting-bookkeeping', 'financial-reporting', 'management-reporting'],
   },
   {
-    head: 'Start Small. Scale the Scope.',
-    body: [
-      'Begin with bookkeeping. Add reporting. Forecasting. Tax support. Finance leadership.',
-      'Use the capability your business needs as it grows.',
-    ],
+    tab: AT_JOURNEY_RAIL.head,
+    intro: AT_JOURNEY_RAIL.body.join(' '),
+    slugs: ['corporate-tax-services', 'vat-services', 'external-audit-support'],
   },
   {
-    head: 'Management Insight, Not Just Data Entry',
-    body: [
-      'The objective is not simply to record transactions.',
-      'It is to create reliable financial information management can actually use.',
-    ],
-  },
-  {
-    head: 'Senior Finance Capability',
-    body: ['Access deeper finance expertise when business questions become more complex.'],
-  },
-  {
-    head: 'Fixed-Fee Scope',
-    body: ['Agree the deliverables and commercial scope before the engagement begins.'],
-  },
-  {
-    head: 'Technology-Enabled',
-    body: ['ValuNxt works with commonly used accounting systems.'],
+    tab: AT_JOURNEY[3].head,
+    intro: `${AT_JOURNEY[2].note} ${AT_JOURNEY[3].note}`,
+    slugs: ['budgeting-forecasting', 'cfo-services'],
   },
 ];
 
-export const AT_SYSTEMS = ['Zoho Books', 'QuickBooks', 'Xero', 'Odoo', 'Tally'];
-
+/* Read by the intro band's heading, and the last survivor of the WHY block
+   that used to sit above it. */
 export const AT_WHY_CLOSE = 'One Finance Partner from Bookkeeping to Boardroom Decisions.';
-
-/* ---- Comparison ---------------------------------------------------------- */
-
-export const AT_COMPARE = {
-  head: 'Basic accounting support vs an integrated finance partner',
-  columns: ['Capability', 'Basic Accounting Support', 'ValuNxt Integrated Finance Support'],
-  rows: [
-    ['Bookkeeping', 'Core service', 'Available'],
-    ['Reconciliations', 'Core service', 'Available'],
-    ['Financial statements', 'Scope dependent', 'Dedicated capability'],
-    ['Management reporting', 'Additional capability required', 'Available'],
-    ['Budgeting & forecasting', 'Additional capability required', 'Available'],
-    ['VAT', 'Specialist support may be required', 'Available'],
-    ['Corporate Tax', 'Specialist support may be required', 'Available'],
-    ['Audit preparation', 'Scope dependent', 'External Audit Support'],
-    ['CFO support', 'Outside basic accounting', 'Part-Time CFO available'],
-    ['Scalability', 'Accounting-focused', 'Capability can expand with the business'],
-  ],
-  close: 'The Difference Is What Happens After the Books Are Done.',
-  note: [
-    'The right finance partner should not force the business to buy services it does not need.',
-    'But when management needs more than bookkeeping, the capability should be available.',
-  ],
-};
-
-/* ---- Commercial options -------------------------------------------------- */
-
-export const AT_OPTIONS: {
-  label: string;
-  price: string;
-  note: string;
-  cta: string;
-  href: string;
-}[] = [
-  {
-    label: 'Accounting & Bookkeeping',
-    price: 'From AED 2,000/month',
-    note: 'For businesses needing reliable outsourced monthly accounting.',
-    cta: 'Explore Accounting & Bookkeeping',
-    href: '/services/accounting-tax-services/accounting-bookkeeping/',
-  },
-  {
-    label: 'Reporting & Forecasting',
-    price: 'Request Fixed-Fee Pricing',
-    note: 'For Financial Statements, Management Reporting and Budgeting & Forecasting.',
-    cta: 'Discuss Your Reporting Needs',
-    href: '/free-consultation/',
-  },
-  {
-    label: 'VAT & Corporate Tax',
-    price: 'Request Scope & Pricing',
-    note: 'For VAT Advisory and Corporate Tax Return Filing.',
-    cta: 'Discuss Your Tax Requirements',
-    href: '/free-consultation/',
-  },
-  {
-    label: 'Part-Time CFO',
-    price: 'Custom Fixed-Fee Scope',
-    note: 'For businesses requiring senior finance leadership.',
-    cta: 'Discuss CFO Support',
-    href: '/free-consultation/',
-  },
-];
-
-/* ---- Capability without headcount ---------------------------------------- */
-
-export const AT_CAPABILITY = {
-  head: 'Build more finance capability without building the whole team',
-  lede: 'A growing company may need:',
-  roles: [
-    'A bookkeeper.',
-    'An accountant.',
-    'Management reporting.',
-    'Tax expertise.',
-    'Forecasting.',
-    'CFO-level input.',
-  ],
-  body: [
-    'It may not need six separate permanent hires.',
-    'Outsourcing can allow a growing business to access the finance capability it needs now and add deeper expertise when the business requires it.',
-  ],
-  close: ['Start with the problem you need solved today.', 'Add capability as the business grows.'],
-  cta: { label: 'Discuss Your Finance Setup', href: '/free-consultation/' },
-};
-
-/* ---- Industries ---------------------------------------------------------- */
-
-export const AT_INDUSTRIES: { head: string; body: string[] }[] = [
-  {
-    head: 'Real Estate & Construction',
-    body: [
-      'Projects, suppliers, subcontractors and long payment cycles can create significant financial complexity.',
-      'ValuNxt supports accounting, reporting, cash visibility, forecasting and tax requirements around these moving parts.',
-    ],
-  },
-  {
-    head: 'Trading & Import / Export',
-    body: [
-      'Supplier balances, customer credit and working-capital requirements can make financial visibility critical.',
-      'ValuNxt helps connect accounting, tax and reporting so management can understand what is owed, what is due and where cash is committed.',
-    ],
-  },
-  {
-    head: 'F&B & Hospitality',
-    body: [
-      'High transaction volumes, payroll, supplier costs and tight margins make timely financial information important.',
-      'ValuNxt supports bookkeeping, VAT, reporting and wider financial visibility.',
-    ],
-  },
-  {
-    head: 'Technology & Startups',
-    body: [
-      'Fast-growing companies can scale faster than their finance processes.',
-      'Start with reliable books and add reporting, forecasting and CFO-level support as the business grows.',
-    ],
-  },
-  {
-    head: 'Retail & E-Commerce',
-    body: [
-      'Sales, collections, refunds and large transaction volumes can create reconciliation complexity.',
-      'Structured accounting and reporting help management maintain a clearer financial picture.',
-    ],
-  },
-  {
-    head: 'Professional Services',
-    body: [
-      'Consultancies, agencies and professional firms need visibility into billing, collections, project profitability, payroll and cash.',
-      'ValuNxt helps turn those records into useful management information.',
-    ],
-  },
-];
-
-/* ---- Process ------------------------------------------------------------- */
-
-export const AT_PROCESS: { head: string; note: string }[] = [
-  {
-    head: 'Understand',
-    note: 'We review the current finance setup, systems and the problem management needs solved.',
-  },
-  {
-    head: 'Scope',
-    note: 'We agree what ValuNxt will manage and what remains with the internal team.',
-  },
-  { head: 'Onboard', note: 'Access, records, responsibilities and workflows are established.' },
-  { head: 'Deliver', note: 'ValuNxt runs the agreed Accounting, Reporting, Tax or finance scope.' },
-  { head: 'Scale', note: 'Add additional finance capability when the business requires it.' },
-];
-
-export const AT_PROCESS_RAIL = [
-  'Accounting',
-  'Reporting',
-  'Tax',
-  'Forecasting',
-  'CFO',
-];
-
-/* ---- FAQ ----------------------------------------------------------------- */
-
-/**
- * How many of the twelve the page shows.
- *
- * The source lists twelve; eight is what the page renders, so the block stays
- * a scannable column rather than a second document. All twelve stay in this
- * file — they are the client's copy, they are the natural source for FAQ
- * structured data later, and re-adding one is changing this number.
- *
- * The four below the line are the four whose answer the page already gives in
- * full: Management Reporting, Budgeting & Forecasting, Financial Statements
- * and External Audit Support each have a card in the eight-service grid
- * carrying the same "what it is / best for / outcome". The eight kept are the
- * ones the grid does NOT answer — scope, price, how to start, working with an
- * existing accountant — plus Corporate Tax and VAT, which are half the page's
- * subject and would be odd to leave out.
- */
-export const AT_FAQ_SHOWN = 8;
-
-export const AT_FAQ: { q: string; a: string[] }[] = [
-  {
-    q: 'What Accounting and Tax services does ValuNxt provide?',
-    a: [
-      'ValuNxt provides Accounting & Bookkeeping Outsourcing, Part-Time CFO Services, Management Reporting, Budgeting & Forecasting, Financial Statement Preparation & Review, External Audit Support, Corporate Tax Return Filing and VAT Advisory.',
-    ],
-  },
-  {
-    q: 'Can ValuNxt manage our accounting and tax together?',
-    a: [
-      'Yes. Accounting, VAT and Corporate Tax support can be coordinated through ValuNxt so the tax work remains connected with the underlying financial records.',
-    ],
-  },
-  {
-    q: 'How much does accounting cost in Dubai?',
-    a: [
-      'Pricing depends on transaction volume, complexity and scope. ValuNxt currently publishes Accounting & Bookkeeping from AED 2,000 per month, subject to the agreed engagement.',
-    ],
-  },
-  {
-    q: 'Can we outsource only bookkeeping?',
-    a: [
-      'Yes. A business can begin with Accounting & Bookkeeping Outsourcing without taking additional services and expand the scope later if needed.',
-    ],
-  },
-  {
-    q: 'Can ValuNxt work with our existing accountant?',
-    a: [
-      'Yes. The engagement can be structured around the capability already available internally, with ValuNxt providing specialist reporting, tax or senior finance support.',
-    ],
-  },
-  {
-    q: 'What does a Part-Time CFO do?',
-    a: [
-      'A Part-Time CFO provides senior finance support across areas such as cash-flow planning, budgeting, forecasting, financing discussions, management reporting and strategic financial decisions.',
-    ],
-  },
-  {
-    q: 'Do you provide Corporate Tax Return Filing?',
-    a: [
-      'Yes. ValuNxt supports the preparation, review and filing of UAE Corporate Tax Returns within the agreed engagement scope.',
-    ],
-  },
-  {
-    q: 'Can you help with VAT?',
-    a: [
-      'Yes. VAT Advisory covers compliance and advisory requirements while connecting VAT treatment with the accounting records and transactions behind it.',
-    ],
-  },
-  /* ---- Below AT_FAQ_SHOWN: kept for structured data and for swapping in.
-     Each of these four is answered in full by its own card in the eight-service
-     grid above, which is why these are the four that came out. ---- */
-  {
-    q: 'What is Management Reporting?',
-    a: [
-      'Management Reporting converts accounting information into decision-focused reports for leadership. Depending on scope, this can include management accounts, cash flow, KPIs, budget comparisons, profitability analysis and commentary.',
-    ],
-  },
-  {
-    q: 'Do you provide Budgeting & Forecasting?',
-    a: [
-      'Yes. ValuNxt provides Budgeting & Forecasting support to help management plan expected revenue, costs, cash requirements and financial scenarios.',
-    ],
-  },
-  {
-    q: 'Can ValuNxt help prepare financial statements?',
-    a: [
-      'Yes. ValuNxt provides Preparation & Review of Financial Statements based on the underlying accounting records and relevant reporting requirements.',
-    ],
-  },
-  {
-    q: 'Can ValuNxt support us during an external audit?',
-    a: [
-      'Yes. ValuNxt provides External Audit Support including audit-file preparation, reconciliations, schedules and auditor-query management.',
-      'ValuNxt supports the company through the audit. It does not act as the statutory external auditor.',
-    ],
-  },
-];
-
-/* ---- Lead form -----------------------------------------------------------
-   The source's own field list. It posts to /form-handler/ like every other
-   form on the site: that route matches lead fields by SUFFIX (full_name,
-   _email, phone, company), so the `at_` prefix is enough to keep these fields
-   distinct from the Contact and Free Consultation forms while still being
-   recognised and written to the enquiries table. */
-
-export const AT_FORM = {
-  head: 'Tell us what you need help with',
-  /* Read by SOURCE_MAP in the form handler, which turns it into the `source`
-     column the enquiries desk sorts on. */
-  formId: 'accounting-tax',
-  fields: [
-    { id: 'at_full_name', label: 'Name', type: 'text', required: true },
-    { id: 'at_email', label: 'Work Email', type: 'email', required: true },
-    { id: 'at_phone', label: 'Phone', type: 'tel', required: true },
-    { id: 'at_company', label: 'Company Name', type: 'text', required: false },
-  ],
-  serviceLabel: 'Service Required',
-  serviceOptions: [
-    'Accounting & Bookkeeping',
-    'Part-Time CFO',
-    'Management Reporting',
-    'Budgeting & Forecasting',
-    'Financial Statements',
-    'External Audit Support',
-    'Corporate Tax Return Filing',
-    'VAT Advisory',
-    'Not Sure / Need Guidance',
-  ],
-  messageLabel: 'Message',
-  button: 'Speak to a Finance Adviser',
-};
 
 /* ---- Closing ------------------------------------------------------------- */
 

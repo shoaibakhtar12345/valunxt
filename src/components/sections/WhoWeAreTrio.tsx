@@ -3,9 +3,15 @@
  * pages — India's `.vxn-wwa` block and the UAE's `.vxn-plat` block.
  *
  * Added below whatever that section already had; nothing above is touched, so
- * no copy is lost. The middle card is the brand gradient carrying the
- * wordmark's x as a window onto a photograph; the outer two are cream cards.
+ * no copy is lost. The middle card is the brand gradient; the outer two are cream cards.
  * Every card links somewhere that exists.
+ *
+ * WHAT FILLS THE BRAND CARD IS PER EDITION. India keeps the wordmark's x as a
+ * window onto a photograph, on the gradient. The UAE takes a texture across
+ * the whole card instead, by request — set `texture` on that edition's brand
+ * card and the plate goes behind everything and the x is not rendered. It is a
+ * field rather than a region check, so the two editions do not have to be read
+ * together to know which one you are looking at.
  *
  * The copy differs per edition — the UAE leads with accounting and tax, India
  * with the four investment verticals — so the content lives here keyed by
@@ -28,8 +34,12 @@ interface TrioCard {
 
 interface TrioContent {
   left: TrioCard;
-  /** The gradient card. `img` is the photograph seen through the x. */
-  brand: TrioCard & { img: string };
+  /**
+   * The gradient card. `img` is the photograph seen through the x — unless
+   * `texture` is set, in which case that plate fills the slot and the x is not
+   * drawn at all.
+   */
+  brand: TrioCard & { img: string; texture?: string };
   right: TrioCard;
 }
 
@@ -68,7 +78,10 @@ const CONTENT: Record<string, TrioContent> = {
       tag: 'The Group',
       title: 'RICS-Compliant Valuations Through Group Firm Reliant Surveyors',
       href: '/our-group/reliant-surveyors/',
+      /* Unused while `texture` is set; kept so removing the texture restores
+         the x window without hunting for a photograph. */
       img: 'services/valuation-and-advisory.webp',
+      texture: 'banners/texture-2.webp',
     },
     right: {
       tag: 'Guide',
@@ -124,13 +137,30 @@ export default function WhoWeAreTrio({ region }: { region: string }) {
       <PlainCard region={region} card={c.left} />
 
       <a className="vxn-trio__card vxn-trio__card--brand" href={rurl(region, c.brand.href)}>
+        {/* THE PLATE IS THE CARD, not a panel inside it: absolutely positioned
+            behind everything, so the tag, the arrow and the heading sit on the
+            texture rather than beside it. Decorative — the heading is the
+            card's whole message. */}
+        {c.brand.texture ? (
+          <div className="vxn-trio__tex" aria-hidden="true">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={rimg(region, c.brand.texture)} alt="" loading="lazy" />
+          </div>
+        ) : null}
+
         <div className="vxn-trio__top">
           <span className="vxn-trio__tag">{c.brand.tag}</span>
           <GoArrow />
         </div>
-        <div className="vxn-trio__x">
-          <LogoXWindow src={rimg(region, c.brand.img)} />
-        </div>
+
+        {/* No x where a texture fills the card — there is nothing left for it
+            to be a window onto. */}
+        {c.brand.texture ? null : (
+          <div className="vxn-trio__x">
+            <LogoXWindow src={rimg(region, c.brand.img)} />
+          </div>
+        )}
+
         <h3 className="vxn-trio__title">{c.brand.title}</h3>
       </a>
 

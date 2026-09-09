@@ -6417,3 +6417,11 @@ nav.elementor-nav-menu--dropdown .vxn-mega__grouprow::before {
   overflow-y: auto;
   overscroll-behavior: contain;
 }
+
+.vxn-ready {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: clamp(44px, 5vw, 84px) clamp(16px, 4vw, 48px) !important;
+  background: linear-gradient(105deg, #F6F4EF 0%, #F1F1F5 42%, #E6E9F7 100%);
+}

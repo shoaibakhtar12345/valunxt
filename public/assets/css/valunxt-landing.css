@@ -189,6 +189,11 @@
 
 /* ---- The gradient middle card ---- */
 .vxn-trio__card--brand {
+  /* isolation, so a plate at z-index -1 paints ABOVE this background rather
+     than behind it — see .vxn-trio__tex. The gradient stays as the ground: it
+     is what the card looks like for the moment before the plate has loaded,
+     and on any edition that sets no texture at all. */
+  isolation: isolate;
   background: var(--vxn-grad-card);
   border-color: transparent;
   color: #FFFFFF;
@@ -232,6 +237,48 @@
 
 .vxn-trio__x .vxn-xwin {
   width: min(64%, 250px);
+}
+
+/* THE PLATE IS THE CARD'S BACKGROUND, not a panel inside it. It fills the card
+   edge to edge behind the content — the card already clips to its own radius,
+   so the plate needs no radius of its own.
+
+   z-index:-1 inside the card's isolation puts it above the gradient and below
+   the tag, the arrow and the heading. */
+.vxn-trio__tex {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.vxn-trio__tex img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .8s var(--vxn-ease);
+}
+
+/* A scrim weighted to the two ends and open through the middle. The plate runs
+   from deep blue to bright arcs depending on where cover crops it, and both the
+   pill at the head and the heading at the foot are white — the middle carries
+   nothing, so it is left alone and the texture reads at full strength there. */
+.vxn-trio__tex::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+      rgba(8, 26, 92, .46) 0%,
+      rgba(8, 26, 92, .12) 30%,
+      rgba(8, 26, 92, .10) 58%,
+      rgba(8, 26, 92, .58) 100%);
+}
+
+.vxn-trio__card--brand:hover .vxn-trio__tex img {
+  transform: scale(1.06);
 }
 
 .vxn-trio__card--brand:hover .vxn-xwin__img {
@@ -1130,8 +1177,10 @@
   min-height: clamp(360px, 38vw, 548px);
 }
 
+/* The shared card fill runs blue -> violet -> magenta. This page carries no
+   purple, so the middle card takes the same blue ramp as the trio card. */
 .vxn-mosaic__card--grad {
-  background: var(--vxn-grad-card);
+  background: linear-gradient(150deg, #0E3FA8 0%, #1436D8 48%, #0B2DBE 100%);
 }
 
 .vxn-mosaic__card:hover,
@@ -1275,9 +1324,7 @@
   justify-content: end;
 }
 
-.elementor-kit-5 img{
-  border-radius: 0 !important;
-}
+
 
 .vxn-careers__media {
   position: relative;
@@ -1492,6 +1539,25 @@
   backdrop-filter: blur(3px) saturate(110%);
 }
 
+/* THE OPEN PANEL GETS A SCRIM TOO. The base band fades one out to nothing by
+   72% across, which is enough over a mid-toned photograph and not enough over
+   the accounting shot — a bright window fills its right half, and the heading,
+   the paragraph and the "Learn more" link all sit on it.
+
+   Two layers: the base ramp, deepened and carried further across, plus a flat
+   wash over the whole panel. The flat one does what the ramp cannot — it is
+   the top-right corner that fails, and a left-to-right gradient has already
+   given up by the time it reaches there. */
+.vxn-klay--six .vxn-klay__panel.is-active .vxn-klay__bg::after {
+  background:
+    linear-gradient(90deg,
+        rgba(9, 18, 30, .74) 0%,
+        rgba(9, 18, 30, .50) 38%,
+        rgba(9, 18, 30, .22) 70%,
+        rgba(9, 18, 30, .12) 100%),
+    linear-gradient(0deg, rgba(9, 18, 30, .22), rgba(9, 18, 30, .22));
+}
+
 /* Text only — no chip. The accent colours are exactly what the brand sheet
    sets; all this adds is a shadow to hold the letterforms' edges against the
    photograph, and the z-index that keeps the label out of the sheet's backdrop
@@ -1520,13 +1586,7 @@
    -------------------------------------------------------------------------- */
 /* Cream on the left running to a pale blue on the right, as in the reference —
    the texture on top supplies the bands. */
-.vxn-ready {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  padding: clamp(44px, 5vw, 84px) clamp(16px, 4vw, 48px);
-  background: linear-gradient(105deg, #F6F4EF 0%, #F1F1F5 42%, #E6E9F7 100%);
-}
+
 
 .vxn-ready__wash {
   position: absolute;
@@ -1628,7 +1688,7 @@
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 14px;
+  gap: 50px;
 }
 
 .vxn-ready__card {
@@ -1736,117 +1796,251 @@
 /* --------------------------------------------------------------------------
    12. .vxn-sub — the newsletter card
    -------------------------------------------------------------------------- */
-/* The dark colour stays only as the ground the artwork is laid over — if the
-   image is slow or missing, the section still reads as a deep navy field
-   rather than as a hole in the page. */
+/* Half brand gradient, half photograph, split down the middle, with a frosted
+   bar overlapping the two near the bottom.
+
+   THE HALVES MEET AT A HARD EDGE, on purpose. The bar is what crosses the join
+   — it starts on the gradient and finishes over the photograph — and a blend
+   between the two would leave it floating over mush instead of over a clean
+   change of material.
+
+   The dark colour stays as the ground under both halves: if the photograph is
+   slow or missing, the section still reads as a deep navy field rather than as
+   a hole in the page. */
 .vxn-sub {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  padding: clamp(30px, 3.4vw, 52px) clamp(16px, 4vw, 48px) clamp(40px, 4.4vw, 70px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: clamp(360px, 33vw, 480px);
   background: #071E3C;
 }
 
-/* Renamed from .vxn-sub__field: that name was also on the form's email field
-   group, so this rule was absolutely positioning the input to fill the card —
-   which is why the white pill spanned the whole width behind the copy. The form
-   has gone, and the name is now unambiguous. */
+.vxn-sub__panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* The bottom padding is the bar's room, and it has to clear the bar's own
+     height plus its inset — not just its inset. At 96px the four-line headline
+     finished 14px above the bar, which read as a collision even though it was
+     not one. */
+  padding: clamp(34px, 4vw, 62px) clamp(24px, 4vw, 70px) clamp(118px, 11vw, 178px);
+  background: linear-gradient(150deg, #0E3FA8 0%, #1436D8 48%, #0B2DBE 100%);
+}
+
+.vxn-sub__shot {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Renamed from .vxn-sub__field once, because that name was also on the form's
+   email field group and this rule was absolutely positioning the input to fill
+   the card. The form has gone; the name is unambiguous. */
 .vxn-sub__ground {
   position: absolute;
   inset: 0;
-  z-index: -2;
+  z-index: -1;
   width: 100%;
   height: 100% !important;
   object-fit: cover;
-  object-position: center 55%;
-  opacity: .85;
+  border-radius: 0 !important;
+  object-position: center 30%;
 }
 
-/* Holds the artwork back from the card's edges so the card still reads as a
-   distinct object sitting on the field. */
-/* .vxn-sub::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: radial-gradient(120% 90% at 50% 50%, rgba(4, 16, 34, .30) 0%, rgba(4, 16, 34, .74) 100%);
-  pointer-events: none;
-} */
+.vxn-sub__eyebrow {
+  display: block;
+  margin: 0 0 14px;
+  color: rgba(255, 255, 255, .82) !important;
+  font-size: clamp(14px, 1.2vw, 17px);
+  font-weight: 400;
+  line-height: 1.4;
+}
 
-.vxn-sub__card {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  max-width: 1520px;
-  margin: 0 auto;
-  padding: clamp(26px, 3vw, 46px) clamp(24px, 3.4vw, 56px);
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, .16);
-  background: linear-gradient(100deg, #1E44D6 0%, #1230CC 44%, #2A16B6 100%);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(20px, 3vw, 52px);
+.vxn-sub__head {
+  margin: 0;
+  max-width: 20ch;
+  /* MARKED, and it is load-bearing. This is an h2, and the theme sets heading
+     colour inside its own max-width media queries — so the headline was white
+     on desktop and black under 1024px, which is where the section stacks and
+     the type is largest. */
+  color: #FFFFFF !important;
+  font-size: clamp(22px, 2.4vw, 34px);
+  font-weight: 400;
+  line-height: 1.26;
+  letter-spacing: -.005em;
+}
+
+/* The bar. Frosted rather than solid, and denser at the left than the right:
+   the copy sits on the left and needs the contrast, while the right end stays
+   glassy enough to show the photograph moving under it. */
+.vxn-sub__bar {
+  position: absolute;
+  z-index: 2;
+  left: clamp(16px, 4vw, 56px);
+  right: clamp(16px, 4vw, 56px);
+  bottom: clamp(18px, 2.4vw, 38px);
+  display: flex;
   align-items: center;
+  justify-content: space-between;
+  gap: clamp(16px, 3vw, 48px);
+  padding: clamp(14px, 1.6vw, 24px) clamp(18px, 2.2vw, 38px);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, .55);
+  background: linear-gradient(100deg,
+      rgba(233, 238, 247, .95) 0%,
+      rgba(233, 238, 247, .90) 46%,
+      rgba(233, 238, 247, .66) 100%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(140%);
+  box-shadow: 0 18px 44px rgba(4, 16, 34, .28);
 }
 
-/* The faceted artwork is the point here, not a wash — it carries the card the
-   way the reference does. `screen` was lifting it to a pale haze; at normal
-   blending and this opacity the folds read as folds, and the gradient beneath
-   still sets the colour from blue at the left to indigo at the right. */
-.vxn-sub__texture {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  width: 100%;
-  height: 100% !important;
-  object-fit: cover;
-  object-position: center 38%;
-  opacity: .72;
-  mix-blend-mode: normal;
-}
-
-/* Keeps the copy side legible over the busiest part of the artwork. */
-.vxn-sub__card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: linear-gradient(90deg, rgba(9, 26, 120, .62) 0%, rgba(9, 26, 120, .28) 42%, rgba(9, 26, 120, 0) 68%);
-  pointer-events: none;
+/* Where backdrop-filter is unavailable the bar would be a flat translucent film
+   over a sharp photograph, so the fill goes solid. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .vxn-sub__bar {
+    background: #E9EEF7;
+  }
 }
 
 .vxn-sub__copy {
   margin: 0;
   max-width: 34ch;
-  color: #FFFFFF;
-  font-size: clamp(15px, 1.35vw, 18px);
-  font-weight: 600;
-  line-height: 1.55;
+  color: var(--vxn-ink);
+  font-size: clamp(15px, 1.35vw, 19px);
+  font-weight: 500;
+  line-height: 1.5;
 }
 
-/* The CTA that replaced the inline form. Sized like a pill with the round
-   arrow kept as its trailing mark, so the card keeps its shape without the
-   field beside it. */
+/* The field and the line under it that reports what happened. The wrapper is
+   what the bar lays out; the message sits below the well so appearing does not
+   change the well's own size. */
+.vxn-sub__formwrap {
+  flex: none;
+  width: min(440px, 100%);
+}
+
+/* The field. A white rounded well holding the input and the button, with the
+   button inset a few pixels inside it rather than sitting beside it — one
+   object on the bar instead of two. */
+.vxn-sub__form {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 6px 6px 10px;
+  border-radius: 12px;
+  background: #FFFFFF;
+  border: 1px solid rgba(11, 45, 190, .14);
+  box-shadow: 0 8px 22px rgba(4, 16, 34, .12);
+  transition: border-color .25s var(--vxn-ease), box-shadow .25s var(--vxn-ease);
+}
+
+/* The focus ring belongs to the well, not to the bare input inside it: the
+   input has no border of its own, so its own ring would draw inside the well
+   and read as a second box. */
+.vxn-sub__form:focus-within {
+  border-color: rgba(11, 45, 190, .48);
+  box-shadow: 0 8px 22px rgba(4, 16, 34, .12), 0 0 0 3px rgba(11, 45, 190, .16);
+}
+
+/* Present for screen readers and for the input's accessible name; the
+   placeholder is not a label — it disappears on the first keystroke. */
+.vxn-sub__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* MARKED, all of it, and for the same reason the headline above is: the theme
+   styles bare input and button elements inside its own max-width media
+   queries, at a specificity a single class cannot reach. Unmarked, this input
+   picked up a border, a white fill, a 4px radius and 16px padding below 767px
+   — a box drawn inside the box it is supposed to be part of — while looking
+   correct on desktop. */
+.vxn-sub__input {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: auto !important;
+  padding: 11px 6px 11px 12px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  color: var(--vxn-ink) !important;
+  font-family: inherit;
+  font-size: 15px !important;
+  line-height: 1.3;
+}
+
+.vxn-sub__input:focus {
+  outline: none;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+
+.vxn-sub__input::placeholder {
+  color: #8A93A6;
+  opacity: 1;
+}
+
+/* Inverted from the version that sat on blue glass: the well is white now, so a
+   white pill would disappear into it. It is a submit button rather than a link,
+   so it also has to shed the browser's own button styling. */
 .vxn-sub__cta {
-  justify-self: end;
+  flex: none;
   display: inline-flex;
   align-items: center;
   gap: 14px;
-  padding: 7px 7px 7px 26px;
-  border-radius: 999px;
-  background: #FFFFFF;
+  padding: 7px 7px 7px 26px !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  background: #0B2DBE;
+  font-family: inherit;
+  cursor: pointer;
   text-decoration: none !important;
-  transition: transform .25s var(--vxn-ease), box-shadow .25s var(--vxn-ease);
+  transition: box-shadow .25s var(--vxn-ease), background-color .25s var(--vxn-ease);
 }
 
+/* NO LIFT ON HOVER. The pill sits inside the field's well now; raising it two
+   pixels moved it out of a container it is supposed to be seated in. */
 .vxn-sub__cta:hover,
 .vxn-sub__cta:focus-visible {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 32px rgba(4, 16, 34, .34);
+  background: #1740D8;
+  box-shadow: 0 10px 24px rgba(4, 16, 34, .28);
+}
+
+.vxn-sub__cta[disabled] {
+  opacity: .72;
+  cursor: default;
+}
+
+/* Empty until there is something to say, and it takes no room while empty:
+   :empty rather than a hidden class, so the markup carries no state. */
+.vxn-sub__msg {
+  margin: 10px 2px 0;
+  color: #14532D;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.vxn-sub__msg:empty {
+  display: none;
+}
+
+.vxn-sub__msg.is-error {
+  color: #8A1C1C;
 }
 
 .vxn-sub__cta-label {
-  color: var(--vxn-ink) !important;
+  color: #FFFFFF !important;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: .08em;
@@ -1862,8 +2056,8 @@
   height: 40px;
   flex: none;
   border-radius: 50%;
-  background: var(--vxn-violet);
-  color: #FFFFFF;
+  background: #FFFFFF;
+  color: #0B2DBE;
   transition: background-color .25s var(--vxn-ease), transform .25s var(--vxn-ease);
 }
 
@@ -1874,7 +2068,7 @@
 }
 
 .vxn-sub__cta:hover .vxn-sub__cta-go {
-  background: #B01DF2;
+  background: #EAF0FF;
   transform: rotate(45deg);
 }
 
@@ -2028,17 +2222,40 @@
    -------------------------------------------------------------------------- */
 @media (max-width: 1024px) {
 
-  .vxn-ready__inner,
-  .vxn-sub__card {
+  .vxn-ready__inner {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* One column: the gradient, then the photograph, then the bar in flow under
+     both. The bar is drawn overlapping a vertical join, and there is no
+     vertical join left to overlap. */
+  .vxn-sub {
+    grid-template-columns: minmax(0, 1fr);
+    min-height: 0;
+  }
+
+  .vxn-sub__panel {
+    padding: clamp(30px, 5vw, 48px) clamp(20px, 5vw, 44px);
+  }
+
+  .vxn-sub__shot {
+    aspect-ratio: 16 / 7;
+  }
+
+  .vxn-sub__bar {
+    position: static;
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+  }
+
+  .vxn-sub__formwrap {
+    width: min(420px, 100%);
   }
 
   .vxn-ready__title {
     max-width: none;
-  }
-
-  .vxn-sub__cta {
-    justify-self: start;
   }
 
   .vxn-foot__mid {
@@ -2064,9 +2281,31 @@
     display: none;
   }
 
+  /* The bar's two halves stop fitting on one line well before the copy runs
+     out of room. */
+  .vxn-sub__bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .vxn-sub__formwrap {
+    width: 100%;
+  }
+
   .vxn-sub__cta {
-    padding: 6px 6px 6px 20px;
-    gap: 12px;
+    padding: 6px 6px 6px 18px !important;
+    gap: 10px;
+  }
+
+  /* The label is the first thing to go when the well is 320px wide: the pill
+     already says what the button does. */
+  .vxn-sub__cta-label {
+    display: none;
+  }
+
+  .vxn-sub__cta {
+    padding: 6px !important;
   }
 
   .vxn-sub__cta-go {
@@ -2156,7 +2395,6 @@
 .vxn-ae-home .vxn-mosaic,
 .vxn-ae-home .vxn-careers,
 .vxn-ae-home .vxn-ready,
-.vxn-ae-home .vxn-sub,
 .vxn-ae-home .elementor-element-c50d7c9,
 .vxn-ae-home .elementor-element-413d07d {
   padding: 40px 0 !important;
@@ -2165,9 +2403,12 @@
 }
 
 /* The insights heading and its carousel are two containers making one section,
-   so they share a single 40px band rather than stacking two. */
+   so they share a single 40px band rather than stacking two — but not with
+   nothing between them. At 0 the first row of thumbnails began on the exact
+   pixel the heading block ended, and the two read as one object: the heading's
+   descenders sat on the images. */
 .vxn-ae-home .elementor-element-c50d7c9 {
-  padding-bottom: 0 !important;
+  padding-bottom: clamp(24px, 2.6vw, 44px) !important;
 }
 
 .vxn-ae-home .elementor-element-413d07d {
@@ -2182,11 +2423,19 @@
 .vxn-ae-home .vxn-spotlight__inner,
 .vxn-ae-home .vxn-mosaic__grid,
 .vxn-ae-home .vxn-ready__inner,
-.vxn-ae-home .vxn-sub__card,
 .vxn-ae-home .vxn-trio-solo .vxn-trio {
   max-width: min(1520px, calc(100% - var(--vxn-gutter) * 2));
   margin-left: auto;
   margin-right: auto;
+}
+
+/* .vxn-sub runs edge to edge and is inset by nothing: it is two full-bleed
+   halves with a bar floating on them, so the band padding and the max-width
+   inset the other sections take would both fight it. */
+.vxn-ae-home .vxn-sub {
+  padding: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 /* The insights containers keep their own Elementor inner, which already
@@ -2224,4 +2473,29 @@
    line up. */
 .vxn-ae-home .vxn-trio-solo {
   max-width: none;
+}
+
+/* --------------------------------------------------------------------------
+   16. /en-ae/ — no purple in the services labels
+
+   The shared band gives panels 1 and 3 a violet (#A97BFF) and a magenta
+   (#FF3B9A). Neither belongs on this page.
+
+   They are NOT replaced with #0B2DBE. That colour's relative luminance is
+   .058, which means it cannot reach 4.5:1 against ANY backdrop darker than
+   itself — on the glass here it measures 1.57:1, i.e. invisible. #0B2DBE works
+   on this page as a fill with white on it, which is where it is used (the
+   subscribe CTA, the mosaic card, the newsletter gradient); as type on a dark
+   panel it needs a tint. These are two blues from the same family, at 6.9:1
+   and 5.7:1 on the lightest backdrop the photographs produce.
+
+   Panels 5 and 6 are already scoped this way in the brand sheet; matching that
+   specificity plus a class is what wins here.
+   -------------------------------------------------------------------------- */
+.vxn-klay--six .vxn-klay__panel:nth-child(1) .vxn-klay__label {
+  color: #8FB7FF;
+}
+
+.vxn-klay--six .vxn-klay__panel:nth-child(3) .vxn-klay__label {
+  color: #5AA9FF;
 }
