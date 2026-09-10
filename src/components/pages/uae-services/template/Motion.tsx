@@ -1,7 +1,7 @@
 'use client';
 
 /**
- * The Accounting & Tax page's motion layer.
+ * The UAE service template's motion layer.
  *
  * WORKS BY SELECTOR, NOT BY WRAPPER. The alternative is a <Reveal> around every
  * block, which means the body file carries animation concerns in forty places
@@ -17,20 +17,20 @@
  * revealed rather than left waiting for an intersection that will not come, and
  * a timeout sweeps the whole page after four seconds whatever the observer did.
  *
- * THE TEXTURES. `.at-zoom` media is driven by one rAF loop over whatever is
+ * THE PLATES. `.at-zoom` media is driven by one rAF loop over whatever is
  * currently in view — not a scroll listener per element — and it writes two
  * custom properties the stylesheet turns into a transform:
  *
  *   --at-z   scale. 1 mid-screen, lifting to 1.12 at either end of the
  *            element's travel: a zoom-out as it arrives, back in as it leaves.
  *   --at-p   drift, -1..1 across the same travel. The stylesheet multiplies it
- *            into a translate so a texture moves against the scroll while the
+ *            into a translate so a plate moves against the scroll while the
  *            copy over it stays put. Parallax and zoom share one loop and one
  *            measurement, because they are the same measurement.
  *
  * Both are written as properties rather than as a transform string so the
- * stylesheet keeps control of the curve, the distance and the axis — a texture
- * behind a full-bleed band wants a different throw from one inside a card.
+ * stylesheet keeps control of the curve, the distance and the axis — a plate
+ * behind a full-bleed banner wants a different throw from one inside a card.
  *
  * COST. One IntersectionObserver for the reveals, one for the zoom's in-view
  * set, one rAF loop that only runs while something is in view and stops itself
@@ -47,9 +47,6 @@ const GROUPS: { sel: string; variant: string; stagger?: boolean }[] = [
   { sel: '.at-intro__point', variant: 'up', stagger: true },
   { sel: '.at-intro__chips, .at-intro__ctas', variant: 'up', stagger: true },
   { sel: '.at-intro__figure', variant: 'right' },
-  { sel: '.at-proof__item', variant: 'up', stagger: true },
-  /* The banner's three things. (.at-prob__q went with the six questions, .at-q
-     with the three-block layout before it, .at-step with the ladder.) */
   { sel: '.at-prob__panel > *', variant: 'up', stagger: true },
   /* THE INNER, NOT THE PANEL. Revealing .at-acc__panel put data-anim on the
      element that owns the strip's flex-grow transition, and [data-anim='in']
@@ -64,69 +61,21 @@ const GROUPS: { sel: string; variant: string; stagger?: boolean }[] = [
   { sel: '.at-talk__copy > *', variant: 'up', stagger: true },
 ];
 
-export default function AccountingTaxMotion() {
+export default function ServiceTemplateMotion() {
   useEffect(() => {
     const root = document.querySelector<HTMLElement>('.at-root');
     if (!root) return;
 
-    const cleanups: (() => void)[] = [];
-
-    /* ---------- 0. The scrolling tables ----------
-       The decision table and the comparison table are wider than a phone and
-       have always scrolled sideways; nothing said so, which on a phone looks
-       like a table with its second column cropped off rather than one you can
-       drag. This marks the wrapper .is-scrollable when the table really is
-       wider than its box — measured, not guessed from a breakpoint — which
-       turns on the edge fade and the "Swipe" line above it, and marks .is-end
-       when the reader reaches the right so the cue stops once it is spent.
-
-       IT RUNS BEFORE THE REDUCED-MOTION GUARD ON PURPOSE. This is an
-       affordance, not an animation: someone who has asked for less motion still
-       needs to be told the table scrolls. Its only moving part, the nudge on
-       the glyph, is turned off by the stylesheet's own media query. */
-    for (const wrap of root.querySelectorAll<HTMLElement>('.at-tablewrap')) {
-      const scroller = wrap.querySelector<HTMLElement>('.at-tablescroll');
-      if (!scroller) continue;
-      /* The hint is the wrapper's previous sibling where one was written. */
-      const hint = wrap.previousElementSibling?.classList.contains('at-swipe')
-        ? (wrap.previousElementSibling as HTMLElement)
-        : null;
-
-      const sync = () => {
-        const over = scroller.scrollWidth - scroller.clientWidth;
-        /* 2px, not 0: sub-pixel layout leaves a fractional overflow on tables
-           that fit, and a cue on a table nobody can scroll is worse than none. */
-        const scrollable = over > 2;
-        wrap.classList.toggle('is-scrollable', scrollable);
-        wrap.classList.toggle('is-end', scrollable && scroller.scrollLeft >= over - 2);
-        hint?.classList.toggle('is-shown', scrollable);
-      };
-
-      sync();
-      scroller.addEventListener('scroll', sync, { passive: true });
-      cleanups.push(() => scroller.removeEventListener('scroll', sync));
-
-      if (typeof ResizeObserver !== 'undefined') {
-        const ro = new ResizeObserver(sync);
-        ro.observe(scroller);
-        cleanups.push(() => ro.disconnect());
-      } else {
-        window.addEventListener('resize', sync, { passive: true });
-        cleanups.push(() => window.removeEventListener('resize', sync));
-      }
-    }
-
     /* Asked for less motion: nothing is marked pending, so the stylesheet's
-       visible default stands and no loop ever starts. The table cues above are
-       already wired, and the cleanups collected for them still run. */
-    const stop =
+       visible default stands and no loop ever starts. */
+    if (
       window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
-      typeof IntersectionObserver === 'undefined';
-    if (stop) {
-      return () => {
-        for (const fn of cleanups) fn();
-      };
+      typeof IntersectionObserver === 'undefined'
+    ) {
+      return;
     }
+
+    const cleanups: (() => void)[] = [];
 
     /* ---------- 1. Reveal on scroll ---------- */
 
@@ -161,8 +110,8 @@ export default function AccountingTaxMotion() {
         if (g.stagger && el.parentElement) {
           const n = seen.get(el.parentElement) ?? 0;
           seen.set(el.parentElement, n + 1);
-          /* Capped: a twelve-item FAQ should not make the last one wait most
-             of a second after the first. */
+          /* Capped: an eight-panel strip should not make the last one wait
+             most of a second after the first. */
           el.style.setProperty('--at-delay', `${Math.min(n, 7) * 70}ms`);
         }
         pending.push(el);

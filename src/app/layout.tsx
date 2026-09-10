@@ -19,8 +19,9 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import { headers } from 'next/headers';
 import { vxnSeoOrigin } from '@/lib/seo';
-import { vxnRegionData } from '@/lib/region';
+import { BASE, vxnRegionData } from '@/lib/region';
 import { pageConfig, resolveRequest } from '@/lib/pages';
+import { UAE_FACE_CLASS, UAE_FACE_CSS, withUaeFace } from '@/lib/uae-typography';
 import HeadAssets, { SiteFavicons } from '@/components/layout/HeadAssets';
 import { PRELOADER_GATE_SCRIPT } from '@/components/layout/Preloader';
 import { realEstateRequest } from '@/real-estate/lib/routes';
@@ -128,14 +129,22 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
      to the branch below and 404s in the site's own chrome, styled. */
   const realEstate = realEstateRequest(path);
   if (realEstate) {
+    /* The one thing from the host that does reach in: the UAE face. The module
+       declares Forum and DM Sans for itself, which is right for /en-in/ and
+       wrong under /en-ae/, where the whole market runs Sanomat Sans on client
+       instruction. The face sheet is scoped to a body class, so the India
+       edition of the module is untouched, and it names a family and nothing
+       else, so the module's own sizes and weights stand. */
+    const uae = realEstate.region === 'en-ae';
     return (
       <html lang={vxnRegionData(realEstate.region).lang}>
         <head>
           <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
           <SiteFavicons />
           <style dangerouslySetInnerHTML={{ __html: RE_DOCUMENT_CSS }} />
+          {uae ? <link rel="stylesheet" href={`${BASE}${UAE_FACE_CSS}`} media="all" /> : null}
         </head>
-        <body>
+        <body className={uae ? UAE_FACE_CLASS : undefined}>
           {children}
           {/* Google tag (gtag.js) — the same one the rest of the site runs. */}
           <Script src="https://www.googletagmanager.com/gtag/js?id=G-3LN0QDVS2F" strategy="afterInteractive" />
@@ -144,6 +153,15 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       </html>
     );
   }
+
+  /* A URL the registry has never heard of — a 404, or a page created in the
+     admin panel — still renders in the market it was asked for, so under
+     /en-ae/ it takes the UAE face like every registered page. withUaeFace is a
+     no-op outside that market and idempotent on a page resolveRequest has
+     already decorated, so this line changes nothing for anything else. The
+     head keeps the 404 template's stylesheets and the body keeps the CMS class
+     list, exactly as before. */
+  const doc = withUaeFace(page ?? { ...FALLBACK, body: CMS_BODY_CLASS }, region);
 
   return (
     /* suppressHydrationWarning on both: the intro gate below adds a class to
@@ -155,9 +173,9 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <noscript>
           <style>{`.elementor-invisible{visibility:visible !important;}`}</style>
         </noscript>
-        <HeadAssets page={page ?? FALLBACK} />
+        <HeadAssets page={doc} />
       </head>
-      <body className={page?.body ?? CMS_BODY_CLASS} suppressHydrationWarning>
+      <body className={doc.body} suppressHydrationWarning>
         {/* The intro gate reads sessionStorage and must settle before the first
             paint, so it is the one script that runs ahead of hydration. It only
             touches <html>, which is why that element suppresses the warning. */}

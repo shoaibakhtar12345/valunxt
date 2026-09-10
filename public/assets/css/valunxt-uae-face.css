@@ -1,0 +1,226 @@
+/* =============================================================================
+   VALUNXT — the UAE face
+
+   Sanomat Sans, on every page under /en-ae/. Loaded through `site_css`, which
+   HeadAssets emits LAST, and scoped by `body.vxn-uae-face` — a class the same
+   helper adds, so a page can never get one without the other. See
+   lib/uae-typography.ts, and lib/pages.ts for where it is applied.
+
+   THIS SHEET NAMES A FAMILY AND ONE WEIGHT. Sizes and line heights are
+   untouched by design: the market's type SCALE lives in valunxt-uae-type.css
+   and applies to the home page and the services section only, as it always
+   has. Every other UAE page keeps whatever sizes it had.
+
+   The weight is the exception, added on client instruction (20260910, the
+   same day the face landed): every heading, h1 through h6, on every UAE page
+   — services and sub-services included — sits at 400. It lives here rather
+   than in the scale sheet because "every UAE page" is exactly this sheet's
+   reach and not that one's. See THE HEADING WEIGHT at the foot.
+
+   ---------------------------------------------------------------------------
+   IT REPLACED TWO FAMILIES. Until 20260910 the UAE ran Forum on h1/h2 and Asap
+   Sharp on everything else, from the type sheet. Both are gone from this market
+   on client instruction; forum.css stays in HeadAssets because India still
+   sets it, and asapsharp.css is no longer linked anywhere.
+
+   ---------------------------------------------------------------------------
+   THE CUTS
+
+   Nine static OpenType files in public/sanomat-sans/, declared at the weight
+   each file itself carries in its OS/2 table (read, not assumed):
+
+     Hairline 100   Thin 150   XLight 200   Light 300   Regular 400
+     Medium   500   Bold 700   XBold  800   Black 900
+
+   There is NO 600 and there are NO ITALICS. Anything set to font-weight:600 —
+   the mega menu's tabs, the CTAs, the eyebrows on the service pages — takes
+   Bold under the CSS font-matching rule (above 500, the browser looks upward
+   first), and italics are synthesised obliques. If 600 reads too heavy, the
+   one-line fix is to widen the Medium face to `font-weight: 500 600` below;
+   500 and 600 then draw the same cut.
+
+   The file names carry a space, encoded here as %20. They are referenced where
+   the client placed them rather than renamed. Regular and Medium are preloaded
+   by HeadAssets — see UAE_FACE_PRELOAD — because they are the body and every
+   heading; the other seven load when something first asks for them.
+
+   ---------------------------------------------------------------------------
+   WHY THE SELECTOR IS WRITTEN THREE CLASSES DEEP
+
+   `body.vxn-uae-face h2` would be (0,1,2). Surveyed across every stylesheet a
+   UAE page can load, the strongest competing font-family declaration is
+
+     .elementor-262 .vxn-ind-intro h2.vxn-ind-intro__title   (0,3,1) !important
+
+   and a dozen shared sections set Forum at (0,2,1) !important — CommunitySection,
+   FaqSection, LeadershipSection, PlatformSection and the rest. Those files
+   render on /en-in/ too, where Forum is still the face, so they cannot simply
+   be edited. Repeating the body class (it really is on <body>; it just counts
+   three times) puts this rule at (0,3,2) and it wins against all of them.
+
+   ICON FONTS ARE EXCLUDED, the same way the type sheet always excluded them.
+   Font Awesome, Elementor's eicons and the theme's vamtam-theme set live at
+   letter codepoints; give one of their elements this family and the icon
+   renders as a letter. `<i>` is not targeted at all — it is almost always an
+   icon and inherits correctly when it is not — and span/div carry the class
+   guards. Pseudo-element icons declare their own face and are unaffected.
+   ============================================================================= */
+
+@font-face {
+  font-family: "Sanomat Sans";
+  font-style: normal;
+  font-weight: 100;
+  font-display: swap;
+  src: url("/sanomat-sans/Sanomat%20SansHairline.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Sanomat Sans";
+  font-style: normal;
+  font-weight: 150;
+  font-display: swap;
+  src: url("/sanomat-sans/Sanomat%20SansThin.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Sanomat Sans";
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: url("/sanomat-sans/Sanomat%20SansXLight.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Sanomat Sans";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("/sanomat-sans/Sanomat%20SansLight.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Sanomat Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/sanomat-sans/Sanomat%20SansRegular.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Sanomat Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/sanomat-sans/Sanomat%20SansMedium.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Sanomat Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/sanomat-sans/Sanomat%20SansBold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Sanomat Sans";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/sanomat-sans/Sanomat%20SansXBold.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Sanomat Sans";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("/sanomat-sans/Sanomat%20SansBlack.otf") format("opentype");
+}
+
+/* =============================================================================
+   THE FAMILY
+   ============================================================================= */
+
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face h1,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face h2,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face h3,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face h4,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face h5,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face h6,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face p,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face a,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face li,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face dt,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face dd,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face td,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face th,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face caption,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face blockquote,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face q,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face cite,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face figcaption,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face label,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face legend,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face summary,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face time,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face address,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face abbr,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face small,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face strong,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face b,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face em,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face mark,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face sup,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face sub,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face del,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face ins,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face s,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face u,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face button,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face input,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face select,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face option,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face textarea,
+/* The two containers icons actually live in, guarded. */
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face span:not([class*="icon"]):not([class*="eicon"]):not([class*="fa-"]),
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face div:not([class*="icon"]):not([class*="eicon"]):not([class*="fa-"]) {
+  font-family: "Sanomat Sans", "Helvetica Neue", Arial, sans-serif !important;
+}
+
+/* =============================================================================
+   THE HEADING WEIGHT — 400, h1 through h6, on every UAE page
+
+   By client instruction. Sanomat Sans ships a real Regular cut, so this is a
+   designed weight on every level, not a synthesis.
+
+   IT HAS TO WIN, and it is written to. The scale sheet used to set 500 at this
+   same (0,3,2) and the survey behind that rule found nothing heavier among
+   the page sheets: the service template sets its banner head at 500 and its
+   strip cards at 600, both at (0,1,0) with !important; the bookkeeping page
+   sets its hero at 300 at (0,2,0); the Elementor kit reaches (0,3,0) with no
+   !important at all. (0,3,2) with !important clears every one of them, and
+   they are now dead declarations rather than wrong ones.
+
+   The heading widget's inner element is covered too — Elementor puts the text
+   in a child of the tag, and a weight set on the child would survive the rule
+   on the parent. The breadcrumb line the scale sheet holds at 500 is not a
+   heading and is not touched. */
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face h1,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face h2,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face h3,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face h4,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face h5,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face h6 {
+  font-weight: 400 !important;
+}
+
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face h1 .elementor-heading-title,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face h2 .elementor-heading-title,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face h3 .elementor-heading-title,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face h4 .elementor-heading-title,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face h5 .elementor-heading-title,
+body.vxn-uae-face.vxn-uae-face.vxn-uae-face h6 .elementor-heading-title {
+  font-weight: inherit !important;
+}

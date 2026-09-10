@@ -13,7 +13,7 @@
  */
 import rawConfigs from '@/data/page-configs.json';
 import type { PageConfig } from './page-config';
-import { withUaeType } from './uae-typography';
+import { withUaeFace, withUaeType } from './uae-typography';
 import { vxnRegion, vxnRegionExists, vxnServiceBySlug, vxnSubService } from './region';
 import { uaeServiceConfig, uaeSubServiceConfig } from './uae-service-pages';
 
@@ -121,13 +121,19 @@ export function resolveRequest(path: string): { region: string; page: PageConfig
  * the stylesheet up (its config is derived, and derivedPage runs here) while
  * /en-ae/ and /en-ae/services/capital-advisory/ did not.
  *
- * SCOPE is the market home page and everything under /services/, which is what
- * was asked for. About, Contact, Blogs and the rest of /en-ae/ are untouched;
- * widening it is one more test on `rest`.
+ * TWO SCOPES. The FACE — Sanomat Sans — goes on every page in the market, by
+ * client instruction (20260910). The SCALE — the sizes, weights and line
+ * heights in valunxt-uae-type.css — stays on the market home page and the
+ * services section, which is what was asked for when it was built, and the
+ * same instruction said to leave every size, weight and line height as it is.
+ * About, Contact, Blogs and the rest therefore change face and nothing else.
+ *
+ * The 404 fallback and the real estate module do not pass through here; the
+ * root layout gives them the face itself.
  */
 function uaeType(page: PageConfig | null, region: string, rest: string): PageConfig | null {
   if (!page || region !== 'en-ae') return page;
-  if (rest !== '/' && !rest.startsWith('/services/')) return page;
+  if (rest !== '/' && !rest.startsWith('/services/')) return withUaeFace(page, region);
   return withUaeType(page, region);
 }
 

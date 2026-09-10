@@ -101,21 +101,21 @@ function config({
 }
 
 /**
- * Stylesheets a single service page needs beyond the shared five.
+ * Stylesheets every service page needs beyond the shared five.
  *
- * Accounting & Tax carries the "Find the Right Solution" tab block, which is
- * the home page's section reused verbatim — so it needs the home page's own
- * captured stylesheet (17) and the blur-background template inside it (7162),
- * exactly as /our-group/valunxt-corporate-services/ does for the same block.
- * Both are scoped under .elementor-17 / .elementor-7162, so they reach nothing
- * outside the markup that asks for them.
+ * The service template carries the "Find the Right Solution" tab block, which
+ * is the home page's section reused verbatim — so it needs the home page's
+ * own captured stylesheet (17) and the blur-background template inside it
+ * (7162), exactly as /our-group/valunxt-corporate-services/ does for the same
+ * block. Both are scoped under .elementor-17 / .elementor-7162, so they reach
+ * nothing outside the markup that asks for them.
  *
- * Keyed by slug rather than added to POST_CSS because post-17.css is 250KB and
- * the other five UAE service pages have no use for it.
+ * This was keyed by slug while only Accounting & Tax rendered the block —
+ * post-17.css is 250KB and the other five had no use for it. All six render
+ * the template now (see components/pages/uae-services/index.ts), so all six
+ * load it. The sub-pages do not: they are not on the template.
  */
-const EXTRA_CSS: Record<string, string[]> = {
-  'accounting-tax-services': ['17', '7162'],
-};
+const SERVICE_EXTRA_CSS = ['17', '7162'];
 
 /** The page at /services/<service>/. */
 export function uaeServiceConfig(service: Service, written = false): PageConfig {
@@ -124,7 +124,7 @@ export function uaeServiceConfig(service: Service, written = false): PageConfig 
     name,
     path: `/services/${service.slug}/`,
     heroImage: service.img,
-    extraCss: service.slug ? EXTRA_CSS[service.slug] : undefined,
+    extraCss: SERVICE_EXTRA_CSS,
     desc: written
       ? `${name} in the UAE from VALUNXT.`
       : `${name} in the UAE from VALUNXT — coming soon.`,

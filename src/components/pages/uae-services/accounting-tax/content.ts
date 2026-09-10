@@ -18,12 +18,14 @@
  * hero, proof, a short problem statement, then THE EIGHT SERVICE CARDS — "the
  * commercial centre of the page" — and "do not allow generic accounting
  * education to push the eight services down the page". The section order in
- * AccountingTaxBody follows that, which is why the problem section is three
+ * ServiceTemplateBody follows that, which is why the problem section is three
  * short blocks and not the essay the source could support.
  *
  * SUB-SERVICE LINKS resolve through vxnServices('en-ae'), so every `slug` below
  * exists in that registry and the eight cards cannot point at a 404.
  */
+
+import type { ServiceTemplateContent } from '../template/types';
 
 export interface AtService {
   /** The card's title, and the decision tool's destination label. */
@@ -312,4 +314,95 @@ export const AT_CLOSE = {
     'CFO support helps management decide what comes next.',
   ],
   positioningClose: 'One Finance Partner—from Bookkeeping to Boardroom Decisions.',
+};
+
+/* ---- The photographs ------------------------------------------------------
+   A photograph per service, for the strip. Same candidate convention as the
+   rest of the market: a purpose-shot filename first, an existing library
+   photograph behind it, so commissioning eight proper shots is a drop into
+   uploads/services/ and no code change at all.
+
+   The library files are picked for what they show, not for what they are
+   called — services-2 is the one abstract of the eight because forecasting
+   has nothing literal to photograph. accounting-and-tax-services.webp is not
+   used here: it is the 6206x3888 original, and the chooser already spends it. */
+const EXPLORE_FIGURE: Record<string, string[]> = {
+  'accounting-bookkeeping': ['services/at-explore-accounting-bookkeeping.webp', 'new-folder/services-1.webp'],
+  'cfo-services': ['services/at-explore-cfo-services.webp', 'new-folder/client-success-2.webp'],
+  'management-reporting': ['services/at-explore-management-reporting.webp', 'new-folder/services-3.webp'],
+  'budgeting-forecasting': ['services/at-explore-budgeting-forecasting.webp', 'new-folder/services-2.webp'],
+  'financial-reporting': ['services/at-explore-financial-reporting.webp', 'new-folder/insights-2.webp'],
+  'external-audit-support': ['services/at-explore-external-audit-support.webp', 'new-folder/insights-3.webp'],
+  'corporate-tax-services': ['services/at-explore-corporate-tax-services.webp', 'homepage/client-2.webp'],
+  'vat-services': ['services/at-explore-vat-services.webp', 'new-folder/insights-1.webp'],
+};
+
+/* ---- The page, as the template reads it -----------------------------------
+   Everything above is the source document, kept in its own shape because the
+   decision tool, the journey and the FAQs may come back. This is the one
+   object ServiceTemplateBody renders; the other five services write theirs
+   directly in this shape. See ../template/types.ts.
+
+   THE HERO PHOTOGRAPH IS THE BOOKKEEPING SUB-PAGE'S, by request: the client
+   asked for this banner to be the same as that page's, and the same plate is
+   the plainest reading of "same". services/accounting-tax-hero.webp takes over
+   the moment it exists. */
+export const ACCOUNTING_TAX_TEMPLATE: ServiceTemplateContent = {
+  slug: 'accounting-tax-services',
+  crumb: 'Accounting & Tax',
+  hero: {
+    head: AT_HERO.head,
+    sub: AT_HERO.sub,
+    image: ['services/accounting-tax-hero.webp', 'banners/service-main.webp'],
+    alt: 'A meeting at dusk against a city skyline',
+  },
+  intro: {
+    head: AT_WHY_CLOSE,
+    lede: AT_HERO.lede,
+    proof: AT_PROOF.map(({ label, note }) => ({ label, note })),
+    chips: AT_HERO.chips,
+    primary: AT_HERO.primary,
+    secondary: AT_HERO.secondary,
+    /* who-we-are-2 is the one library shot with ValuNxt's own branding in it;
+       services-1 shows at the top of the strip, and the same photograph twice
+       inside one screen of scrolling read as a mistake. */
+    image: ['services/accounting-tax-intro.webp', 'new-folder/who-we-are-2.webp'],
+  },
+  strip: {
+    kicker: 'Explore services',
+    head: 'Find the finance support your business needs',
+    lede: 'Start with the problem you need solved today. Add more capability as your business grows.',
+    cta: 'Ready to get started?',
+    subs: AT_SERVICES.map((s) => ({
+      name: s.name,
+      slug: s.slug,
+      cardText: s.cardText,
+      figure: EXPLORE_FIGURE[s.slug] ?? [],
+    })),
+  },
+  solution: {
+    head: 'Find the Right Solution',
+    tabs: AT_SOLUTION,
+    images: [
+      ['services/accounting-and-tax-services.webp'],
+      ['new-folder/about-us-1.webp'],
+      ['new-folder/who-we-are-1.webp'],
+    ],
+  },
+  banner: {
+    ...AT_BANNER,
+    /* uae-slider-3 is a pale periwinkle field with a bright blue glass form in
+       its right two-thirds, so the card reads dark-to-light across the join
+       rather than blue-into-blue — and its left third is a flat field, which
+       is the third sitting against the ramp's edge. */
+    image: ['services/accounting-tax-banner.webp', 'banners/uae-slider-3.webp'],
+  },
+  related: { head: 'Explore Related Services' },
+  close: {
+    head: AT_CLOSE.head,
+    lede: AT_CLOSE.lede,
+    primary: AT_CLOSE.primary,
+    /* A meeting, not a desk: the section asks the reader to talk to someone. */
+    image: ['services/accounting-tax-talk.webp', 'new-folder/career-1.webp'],
+  },
 };

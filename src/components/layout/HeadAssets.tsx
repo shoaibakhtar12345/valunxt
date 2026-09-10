@@ -8,6 +8,7 @@
  */
 import { BASE } from '@/lib/region';
 import type { PageConfig } from '@/lib/page-config';
+import { UAE_FACE_CSS, UAE_FACE_PRELOAD } from '@/lib/uae-typography';
 import { siteScriptSources } from './SiteScripts';
 
 /** The Elementor / theme / plugin stylesheets, in load order. */
@@ -16,11 +17,10 @@ const STYLESHEETS: string[] = [
   '/assets/content/uploads/elementor/google-fonts/css/dmsans.css',
   '/assets/content/uploads/elementor/google-fonts/css/forum.css',
   '/assets/content/uploads/elementor/google-fonts/css/nothingyoucoulddo.css',
-  /* The UAE market's body face. Self-hosted like the three above rather than
-     pulled from fonts.googleapis.com, and listed globally because @font-face
-     costs nothing on a page that never asks for the family — the browser only
-     fetches a .woff2 once something is actually set in it. */
-  '/assets/content/uploads/elementor/google-fonts/css/asapsharp.css',
+  /* asapsharp.css was listed here for the UAE market's body face. That market
+     runs Sanomat Sans now — declared in valunxt-uae-face.css, which is a page
+     sheet rather than a global one — so the link is gone; the .woff2 files it
+     pointed at are still under google-fonts/ and unreferenced. */
   '/assets/content/plugins/elementor/assets/css/frontend.min.css',
   '/assets/content/plugins/elementor/assets/css/conditionals/apple-webkit.min.css',
   '/assets/content/plugins/elementor/assets/css/conditionals/e-swiper.min.css',
@@ -633,6 +633,18 @@ export default function HeadAssets({ page }: { page: PageConfig }) {
       {siteScriptSources().map((src) => (
         <link key={src} rel="preload" as="script" href={src} />
       ))}
+
+      {/* The UAE face's two everyday cuts, fetched from the first byte of the
+          document rather than after the face sheet — the last stylesheet in
+          this head — has been parsed and matched. Font requests are CORS
+          requests even from the same origin, so the preload has to say so or
+          the browser fetches the file twice. Only on pages that carry the face
+          sheet; India never asks for the family. */}
+      {(page.site_css ?? []).includes(UAE_FACE_CSS)
+        ? UAE_FACE_PRELOAD.map((href) => (
+            <link key={href} rel="preload" as="font" type="font/otf" href={`${BASE}${href}`} crossOrigin="anonymous" />
+          ))
+        : null}
 
       <style id="vamtam-theme-options" dangerouslySetInnerHTML={{ __html: VAMTAM_THEME_OPTIONS }} />
       <style

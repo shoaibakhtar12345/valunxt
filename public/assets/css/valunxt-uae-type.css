@@ -1,22 +1,22 @@
 /* =============================================================================
-   VALUNXT — UAE typography
+   VALUNXT — UAE typography: the scale
 
-   The type system for the UAE home page and every page under
-   /en-ae/services/. Loaded through `site_css`, which HeadAssets emits LAST, and
-   scoped by `body.vxn-uae-type` — a class the same helper adds, so a page can
-   never get one without the other. See lib/uae-typography.ts.
+   The type SCALE for the UAE home page and every page under /en-ae/services/.
+   Loaded through `site_css`, which HeadAssets emits LAST, and scoped by
+   `body.vxn-uae-type` — a class the same helper adds, so a page can never get
+   one without the other. See lib/uae-typography.ts.
 
    ---------------------------------------------------------------------------
-   THE TWO FAMILIES
+   THE FAMILY IS NOT SET HERE
 
-     h1, h2                    "Forum", serif
-     everything else           "Asap Sharp", sans-serif
-
-   Asap Sharp is self-hosted alongside the theme's other faces, in
-   uploads/elementor/google-fonts/ — a variable face, one file per script, 100
-   to 900 in both styles. It is NOT pulled from fonts.googleapis.com: every
-   other face on this site is local, and a render-blocking request to a third
-   party for one market's body text would be the only one of its kind.
+   It used to be — Forum on h1/h2, Asap Sharp on everything else — and both
+   went on client instruction (20260910). The market now runs one face, Sanomat
+   Sans, and it is declared in valunxt-uae-face.css, which is applied to EVERY
+   /en-ae/ page, not only the ones on this scale. The split is deliberate: the
+   About, Contact, Blogs and Industries pages were to change face and nothing
+   else, so the sheet that changes sizes must not travel with the one that
+   changes the family. withUaeType() loads both; withUaeFace() loads only that
+   one.
 
    ---------------------------------------------------------------------------
    WHY `body.vxn-uae-type` AND NOT PLAIN TAGS
@@ -31,10 +31,6 @@
    ---------------------------------------------------------------------------
    WHAT THIS SHEET DOES AND DOES NOT WIN
 
-   FAMILIES: it wins everywhere. The UAE page stylesheets had their own
-   `font-family` declarations and those have been removed, so this file is the
-   only thing naming a face on these pages.
-
    SIZES: the scale below is the BASELINE. It beats the theme and the kit, so
    every heading that was never explicitly sized now sits on the scale — which
    is most of them. It does NOT beat a page that sizes a heading on purpose:
@@ -44,80 +40,36 @@
    scale should be absolute instead, raise these to `body.vxn-uae-type h1` with
    an added `:not(#\9)` or strip the page-level sizes; both are one pass.
 
-   ---------------------------------------------------------------------------
-   ICON FONTS ARE EXCLUDED. Font Awesome and Elementor's `eicon` set are fonts
-   whose glyphs live at letter codepoints — give one of those elements Asap
-   Sharp and the icon renders as a letter. `span` and `div` therefore carry
-   :not() guards; `<i>` is not targeted at all, because it is almost always an
-   icon and inherits correctly when it is not.
+   WEIGHT is not set here any more. It was — 500 on every heading, at (0,3,2)
+   — until the client asked for 400 on every heading on every UAE page, which
+   is a wider reach than this sheet has. The rule moved to valunxt-uae-face.css
+   (THE HEADING WEIGHT), which every /en-ae/ page loads; it is written at the
+   same (0,3,2) and wins for the same reasons.
    ============================================================================= */
 
 /* =============================================================================
-   1. FAMILIES
-   ============================================================================= */
-
-body.vxn-uae-type h1,
-body.vxn-uae-type h2,
-body.vxn-uae-type h1 .elementor-heading-title,
-body.vxn-uae-type h2 .elementor-heading-title {
-  font-family: "Forum", serif !important;
-}
-
-body.vxn-uae-type,
-body.vxn-uae-type h3,
-body.vxn-uae-type h4,
-body.vxn-uae-type h5,
-body.vxn-uae-type h6,
-body.vxn-uae-type p,
-body.vxn-uae-type a,
-body.vxn-uae-type li,
-body.vxn-uae-type td,
-body.vxn-uae-type th,
-body.vxn-uae-type dt,
-body.vxn-uae-type dd,
-body.vxn-uae-type blockquote,
-body.vxn-uae-type figcaption,
-body.vxn-uae-type label,
-body.vxn-uae-type strong,
-body.vxn-uae-type b,
-body.vxn-uae-type em,
-body.vxn-uae-type small,
-body.vxn-uae-type cite,
-body.vxn-uae-type button,
-body.vxn-uae-type input,
-body.vxn-uae-type select,
-body.vxn-uae-type textarea,
-/* The two containers icons actually live in, guarded. */
-body.vxn-uae-type span:not([class*="icon"]):not([class*="eicon"]):not([class*="fa-"]),
-body.vxn-uae-type div:not([class*="icon"]):not([class*="eicon"]):not([class*="fa-"]) {
-  font-family: "Asap Sharp", sans-serif !important;
-}
-
-/* An opt-in for a paragraph that is meant to be display serif — a pull quote,
-   a wordmark set in type. Nothing uses it by default; it exists so a
-   deliberate exception does not have to fight the rule above. */
-body.vxn-uae-type .vxn-serif {
-  font-family: "Forum", serif !important;
-}
-
-/* =============================================================================
-   2. THE SCALE
+   1. THE SCALE
 
    A major-third ramp (×1.25) with the steps rounded to whole pixels and each
    one clamped so it holds from 360px to 1600px without a media query.
 
-     h1   36 -> 58    1.14   400    the page's one title
-     h2   28 -> 42    1.20   400    section heads
-     h3   21 -> 27    1.32   600    block heads
-     h4   18 -> 21    1.38   600    card titles
-     h5   16 -> 18    1.45   600
-     h6   15          1.50   700    eyebrows and labels, tracked out
-     body 16          1.70   400
+     h1   36 -> 58    1.14   the page's one title
+     h2   28 -> 42    1.20   section heads
+     h3   21 -> 27    1.32   block heads
+     h4   18 -> 21    1.38   card titles
+     h5   16 -> 18    1.45
+     h6   15          1.50   eyebrows and labels, tracked out
+     body 16          1.70
 
-   Forum ships one weight, so h1 and h2 are 400 and cannot be otherwise; the
-   contrast between them and the 600 of h3 down is the point of the pairing.
    Line height tightens as size grows, which is what keeps a 58px title from
    reading as double-spaced and a 15px label from reading as cramped.
+
+   Every size and line height here is unchanged from the two-family version of
+   this sheet. The weight column is gone: every heading is 400, set by the face
+   sheet for the whole market, and with weight flat across all six SIZE is the
+   only thing carrying the hierarchy — 58 / 42 / 27 / 21 / 18 / 15 at the top
+   of the clamps. Shrink any two neighbours toward each other and the levels
+   stop reading as different.
    ============================================================================= */
 
 body.vxn-uae-type {
@@ -125,24 +77,6 @@ body.vxn-uae-type {
   line-height: 1.7;
   font-weight: 400;
 }
-
-/* SYNTHESIS IS ON FOR h1/h2, AND HAS TO BE.
-
-   Forum ships one cut — verified in forum.css: a single @font-face at
-   font-weight:400, against Asap Sharp's variable 100..900. The requested h1 600
-   and h2 500 therefore have no real face to resolve to.
-
-   An earlier pass set `font-synthesis: none` here so that stray weights left
-   over from the DM Sans era could not produce a faux bold. That guard now works
-   against the brief: with it in place, `font-weight: 600` on an h1 renders the
-   400 face and the declaration does nothing at all. Synthesis is left ON so the
-   requested weights are actually visible.
-
-   What that means in practice: the browser draws the 400 outline and thickens
-   it. It is heavier, and on a display serif at 58px the thickening is visible
-   as slightly softened stems rather than as a designed bold. The clean
-   alternative is to move h1/h2 onto Asap Sharp, which has real 500 and 600
-   cuts — one line in section 1. */
 
 body.vxn-uae-type h1 {
   font-size: clamp(36px, 4.4vw, 58px) !important;
@@ -180,60 +114,16 @@ body.vxn-uae-type h6 {
 }
 
 /* =============================================================================
-   2b. WEIGHT — by tag, and it has to WIN
+   2b. WEIGHT — moved
 
-   Weight is split out of the blocks above and given a heavier selector on
-   purpose. Measured on /accounting-bookkeeping/: with the weights declared at
-   `body.vxn-uae-type h3` — specificity (0,1,2) — three headings still came out
-   on the page's own value, because a page rule is `.abk-root .abk-appr__h`,
-   which is (0,2,0) and outranks it:
-
-     .abk-appr__h    (h3)   computed 700   ladder asked 700 -> was 600, page won
-     .abk-vision__h  (h3)   computed 500   page won
-     .abk-talk__head (h2)   computed 300   page won
-
-   Repeating the body class is what clears that. `body.vxn-uae-type` three times
-   is (0,3,2) — the class really is on <body>, so the selector is honest, it
-   just counts three times. Anything a page sets is now inert; those
-   declarations are dead rather than wrong, and can be swept later.
-
-   ONE WEIGHT, h1 THROUGH h6: 500. By request, and it makes the rule below a
-   single declaration rather than a ladder.
-
-     h1  500   Forum — SYNTHESISED, see the note in section 2. No 500 cut exists
-     h2  500   Forum — synthesised for the same reason
-     h3  500   Asap Sharp, a real cut on its 100..900 axis
-     h4  500   real
-     h5  500   real
-     h6  500   real
-
-   With weight flat across all six, SIZE is the only thing carrying the
-   hierarchy — 58 / 42 / 27 / 21 / 18 / 15 at the top of the clamps. Those steps
-   are wide enough to do it, but it does mean the scale in section 2 is now
-   load-bearing on its own: shrink any two neighbours toward each other and the
-   levels stop reading as different. Weight is the lever to reach for first if
-   that happens.
+   This block set 500 on h1-h6 at (0,3,2), because a page rule such as
+   `.abk-root .abk-appr__h` (0,2,0) outranked the (0,1,2) the sizes above use
+   and three headings on /accounting-bookkeeping/ kept the page's own weight.
+   The same rule, at the same specificity, now sets 400 from
+   valunxt-uae-face.css so that it reaches every UAE page rather than only the
+   ones on this scale. Nothing here sets a weight; the crumb below is the one
+   exception, and it is not a heading.
    ============================================================================= */
-
-body.vxn-uae-type.vxn-uae-type.vxn-uae-type h1,
-body.vxn-uae-type.vxn-uae-type.vxn-uae-type h2,
-body.vxn-uae-type.vxn-uae-type.vxn-uae-type h3,
-body.vxn-uae-type.vxn-uae-type.vxn-uae-type h4,
-body.vxn-uae-type.vxn-uae-type.vxn-uae-type h5,
-body.vxn-uae-type.vxn-uae-type.vxn-uae-type h6 {
-  font-weight: 500 !important;
-}
-
-/* The heading widget's inner element again — Elementor puts the text in a child
-   of the tag, and a weight set on the child would survive the rules above. */
-body.vxn-uae-type.vxn-uae-type.vxn-uae-type h1 .elementor-heading-title,
-body.vxn-uae-type.vxn-uae-type.vxn-uae-type h2 .elementor-heading-title,
-body.vxn-uae-type.vxn-uae-type.vxn-uae-type h3 .elementor-heading-title,
-body.vxn-uae-type.vxn-uae-type.vxn-uae-type h4 .elementor-heading-title,
-body.vxn-uae-type.vxn-uae-type.vxn-uae-type h5 .elementor-heading-title,
-body.vxn-uae-type.vxn-uae-type.vxn-uae-type h6 .elementor-heading-title {
-  font-weight: inherit !important;
-}
 
 /* ---- The breadcrumb line -------------------------------------------------
    Not a heading, but it sits in the hero with one and was left at whatever the

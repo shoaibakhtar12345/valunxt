@@ -11,7 +11,7 @@
  *
  * public/assets/css/accounting-bookkeeping.css, declared by this page's
  * PageConfig as `site_css` and emitted by HeadAssets after the brand and
- * landing sheets. That is the one structural difference from AccountingTaxBody,
+ * landing sheets. That is the one structural difference from the service template,
  * which carries its CSS inline. It was asked for that way, and it buys two
  * things: the sheet is cached separately from the HTML, and it is in <head>
  * before first paint rather than mid-body — so there is no window in which the

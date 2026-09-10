@@ -4,22 +4,20 @@
  * The UAE Services mega menu.
  *
  * Built to a supplied reference (the KPMG services panel): a blue introduction
- * column on the left, a tabbed pane on the right, and a grey footer band under
- * both, closed by a coloured rule.
+ * column on the left and a tabbed pane on the right, closed by a coloured rule.
  *
  *   ┌───────────────┬──────────────────────────────────────────────┐
  *   │               │  [tab] [tab] [tab] [tab]                 (x) │
  *   │   Services    ├──────────────────────────────────────────────┤
  *   │   lede…       │   link ›      link ›      link ›             │
  *   │               │   link ›      link ›      link ›             │
+ *   │               │                                              │
  *   │   Learn More ›│   View all … ›                               │
- *   ├───────────────┴──────────────────────────────────────────────┤
- *   │  ┌────────────────────────────────┐   OUR NETWORK            │
- *   │  │ Services to meet your goals    │   copy…                  │
- *   │  │ link ›  link ›  link ›         │   View all ›             │
- *   │  └────────────────────────────────┘                          │
- *   ├──────────────────────────────────────────────────────────────┤
  *   └──────────────────────────── accent rule ─────────────────────┘
+ *
+ * The reference also hangs a grey footer band under both columns. It was built
+ * here — "Explore the rest of VALUNXT" and a card for the group — and removed on
+ * client feedback, with the sheet given more height in its place.
  *
  * ---------------------------------------------------------------------------
  * WHY THIS IS A CLIENT COMPONENT, when the existing MegaMenu is not
@@ -30,17 +28,24 @@
  * (consistent with the rest of the bar, and it still works before hydration
  * because the CSS does that part), and React only owns the tab and the dismiss.
  *
- * `dismissed` clears on pointer leave. Without that, closing the panel once
- * would leave it shut for the rest of the page — the pointer is still inside
- * the item that opens it, so no hover event would ever re-fire.
+ * `dismissed` clears on pointer leave AND on re-entering the trigger. Without
+ * either, closing the panel once would leave it shut for the rest of the page —
+ * the pointer is still inside the item that opens it, so no hover event would
+ * ever re-fire. Leave alone is not enough, and the second one is the fix for
+ * the reported "close doesn't work": see the note on the handler below.
  *
  * ---------------------------------------------------------------------------
  * THE TABS ARE THE SERVICES, and the links under them are that service's own
  * children — both read from vxnServices('en-ae'), the same registry the routes
  * and the footer read. Nothing here is a second copy of the menu.
+ *
+ * Each tab is also a LINK to its service's page, on client request. Hovering or
+ * focusing a tab still swaps the pane, so the pointer previews a service and a
+ * click commits to it. A tap is the one gesture where those two cannot share an
+ * event — see the note on the tab row.
  */
 
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { rurl, vxnServiceName, vxnServices, type Service } from '@/lib/region';
 
@@ -74,25 +79,6 @@ const TAB_LABEL: Record<string, string> = {
   'technology-data-ai': 'Technology & AI',
 };
 
-/**
- * The footer band's link set — the rest of the site, not more services.
- *
- * The reference fills this row with cross-cutting "business goals"; the
- * equivalent here is the sections a visitor looking at services is most likely
- * to want next, which is why it is a fixed list rather than derived.
- */
-const GOALS: { label: string; href: string }[] = [
-  { label: 'Industries', href: '/industries/' },
-  { label: 'Track Record', href: '/track-record/' },
-  { label: 'Research', href: '/research/' },
-  { label: 'Clients', href: '/clients/' },
-  { label: 'Partnership', href: '/partnership/' },
-  { label: 'Community', href: '/community/' },
-  { label: 'Our Group', href: '/our-group/' },
-  { label: 'Free Consultation', href: '/free-consultation/' },
-  { label: 'Contact', href: '/contact/' },
-];
-
 export default function UaeServicesMega({
   region,
   tabIndex,
@@ -104,8 +90,10 @@ export default function UaeServicesMega({
   const services = vxnServices(region).filter((s) => (s.subs?.length ?? 0) > 0);
   const [active, setActive] = useState(0);
   const [dismissed, setDismissed] = useState(false);
-  const uid = useId().replace(/:/g, '');
   const itemRef = useRef<HTMLLIElement>(null);
+  /* The tab a touch went down on, and whether its pane was already showing at
+     that moment. See the note on the tab row. */
+  const tap = useRef<{ index: number; shown: boolean } | null>(null);
 
   /* Escape closes it from anywhere inside, which is the one thing a hover menu
      otherwise gives a keyboard user no way to do. */
@@ -132,7 +120,30 @@ export default function UaeServicesMega({
       }`}
       onMouseLeave={() => setDismissed(false)}
     >
-      <a href={rurl(region, '/services/')} className="elementor-item" {...tab}>
+      {/* ---- WHY THE RE-ARM IS ON THE TRIGGER AND NOT ONLY ON LEAVE --------
+          `onMouseLeave` on the <li> was the only thing clearing `dismissed`,
+          and it has a hole that is easy to fall into rather than a rare race.
+
+          The panel is a DOM child of this <li>, so while the pointer is over
+          the sheet the <li> is still hovered and `mouseleave` has not fired.
+          Press ✕ and the sheet stops taking pointer events — but the browser
+          does not re-run hit testing until the pointer next MOVES, and if that
+          move lands straight on this link (a flick back up to "Services",
+          which is exactly what someone does next) the browser fires one
+          mouseout whose relatedTarget is this anchor. That is still inside the
+          <li>, so React correctly does NOT fire onMouseLeave, `dismissed`
+          stays set, and the menu is hovered but refuses to open. It looks
+          precisely like a broken close button.
+
+          Clearing on entry to the trigger closes that hole: whatever route the
+          pointer took, arriving at "Services" re-arms the menu. The leave
+          handler stays as the case where the pointer wanders off elsewhere. */}
+      <a
+        href={rurl(region, '/services/')}
+        className="elementor-item"
+        onMouseEnter={() => setDismissed(false)}
+        {...tab}
+      >
         Services
       </a>
 
@@ -154,26 +165,49 @@ export default function UaeServicesMega({
             </aside>
 
             <div className="vxn-umega__main">
-              <div className="vxn-umega__tabs" role="tablist" aria-label="Service areas">
+              {/* ---- A TAP IS NOT A HOVER -----------------------------------
+                  With a mouse, hovering a tab has selected it long before the
+                  click lands, so the click simply follows the link. A touch has
+                  no hover in front of it: the tap would navigate before the
+                  pane was ever seen — and in the burger drawer, which renders
+                  this panel inline and has nothing else to switch the pane
+                  with, only the first service's pages could be reached at all.
+
+                  So a tap on a tab whose pane is not showing opens that pane
+                  and goes no further, and a second tap follows the link.
+
+                  The check reads a snapshot taken at pointerdown, not `active`
+                  at click time. A tap's emulated mouseenter and its focus both
+                  select the tab before the click is dispatched, so read at
+                  click time every tab would already look shown. `e.detail` is
+                  0 for a keyboard activation, which focus has already
+                  previewed, so Enter always follows the link. */}
+              <div className="vxn-umega__tabs">
                 {services.map((s, i) => (
-                  <button
+                  <a
                     key={s.slug}
-                    type="button"
-                    role="tab"
-                    id={`${uid}-tab-${i}`}
-                    aria-selected={i === active}
-                    aria-controls={`${uid}-pane`}
+                    href={rurl(region, s.href)}
                     className={`vxn-umega__tab${i === active ? ' is-active' : ''}`}
-                    /* Hover selects as well as click: the panel is reached by
-                       pointer, and making the reader click to preview a tab
-                       they are already hovering is a step for nothing. */
+                    onPointerDown={(e) => {
+                      tap.current = e.pointerType === 'mouse' ? null : { index: i, shown: i === active };
+                    }}
+                    onPointerCancel={() => {
+                      tap.current = null;
+                    }}
                     onMouseEnter={() => setActive(i)}
                     onFocus={() => setActive(i)}
-                    onClick={() => setActive(i)}
-                    tabIndex={tabIndex === -1 ? -1 : undefined}
+                    onClick={(e) => {
+                      const t = tap.current;
+                      tap.current = null;
+                      if (t && t.index === i && !t.shown && e.detail !== 0) {
+                        e.preventDefault();
+                        setActive(i);
+                      }
+                    }}
+                    {...tab}
                   >
                     {TAB_LABEL[s.slug ?? ''] ?? vxnServiceName(s)}
-                  </button>
+                  </a>
                 ))}
 
                 <button
@@ -189,10 +223,18 @@ export default function UaeServicesMega({
                 </button>
               </div>
 
-              <div className="vxn-umega__pane" id={`${uid}-pane`} role="tabpanel" aria-labelledby={`${uid}-tab-${active}`}>
-                <ul className="vxn-umega__grid">
+              <div
+                className="vxn-umega__pane"
+                role="group"
+                aria-label={current ? vxnServiceName(current) : undefined}
+              >
+                {/* NOT A <ul> — see THE GRID IS NOT A <ul> in the stylesheet.
+                    As one it crashed Elementor's SmartMenus on every UAE page
+                    and cut the nav widget's init short. role="list" keeps what
+                    the <ul> said. */}
+                <div className="vxn-umega__grid" role="list">
                   {(current?.subs ?? []).map((sub) => (
-                    <li key={sub.slug}>
+                    <div key={sub.slug} role="listitem">
                       <a
                         href={rurl(region, `/services/${current!.slug}/${sub.slug}/`)}
                         className="vxn-umega__link"
@@ -201,9 +243,9 @@ export default function UaeServicesMega({
                         {sub.name}
                         <Chev />
                       </a>
-                    </li>
+                    </div>
                   ))}
-                </ul>
+                </div>
 
                 {current ? (
                   <a
@@ -216,34 +258,6 @@ export default function UaeServicesMega({
                   </a>
                 ) : null}
               </div>
-            </div>
-          </div>
-
-          <div className="vxn-umega__foot">
-            <div className="vxn-umega__goals">
-              <h3 className="vxn-umega__goalshead">Explore the rest of VALUNXT</h3>
-              <ul className="vxn-umega__goalgrid">
-                {GOALS.map((g) => (
-                  <li key={g.href}>
-                    <a href={rurl(region, g.href)} className="vxn-umega__link" {...tab}>
-                      {g.label}
-                      <Chev />
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="vxn-umega__side">
-              <span className="vxn-umega__eyebrow">The Reliant Surveyors Group</span>
-              <p className="vxn-umega__sidecopy">
-                VALUNXT is part of a senior team of accountants, tax advisers and valuers working
-                across Dubai, Noida and Mumbai.
-              </p>
-              <a className="vxn-umega__sidelink" href={rurl(region, '/network/')} {...tab}>
-                View the network
-                <Chev />
-              </a>
             </div>
           </div>
 

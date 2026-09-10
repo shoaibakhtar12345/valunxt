@@ -1,17 +1,31 @@
 /**
  * "Ready when you are" — the closing conversion band on /en-ae/.
  *
- * Copy on the left, three ways to start on the right, over a pale wash that
- * drifts slowly behind them. The motion is CSS: two blurred conic blooms on
- * long, offset keyframes, plus a scroll-driven reveal on the cards. No
- * animation library is pulled in for it — a dependency would cost more than the
- * ~30 lines of keyframes it would replace, and the reveal degrades to "already
- * visible" wherever `animation-timeline` is unsupported (see the @supports
- * guard in the stylesheet).
+ * REDESIGNED FROM SCRATCH on client request. It was copy on the left and three
+ * floating cards on the right, over a wash of blurred ribbons drifting on long
+ * loops. It now reads top to bottom: the statement and its lede share one line,
+ * and the three ways to start are the rows of a single white card.
+ *
+ *   ── READY WHEN YOU ARE
+ *   Start with a conversation,                   A free consultation, a
+ *   not a commitment.                            fixed-fee quote in writing…
+ *   ┌───────────────────────────────────────────────────────────────────┐
+ *   │ (o)  Book a free consultation    No obligation. A partner…   (↗) │
+ *   │ ───────────────────────────────────────────────────────────────── │
+ *   │ (o)  Get a fixed-fee quote       Scope and fee agreed in…    (↗) │
+ *   │ ───────────────────────────────────────────────────────────────── │
+ *   │ (o)  Call +971 4 255 4683        Mon – Sat … · Dubai and…    (↗) │
+ *   └───────────────────────────────────────────────────────────────────┘
+ *
+ * WHY ROWS. The insights carousel directly above is a row of image cards, the
+ * trio under the hero is three more, and the band directly below is a split
+ * panel. A ruled list is the one shape nothing near it uses, and it gives each
+ * route a full-width target with its note on the same line. Each row is the
+ * whole of its link, and fills with the brand ramp when it is pointed at.
  *
  * Every claim restates something the site already publishes: the free
- * consultation, the fee agreed in writing before work starts, and the UAE line
- * and hours from site-data.
+ * consultation, the fee agreed in writing before work starts, and the UAE line,
+ * hours and cities from the region registry.
  *
  * Styles: assets/css/valunxt-landing.css (.vxn-ready).
  */
@@ -56,11 +70,12 @@ function Glyph({ name }: { name: 'talk' | 'quote' | 'call' }) {
   );
 }
 
-/** The small corner arrow every card carries. */
+/** The end cap on every row. The arrow turns to point along the row when the
+ *  row is pointed at. */
 function GoArrow() {
   return (
     <span className="vxn-ready__go" aria-hidden="true">
-      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
         <path
           d="M4.5 11.5L11.5 4.5M11.5 4.5H5.5M11.5 4.5V10.5"
           stroke="currentColor"
@@ -73,16 +88,34 @@ function GoArrow() {
   );
 }
 
+type Route = {
+  icon: 'talk' | 'quote' | 'call';
+  name: string;
+  note: string;
+  href: string;
+};
+
+/** One face of a row. Every row draws two — see the note on the list. */
+function RouteFace({ route, fill = false }: { route: Route; fill?: boolean }) {
+  return (
+    <span
+      className={`vxn-ready__face${fill ? ' vxn-ready__face--fill' : ''}`}
+      aria-hidden={fill || undefined}
+    >
+      <span className="vxn-ready__icon" aria-hidden="true">
+        <Glyph name={route.icon} />
+      </span>
+      <span className="vxn-ready__name">{route.name}</span>
+      <span className="vxn-ready__note">{route.note}</span>
+      <GoArrow />
+    </span>
+  );
+}
+
 export default function UaeReadyBand({ region }: { region: string }) {
   const r = vxnRegionData(region);
 
-  const routes: {
-    icon: 'talk' | 'quote' | 'call';
-    name: string;
-    note: string;
-    href: string;
-    external?: boolean;
-  }[] = [
+  const routes: Route[] = [
     {
       icon: 'talk',
       name: 'Book a free consultation',
@@ -100,86 +133,44 @@ export default function UaeReadyBand({ region }: { region: string }) {
       name: `Call ${vxnRegionPhone(region)}`,
       note: `${r.hours} · ${r.cities}`,
       href: `tel:${r.tel}`,
-      external: true,
     },
   ];
 
   return (
     <section className="vxn-ready" aria-labelledby="vxn-ready-title">
-      {/* Decorative only.
-
-          Drawn rather than photographed: the reference is a set of broad,
-          soft-edged ribbons sweeping across a cream ground, and no asset in
-          uploads is that — they are all saturated blue studies, which at any
-          opacity read as a picture behind the copy rather than as a pale wash.
-          Six paths on a 1440x520 canvas, blurred through a filter and drifting
-          on long offset loops, land much closer and stay editable: the band
-          colour, spacing and curvature are all in this file. */}
-      <div className="vxn-ready__wash" aria-hidden="true">
-        <span className="vxn-ready__bloom" />
-        <svg
-          className="vxn-ready__waves"
-          viewBox="0 0 1440 520"
-          preserveAspectRatio="none"
-          xmlns="http://www.w3.org/2000/svg"
-          focusable="false"
-        >
-          <defs>
-            {/* Blur reduced from 16 on client feedback. The viewBox is 520 tall
-                and `preserveAspectRatio="none"` squashes it into a band that
-                was ~420px — so a 16px deviation was being scaled up with
-                everything else and the ribbons dissolved into the ground. At 11
-                they read as bands again without becoming graphic. */}
-            <filter id="vxn-ready-soft" x="-20%" y="-40%" width="140%" height="180%">
-              <feGaussianBlur stdDeviation="11" />
-            </filter>
-            {/* Opacities raised across the ramp for the same reason: the wash
-                was there in the markup but not on the screen. */}
-            <linearGradient id="vxn-ready-band" x1="0" y1="1" x2="1" y2="0">
-              <stop offset="0%" stopColor="#C6CEEC" stopOpacity=".46" />
-              <stop offset="55%" stopColor="#AFBDE8" stopOpacity=".82" />
-              <stop offset="100%" stopColor="#93A7DF" stopOpacity="1" />
-            </linearGradient>
-          </defs>
-          <g filter="url(#vxn-ready-soft)" fill="url(#vxn-ready-band)">
-            <path d="M-140 470 C 240 400, 520 300, 900 236 C 1180 188, 1380 160, 1600 140 L1600 214 C 1380 234, 1180 262, 900 310 C 520 374, 240 474, -140 544 Z" />
-            <path d="M-140 560 C 260 486, 560 374, 940 306 C 1210 258, 1400 232, 1600 214 L1600 292 C 1400 310, 1210 336, 940 384 C 560 452, 260 564, -140 638 Z" />
-            <path d="M-140 372 C 220 312, 480 226, 860 168 C 1150 124, 1370 100, 1600 84 L1600 128 C 1370 144, 1150 168, 860 212 C 480 270, 220 356, -140 416 Z" />
-            <path d="M-140 668 C 300 578, 620 452, 1000 380 C 1250 332, 1420 308, 1600 292 L1600 352 C 1420 368, 1250 392, 1000 440 C 620 512, 300 638, -140 728 Z" />
-            <path d="M-140 262 C 200 214, 440 148, 820 100 C 1120 62, 1360 42, 1600 30 L1600 62 C 1360 74, 1120 94, 820 132 C 440 180, 200 246, -140 294 Z" />
-            <path d="M-140 790 C 340 682, 680 536, 1060 456 C 1290 408, 1440 386, 1600 372 L1600 424 C 1440 438, 1290 460, 1060 508 C 680 588, 340 734, -140 842 Z" />
-          </g>
-        </svg>
-      </div>
-
       <div className="vxn-ready__inner">
-        <div className="vxn-ready__copy">
-          <span className="vxn-ready__eyebrow">Ready when you are</span>
-          <h2 id="vxn-ready-title" className="vxn-ready__title">
-            Start with a conversation, not a commitment.
-          </h2>
+        <div className="vxn-ready__head">
+          <div className="vxn-ready__intro">
+            <span className="vxn-ready__eyebrow">Ready when you are</span>
+            {/* The second clause is an <i>, not a <span> or an <em> — see the
+                note on .vxn-ready__accent for why it is the one inline element
+                that keeps the heading's face. */}
+            <h2 id="vxn-ready-title" className="vxn-ready__title">
+              Start with a conversation, <i className="vxn-ready__accent">not a commitment.</i>
+            </h2>
+          </div>
           <p className="vxn-ready__lede">
             A free consultation, a fixed-fee quote in writing, and a named partner from the first
             call.
           </p>
         </div>
 
+        {/* EACH ROW IS DRAWN TWICE: in ink on the white card, and again in white
+            on the brand ramp, stacked, with the white face uncovered by a clip
+            that sweeps across the row. The text itself never changes colour, so
+            no part of it can turn white ahead of the fill or stay white behind
+            it — the fill's edge is the only thing moving. See THE FILL in the
+            stylesheet for what fading the text instead measured at. The white
+            face is aria-hidden, so the link is read once.
+
+            The lead route is marked so its end cap is the one solid control in
+            the card: the consultation is the route this page is built toward. */}
         <ul className="vxn-ready__list">
           {routes.map((it, i) => (
-            <li className="vxn-ready__item" key={it.name} style={{ '--i': i } as React.CSSProperties}>
-              <a
-                className="vxn-ready__card"
-                href={it.href}
-                {...(it.external ? {} : { rel: 'noopener' })}
-              >
-                <span className="vxn-ready__icon" aria-hidden="true">
-                  <Glyph name={it.icon} />
-                </span>
-                <span className="vxn-ready__text">
-                  <span className="vxn-ready__name">{it.name}</span>
-                  <span className="vxn-ready__note">{it.note}</span>
-                </span>
-                <GoArrow />
+            <li className="vxn-ready__item" key={it.name}>
+              <a className={`vxn-ready__route${i === 0 ? ' is-lead' : ''}`} href={it.href}>
+                <RouteFace route={it} />
+                <RouteFace route={it} fill />
               </a>
             </li>
           ))}

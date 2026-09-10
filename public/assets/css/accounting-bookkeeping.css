@@ -285,9 +285,10 @@
   opacity: 0.5;
 }
 
-/* DM Sans at 300, not the section's usual Forum. The reference sets the page
-   title in a light geometric sans and the difference is the whole character of
-   the banner — a serif at this size reads as a different brand.
+/* Light — 300 — where the rest of the section's headings run heavier. The
+   reference sets the page title thin at display size and the difference is
+   the whole character of the banner. (It was a change of family as well once,
+   a sans against the section's serif; the market runs one face now.)
 
    font-size and line-height carry `!important` because valunxt-brand.css sets
    `h1 { font-size: 30px !important }` under 767px; without it the title would
@@ -1577,8 +1578,8 @@
   color: #33415c !important;
 }
 
-/* Forum, and large. This is the one sentence on the page that is meant to be
-   read slowly, and the serif at 26px is what says so. */
+/* Large. This is the one sentence on the page that is meant to be read
+   slowly, and the size — 26px in a column of 15px copy — is what says so. */
 .abk-root .abk-vision__quote {
   max-width: 26ch;
   margin: clamp(20px, 2.4vw, 30px) 0 0;
