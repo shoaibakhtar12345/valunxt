@@ -13,7 +13,7 @@ import MainNav, { MenuToggle } from './MainNav';
 import RegionSwitcher from './RegionSwitcher';
 
 const NAV_SETTINGS =
-  '{"submenu_icon":{"value":"&lt;i aria-hidden=\\"true\\" class=\\"\\"&gt;&lt;\\/i&gt;","library":""},"full_width":"stretch","layout":"horizontal","toggle":"burger"}';
+  '{"submenu_icon":{"value":"&lt;i aria-hidden=\\"true\\" class=\\"\\"&gt;&lt;\\/i&gt;","library":""},"full_width":"","layout":"horizontal","toggle":"burger"}';
 
 function Bar({
   region,

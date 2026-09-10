@@ -171,6 +171,10 @@ export default function AccountingBookkeepingBody({ region }: { region: string }
         <div className="abk-hero__wash" aria-hidden="true" />
 
         <div className="abk-hero__inner">
+          {/* One column. The reference put a "Contact us" link opposite the
+              copy; removed by request, and the grid went with it — a two-column
+              grid with nothing in its second track just narrows the paragraph
+              for no reason. */}
           <div className="abk-hero__grid">
             <div>
               <nav className="abk-hero__crumb" aria-label="Breadcrumb">
@@ -186,13 +190,6 @@ export default function AccountingBookkeepingBody({ region }: { region: string }
               <h1 className="abk-hero__title">{ABK_HERO.title}</h1>
               <p className="abk-hero__lede">{ABK_HERO.lede}</p>
             </div>
-
-            <a className="abk-hero__cta" href={rurl(region, ABK_HERO.cta.href)}>
-              <span className="abk-hero__dot" aria-hidden="true">
-                <ArrowRight />
-              </span>
-              <span>{ABK_HERO.cta.label}</span>
-            </a>
           </div>
         </div>
       </section>
@@ -226,16 +223,11 @@ export default function AccountingBookkeepingBody({ region }: { region: string }
               </div>
               <div className="abk-panel__glow" aria-hidden="true" />
 
+              {/* The wordmark alone. A decorative burger glyph sat opposite it
+                  in the reference; removed by request — it read as a control
+                  that opens nothing. */}
               <div className="abk-panel__top">
                 <span className="abk-panel__mark">{ABK_BRIEF.panel.mark}</span>
-                {/* Decorative, as in the reference: the panel is a picture of a
-                    product surface, not a control. Hidden from assistive tech
-                    rather than announced as a menu that opens nothing. */}
-                <span className="abk-panel__burger" aria-hidden="true">
-                  <i />
-                  <i />
-                  <i />
-                </span>
               </div>
 
               <figcaption className="abk-panel__foot">

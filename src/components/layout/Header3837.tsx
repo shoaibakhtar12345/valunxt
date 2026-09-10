@@ -10,8 +10,17 @@ import { BASE, rurl } from '@/lib/region';
 import MainNav, { MenuToggle } from './MainNav';
 import RegionSwitcher from './RegionSwitcher';
 
+/* `full_width` is deliberately empty, and this is the ONE place the captured
+   markup is not reproduced verbatim.
+
+   The capture carried `"full_width":"stretch"`, which makes Elementor's nav
+   widget try to stretch its dropdown against a container this conversion does
+   not render. It threw on every page load —
+   `TypeError: Cannot read properties of null (reading 'stretch')` — and, having
+   thrown, never applied the stretch anyway. Emptying the flag removes the error
+   and changes nothing visible: the menus are positioned by our own CSS. */
 const NAV_SETTINGS =
-  '{"submenu_icon":{"value":"&lt;i aria-hidden=\\"true\\" class=\\"\\"&gt;&lt;\\/i&gt;","library":""},"full_width":"stretch","layout":"horizontal","toggle":"burger"}';
+  '{"submenu_icon":{"value":"&lt;i aria-hidden=\\"true\\" class=\\"\\"&gt;&lt;\\/i&gt;","library":""},"full_width":"","layout":"horizontal","toggle":"burger"}';
 
 function Bar({
   region,

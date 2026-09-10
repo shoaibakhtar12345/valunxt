@@ -998,18 +998,23 @@
   background: #fff;
 }
 
+/* Height and internal spacing raised on client feedback — the band was 206px
+   tall at 1440 and the copy sat close to all four edges, which read as cramped
+   against the width. The min-height is what does the work: the two columns are
+   short enough that padding alone left the box governed by the taller of them. */
 .vxn-impact__card {
   position: relative;
   max-width: 1520px;
+  min-height: clamp(210px, 17.5vw, 286px);
   margin: 0 auto;
-  padding: clamp(22px, 2.4vw, 34px) clamp(24px, 3.2vw, 52px);
+  padding: clamp(38px, 4.2vw, 64px) clamp(30px, 3.8vw, 66px);
   border-radius: 24px;
   overflow: hidden;
   isolation: isolate;
   background: var(--vxn-band-dark);
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: clamp(20px, 3vw, 56px);
+  gap: clamp(28px, 3.6vw, 74px);
   align-items: center;
 }
 
@@ -1068,7 +1073,8 @@
   margin: 0 auto;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr);
-  gap: clamp(28px, 4vw, 72px);
+  /* Widened with the band's height, on client feedback. */
+  gap: clamp(36px, 4.8vw, 92px);
   align-items: stretch;
 }
 
@@ -1108,8 +1114,11 @@
   overflow: hidden;
   isolation: isolate;
   /* Sets the height of the whole band: the copy column is shorter, and its CTA
-     is pushed to the foot to meet this. Lower it and the band gets shorter. */
-  min-height: clamp(220px, 23vw, 330px);
+     is pushed to the foot to meet this. Lower it and the band gets shorter.
+
+     Raised on client feedback — 328px at 1440 left the artwork reading as a
+     thumbnail beside its own paragraph. */
+  min-height: clamp(300px, 31vw, 470px);
 }
 
 .vxn-spotlight__media img {
@@ -1159,11 +1168,18 @@
   min-width: 0;
 }
 
+/* THE STACK SETS THE SECTION'S HEIGHT, not the lead card — which is why this
+   min-height had to come down with the lead's and not instead of it.
+
+   The right column is two of these plus a 20px gap, so at the old 264 it stood
+   264 * 2 + 20 = 548 — exactly the lead's old ceiling. Lowering only the lead
+   would have changed nothing: the grid row takes the taller of the two, and
+   the stack would simply have kept the section at 548. */
 .vxn-mosaic__card {
   position: relative;
   display: flex;
   align-items: flex-end;
-  min-height: 264px;
+  min-height: 190px;
   padding: clamp(22px, 2.4vw, 34px);
   border-radius: 18px;
   overflow: hidden;
@@ -1173,8 +1189,10 @@
   transition: transform .3s var(--vxn-ease), box-shadow .3s var(--vxn-ease);
 }
 
+/* Reduced on client feedback: 548 at 1600 made this the tallest band on the
+   page for three cards carrying a line of copy each. */
 .vxn-mosaic__card--lead {
-  min-height: clamp(360px, 38vw, 548px);
+  min-height: clamp(300px, 30vw, 440px);
 }
 
 /* The shared card fill runs blue -> violet -> magenta. This page carries no
@@ -1326,12 +1344,19 @@
 
 
 
+/* ROUNDED ON THE LEFT ONLY, by request. The panel runs off the right edge of
+   the viewport, so a radius on that side would round a corner nobody can see
+   while leaving a 1px sliver of cream down the outside. Left corners rounded,
+   right corners square: the band reads as a plate sliding in from off-screen.
+
+   `overflow: hidden` is what clips the texture and the framed photo to it. */
 .vxn-careers__media {
   position: relative;
   display: grid;
   place-items: center;
   min-height: clamp(320px, 34vw, 470px);
   overflow: hidden;
+  border-radius: clamp(18px, 2vw, 32px) 0 0 clamp(18px, 2vw, 32px);
 }
 
 .vxn-careers__texture {
@@ -1398,8 +1423,14 @@
     min-height: clamp(300px, 52vw, 420px);
   }
 
+  /* SQUARE ONCE IT STACKS. The left-only radius is a two-column device: it
+     works because the plate runs off the right edge of the viewport and the
+     rounded side is the only one the reader can see. Stacked, the plate spans
+     the full width and bleeds off BOTH edges, so one rounded side and one
+     square side reads as a bug rather than as a decision. */
   .vxn-careers__media {
     min-height: clamp(280px, 56vw, 380px);
+    border-radius: 0;
   }
 }
 
@@ -2429,6 +2460,18 @@
   margin-right: auto;
 }
 
+/* The collapsed service names on the accordion, larger on client feedback.
+   Those labels are the only wayfinding a closed panel has, and at
+   clamp(19px, 1.6vw, 27px) — 23px at 1440 — they were losing to the artwork
+   behind them.
+
+   Scoped to .vxn-ae-home rather than changed at source: `.vxn-klay__label` in
+   valunxt-brand.css is shared with the India home, which was not part of this
+   request. */
+.vxn-ae-home .vxn-klay__label {
+  font-size: clamp(24px, 2.1vw, 34px);
+}
+
 /* .vxn-sub runs edge to edge and is inset by nothing: it is two full-bleed
    halves with a bar floating on them, so the band padding and the max-width
    inset the other sections take would both fight it. */
@@ -2436,6 +2479,33 @@
   padding: 0 !important;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
+}
+
+/* ---- Client feedback: three bands come off the 40px rhythm ----------------
+   The block above sets one 40px band for the whole page, which is what keeps
+   the sections evenly spaced. These three are deliberate exceptions, and they
+   are here rather than on the rules themselves because that block declares
+   `padding … !important` and would otherwise win.
+
+   CAREERS goes to 0. Its right-hand column is a full-height plate that runs off
+   the edge of the viewport; the 40px left a strip of cream above and below it,
+   so the plate read as a card sitting in the band rather than as the band's own
+   right half. With 0 it meets the section's top and bottom, and the radius on
+   .vxn-careers__media is what keeps the left corners from being a hard join.
+
+   IMPACT, SPOTLIGHT and READY gain height instead — see the note on the ready
+   band's wash for why that one needed the room most. */
+.vxn-ae-home .vxn-careers {
+  padding: 0 !important;
+}
+
+.vxn-ae-home .vxn-impact,
+.vxn-ae-home .vxn-spotlight {
+  padding: clamp(48px, 5vw, 76px) 0 !important;
+}
+
+.vxn-ae-home .vxn-ready {
+  padding: clamp(64px, 6.6vw, 104px) 0 !important;
 }
 
 /* The insights containers keep their own Elementor inner, which already

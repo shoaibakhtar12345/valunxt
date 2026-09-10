@@ -63,8 +63,12 @@
      inside the sections (see --headgap) rather than by making this page's
      bands taller than its neighbours'. ------------------------------------- */
   --pad: 40px;
-  --gutter: 24px;
-  --maxw: 1280px;
+  /* Matched to the UAE home page by request. That page runs a 1520px measure
+     with `--vxn-gutter: clamp(16px, 4vw, 48px)` (see the .vxn-ae-home block in
+     valunxt-landing.css); this page was 1280/24, so the two sections did not
+     line up down their left edges when a visitor moved between them. */
+  --gutter: clamp(16px, 4vw, 48px);
+  --maxw: 1520px;
   --gap: 24px;
   --headgap: 52px;
   --radius: 16px;
@@ -87,12 +91,22 @@
   padding: var(--pad) 0;
 }
 
-/* The one container. Every band on the page uses it or copies it exactly. */
+/* The one container. Every band on the page uses it or copies it exactly.
+
+   THE GUTTER IS SUBTRACTED FROM THE MEASURE, not padded inside it — this is
+   the UAE home page's own formula (`.vxn-ae-home .vxn-impact__card` et al in
+   valunxt-landing.css) and copying the number without copying the formula is
+   what left the two pages misaligned.
+
+   Padding inside a 1520 box centres the BOX and then insets the content, so at
+   a 1600 viewport the copy began at 81px. Subtracting the gutter from the
+   max-width centres the CONTENT, which begins at 48px — where the home page's
+   does. Measured both ways at 1600 before settling on this. */
 .abk-root .abk-in {
   width: 100%;
-  max-width: var(--maxw);
+  max-width: min(var(--maxw), calc(100% - var(--gutter) * 2));
   margin: 0 auto;
-  padding: 0 var(--gutter);
+  padding: 0;
 }
 
 /* =============================================================================
@@ -228,22 +242,21 @@
   );
 }
 
+/* Same measure as .abk-in, so the hero's copy starts on the same vertical line
+   as every section under it. */
 .abk-root .abk-hero__inner {
   position: relative;
   z-index: 3;
   width: 100%;
-  max-width: var(--maxw);
+  max-width: min(var(--maxw), calc(100% - var(--gutter) * 2));
   margin: 0 auto;
-  padding: 0 var(--gutter);
+  padding: 0;
 }
 
-/* Copy left, the call to action hard right and on the same baseline as the
-   foot of the paragraph — which is what `align-items:end` buys. */
+/* One column since the call to action was removed. */
 .abk-root .abk-hero__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: end;
-  gap: clamp(24px, 4vw, 72px);
+  grid-template-columns: minmax(0, 1fr);
 }
 
 .abk-root .abk-hero__crumb {
@@ -281,60 +294,19 @@
    collapse to the site default on every phone. */
 .abk-root .abk-hero__title {
   margin: 0 0 24px;
-  font-size: clamp(42px, 6.2vw, 90px) !important;
+  font-size: clamp(42px, 6.2vw, 62px) !important;
   line-height: 1.03 !important;
   letter-spacing: -0.022em;
   color: #fff !important;
 }
 
 .abk-root .abk-hero__lede {
-  max-width: 47ch;
+  max-width: 50%;
   margin: 0;
   font-size: clamp(13.5px, 1.02vw, 15.5px);
   font-weight: 400;
   line-height: 1.78;
   color: rgba(255, 255, 255, 0.86) !important;
-}
-
-.abk-root .abk-hero__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  padding-bottom: 4px;
-  text-decoration: none !important;
-  white-space: nowrap;
-}
-
-.abk-root .abk-hero__dot {
-  display: grid;
-  flex: 0 0 auto;
-  place-items: center;
-  width: 46px;
-  height: 46px;
-  border: 1px solid rgba(255, 255, 255, 0.55);
-  border-radius: 50%;
-  color: #fff;
-  transition:
-    background 0.4s ease,
-    border-color 0.4s ease,
-    color 0.4s ease;
-}
-
-.abk-root .abk-hero__dot svg {
-  width: 15px;
-  height: 15px;
-}
-
-.abk-root .abk-hero__cta span {
-  font-size: 15px;
-  color: #fff !important;
-  transition: color 0.3s ease;
-}
-
-.abk-root .abk-hero__cta:hover .abk-hero__dot {
-  background: #fff;
-  border-color: #fff;
-  color: var(--blue);
 }
 
 /* =============================================================================
@@ -483,18 +455,6 @@
   color: #fff;
 }
 
-.abk-root .abk-panel__burger {
-  display: grid;
-  gap: 4px;
-  width: 20px;
-}
-
-.abk-root .abk-panel__burger i {
-  display: block;
-  height: 1.5px;
-  background: rgba(255, 255, 255, 0.9);
-}
-
 .abk-root .abk-panel__title {
   margin: 0 0 10px;
   font-weight: 400 !important;
@@ -574,27 +534,31 @@
    a mask on the element would take the text with it. As its own layer the mask
    applies to the frost alone, so the card dissolves into the photograph at its
    right edge while every word on top of it stays sharp. */
+/* THE SAME GLASS AS THE INSIGHTS CARD, by request — the values below are
+   `.abk-card__glass`'s, not a second recipe that resembles it:
+
+     background   linear-gradient(150deg, #fff .68 -> #fff .46)
+     filter       blur(18px) saturate(125%)
+     border       1px solid rgba(255,255,255,.5)
+     shadow       0 10px 30px rgba(8,20,48,.16)
+
+   THE MASK IS GONE. It used to dissolve the card's right edge into the
+   photograph, which is why this pane read as a different material from the
+   article cards: theirs is an even frosted sheet, this one was a gradient
+   wiping out to nothing. Removing it also retires the reason
+   `.abk-why__note` carried a max-width — that was there to keep the last line
+   of copy off the transparent part, and there is no transparent part now. */
 .abk-root .abk-why__card::before {
   content: "";
   position: absolute;
   z-index: 0;
   inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: inherit;
-  background: linear-gradient(
-    100deg,
-    rgba(255, 255, 255, 0.92) 0%,
-    rgba(255, 255, 255, 0.84) 62%,
-    rgba(255, 255, 255, 0.18) 100%
-  );
-  -webkit-backdrop-filter: blur(20px) saturate(135%);
-  backdrop-filter: blur(20px) saturate(135%);
-  /* Opaque until 72%, THEN the fade. At 50% the dissolve started under the last
-     line of the note and half a sentence was sitting on the photograph. The
-     copy's own max-width (below) is the other half of that fix: the two
-     together keep every word over the solid part of the card. */
-  -webkit-mask-image: linear-gradient(100deg, #000 0%, #000 72%, rgba(0, 0, 0, 0.42) 90%, rgba(0, 0, 0, 0) 100%);
-  mask-image: linear-gradient(100deg, #000 0%, #000 72%, rgba(0, 0, 0, 0.42) 90%, rgba(0, 0, 0, 0) 100%);
-  box-shadow: 0 24px 64px rgba(6, 20, 60, 0.2);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.68) 0%, rgba(255, 255, 255, 0.46) 100%);
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
+  backdrop-filter: blur(18px) saturate(125%);
+  box-shadow: 0 10px 30px rgba(8, 20, 48, 0.16);
 }
 
 .abk-root .abk-why__card > * {
@@ -662,12 +626,18 @@
   box-decoration-break: clone;
 }
 
+/* Darkened with the glass change. The article cards' sheet is more transparent
+   than the one this pane used to carry (.68/.46 against .92/.84), and this
+   note is 13px grey over a bright photograph — the heading above it is blue and
+   large enough to survive the swap, this was not. The max-width stays: it no
+   longer has a transparent edge to avoid, but it still keeps the line length
+   readable. */
 .abk-root .abk-why__note {
   max-width: 32ch;
   margin: 16px 0 22px;
   font-size: 13px;
   line-height: 1.7;
-  color: #5b6472 !important;
+  color: #2f3a4d !important;
 }
 
 .abk-root .abk-why__btn {
@@ -1187,23 +1157,31 @@
 /* The frost is a layer, not the box — the same reason as .abk-why__card. A
    filter on the element itself cannot be faded out without taking the words
    with it. */
+/* THE INSIGHTS CARD'S GLASS, third and last place it is used — the values are
+   `.abk-card__glass`'s verbatim, the same set now on `.abk-why__card::before`:
+
+     background   linear-gradient(150deg, #fff .68 -> #fff .46)
+     filter       blur(18px) saturate(125%)
+     border       1px solid rgba(255,255,255,.5)
+     shadow       0 10px 30px rgba(8,20,48,.16)
+
+   Mask removed, as on the Why Us card. The right-edge dissolve is what made
+   these panes read as a different material from the article cards, and it is
+   the only thing the three had not shared.
+
+   If this recipe changes again it should become a custom-property set on
+   .abk-root rather than a fourth copy of the same six declarations. */
 .abk-root .abk-case__quote::before {
   content: "";
   position: absolute;
   z-index: 0;
   inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: inherit;
-  background: linear-gradient(
-    100deg,
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(255, 255, 255, 0.8) 62%,
-    rgba(255, 255, 255, 0.22) 100%
-  );
-  -webkit-backdrop-filter: blur(18px) saturate(130%);
-  backdrop-filter: blur(18px) saturate(130%);
-  -webkit-mask-image: linear-gradient(100deg, #000 0%, #000 68%, rgba(0, 0, 0, 0.38) 90%, rgba(0, 0, 0, 0) 100%);
-  mask-image: linear-gradient(100deg, #000 0%, #000 68%, rgba(0, 0, 0, 0.38) 90%, rgba(0, 0, 0, 0) 100%);
-  box-shadow: 0 20px 50px rgba(6, 20, 60, 0.18);
+  background: linear-gradient(150deg, rgba(255, 255, 255, 0.68) 0%, rgba(255, 255, 255, 0.46) 100%);
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
+  backdrop-filter: blur(18px) saturate(125%);
+  box-shadow: 0 10px 30px rgba(8, 20, 48, 0.16);
 }
 
 .abk-root .abk-case__quote > * {
@@ -1220,12 +1198,15 @@
   color: var(--blue);
 }
 
+/* Darkened with the glass, for the same reason as .abk-why__note: the article
+   cards' sheet is more transparent than the one this card used to carry, and
+   this is 12.5px set over a photograph. */
 .abk-root .abk-case__said {
   max-width: 34ch;
   margin: 0 0 18px;
   font-size: 12.5px;
   line-height: 1.7;
-  color: #3d4a63 !important;
+  color: #2f3a4d !important;
 }
 
 .abk-root .abk-case__by {
@@ -1674,7 +1655,7 @@
 }
 
 .abk-root .abk-talk__head {
-  max-width: 20ch;
+  max-width: 100%;
   margin: 0 0 16px !important;
   font-weight: 300 !important;
   font-size: clamp(25px, 3.1vw, 40px) !important;
@@ -1839,11 +1820,7 @@
     gap: 30px;
   }
 
-  .abk-root .abk-hero__cta {
-    justify-self: start;
-  }
-
-  /* The desktop scrim is a wash from the LEFT, because that is the only side
+    /* The desktop scrim is a wash from the LEFT, because that is the only side
      the copy occupies there. In one column the copy runs the full width, so the
      last words of every line were landing on the brightest part of the plate.
      An even scrim instead — it costs the photograph some depth and buys the
@@ -1871,15 +1848,12 @@
     border-radius: 0;
   }
 
+  /* Stacked, the card runs the full width and needs a touch more opacity to
+     hold its copy over the photograph. It keeps the even sheet, though — the
+     upward fade that used to live here went with the desktop mask, for the same
+     reason: it made this pane a different material from the article cards. */
   .abk-root .abk-why__card::before {
-    background: linear-gradient(
-      to top,
-      rgba(255, 255, 255, 0.94) 0%,
-      rgba(255, 255, 255, 0.78) 62%,
-      rgba(255, 255, 255, 0.2) 100%
-    );
-    -webkit-mask-image: linear-gradient(to top, #000 0%, #000 62%, rgba(0, 0, 0, 0.35) 88%, rgba(0, 0, 0, 0) 100%);
-    mask-image: linear-gradient(to top, #000 0%, #000 62%, rgba(0, 0, 0, 0.35) 88%, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient(150deg, rgba(255, 255, 255, 0.82) 0%, rgba(255, 255, 255, 0.66) 100%);
   }
 
   /* The two halves of the band stack. The photograph keeps its own height
@@ -1907,6 +1881,8 @@
 
 @media (max-width: 620px) {
   .abk-root {
+    /* The clamp above already floors at 16px; this holds the phone gutter at
+       the 20px the sections below were laid out against. */
     --gutter: 20px;
     --headgap: 32px;
   }

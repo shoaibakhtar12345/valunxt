@@ -16,7 +16,7 @@ const STICKY_SETTINGS =
   '{"sticky":"top","sticky_anchor_link_offset":70,"sticky_anchor_link_offset_tablet":60,"sticky_anchor_link_offset_mobile":50,"sticky_on":["desktop","tablet","mobile"],"sticky_offset":0,"sticky_effects_offset":0}';
 
 const NAV_SETTINGS =
-  '{"submenu_icon":{"value":"&lt;i aria-hidden=\\"true\\" class=\\"\\"&gt;&lt;\\/i&gt;","library":""},"full_width":"stretch","layout":"horizontal","toggle":"burger"}';
+  '{"submenu_icon":{"value":"&lt;i aria-hidden=\\"true\\" class=\\"\\"&gt;&lt;\\/i&gt;","library":""},"full_width":"","layout":"horizontal","toggle":"burger"}';
 
 export default function Header3134({ region }: { region: string }) {
   const dubai = vxnOffice('dubai')!;

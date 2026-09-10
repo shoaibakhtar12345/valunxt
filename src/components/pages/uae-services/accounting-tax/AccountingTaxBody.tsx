@@ -285,8 +285,12 @@ const CSS = `
      template from the five services beside it. The horizontal gutter still
      lives on the inner wrapper, so 0 here cannot let copy touch the edge. */
   --pad:40px;
-  --gutter:24px;
-  --maxw:1440px;
+  /* The UAE home page's measure — 1520 with clamp(16px,4vw,48px) either side.
+     Was 1440/24, so this page's bands did not line up with the home's when a
+     visitor moved between them. See .at-in for why the formula matters as much
+     as the number. */
+  --gutter:clamp(16px, 4vw, 48px);
+  --maxw:1520px;
   --gap:24px;
   --cardpad:24px;
   --radius:18px;
@@ -306,8 +310,16 @@ const CSS = `
    its copy hangs off the bottom, so the 40px is what sits under the last line
    rather than what sets the band's size. */
 /* The one container. Every band on the page uses it or copies it exactly. */
+/* Matched to the UAE home page's measure by request.
+
+   THE GUTTER IS SUBTRACTED FROM THE MEASURE, not padded inside it. That is the
+   home page's own formula (see the .vxn-ae-home block in valunxt-landing.css),
+   and copying the 1520 without copying the formula is what leaves two pages
+   misaligned: padding inside a 1520 box centres the BOX and then insets the
+   content, so at a 1600 viewport the copy starts at 81px instead of 48px.
+   Subtracting centres the CONTENT, which is what has to line up. */
 .at-in,.at-hero__inner{
-  width:100%;max-width:var(--maxw);margin:0 auto;padding:0 var(--gutter);
+  width:100%;max-width:min(var(--maxw),calc(100% - var(--gutter) * 2));margin:0 auto;padding:0;
 }
 
 /* ==========================================================================
@@ -480,25 +492,35 @@ const CSS = `
    the photograph runs to the same bottom line as the buttons beside it however
    long the four notes turn out to be.
    ========================================================================== */
+/* Height and measure both cut on client feedback. This band was the tallest
+   on the page and ran the full 1520 the rest of it uses, which is more measure
+   than a four-item list beside one photograph needs. The narrower box is on
+   .at-intro .at-in only — every other band keeps the page measure. */
 .at-intro{
   background:#fff;
-  padding:clamp(46px,5.2vw,74px) 0 clamp(50px,5.6vw,82px)!important;
+  padding:clamp(34px,3.8vw,54px) 0 clamp(36px,4vw,58px)!important;
 }
+.at-intro .at-in{max-width:min(1180px,calc(100% - var(--gutter) * 2));}
 .at-intro__top{
-  max-width:840px;margin:0 auto clamp(32px,3.8vw,52px);text-align:center;
+  max-width:760px;margin:0 auto clamp(22px,2.6vw,34px);text-align:center;
 }
-.at-intro__head{
+/* Scoped to .at-root so it beats the UAE type scale. valunxt-uae-type.css sets
+   "body.vxn-uae-type h2" at (0,1,2) with !important; a bare .at-intro__head is
+   (0,1,0) and lost, so this heading rendered at the scale's 42px however it was
+   written here. (0,2,0) clears it — which is the escape hatch that type sheet
+   documents for a heading a page sizes on purpose. */
+.at-root .at-intro__head{
   font-weight:300!important;
-  color:#16233C!important;font-size:clamp(27px,3.5vw,46px)!important;
-  line-height:1.16!important;letter-spacing:-.012em!important;margin:0 0 15px!important;
+  color:#16233C!important;font-size:clamp(24px,2.7vw,36px)!important;
+  line-height:1.18!important;letter-spacing:-.012em!important;margin:0 0 12px!important;
 }
 .at-intro__lede{
-  color:var(--muted)!important;font-size:16px!important;line-height:1.62!important;
+  color:var(--muted)!important;font-size:15px!important;line-height:1.6!important;
   margin:0 auto!important;max-width:80ch;
 }
 .at-intro__grid{
   display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-  gap:clamp(26px,3.6vw,58px);align-items:stretch;
+  gap:clamp(22px,2.8vw,44px);align-items:stretch;
 }
 .at-intro__copy{display:flex;flex-direction:column;}
 .at-intro__points{
@@ -506,21 +528,23 @@ const CSS = `
 }
 .at-intro__point{
   position:relative;border-top:1px solid var(--line);
-  padding:21px 0 23px 24px;
+  padding:14px 0 15px 22px;
 }
 /* A square, not a disc, and the one warm mark on a page of blues. It has to
    read at 9px, which is what rules the disc out. */
 .at-intro__point::before{
-  content:"";position:absolute;left:0;top:29px;width:9px;height:9px;
+  content:"";position:absolute;left:0;top:21px;width:8px;height:8px;
   background:var(--gold);
 }
-.at-intro__label{
+/* Same reason as .at-intro__head — this was rendering at the h3 scale's 27px,
+   which is most of why the band read as oversized for a four-item list. */
+.at-root .at-intro__label{
   font-weight:400!important;
-  color:var(--ny)!important;font-size:20px!important;line-height:1.32!important;
-  letter-spacing:0!important;text-transform:none!important;margin:0 0 6px!important;
+  color:var(--ny)!important;font-size:18px!important;line-height:1.3!important;
+  letter-spacing:0!important;text-transform:none!important;margin:0 0 4px!important;
 }
 .at-intro__note{
-  color:var(--body)!important;font-size:14.5px!important;line-height:1.66!important;
+  color:var(--body)!important;font-size:13.5px!important;line-height:1.6!important;
   margin:0!important;
 }
 /* The chips and the buttons follow the list in flow. They were pinned to the
@@ -530,7 +554,7 @@ const CSS = `
    the pin did was open a hole between the chips and the buttons. */
 .at-intro__chips{
   display:flex;flex-wrap:wrap;gap:10px;
-  margin:28px 0 22px;padding:0;list-style:none;
+  margin:20px 0 18px;padding:0;list-style:none;
 }
 .at-intro__chip{
   display:inline-flex;align-items:center;gap:9px;
@@ -542,7 +566,7 @@ const CSS = `
   width:6px;height:6px;border-radius:50%;background:var(--ny2);flex:0 0 auto;
 }
 .at-intro__ctas{display:flex;flex-wrap:wrap;gap:14px;}
-.at-intro__figure{margin:0;overflow:hidden;border-radius:3px;min-height:340px;}
+.at-intro__figure{margin:0;overflow:hidden;border-radius:3px;min-height:270px;}
 .at-intro__figure img{
   display:block;width:100%;height:100%;object-fit:cover;
 }
@@ -940,7 +964,7 @@ const CSS = `
   font-weight:300!important;
   color:#16233C!important;font-size:clamp(25px,3.1vw,40px)!important;
   line-height:1.18!important;letter-spacing:-.012em!important;
-  margin:0 0 16px!important;max-width:20ch;
+  margin:0 0 16px!important;max-width:100%;
 }
 .at-talk__lede{
   color:var(--body)!important;font-size:15px!important;line-height:1.7!important;

@@ -38,7 +38,6 @@ export const ABK_HERO = {
     'reconcile cleanly and stand up to scrutiny. Whether you are opening your first UAE ' +
     'entity, cleaning up a backlog, or preparing for an audit, we bring disciplined ' +
     'process and structured reporting that moves you forward.',
-  cta: { label: 'Contact us', href: '/contact/' },
   /* The plate. Warm, architectural and already out of focus at the right, which
      is what lets the blur band at the foot dissolve rather than start. */
   image: 'banners/service-main.webp',

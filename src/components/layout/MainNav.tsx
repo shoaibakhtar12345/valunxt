@@ -12,6 +12,7 @@
  */
 import { rurl } from '@/lib/region';
 import MegaMenu from './MegaMenu';
+import UaeServicesMega from './UaeServicesMega';
 
 export interface NavIds {
   /** menu-item-<n> on the About parent. */
@@ -129,7 +130,14 @@ export default function MainNav({
           home on every header, and both markets already land on their own home
           page by default — /en-in/ and /en-ae/ — so the item only repeated an
           affordance the bar already had. The route is untouched. */}
-      <MegaMenu region={region} presetKey="services" tabIndex={megaTab} />
+      {/* The UAE takes the tabbed panel built to the client's reference; India
+          keeps the shared preset. Region rather than header template, because
+          all three headers share this list and only one market was specified. */}
+      {region === 'en-ae' ? (
+        <UaeServicesMega region={region} tabIndex={megaTab} />
+      ) : (
+        <MegaMenu region={region} presetKey="services" tabIndex={megaTab} />
+      )}
       <AboutItem region={region} ids={ids} hidden={hidden} />
       {/* "Our Group" was removed from the bar; the group companies are still
           reachable from the footer and from /our-group/ itself. */}

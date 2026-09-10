@@ -663,7 +663,12 @@ export default function HeadAssets({ page }: { page: PageConfig }) {
       <link rel="stylesheet" href={`${BASE}/assets/css/valunxt-brand.css?v=157`} media="all" />
       {/* Landing-page feature blocks. Purely additive — after the brand sheet so
           it can build on its tokens without overriding any of its rules. */}
-      <link rel="stylesheet" href={`${BASE}/assets/css/valunxt-landing.css?v=32`} media="all" />
+      <link rel="stylesheet" href={`${BASE}/assets/css/valunxt-landing.css?v=36`} media="all" />
+      {/* The UAE services mega panel. Listed globally rather than per page
+          because the header renders on every page in that market — and it is
+          entirely under `.vxn-umega`, a class only that component emits, so it
+          is inert everywhere else. */}
+      <link rel="stylesheet" href={`${BASE}/assets/css/valunxt-uae-mega.css?v=12`} media="all" />
       {/* Stylesheets a single page wrote for itself. Last in the block on
           purpose: a page sheet is scoped to one root class and has to be able
           to beat the theme's rules at equal specificity, which is what loading

@@ -125,13 +125,20 @@ export default function UaeReadyBand({ region }: { region: string }) {
           focusable="false"
         >
           <defs>
+            {/* Blur reduced from 16 on client feedback. The viewBox is 520 tall
+                and `preserveAspectRatio="none"` squashes it into a band that
+                was ~420px — so a 16px deviation was being scaled up with
+                everything else and the ribbons dissolved into the ground. At 11
+                they read as bands again without becoming graphic. */}
             <filter id="vxn-ready-soft" x="-20%" y="-40%" width="140%" height="180%">
-              <feGaussianBlur stdDeviation="16" />
+              <feGaussianBlur stdDeviation="11" />
             </filter>
+            {/* Opacities raised across the ramp for the same reason: the wash
+                was there in the markup but not on the screen. */}
             <linearGradient id="vxn-ready-band" x1="0" y1="1" x2="1" y2="0">
-              <stop offset="0%" stopColor="#C6CEEC" stopOpacity=".28" />
-              <stop offset="55%" stopColor="#AFBDE8" stopOpacity=".62" />
-              <stop offset="100%" stopColor="#93A7DF" stopOpacity=".82" />
+              <stop offset="0%" stopColor="#C6CEEC" stopOpacity=".46" />
+              <stop offset="55%" stopColor="#AFBDE8" stopOpacity=".82" />
+              <stop offset="100%" stopColor="#93A7DF" stopOpacity="1" />
             </linearGradient>
           </defs>
           <g filter="url(#vxn-ready-soft)" fill="url(#vxn-ready-band)">

@@ -142,7 +142,7 @@ export function uaeServiceConfig(service: Service, written = false): PageConfig 
  * cascade. Each one is scoped to its page's own root class.
  */
 const SUB_SITE_CSS: Record<string, string[]> = {
-  'accounting-tax-services/accounting-bookkeeping': ['/assets/css/accounting-bookkeeping.css?v=2'],
+  'accounting-tax-services/accounting-bookkeeping': ['/assets/css/accounting-bookkeeping.css?v=7'],
 };
 
 /** The page at /services/<service>/<sub>/. */
