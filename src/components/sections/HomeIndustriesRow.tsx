@@ -22,7 +22,7 @@
  */
 import { rimgFirst } from '@/lib/region-assets';
 
-interface Industry {
+export interface Industry {
   /** Plain text — this is a heading, not markup. */
   name: string;
   /** Preferred artwork first, current stand-in last. */
@@ -68,7 +68,30 @@ const INDUSTRIES: Industry[] = [
   },
 ];
 
-export default function HomeIndustriesRow({ region }: { region: string }) {
+/**
+ * The strip, optionally with a different list behind it.
+ *
+ * The Accounting & Bookkeeping page shows the same expanding row over its own
+ * six disciplines rather than over sectors, so the cards, the CSS and the
+ * hover are shared and only the list differs. Both home pages call this with no
+ * arguments and are unaffected.
+ *
+ * `eyebrow` and `heading` are props for completeness only: the
+ * `.vxn-home-svc-section` variant hides that block outright
+ * (`.elementor-element-85963b4 { display:none }` in valunxt-brand.css), so
+ * nothing passed here is ever painted. They stay because the markup does.
+ */
+export default function HomeIndustriesRow({
+  region,
+  items = INDUSTRIES,
+  eyebrow = 'Industries We Serve',
+  heading = 'The Sectors We Work Across',
+}: {
+  region: string;
+  items?: Industry[];
+  eyebrow?: string;
+  heading?: string;
+}) {
   return (
     <div className="vxn-home-svc-section vxn-home-svc-shifted">
       <div
@@ -94,7 +117,7 @@ export default function HomeIndustriesRow({ region }: { region: string }) {
             >
               <div className="elementor-widget-container">
                 <span className="elementor-heading-title elementor-size-default">
-                  Industries We Serve
+                  {eyebrow}
                 </span>
               </div>
             </div>
@@ -108,7 +131,7 @@ export default function HomeIndustriesRow({ region }: { region: string }) {
             >
               <div className="elementor-widget-container">
                 <h2 className="elementor-heading-title elementor-size-default">
-                  The Sectors We Work Across
+                  {heading}
                 </h2>
               </div>
             </div>
@@ -123,7 +146,7 @@ export default function HomeIndustriesRow({ region }: { region: string }) {
       >
         <div className="e-con-inner">
           <div className="vxn-svc-row">
-            {INDUSTRIES.map((industry) => (
+            {items.map((industry) => (
               <div className="vxn-svc-card" key={industry.name}>
                 <div className="vxn-svc-card__media">
                   {/* eslint-disable-next-line @next/next/no-img-element */}

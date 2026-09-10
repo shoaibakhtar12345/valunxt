@@ -16,6 +16,11 @@ const STYLESHEETS: string[] = [
   '/assets/content/uploads/elementor/google-fonts/css/dmsans.css',
   '/assets/content/uploads/elementor/google-fonts/css/forum.css',
   '/assets/content/uploads/elementor/google-fonts/css/nothingyoucoulddo.css',
+  /* The UAE market's body face. Self-hosted like the three above rather than
+     pulled from fonts.googleapis.com, and listed globally because @font-face
+     costs nothing on a page that never asks for the family — the browser only
+     fetches a .woff2 once something is actually set in it. */
+  '/assets/content/uploads/elementor/google-fonts/css/asapsharp.css',
   '/assets/content/plugins/elementor/assets/css/frontend.min.css',
   '/assets/content/plugins/elementor/assets/css/conditionals/apple-webkit.min.css',
   '/assets/content/plugins/elementor/assets/css/conditionals/e-swiper.min.css',
@@ -659,6 +664,14 @@ export default function HeadAssets({ page }: { page: PageConfig }) {
       {/* Landing-page feature blocks. Purely additive — after the brand sheet so
           it can build on its tokens without overriding any of its rules. */}
       <link rel="stylesheet" href={`${BASE}/assets/css/valunxt-landing.css?v=32`} media="all" />
+      {/* Stylesheets a single page wrote for itself. Last in the block on
+          purpose: a page sheet is scoped to one root class and has to be able
+          to beat the theme's rules at equal specificity, which is what loading
+          after them buys. See `site_css` on PageConfig. */}
+      {(page.site_css ?? []).map((href) => (
+        <link key={href} rel="stylesheet" href={`${BASE}${href}`} media="all" />
+      ))}
+
       {/* intl-tel-input: international phone field with country code + flag dropdown (lead-capture forms) */}
       <link
         rel="stylesheet"

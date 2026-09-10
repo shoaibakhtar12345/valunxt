@@ -142,7 +142,6 @@ const CSS = `
   --gap:24px;
   --radius:20px;
 
-  font-family:"DM Sans",sans-serif;
   background:#fff;
 }
 /* border-box across the page: without it --maxw sets the CONTENT box and the
@@ -206,7 +205,7 @@ const CSS = `
   background:currentColor;box-shadow:0 0 0 3px rgba(0,83,183,.14);
 }
 .svcx-h2{
-  font-family:"Forum",serif!important;font-weight:400!important;
+  font-weight:400!important;
   color:var(--ny)!important;
   font-size:clamp(30px,3.8vw,46px)!important;line-height:1.11!important;
   margin:0 0 18px!important;
@@ -277,7 +276,7 @@ const CSS = `
 .svcx-hero__crumb i{font-style:normal;color:rgba(255,255,255,.5);}
 .svcx-hero__crumb b{font-weight:500!important;color:#fff!important;}
 .svcx-hero__head{
-  font-family:"Forum",serif!important;font-weight:400!important;color:#fff!important;
+  font-weight:400!important;color:#fff!important;
   font-size:clamp(38px,5.4vw,68px)!important;line-height:1.04!important;
   margin:0 0 16px!important;
 }
@@ -339,7 +338,7 @@ const CSS = `
 }
 .svcx-stat__n{
   grid-row:span 2;
-  font-family:"Forum",serif!important;font-weight:400!important;
+  font-weight:400!important;
   color:var(--ny2)!important;font-size:34px!important;line-height:1!important;
 }
 .svcx-stat__k{
@@ -458,7 +457,7 @@ const CSS = `
   border:1px solid rgba(255,255,255,.24);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.26);
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  font-family:"Forum",serif!important;font-weight:400!important;color:#fff!important;
+  font-weight:400!important;color:#fff!important;
   font-size:clamp(17px,1.6vw,21px)!important;line-height:1.32!important;
   /* 'background', not 'background-color': what changes on hover is the sheen,
      which lives in background-image. */
@@ -486,7 +485,7 @@ const CSS = `
   color:var(--muted);
 }
 .svcx-h3{
-  font-family:"Forum",serif!important;font-weight:400!important;color:var(--ny)!important;
+  font-weight:400!important;color:var(--ny)!important;
   font-size:clamp(27px,3.1vw,38px)!important;line-height:1.12!important;
   margin:0 0 16px!important;
 }
@@ -579,7 +578,7 @@ const CSS = `
   background:#8FC0FF;box-shadow:0 0 0 3px rgba(143,192,255,.28);
 }
 .svcx-close__head{
-  font-family:"Forum",serif!important;font-weight:400!important;color:#fff!important;
+  font-weight:400!important;color:#fff!important;
   font-size:clamp(30px,4vw,50px)!important;line-height:1.08!important;
   margin:0 auto 18px!important;max-width:20ch;
 }

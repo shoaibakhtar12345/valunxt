@@ -51,6 +51,7 @@ function config({
   desc,
   written = false,
   extraCss = [],
+  siteCss = [],
 }: {
   name: string;
   path: string;
@@ -60,15 +61,21 @@ function config({
   written?: boolean;
   /** Captured stylesheets this one page needs on top of POST_CSS. */
   extraCss?: string[];
+  /** Stylesheets written for this page by hand; see `site_css` on PageConfig. */
+  siteCss?: string[];
 }): PageConfig {
   const id = postId(path);
   const title = `${name} | VALUNXT`;
+  /* NOTE: the UAE type system is NOT applied here. It is applied once, in
+     resolveRequest — the only resolution the root layout actually renders from.
+     See the note on uaeType() in lib/pages.ts. */
   return {
     title,
     desc,
     og_image: '/assets/content/uploads/2025/03/valunxt-og.png',
     body: bodyClass(id),
     post_css: [...POST_CSS, ...extraCss],
+    site_css: siteCss,
     header: '3837',
     /* The UAE home page's footer, not the shared 2094 one. Every page under
        /en-ae/services/ is a UAE page, so they all take the market's own
@@ -125,15 +132,38 @@ export function uaeServiceConfig(service: Service, written = false): PageConfig 
   });
 }
 
+/**
+ * Stylesheets a single sub-service page wrote for itself, keyed by
+ * `<service slug>/<sub slug>` so two services can each have a page of the same
+ * name without colliding.
+ *
+ * These are hand-written sheets under public/assets/css/, not captured
+ * Elementor CSS — see `site_css` on PageConfig for where they land in the
+ * cascade. Each one is scoped to its page's own root class.
+ */
+const SUB_SITE_CSS: Record<string, string[]> = {
+  'accounting-tax-services/accounting-bookkeeping': ['/assets/css/accounting-bookkeeping.css?v=2'],
+};
+
 /** The page at /services/<service>/<sub>/. */
-export function uaeSubServiceConfig(service: Service, sub: SubService): PageConfig {
+export function uaeSubServiceConfig(
+  service: Service,
+  sub: SubService,
+  written = false,
+): PageConfig {
+  const key = `${service.slug}/${sub.slug}`;
   return config({
     name: sub.name,
     path: `/services/${service.slug}/${sub.slug}/`,
     /* The sub-pages borrow the parent's image: they are the same discipline,
        and a placeholder per page would be thirty more images to art-direct
-       before any of them has copy. */
+       before any of them has copy. A written page sets its own artwork in its
+       body and never reads this. */
     heroImage: service.img,
-    desc: `${sub.name} — part of ${vxnServiceName(service)} at VALUNXT. Coming soon.`,
+    desc: written
+      ? `${sub.name} — part of ${vxnServiceName(service)} at VALUNXT.`
+      : `${sub.name} — part of ${vxnServiceName(service)} at VALUNXT. Coming soon.`,
+    written,
+    siteCss: SUB_SITE_CSS[key],
   });
 }

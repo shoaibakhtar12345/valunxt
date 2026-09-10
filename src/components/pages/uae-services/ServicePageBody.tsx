@@ -56,7 +56,6 @@ const COMMITMENTS: Commitment[] = [
 const CSS = `
 .vxn-svcintro{
   --ny:#0E355F; --ny2:#0053B7; --body:#4d5863;
-  font-family:"DM Sans",sans-serif;
   background:#fff;
   /* UAE services house rule: every section is padded 40px 0. The horizontal
      gutter lives on the inner wrapper, so 0 here cannot let copy touch the
@@ -74,7 +73,7 @@ const CSS = `
    these classes cannot reach on their own — the same reason
    ComingSoonBandSection marks its own title. */
 .vxn-svcintro__head{
-  font-family:"Forum",serif!important;font-weight:400!important;
+  font-weight:400!important;
   color:var(--ny)!important;
   font-size:clamp(32px,4.2vw,48px)!important;
   line-height:1.14!important;
@@ -99,13 +98,12 @@ const CSS = `
 
 .vxn-cap{
   --ny:#0E355F; --body:#4d5863;
-  font-family:"DM Sans",sans-serif;
   background:#f2f7fc;
   padding:40px 0;
 }
 .vxn-cap__inner{max-width:1240px;margin:0 auto;padding:0 24px;}
 .vxn-cap__head{
-  font-family:"Forum",serif!important;font-weight:400!important;
+  font-weight:400!important;
   color:var(--ny)!important;
   font-size:clamp(28px,3.6vw,44px)!important;
   line-height:1.16!important;
@@ -205,7 +203,6 @@ const CSS = `
 
 .vxn-comm{
   --ny:#0E355F; --ny2:#0053B7;
-  font-family:"DM Sans",sans-serif;
   background:#fff;
   padding:40px 0;
 }
@@ -224,7 +221,7 @@ const CSS = `
 }
 .vxn-comm__ico svg{width:30px;height:30px;}
 .vxn-comm__title{
-  font-family:"DM Sans",sans-serif!important;font-weight:400!important;
+  font-weight:400!important;
   color:var(--ny)!important;
   font-size:22px!important;
   line-height:1.35!important;
@@ -309,7 +306,7 @@ const CSS = `
   margin:0 0 18px;
 }
 .vxn-glass__head{
-  font-family:"Forum",serif!important;font-weight:400!important;
+  font-weight:400!important;
   color:#fff!important;
   font-size:clamp(28px,3.4vw,42px)!important;
   line-height:1.18!important;
@@ -348,7 +345,6 @@ const CSS = `
 
 .vxn-hl{
   --ny:#0E355F; --ny2:#0053B7; --body:#4d5863;
-  font-family:"DM Sans",sans-serif;
   background:#eef4fc;
   padding:40px 0;
 }
@@ -361,7 +357,7 @@ const CSS = `
   margin-bottom:34px;
 }
 .vxn-hl__head{
-  font-family:"Forum",serif!important;font-weight:400!important;
+  font-weight:400!important;
   color:var(--ny)!important;
   font-size:clamp(28px,3.4vw,40px)!important;
   line-height:1.15!important;
@@ -394,7 +390,6 @@ const CSS = `
 }
 .vxn-hl__figure{
   display:block;
-  font-family:"Forum",serif;
   font-size:clamp(36px,4vw,46px);
   line-height:1.1;
   color:var(--ny);
@@ -402,7 +397,7 @@ const CSS = `
   transition:color .4s ease;
 }
 .vxn-hl__label{
-  font-family:"DM Sans",sans-serif!important;font-weight:400!important;
+  font-weight:400!important;
   color:var(--ny)!important;
   font-size:17px!important;
   line-height:1.45!important;

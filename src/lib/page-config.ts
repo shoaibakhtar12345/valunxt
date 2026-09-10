@@ -17,6 +17,16 @@ export interface PageConfig {
   body: string;
   /** Elementor per-post stylesheets: /assets/content/uploads/elementor/css/post-<id>.css */
   post_css: string[];
+  /**
+   * Stylesheets written for this conversion rather than captured from
+   * WordPress, as site-root paths (e.g. '/assets/css/accounting-bookkeeping.css').
+   *
+   * HeadAssets emits them LAST — after the theme, Elementor, brand and landing
+   * sheets — so a page that carries one can style itself with plain selectors
+   * instead of out-specifying the theme. Page-scoped by convention: everything
+   * in such a sheet should sit under one root class belonging to that page.
+   */
+  site_css?: string[];
   /** Which captured Elementor header template to render ('139' | '3134' | '3837' | 'none'). */
   header: string;
   /** Which captured Elementor footer template to render ('2094' | '3425' | 'none'). */

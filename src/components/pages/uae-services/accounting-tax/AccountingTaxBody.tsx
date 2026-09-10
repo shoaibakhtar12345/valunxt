@@ -292,7 +292,6 @@ const CSS = `
   --radius:18px;
   --headgap:44px;
 
-  font-family:"DM Sans",sans-serif;
   background:#fff;
 }
 /* border-box across the page. Without it --maxw sets the CONTENT box and the
@@ -350,7 +349,7 @@ const CSS = `
   background:currentColor;box-shadow:0 0 0 3px rgba(0,83,183,.14);
 }
 .at-h2{
-  font-family:"Forum",serif!important;font-weight:400!important;
+  font-weight:400!important;
   color:var(--ny)!important;
   font-size:clamp(28px,3.4vw,42px)!important;line-height:1.13!important;
   margin:0 0 16px!important;max-width:38ch;
@@ -446,7 +445,7 @@ const CSS = `
    corner of the eye. If one ever comes back, it is the tinted .at-kicker badge
    the sections below use, not a bespoke rule here. */
 .at-hero__head{
-  font-family:"Forum",serif!important;font-weight:400!important;color:#fff!important;
+  font-weight:400!important;color:#fff!important;
   font-size:clamp(34px,4.5vw,62px)!important;line-height:1.05!important;
   letter-spacing:-.004em!important;margin:0 0 24px!important;
 }
@@ -489,7 +488,7 @@ const CSS = `
   max-width:840px;margin:0 auto clamp(32px,3.8vw,52px);text-align:center;
 }
 .at-intro__head{
-  font-family:"DM Sans",sans-serif!important;font-weight:300!important;
+  font-weight:300!important;
   color:#16233C!important;font-size:clamp(27px,3.5vw,46px)!important;
   line-height:1.16!important;letter-spacing:-.012em!important;margin:0 0 15px!important;
 }
@@ -516,7 +515,7 @@ const CSS = `
   background:var(--gold);
 }
 .at-intro__label{
-  font-family:"Forum",serif!important;font-weight:400!important;
+  font-weight:400!important;
   color:var(--ny)!important;font-size:20px!important;line-height:1.32!important;
   letter-spacing:0!important;text-transform:none!important;margin:0 0 6px!important;
 }
@@ -607,7 +606,7 @@ const CSS = `
    is most of why the card reads as a banner rather than as another section
    opening. */
 .at-prob__head{
-  font-family:"DM Sans",sans-serif!important;font-weight:500!important;color:#fff!important;
+  font-weight:500!important;color:#fff!important;
   font-size:clamp(19px,1.9vw,26px)!important;line-height:1.32!important;
   letter-spacing:-.005em!important;margin:0 0 15px!important;max-width:26ch;
 }
@@ -781,7 +780,7 @@ const CSS = `
   transition:opacity .34s ease,transform .46s var(--ease);
 }
 .at-acc__head{
-  display:block;color:#fff!important;font-family:"DM Sans",sans-serif!important;
+  display:block;color:#fff!important;
   font-size:16px!important;font-weight:600!important;line-height:1.3!important;
   letter-spacing:0!important;margin:0 0 9px!important;
 }
@@ -874,7 +873,7 @@ const CSS = `
    Nothing about this section is written down twice.
    ========================================================================== */
 .at-rel__head{
-  font-family:"Forum",serif!important;font-weight:400!important;color:var(--ny)!important;
+  font-weight:400!important;color:var(--ny)!important;
   font-size:clamp(26px,3vw,36px)!important;line-height:1.2!important;
   margin:0 0 var(--headgap)!important;
 }
@@ -902,7 +901,7 @@ const CSS = `
   text-transform:uppercase;color:var(--muted);margin:0 0 9px;
 }
 .at-rel__title{
-  display:block;font-family:"DM Sans",sans-serif;font-weight:400;
+  display:block;font-weight:400;
   color:var(--ny);font-size:15px;line-height:1.32;
 }
 .at-rel__card:first-child .at-rel__title{
@@ -938,7 +937,7 @@ const CSS = `
   position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
 }
 .at-talk__head{
-  font-family:"DM Sans",sans-serif!important;font-weight:300!important;
+  font-weight:300!important;
   color:#16233C!important;font-size:clamp(25px,3.1vw,40px)!important;
   line-height:1.18!important;letter-spacing:-.012em!important;
   margin:0 0 16px!important;max-width:20ch;

@@ -641,7 +641,6 @@ export default function HomeAeBody({ page, region }: { page: PageConfig; region:
       													}
 
       													.elementor-1961 .elementor-element.elementor-element-4e1ffcd .elementor-icon-list-item {
-      														font-family: var(--e-global-typography-798d94d-font-family), Sans-serif;
       														font-size: var(--e-global-typography-798d94d-font-size);
       														font-weight: var(--e-global-typography-798d94d-font-weight);
       														line-height: var(--e-global-typography-798d94d-line-height);
@@ -660,7 +659,6 @@ export default function HomeAeBody({ page, region }: { page: PageConfig; region:
       													}
 
       													.elementor-1961 .elementor-element.elementor-element-923a9ab .elementor-icon-list-item {
-      														font-family: var(--e-global-typography-798d94d-font-family), Sans-serif;
       														font-size: var(--e-global-typography-798d94d-font-size);
       														font-weight: var(--e-global-typography-798d94d-font-weight);
       														line-height: var(--e-global-typography-798d94d-line-height);

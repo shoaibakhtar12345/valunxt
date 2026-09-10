@@ -13,6 +13,7 @@
  */
 import rawConfigs from '@/data/page-configs.json';
 import type { PageConfig } from './page-config';
+import { withUaeType } from './uae-typography';
 import { vxnRegion, vxnRegionExists, vxnServiceBySlug, vxnSubService } from './region';
 import { uaeServiceConfig, uaeSubServiceConfig } from './uae-service-pages';
 
@@ -95,14 +96,39 @@ export function resolveRequest(path: string): { region: string; page: PageConfig
   if (vxnRegionExists(first)) {
     const rest = norm.slice(first.length + 1) || '/';
     // A market home is its own page, not the shared root.
-    if (rest === '/') return { region: first, page: CONFIGS[`/${first}/`] ?? null };
+    if (rest === '/') {
+      return { region: first, page: uaeType(CONFIGS[`/${first}/`] ?? null, first, rest) };
+    }
     /* Derived pages are tried first: /services/research-intelligence/ has a
        registry entry for India, and the UAE publishes a different page at the
        same path. */
-    return { region: first, page: derivedPage(first, rest) ?? CONFIGS[rest] ?? null };
+    const page = derivedPage(first, rest) ?? CONFIGS[rest] ?? null;
+    return { region: first, page: uaeType(page, first, rest) };
   }
 
   return { region: vxnRegion(null), page: CONFIGS[norm] ?? null };
+}
+
+/**
+ * The UAE type system, applied in the ONE place that decides what the document
+ * actually gets.
+ *
+ * It has to be here rather than in the page factories. The root layout renders
+ * `<head>` and `<body class>` from its OWN call to resolveRequest, not from the
+ * config a route hands its body — so a page factory that decorated its copy
+ * changed nothing a browser could see. Measured: with the decoration in
+ * definePage and defineHome, /en-ae/services/accounting-tax-services/ picked
+ * the stylesheet up (its config is derived, and derivedPage runs here) while
+ * /en-ae/ and /en-ae/services/capital-advisory/ did not.
+ *
+ * SCOPE is the market home page and everything under /services/, which is what
+ * was asked for. About, Contact, Blogs and the rest of /en-ae/ are untouched;
+ * widening it is one more test on `rest`.
+ */
+function uaeType(page: PageConfig | null, region: string, rest: string): PageConfig | null {
+  if (!page || region !== 'en-ae') return page;
+  if (rest !== '/' && !rest.startsWith('/services/')) return page;
+  return withUaeType(page, region);
 }
 
 /** Every registered path — used to sanity-check the route tree. */

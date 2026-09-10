@@ -9,6 +9,7 @@ import type { Metadata } from 'next';
 
 import PageShell from '@/components/layout/PageShell';
 import UaeServiceBody from '@/components/pages/UaeServiceBody';
+import { uaeSubServiceBody } from '@/components/pages/uae-services';
 import { buildMetadata } from '@/lib/seo';
 import { vxnRegion, vxnServiceBySlug, vxnSubService } from '@/lib/region';
 import { uaeSubServiceConfig } from '@/lib/uae-service-pages';
@@ -28,7 +29,8 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   const { region, service, sub } = await params;
   const hit = resolve(region, service, sub);
   if (!hit) return {};
-  return buildMetadata(uaeSubServiceConfig(hit.service, hit.sub), hit.region);
+  const written = !!uaeSubServiceBody(hit.service.slug, hit.sub.slug);
+  return buildMetadata(uaeSubServiceConfig(hit.service, hit.sub, written), hit.region);
 }
 
 export default async function UaeSubServicePage({ params }: Params) {
@@ -36,7 +38,22 @@ export default async function UaeSubServicePage({ params }: Params) {
   const hit = resolve(region, service, sub);
   if (!hit) notFound();
 
-  const page = uaeSubServiceConfig(hit.service, hit.sub);
+  const Body = uaeSubServiceBody(hit.service.slug, hit.sub.slug);
+  const page = uaeSubServiceConfig(hit.service, hit.sub, !!Body);
+
+  /* A bespoke body owns its whole page, exactly as on the parent route: it
+     opens its own #main-content wrapper, leads with its own hero and carries
+     its own breadcrumb, so the shared banner is NOT rendered above it — two
+     heroes saying the same thing was the result when it was. It closes on its
+     own terms too, so no subscribe band underneath. */
+  if (Body) {
+    return (
+      <PageShell page={page} region={hit.region}>
+        <Body region={hit.region} />
+      </PageShell>
+    );
+  }
+
   return (
     <PageShell page={page} region={hit.region}>
       <UaeServiceBody page={page} region={hit.region} />
