@@ -6,7 +6,7 @@
  * and internal links going through rurl() so they stay in the visitor's market.
  */
 import { rimg, rimgFirst } from '@/lib/region-assets';
-import { BASE, rurl, vxnServices } from '@/lib/region';
+import { BASE, rurl, vxnServices, type Service } from '@/lib/region';
 import Html from '@/components/Html';
 import ClientScript from '@/components/ClientScript';
 import type { PageConfig } from '@/lib/page-config';
@@ -32,6 +32,16 @@ export default function HomeAeBody({ page, region }: { page: PageConfig; region:
      mortgage desk) opt out of the banner with hero: false. */
   const services = vxnServices(region);
   const hero = services.filter((s) => s.hero !== false);
+
+  /* The pill on a slide is its own call: the free consultation unless the
+     registry names another (the "Explore …" slides lead to their service
+     page). The ring beside it takes whichever of the two routes the pill did
+     not, so no slide offers the same page twice. */
+  const heroPill = (s: Service) => s.cta ?? { label: 'Free Consultation', href: '/free-consultation/' };
+  const heroRing = (s: Service) =>
+    heroPill(s).href === s.href
+      ? { label: 'Free Consultation', href: '/free-consultation/' }
+      : { label: decodeEntities(s.title), href: s.href };
 
   return (
     <>
@@ -381,8 +391,8 @@ export default function HomeAeBody({ page, region }: { page: PageConfig; region:
       					<Html as="h1" className="vxae-hero__title" html={s.headline ?? ''} />
       					<Html as="p" className="vxae-hero__lede" html={s.lede ?? ''} />
       					<div className="vxae-hero__actions">
-      						<a className="vxae-hero__cta" href={rurl(region, '/free-consultation/')}>Free Consultation</a>
-      						<a className="vxae-hero__go" href={rurl(region, s.href)} aria-label={decodeEntities(s.title)}>
+      						<a className="vxae-hero__cta" href={rurl(region, heroPill(s).href)}>{heroPill(s).label}</a>
+      						<a className="vxae-hero__go" href={rurl(region, heroRing(s).href)} aria-label={heroRing(s).label}>
       							<svg viewBox="0 0 18 18" width={18} height={18} aria-hidden="true" focusable="false">
       								<path d="M4.5 13.5L13.5 4.5M6 4.5h7.5V12" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
       							</svg>
@@ -542,7 +552,7 @@ export default function HomeAeBody({ page, region }: { page: PageConfig; region:
       								</div>
       								<div className="elementor-element elementor-element-e3649ed elementor-invisible elementor-widget-tablet__width-initial elementor-widget__width-initial animated-fast elementor-widget elementor-widget-heading" data-id="e3649ed" data-element_type="widget" data-e-type="widget" data-settings={"{\"_animation\":\"slideInUp\",\"_animation_delay\":200}"} data-widget_type="heading.default">
       									<div className="elementor-widget-container">
-      										<span className="elementor-heading-title elementor-size-default">Practical guidance on UAE tax, accounting and valuation &#8212; written for the leaders who have to act on it.</span>
+      										<span className="elementor-heading-title elementor-size-default">Practical guidance on UAE tax, accounting and valuation, written for the leaders who have to act on it.</span>
       									</div>
       								</div>
       							</div>
@@ -791,7 +801,7 @@ export default function HomeAeBody({ page, region }: { page: PageConfig; region:
       															</div>
       															<div className="elementor-element elementor-element-abced80 vamtam-show-on-hover elementor-widget elementor-widget-theme-post-excerpt" data-id="abced80" data-element_type="widget" data-e-type="widget" data-widget_type="theme-post-excerpt.default">
       																<div className="elementor-widget-container">
-      																	Large developments rarely fail for lack of a good idea &#8212; they fail for lack of a capital plan mapped across the full lifecycle. </div>
+      																	Large developments rarely fail for lack of a good idea. They fail for lack of a capital plan mapped across the full lifecycle. </div>
       															</div>
       														</div>
       													</div>
@@ -824,7 +834,7 @@ export default function HomeAeBody({ page, region }: { page: PageConfig; region:
       															</div>
       															<div className="elementor-element elementor-element-abced80 vamtam-show-on-hover elementor-widget elementor-widget-theme-post-excerpt" data-id="abced80" data-element_type="widget" data-e-type="widget" data-widget_type="theme-post-excerpt.default">
       																<div className="elementor-widget-container">
-      																	The best investment decisions are made before the deal, not during it &#8212; independent intelligence turns conviction into evidence. </div>
+      																	The best investment decisions are made before the deal, not during it. Independent intelligence turns conviction into evidence. </div>
       															</div>
       														</div>
       													</div>
@@ -857,7 +867,7 @@ export default function HomeAeBody({ page, region }: { page: PageConfig; region:
       															</div>
       															<div className="elementor-element elementor-element-abced80 vamtam-show-on-hover elementor-widget elementor-widget-theme-post-excerpt" data-id="abced80" data-element_type="widget" data-e-type="widget" data-widget_type="theme-post-excerpt.default">
       																<div className="elementor-widget-container">
-      																	Automated valuation models are reshaping how quickly property can be valued &#8212; knowing their strengths and limits is essential. </div>
+      																	Automated valuation models are reshaping how quickly property can be valued. Knowing their strengths and limits is essential. </div>
       															</div>
       														</div>
       													</div>

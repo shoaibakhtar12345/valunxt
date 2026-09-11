@@ -48,7 +48,7 @@ export default function UaeSubscribeForm() {
       const json = await res.json().catch(() => null);
       if (res.ok && json?.success) {
         setState('done');
-        setMessage(json?.data?.message ?? 'Thank you — you are subscribed.');
+        setMessage(json?.data?.message ?? 'Thank you, you are subscribed.');
         form.reset();
       } else {
         setState('error');

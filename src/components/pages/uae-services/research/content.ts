@@ -1,14 +1,11 @@
 /**
  * What /en-ae/services/research-intelligence/ says.
  *
- * Written for the service template on client instruction (20260910): the
- * Accounting & Tax page, section for section, with the words changed. The
- * copy draws on what the market already publishes for this practice — the
- * registry's line ("Independent, data-driven research and valuation
- * intelligence for clearer, more confident investment decisions"), the shared
- * template's intro, and the six sub-services vxnServices('en-ae') lists — and
- * states what the practice does and who it is for. Nothing here is an outcome
- * promise; see ../template/types.ts for why.
+ * THE COPY IS THE CLIENT'S page document (20260911), word for word, on the
+ * service template, under the same two rules as the home page: nothing added
+ * to the document or dropped from it, and no em dashes anywhere on the UAE
+ * pages. Three proof points, as the document gives; every tab has a button
+ * of its own.
  *
  * This slug is the one both markets use; the UAE branch of the static route
  * at app/[region]/services/research-intelligence/ is what renders this.
@@ -22,104 +19,128 @@ export const RESEARCH_TEMPLATE: ServiceTemplateContent = {
   slug: 'research-intelligence',
   crumb: 'Research',
   hero: {
-    head: 'Research & Intelligence in Dubai for Investors, Developers and Occupiers',
-    sub: 'Understand the market. Test the investment. Quantify the evidence. Decide before the capital is committed.',
+    head: 'Research That Turns Market Signals Into Direction.',
+    sub: 'Research & intelligence that turns market data, trends and opportunities into actionable insight for better-informed decisions.',
     image: ['services/research-hero.webp', 'homepage/research-and-intellegance.webp'],
     alt: 'A research team reviewing figures on a laptop',
   },
   intro: {
-    head: 'One Research Partner from Question to Decision.',
-    lede: 'Supply, demand and pricing evidence for UAE property decisions — gathered, tested and quantified, so what a site should become is a question with a defended answer rather than an opinion.',
+    head: 'One Intelligence Partner. From Market Data to Strategic Direction.',
+    lede: 'ValuNxt brings research, market intelligence and analytical expertise together to help investors, developers and businesses understand market conditions, evaluate opportunities and plan what comes next.',
     proof: [
-      { label: 'Evidence first', note: 'Gathered and tested before the recommendation' },
-      { label: 'UAE markets', note: 'Residential, commercial, hospitality and industrial' },
-      { label: 'Bankable studies', note: 'Feasibility written for lenders and boards' },
-      { label: 'Valuation alongside', note: 'Numbers checked by the group’s valuers' },
+      { label: 'Market Research & Benchmarking', note: 'Track market trends, pricing shifts, sector performance and competitive positioning.' },
+      { label: 'Feasibility & Product Analysis', note: 'Assess market potential, product positioning, pricing and commercial viability.' },
+      { label: 'Research Reports & Publications', note: 'Access structured market intelligence across markets, sectors and asset classes.' },
     ],
-    chips: ['Feasibility before the commitment', 'Evidence a lender can read'],
-    primary: { label: 'Book a Free Consultation', href: '/free-consultation/' },
-    secondary: { label: 'Explore Our Services', href: '#at-services' },
+    chips: ['Market Trends & Forecasting', 'Highest & Best Use Analysis'],
+    primary: { label: 'Speak to a Research Advisor', href: '/free-consultation/' },
+    secondary: { label: 'Explore Research Services', href: '#at-services' },
     image: ['services/research-intro.webp', 'new-folder/research-intelligence-1.webp'],
   },
   strip: {
-    kicker: 'Explore services',
-    head: 'Find the evidence your decision needs',
-    lede: 'Start with the question in front of you — what the market will bear, what a site should become, whether an investment holds — and add research as the decision develops.',
-    cta: 'Ready to get started?',
+    kicker: 'Explore Services',
+    head: 'Research Across Markets & Opportunities.',
+    lede: 'From real estate and investment research to feasibility and market intelligence, access the insight needed to understand opportunities, risks and market direction.',
+    cta: 'Speak to an Expert',
     subs: [
       {
         name: 'Real Estate Research',
         slug: 'real-estate-research',
-        cardText: 'Supply, demand, absorption and pricing evidence across UAE residential and commercial markets.',
+        cardText: 'Analyse transactions, pricing, supply, demand and sector performance to understand where property markets stand and where they may be heading.',
         figure: ['services/ri-explore-real-estate-research.webp', 'new-folder/research-intelligence-2.webp'],
       },
       {
         name: 'Market Research',
         slug: 'market-research',
-        cardText: 'Sector and location studies that size a market and describe who is buying, renting and paying what.',
+        cardText: 'Understand market trends, competitive positioning, pricing movements and demand dynamics through focused research and benchmarking.',
         figure: ['services/ri-explore-market-research.webp', 'new-folder/services-3.webp'],
       },
       {
         name: 'Investment Research',
         slug: 'investment-research',
-        cardText: 'Returns, risks and comparables tested before capital is committed to an asset or a fund.',
+        cardText: 'Evaluate markets, sectors and opportunities through research that brings investment potential, market dynamics and key risks into focus.',
         figure: ['services/ri-explore-investment-research.webp', 'new-folder/insights-3.webp'],
       },
       {
         name: 'Feasibility Studies',
         slug: 'feasibility-studies',
-        cardText: 'Highest-and-best-use and financial feasibility for land and development, written for lenders.',
+        cardText: 'Test the market viability of a project through demand assessment, concept analysis, product positioning, pricing and highest & best use considerations.',
         figure: ['services/ri-explore-feasibility-studies.webp', 'new-folder/services-2.webp'],
       },
       {
         name: 'Market Intelligence',
         slug: 'market-intelligence',
-        cardText: 'Ongoing tracking of prices, launches, rents and yields, delivered as the market moves.',
+        cardText: 'Stay informed on market movements through trend analysis, forecasting, benchmarking and sector-specific intelligence.',
         figure: ['services/ri-explore-market-intelligence.webp', 'new-folder/insights-2.webp'],
       },
       {
         name: 'Research Reports',
         slug: 'research-reports',
-        cardText: 'Published reports and bespoke briefs, with the sources and method behind every figure.',
+        cardText: 'Access market updates and sector-focused research covering property trends, performance and emerging opportunities across the UAE.',
         figure: ['services/ri-explore-research-reports.webp', 'new-folder/insights-1.webp'],
       },
     ],
   },
   solution: {
-    head: 'Find the Right Solution',
+    head: 'Find the Right Research Solution',
+    /* The document writes the tab names in capitals; they are set in title
+       case here because the tab strip renders what it is given and every
+       other label on the page is title case. Each tab's steps have lines of
+       their own, so they are items rather than slugs. The two conversations
+       lead to the consultation; "Explore Research Reports" leads to the
+       published reports at /research/. */
     tabs: [
       {
-        tab: 'Understand the Market',
-        intro:
-          'Every decision starts with what the market is actually doing. Supply, demand, pricing and absorption are gathered and tested, then tracked as they move.',
-        slugs: ['real-estate-research', 'market-research', 'market-intelligence'],
+        tab: 'Market & Opportunity',
+        title: 'Understand the Market Before You Make Your Move.',
+        intro: 'Build a clearer view of the market, location or sector through research into demand, pricing, competition and performance.',
+        items: [
+          { name: 'Real Estate Research', text: 'Analyse transactions, pricing, supply, demand and sector dynamics across property markets.' },
+          { name: 'Market Research', text: 'Understand trends, competition, demand patterns and positioning within your target market.' },
+          { name: 'Market Benchmarking', text: 'Compare pricing, performance and positioning against relevant market benchmarks.' },
+        ],
+        cta: { label: 'Discuss Your Research Requirement', href: '/free-consultation/' },
       },
       {
-        tab: 'Test the Investment',
-        intro:
-          'Before land is bought or a scheme is funded, the numbers behind it are run: what the site should become, what it will cost and what it will return.',
-        slugs: ['investment-research', 'feasibility-studies'],
+        tab: 'Investment & Feasibility',
+        title: 'Test the Opportunity Before You Commit.',
+        intro: 'Understand whether the market supports the opportunity through focused analysis of demand, positioning, pricing and commercial viability.',
+        items: [
+          { name: 'Investment Research', text: 'Evaluate sectors, locations and opportunities through focused investment analysis.' },
+          { name: 'Feasibility Studies', text: 'Assess demand, commercial potential, positioning and viability before moving forward.' },
+          { name: 'Highest & Best Use', text: 'Identify the most viable use and positioning for a property or development opportunity.' },
+        ],
+        cta: { label: 'Assess Your Opportunity', href: '/free-consultation/' },
       },
       {
-        tab: 'Publish the Evidence',
-        intro:
-          'A decision has to be explained to a board, a lender or a partner. Reports and briefs carry the sources and the method, so the reader can test the conclusion.',
-        slugs: ['research-reports'],
+        tab: 'Intelligence & Reports',
+        title: 'Stay Closer to Where the Market Is Heading.',
+        intro: 'Follow the trends, movements and emerging signals shaping property markets through ongoing intelligence and published research.',
+        items: [
+          { name: 'Market Intelligence', text: 'Track pricing, supply, demand, transaction activity and changing market dynamics.' },
+          { name: 'Research Reports', text: 'Access market and sector-focused research covering trends, performance and emerging developments.' },
+          { name: 'Trends & Forecasting', text: 'Interpret changing market indicators to build a forward-looking view of what may come next.' },
+        ],
+        cta: { label: 'Explore Research Reports', href: '/research/' },
       },
     ],
     images: [['new-folder/research-intelligence-2.webp'], ['new-folder/insights-3.webp'], ['new-folder/services-3.webp']],
   },
   banner: {
-    head: 'The Research Agenda from the ValuNxt Research & Intelligence Team',
-    body: 'Our research practice brings market research, feasibility and investment analysis together under one team, so an investor, developer or occupier in the UAE decides on evidence that was gathered, tested and quantified rather than on the opinion nearest to hand.',
-    cta: { label: 'Learn more', href: '#at-services' },
+    head: 'See Beyond the Market Headlines.',
+    body: 'Go deeper into the data, trends and market dynamics shaping investment, development and business opportunities.',
+    /* The published research lives at /research/. */
+    cta: { label: 'Explore Research', href: '/research/' },
     image: ['services/research-banner.webp', 'banners/uae-slider-3.webp'],
   },
-  related: { head: 'Explore Related Services' },
+  related: {
+    head: 'Explore Related Services',
+    slugs: ['real-estate-transactions', 'valuation-and-advisory', 'technology-data-ai'],
+  },
   close: {
-    head: 'Start with the question you need answered today.',
-    lede: 'Whether you need a market sized, a site’s best use tested, an investment case checked or a report your board can rely on, ValuNxt can help identify the right place to start.',
-    primary: { label: 'Book a Free Research Consultation', href: '/free-consultation/' },
+    head: 'From Market Understanding To Strategic Advantage.',
+    lede: 'Use research and intelligence to uncover opportunities, assess potential and plan what comes next.',
+    primary: { label: 'Speak to a Research Advisor', href: '/free-consultation/' },
     image: ['services/research-talk.webp', 'new-folder/insights-main.webp'],
   },
 };

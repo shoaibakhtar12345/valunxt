@@ -37,9 +37,18 @@ export interface TemplateSub {
 /** One tab of the "Find the Right Solution" chooser. Up to three items. */
 export interface TemplateTab {
   tab: string;
+  /** A line set above the intro, in bold, in the same text block. It is the
+   *  tab's own heading where a document gives it one; the block has no heading
+   *  widget of its own and the layout is not changed for it. */
+  title?: string;
   intro: string;
   /** Sub-service slugs, in the order they list. A slug not in `subs` is skipped. */
-  slugs: string[];
+  slugs?: string[];
+  /** Items written for the tab itself, shown in place of `slugs` when set. Each
+   *  renders the way a sub-service does: a name and one line under it. */
+  items?: { name: string; text: string }[];
+  /** The button on the tab's picture. `intro.primary` when unset. */
+  cta?: TemplateLink;
 }
 
 export interface ServiceTemplateContent {
@@ -99,6 +108,9 @@ export interface ServiceTemplateContent {
 
   related: {
     head: string;
+    /** The three other service lines to show, by registry slug, in order.
+     *  Unset, the first three in the registry other than this page's own. */
+    slugs?: string[];
   };
 
   /** The closing band. */

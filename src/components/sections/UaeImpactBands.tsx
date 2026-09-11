@@ -9,10 +9,12 @@
  * new. The recurring device is the same one the rest of the page uses — the
  * wordmark's x as a corner motif, see components/brand/LogoX.tsx.
  *
- * Nothing here states a claim the site does not already make elsewhere: the
- * fixed fee, the senior team, the RICS regulation through Reliant Surveyors and
- * the Dubai/Noida/Mumbai footprint are all carried over from copy that was
- * already published.
+ * THE COPY IS THE CLIENT'S home-page document (20260911), word for word, with
+ * two rules attached: nothing added to it or dropped from it, and no em dashes
+ * anywhere on the UAE pages. The figures on the last band (48+ years, 200+
+ * years combined, 10+ industries) are the client's own claims. Where the
+ * document gives a band no button text or no eyebrow, the band keeps the label
+ * it had or renders without one; nothing is invented to fill a slot.
  *
  * India renders none of this — HomeInBody does not import it.
  *
@@ -60,15 +62,17 @@ export function ImpactBand({ region }: { region: string }) {
           loading="lazy"
         />
         <h2 id="vxn-impact-title" className="vxn-impact__title">
-          Impact You Can Evidence
+          Advisory That Stands Up to Scrutiny.
         </h2>
         <div className="vxn-impact__side">
+          {/* The document joins the two halves of this sentence with an em
+              dash; a comma carries the join here, under the no-dash rule. */}
           <p className="vxn-impact__copy">
-            See how we work alongside founders, family businesses, developers and private owners
-            across the UAE &mdash; compliance kept current, valuations documented to withstand
-            scrutiny, and advice you can act on without second-guessing.
+            We work alongside founders, businesses, investors and developers across the UAE,
+            delivering compliant financial reporting, defensible valuations and advice backed by
+            evidence, not assumptions.
           </p>
-          <Pill href={rurl(region, '/clients/')} label="Explore Client Stories" />
+          <Pill href={rurl(region, '/services/')} label="Explore Our Expertise" />
         </div>
       </div>
     </section>
@@ -87,17 +91,15 @@ export function SpotlightBand({ region }: { region: string }) {
         <div className="vxn-spotlight__copy">
           <span className="vxn-band__eyebrow">Technology, Data &amp; AI</span>
           <h2 id="vxn-spotlight-title" className="vxn-spotlight__title">
-            Finance, Made Measurable
+            Intelligence Behind Every Decision.
           </h2>
           <p className="vxn-spotlight__lede">
-            Digital transformation, enterprise and cloud systems, dashboards and AI tooling that
-            turn reporting into something you can rely on month after month. Built on the same
-            evidence-led method as every other practice here, and quoted at a fee agreed before the
-            work starts.
+            Enterprise systems, automation, dashboards and AI solutions that turn financial and
+            operational data into measurable business performance.
           </p>
           <Pill
             href={rurl(region, '/services/technology-data-ai/')}
-            label="Explore the Practice"
+            label="Explore Our Solutions"
             variant="solid"
           />
         </div>
@@ -129,10 +131,15 @@ interface MosaicCard {
   alt?: string;
 }
 
-/** The tall card on the left, then the two stacked beside it. */
+/** The tall card on the left, then the two stacked beside it.
+ *
+ *  The eyebrows and titles are the client's. The document gives the tiles no
+ *  button text, so the first two keep the labels they had, and the third,
+ *  which was the group's card, now goes where its new title points: the
+ *  services index, with a label to match. */
 const MOSAIC_LEAD: MosaicCard = {
   eyebrow: 'About VALUNXT',
-  title: 'Where Independent Advice Meets Applied Method',
+  title: 'Expertise That Moves Business Forward.',
   cta: 'See How We Work',
   href: '/about/',
   images: ['banners/clients.webp', 'homepage/client-2.webp'],
@@ -142,15 +149,15 @@ const MOSAIC_LEAD: MosaicCard = {
 const MOSAIC_STACK: MosaicCard[] = [
   {
     eyebrow: 'Research &amp; Intelligence',
-    title: 'Evidence Before the Commitment',
+    title: 'Intelligence That Turns Decisions Into Impact.',
     cta: 'Read the Research',
     href: '/research/',
   },
   {
-    eyebrow: 'The Group',
-    title: 'RICS-Regulated Valuation at Scale',
-    cta: 'Meet Reliant Surveyors',
-    href: '/our-group/reliant-surveyors/',
+    eyebrow: 'Integrated Advisory',
+    title: 'Business. Property. Finance. All Connected.',
+    cta: 'Explore Our Services',
+    href: '/services/',
     images: ['banners/our-group.webp', 'banners/network.webp'],
     alt: 'Valuation team reviewing a property file',
   },
@@ -225,26 +232,29 @@ export function MosaicBand({ region }: { region: string }) {
 }
 
 /**
- * 4. The careers band. Copy on a cream half, artwork on the other with the
+ * 4. The split band. Copy on a cream half, artwork on the other with the
  *    team photograph inset over it — the framed-photo-on-texture treatment from
  *    the reference, in the brand's blues.
+ *
+ *    It carried the careers copy, which is why the class names and the id say
+ *    so; it now carries the client's experience figures and leads to /about/.
+ *    The band is the same band, so the names stay.
  */
 export function CareersBand({ region }: { region: string }) {
   return (
     <section className="vxn-careers" aria-labelledby="vxn-careers-title">
       <div className="vxn-careers__copy">
-        <span className="vxn-band__eyebrow">VALUNXT Careers</span>
+        {/* No eyebrow: the document gives this band none. One pill, because
+            the document names one call. */}
         <h2 id="vxn-careers-title" className="vxn-careers__title">
-          Build a Career on Work That Holds Up
+          Expertise Measured in Decades.
         </h2>
         <p className="vxn-careers__lede">
-          We are a senior team of accountants, tax advisers and valuers, part of the Reliant
-          Surveyors group &mdash; from Dubai to Noida to Mumbai. If you would rather be trusted with
-          the whole mandate than a slice of it, we should talk.
+          48+ years of expertise. 200+ years of combined experience. 10+ industries served. A
+          depth of knowledge brought to every business, property and investment mandate.
         </p>
         <div className="vxn-careers__actions">
-          <Pill href={rurl(region, '/about/careers/')} label="Explore Careers" variant="ghost" />
-          <Pill href={rurl(region, '/contact/')} label="Get in Touch" variant="solid" />
+          <Pill href={rurl(region, '/about/')} label="About VALUNXT" variant="solid" />
         </div>
       </div>
       <div className="vxn-careers__media">

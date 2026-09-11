@@ -1,12 +1,17 @@
 /**
- * Copy for /en-ae/services/accounting-tax-services/accounting-bookkeeping/.
+ * Copy for /en-ae/services/accounting-tax-services/accounting-bookkeeping/,
+ * and the practice-level sections every Accounting & Tax sub-page shares.
+ *
+ * This page was written first, as its own body; it is one of thirty-three on
+ * the sub-service template now (../../template/SubServiceTemplateBody.tsx),
+ * and ../subs.ts is what assembles it and its seven siblings from the blocks
+ * below. Nothing here is rendered directly.
  *
  * PLACEHOLDER TEXT. The four sections were specified as reference designs, not
  * as a source document, so everything below is written to the shape the design
  * needs — a lede of roughly this length, two lists of four points each, three
  * approach columns — and says something plausible about bookkeeping while the
- * real copy is written. Swapping it is an edit to this file and nothing else:
- * the body component reads every string from here.
+ * real copy is written. Swapping it is an edit to this file and nothing else.
  *
  * Lengths are part of the design. A point that runs to six lines breaks the
  * two-column list's alignment, and a lede longer than about 55 words pushes the
@@ -277,7 +282,10 @@ export const ABK_CASE = {
   stat: 'AED 0',
   note: 'in FTA penalties — registered, reconciled and filed ahead of every deadline.',
   cta: { label: 'Discuss Your Case', href: '/free-consultation/' },
-  arrow: { href: '/track-record/', label: 'See our track record' },
+  /* The corner arrow opens the practice this story belongs to. It pointed at
+     /track-record/ once, which is a 404 on purpose until data/track-record.ts
+     is populated — see the note there. */
+  arrow: { href: '/services/accounting-tax-services/', label: 'More about Accounting & Tax' },
 };
 
 /* -------------------------------------------------------------------------
@@ -295,7 +303,9 @@ export const ABK_BAND = {
     'Working with tax specialists, auditors and technology partners, VALUNXT Finance Intelligence ' +
     'turns a month of bookkeeping into a position you can act on — reconciled, documented and ' +
     'ready for whoever asks to see it next.',
-  cta: { label: "Discover what's next", href: '/services/technology-ai/' },
+  /* technology-data-ai, the UAE slug. It pointed at /services/technology-ai/,
+     which is India's page and a 404 under /en-ae/. */
+  cta: { label: "Discover what's next", href: '/services/technology-data-ai/' },
 };
 
 /* -------------------------------------------------------------------------

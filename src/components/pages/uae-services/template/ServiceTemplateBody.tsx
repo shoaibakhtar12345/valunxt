@@ -62,7 +62,7 @@ import type { ComponentType } from "react";
 import type React from "react";
 
 import Html from "@/components/Html";
-import { BASE, rurl, vxnServiceName, vxnServices } from "@/lib/region";
+import { rurl, vxnServiceName, vxnServices } from "@/lib/region";
 import { rimgFirst } from "@/lib/region-assets";
 import ServiceTemplateMotion from "./Motion";
 import type { ServiceTemplateContent, TemplateSub } from "./types";
@@ -141,7 +141,6 @@ type TabIds = {
   abs: string;
   /** Inline blur-layer ids, or null for the tab that uses template 7162. */
   blur: string[] | null;
-  icon: string;
   btn: string;
 };
 
@@ -159,7 +158,6 @@ const SOLUTION_IDS: TabIds[] = [
     pane: "aa3aa17",
     abs: "c645356",
     blur: null,
-    icon: "af8c0d5",
     btn: "d48003c",
   },
   {
@@ -175,7 +173,6 @@ const SOLUTION_IDS: TabIds[] = [
     pane: "b12020e",
     abs: "4bec2ed",
     blur: ["c0a24aa", "8c08fe0", "acc151c", "b133692", "83dbc33", "11b87a4"],
-    icon: "6e950e7",
     btn: "369ca21",
   },
   {
@@ -191,7 +188,6 @@ const SOLUTION_IDS: TabIds[] = [
     pane: "9106445",
     abs: "a43d0e7",
     blur: ["8578008", "0eb77e5", "23dfb15", "a8bfe90", "a5886a5", "530e76b"],
-    icon: "80e387a",
     btn: "0a6c708",
   },
 ];
@@ -416,7 +412,11 @@ const CSS = `
 .at-hero__crumb span[aria-hidden]{opacity:.5;}
 /* Scoped to .at-root so it beats the UAE type scale, the same reason as the
    intro head below. The weight is the scale's 500 on every heading. */
+/* 70% of the measure, on client instruction (20260911): the headline wraps to
+   two lines instead of running the whole width in one. Full width again under
+   820px, with the lede. */
 .at-root .at-hero__head{
+  max-width:70%;
   margin:0 0 24px!important;color:#fff!important;
   font-size:clamp(42px,6.2vw,62px)!important;line-height:1.03!important;
   letter-spacing:-.022em!important;
@@ -1103,7 +1103,7 @@ const CSS = `
   .at-hero__scrim{
     background:linear-gradient(170deg,rgba(4,14,36,.64) 0%,rgba(4,14,36,.52) 45%,rgba(4,14,36,.64) 100%);
   }
-  .at-hero__sub{max-width:100%;}
+  .at-root .at-hero__head,.at-hero__sub{max-width:100%;}
 }
 @media(max-width:640px){
   .at-root{--gutter:20px;--cardpad:22px;--radius:16px;--headgap:26px;}
@@ -1249,21 +1249,39 @@ export default function ServiceTemplateBody({
      right — that shape needs exactly three. A fourth and fifth flowed onto a
      third row and left the feature card orphaned above them. Change the count
      and the layout has to change with it; RELATED_FIGURE holds all six, so
-     which three show is this one number. */
-  const RELATED = vxnServices(region)
-    .filter((sv) => sv.slug !== content.slug)
-    .slice(0, 3);
+     which three show is this one number.
+
+     WHICH THREE is the page's to say (related.slugs, in the order given); a
+     page that says nothing takes the first three. */
+  const others = vxnServices(region).filter((sv) => sv.slug !== content.slug);
+  const pick = related.slugs;
+  const RELATED = (pick
+    ? others
+        .filter((sv) => pick.includes(sv.slug ?? ""))
+        .sort((a, b) => pick.indexOf(a.slug ?? "") - pick.indexOf(b.slug ?? ""))
+    : others
+  ).slice(0, 3);
 
   /* The chooser names its items by slug; this is where they become the
      sub-services themselves, so the tab block renders the same cardText the
      strip above it does and cannot fall out of step with it. A slug that is
-     not in the strip drops out here rather than rendering as undefined. */
+     not in the strip drops out here rather than rendering as undefined.
+
+     A tab may instead carry items of its own (`items`), when what it lists is
+     not a sub-service but a step; they take the same two slots. Its heading
+     line and its button are the tab's where it has them, and the intro's
+     primary call where it does not. */
   const SOL = solution.tabs.slice(0, SOLUTION_IDS.length).map((g) => ({
     tab: g.tab,
+    title: g.title,
     intro: g.intro,
-    items: g.slugs
-      .map((sl) => strip.subs.find((x) => x.slug === sl))
-      .filter((x): x is TemplateSub => Boolean(x)),
+    cta: g.cta ?? intro.primary,
+    items: g.items
+      ? g.items.map((it) => ({ key: it.name, name: it.name, text: it.text }))
+      : (g.slugs ?? [])
+          .map((sl) => strip.subs.find((x) => x.slug === sl))
+          .filter((x): x is TemplateSub => Boolean(x))
+          .map((x) => ({ key: x.slug, name: x.name, text: x.cardText })),
   }));
 
   /* #main-content / #main / <article> are the theme's page wrappers. Every
@@ -1411,7 +1429,7 @@ export default function ServiceTemplateBody({
                           <i aria-hidden="true">
                             <Arrow />
                           </i>
-                          Explore more
+                          Explore More
                         </span>
                       </span>
                       <span className="at-acc__num" aria-hidden="true">
@@ -1440,7 +1458,13 @@ export default function ServiceTemplateBody({
           {/* The three tab pictures. post-17.css sets them to the home page's
               own shots; these are this service's. A page-scoped override
               rather than an edit to that sheet, because the home page loads it
-              too. */}
+              too.
+
+              The pane also takes flex-end here. The captured sheet spaces its
+              children apart, which held the corner mark at the top and the
+              button at the foot; the mark is gone (client instruction,
+              20260911) and the button is the only child left, so without this
+              it would rise to the top. */}
           <style
             id={`${content.slug}-solution-images`}
             dangerouslySetInnerHTML={{
@@ -1451,6 +1475,9 @@ export default function ServiceTemplateBody({
   background-image:url("${rimgFirst(region, solution.images[k] ?? solution.images[0] ?? [])}")!important;
   background-position:center center!important;
   background-size:cover!important;
+}
+.elementor-17 .elementor-element.elementor-element-${t.pane}{
+  --justify-content:flex-end!important;justify-content:flex-end!important;
 }`,
               ).join("\n"),
             }}
@@ -1509,6 +1536,11 @@ export default function ServiceTemplateBody({
                                     <Con id={t.col} extra="e-con-full">
                                       <div className={`vamtam-has-theme-widget-styles elementor-element elementor-element-${t.intro} elementor-invisible animated-fast elementor-widget elementor-widget-text-editor`} data-id={t.intro} data-element_type="widget" data-e-type="widget" data-settings={"{\"_animation\":\"fadeIn\"}"} data-widget_type="text-editor.default">
                                         <div className="elementor-widget-container">
+                                          {g.title ? (
+                                            <p>
+                                              <strong>{g.title}</strong>
+                                            </p>
+                                          ) : null}
                                           <p>{g.intro}</p>
                                         </div>
                                       </div>
@@ -1523,7 +1555,7 @@ export default function ServiceTemplateBody({
                                         const [block, name, text] = t.items[Math.min(i, t.items.length - 1)];
                                         return (
                                           <Con
-                                            key={item.slug}
+                                            key={item.key}
                                             id={block}
                                             extra="elementor-invisible e-con-full animated-fast"
                                             settings={i === 0 ? "{\"animation\":\"slideInUp\"}" : `{"animation":"slideInUp","animation_delay":${i * 50}}`}
@@ -1535,7 +1567,7 @@ export default function ServiceTemplateBody({
                                             </div>
                                             <div className={`elementor-element elementor-element-${text} elementor-widget elementor-widget-heading`} data-id={text} data-element_type="widget" data-e-type="widget" data-widget_type="heading.default">
                                               <div className="elementor-widget-container">
-                                                <span className="elementor-heading-title elementor-size-default">{item.cardText}</span>
+                                                <span className="elementor-heading-title elementor-size-default">{item.text}</span>
                                               </div>
                                             </div>
                                           </Con>
@@ -1560,25 +1592,19 @@ export default function ServiceTemplateBody({
                                           </div>
                                         )}
                                       </Con>
-                                      <div className={`vamtam-has-theme-widget-styles elementor-element elementor-element-${t.icon} elementor-view-default elementor-widget elementor-widget-icon`} data-id={t.icon} data-element_type="widget" data-e-type="widget" data-widget_type="icon.default">
-                                        <div className="elementor-widget-container">
-                                          <div className="elementor-icon-wrapper">
-                                            <div className="elementor-icon">
-                                              {/* eslint-disable-next-line @next/next/no-img-element */}
-                                              <img src={`${BASE}/LOGO/icon-white.jpg`} alt="VALUNXT" className="vamtam-logo-sign-img" />
-                                            </div>
-                                          </div>
-                                        </div>
-                                      </div>
+                                      {/* The corner mark (the wordmark's x on a tile) that sat at
+                                          the top of the pane was removed on client instruction
+                                          (20260911); the button keeps the foot through the
+                                          flex-end in the page-scoped style above. */}
                                       <div className={`vamtam-has-theme-widget-styles elementor-element elementor-element-${t.btn} vamtam-icon-pos-row-reverse elementor-widget elementor-widget-button`} data-id={t.btn} data-element_type="widget" data-e-type="widget" data-widget_type="button.default">
                                         <div className="elementor-widget-container">
                                           <div className="elementor-button-wrapper">
-                                            <a className="elementor-button elementor-button-link elementor-size-sm" href={rurl(region, intro.primary.href)}>
+                                            <a className="elementor-button elementor-button-link elementor-size-sm" href={rurl(region, g.cta.href)}>
                                               <span className="elementor-button-content-wrapper">
                                                 <span className="elementor-button-icon">
                                                   <i aria-hidden="true" className="vamtamtheme- vamtam-theme-arrow-right"></i>{" "}
                                                 </span>
-                                                <span className="elementor-button-text">{intro.primary.label}</span>
+                                                <span className="elementor-button-text">{g.cta.label}</span>
                                               </span>
                                             </a>
                                           </div>

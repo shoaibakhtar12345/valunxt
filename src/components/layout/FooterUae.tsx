@@ -74,7 +74,7 @@ export default function FooterUae({ region }: { region: string }) {
               <p className="vxn-foot__blurb">
                 We are a senior team of accountants, tax advisers and valuers bringing accounting
                 and tax, transactions, mortgages, valuation, research and technology together under
-                one accountable partner &mdash; so every number you act on holds up to scrutiny.
+                one accountable partner, so every number you act on holds up to scrutiny.
               </p>
               <div className="vxn-foot__social">
                 <SocialIcons items={SOCIAL} />

@@ -1,11 +1,11 @@
 'use client';
 
 /**
- * The Accounting & Bookkeeping page's motion layer.
+ * The UAE sub-service template's motion layer.
  *
- * Same contract as the parent service page's Motion.tsx, and deliberately the
+ * Same contract as the service template's Motion.tsx, and deliberately the
  * same shape so the two behave alike — it is scoped to `.abk-root` and drives
- * this page's selectors only.
+ * that template's selectors only.
  *
  * THE SAFETY RULE. The stylesheet's default is VISIBLE. The hidden state exists
  * only under `[data-anim='pending']`, an attribute this file sets, so a bundle
@@ -29,7 +29,6 @@ import { useEffect } from 'react';
 /** What reveals, and how. `stagger` walks siblings of one parent in sequence. */
 const GROUPS: { sel: string; variant: string; stagger?: boolean }[] = [
   { sel: '.abk-hero__crumb, .abk-hero__title, .abk-hero__lede', variant: 'up', stagger: true },
-  { sel: '.abk-hero__cta', variant: 'up' },
   { sel: '.abk-brief__copy > *', variant: 'up', stagger: true },
   { sel: '.abk-panel', variant: 'right' },
   { sel: '.abk-why__card', variant: 'left' },
@@ -48,15 +47,13 @@ const GROUPS: { sel: string; variant: string; stagger?: boolean }[] = [
   /* NOT `.vxn-svc-card`. Those cards animate by `flex-grow .65s` on hover, and
      [data-anim] sets the whole `transition` shorthand at equal specificity from
      further down the sheet — it would replace that list and the strip would
-     snap open with no animation. The parent Accounting & Tax page hit exactly
-     this on its accordion; the fix there was to reveal the inner element, and
-     the fix here is to reveal nothing: the strip is full-bleed and arrives
-     already in view often enough that it does not need one. */
+     snap open with no animation. The strip is full-bleed and arrives already
+     in view often enough that it does not need one. */
   { sel: '.abk-talk__fig', variant: 'left' },
   { sel: '.abk-talk__copy > *', variant: 'up', stagger: true },
 ];
 
-export default function AccountingBookkeepingMotion() {
+export default function SubServiceTemplateMotion() {
   useEffect(() => {
     const root = document.querySelector<HTMLElement>('.abk-root');
     if (!root) return;

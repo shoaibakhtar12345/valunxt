@@ -5,12 +5,13 @@
  * near the bottom — the label and the headline on the coloured half, the line
  * of copy and the email field on the bar.
  *
- * THE HEADLINE COPY IS THE SENTENCE THAT WAS ALREADY HERE, split across the
- * slots the layout gives it. It read as one paragraph — "Subscribe to Valunxt
- * Insights — our monthly look at the accounting, bookkeeping and reporting
- * issues facing UAE businesses." — and it is the same words now: the name is
- * the label, what the list covers is the headline, and the instruction is the
- * line on the bar.
+ * THE COPY IS THE CLIENT'S ONE SENTENCE (20260911), split across the slots the
+ * layout gives it. The document reads "Stay Ahead With ValuNxt Insights —
+ * perspectives on business, property, markets and the decisions shaping the
+ * UAE.", and it is the same words here: the name is the label, what the list
+ * covers is the headline, and the call is the line on the bar. Splitting at
+ * the dash is also what removes it; the UAE pages carry no em dashes, by the
+ * client's rule.
  *
  * THE INLINE FIELD IS BACK, by request. This section had dropped it so the page
  * carried one lead route; it now takes an email again and the button submits
@@ -33,8 +34,7 @@ export default function UaeSubscribeBand({ region }: { region: string }) {
       <div className="vxn-sub__panel">
         <span className="vxn-sub__eyebrow">ValuNxt Insights</span>
         <h2 className="vxn-sub__head" id="vxn-sub-title">
-          Our monthly look at the accounting, bookkeeping and reporting issues
-          facing UAE businesses.
+          Perspectives on business, property, markets and the decisions shaping the UAE.
         </h2>
       </div>
 
@@ -59,7 +59,7 @@ export default function UaeSubscribeBand({ region }: { region: string }) {
           photograph — which is the whole reason the two halves meet at a hard
           edge rather than blending. */}
       <div className="vxn-sub__bar">
-        <p className="vxn-sub__copy">Subscribe to ValuNxt Insights</p>
+        <p className="vxn-sub__copy">Stay Ahead With ValuNxt Insights</p>
 
         <UaeSubscribeForm />
       </div>

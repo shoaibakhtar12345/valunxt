@@ -13,9 +13,11 @@
  * field rather than a region check, so the two editions do not have to be read
  * together to know which one you are looking at.
  *
- * The copy differs per edition — the UAE leads with accounting and tax, India
- * with the four investment verticals — so the content lives here keyed by
- * region rather than being passed down from two nearly identical call sites.
+ * The copy differs per edition — the UAE leads with business, property and
+ * investment advisory, India with the four investment verticals — so the
+ * content lives here keyed by region rather than being passed down from two
+ * nearly identical call sites. The UAE cards are the client's home-page
+ * document (20260911); the middle card is the one it left unchanged.
  *
  * Styles: assets/css/valunxt-landing.css (.vxn-trio).
  */
@@ -69,7 +71,7 @@ const CONTENT: Record<string, TrioContent> = {
   'en-ae': {
     left: {
       tag: 'Who We Are',
-      title: 'One Accountable Partner for Accounting, Tax & Advisory in the UAE',
+      title: 'One Accountable Partner for Business, Property & Investment Advisory in the UAE',
       href: '/about/',
       img: 'services/accounting-and-tax-services.webp',
       alt: 'Management accounts under review',
@@ -84,9 +86,9 @@ const CONTENT: Record<string, TrioContent> = {
       texture: 'banners/texture-2.webp',
     },
     right: {
-      tag: 'Guide',
-      title: 'Corporate Tax in the UAE: What Every Business Has to Register and File',
-      href: '/services/',
+      tag: 'Why VALUNXT',
+      title: 'Evidence-Led Advice. Built Around Your Goals.',
+      href: '/about/',
       img: 'banners/uae-slider-3.webp',
       alt: 'Dubai commercial district',
     },

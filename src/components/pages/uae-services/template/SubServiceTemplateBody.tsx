@@ -1,74 +1,69 @@
 /**
- * /en-ae/services/accounting-tax-services/accounting-bookkeeping/ — the page.
+ * The UAE sub-service page template — /en-ae/services/<service>/<sub>/, all
+ * thirty-three of them.
  *
- * A bespoke body, registered in ../../index.ts and dispatched by the
- * [service]/[sub] route. Like the parent Accounting & Tax page it owns its
- * whole page: it opens its own #main-content wrapper and leads with its own
- * hero, so the shared breadcrumb band is NOT rendered above it.
+ * ONE COMPONENT, SIX CONTENT MODULES. This began as the Accounting &
+ * Bookkeeping page, written as its own body to a set of reference designs.
+ * The client then asked for every page beneath the six UAE services to take
+ * the same page — every section, the same plates, the same footer — with only
+ * the words changed. So the body became this: a component that reads a
+ * SubServiceTemplateContent (see ./subTypes.ts) and renders the page, and a
+ * subs.ts module per service under ../<service>/ that builds the content for
+ * each of its pages. The `abk-` class prefix is that history; it is the
+ * template's prefix now, the way `at-` is the service template's.
+ *
+ * Like the service template it owns its whole page: it opens its own
+ * #main-content wrapper and leads with its own hero, so the shared breadcrumb
+ * band is NOT rendered above it.
  *
  * ---------------------------------------------------------------------------
  * THE STYLESHEET IS A FILE, NOT A <style> BLOCK
  *
- * public/assets/css/accounting-bookkeeping.css, declared by this page's
+ * public/assets/css/valunxt-uae-sub.css, declared by every sub-page's
  * PageConfig as `site_css` and emitted by HeadAssets after the brand and
- * landing sheets. That is the one structural difference from the service template,
- * which carries its CSS inline. It was asked for that way, and it buys two
- * things: the sheet is cached separately from the HTML, and it is in <head>
- * before first paint rather than mid-body — so there is no window in which the
- * page renders unstyled. It also loads LAST, which is what lets a plain
- * `.abk-*` selector outrank the theme without reaching for `!important`.
+ * landing sheets. That is the one structural difference from the service
+ * template, which carries its CSS inline. It was asked for that way, and it
+ * buys two things: the sheet is cached separately from the HTML, and it is in
+ * <head> before first paint rather than mid-body — so there is no window in
+ * which the page renders unstyled. It also loads LAST, which is what lets a
+ * plain `.abk-*` selector outrank the theme without reaching for `!important`.
  *
  * Nothing in this file sets a style attribute. Every rule lives in that sheet.
  *
  * ---------------------------------------------------------------------------
- * THE FOUR SECTIONS, and what each one is doing
+ * THE TEN SECTIONS, and what each one is doing
  *
  *   1  HERO       A full-bleed plate with the copy hanging off its foot and a
  *                 progressive blur rising out of the bottom edge — four stacked
  *                 backdrop-filters, each masked to start lower than the last.
- *                 The blur band sits under the copy in the z-order, and the
- *                 hero's bottom padding keeps the text clear of it.
- *
- *   2  BRIEF      An editorial column beside a blue panel. The column is plain
- *                 prose and two 2-up lists; the panel is the supplied brand
- *                 ramp over an abstract plate, with the mark at the top and the
- *                 title at the foot.
- *
- *   3  WHY US     A wide picture band with a frosted card floated on it. The
- *                 frost is its OWN layer inside the card rather than a filter
- *                 on the card itself, which is the only way the card can
- *                 dissolve into the photograph at its right edge without taking
- *                 the text with it.
- *
- *   4  APPROACH   A rule, an eyebrow, three columns. No card, no border, no
- *                 background — the whitespace is the design.
+ *   2  BRIEF      An editorial column beside a blue panel: plain prose and two
+ *                 2-up lists; the panel is the brand ramp over an abstract
+ *                 plate, the mark at the top and the title at the foot.
+ *   3  WHY US     A wide picture band with a frosted card floated on it.
+ *   4  APPROACH   A rule, an eyebrow, three columns. The whitespace is the design.
+ *   5  INSIGHTS   Four cards, CSS hover only.
+ *   6  STORY      A photograph carrying a frosted testimonial beside a gradient
+ *                 panel carrying the result — one band split down the middle.
+ *   7  BAND       One wide plate, a heading against it, the copy beside.
+ *   8  VISION     Three steps on a rail beside a pull quote.
+ *   9  STRIP      The home page's own expanding row, over the practice's disciplines.
+ *  10  TALK       The parent service's closing band, restated.
  *
  * ---------------------------------------------------------------------------
  * MOTION. Hover changes colour and light, never position: there is no
  * `transform` under any `:hover` rule in the stylesheet. Scroll reveals come
- * from ./Motion.tsx by selector, and the stylesheet's default is visible — a
+ * from ./SubMotion.tsx by selector, and the stylesheet's default is visible — a
  * failed bundle cannot produce a blank page.
  */
+import type { ComponentType } from 'react';
 import type React from 'react';
 
 import HomeIndustriesRow from '@/components/sections/HomeIndustriesRow';
 import { rurl } from '@/lib/region';
 import { rimg, rimgFirst } from '@/lib/region-assets';
 
-import AccountingBookkeepingMotion from './Motion';
-import {
-  ABK_APPROACH,
-  ABK_BAND,
-  ABK_BRIEF,
-  ABK_CASE,
-  ABK_HERO,
-  ABK_INSIGHTS,
-  ABK_STRIP,
-  ABK_TALK,
-  ABK_VISION,
-  ABK_WHY,
-  type AbkPoint,
-} from './content';
+import SubServiceTemplateMotion from './SubMotion';
+import type { SubPoint, SubServiceTemplateContent } from './subTypes';
 
 /* -------------------------------------------------------------------------
    Small pieces
@@ -111,12 +106,12 @@ function CheckCircle() {
  * One point in a two-column list.
  *
  * `stress` is a substring of `text` to underline, the way the reference marks a
- * key term mid-sentence. Matched rather than authored as HTML so content.ts
- * stays plain strings — nothing in this page is ever dangerouslySetInnerHTML,
- * and a phrase that no longer appears in the text simply renders unmarked
- * instead of throwing or printing a tag.
+ * key term mid-sentence. Matched rather than authored as HTML so the content
+ * modules stay plain strings — nothing in this page is ever
+ * dangerouslySetInnerHTML, and a phrase that no longer appears in the text
+ * simply renders unmarked instead of throwing or printing a tag.
  */
-function Point({ point }: { point: AbkPoint }) {
+function Point({ point }: { point: SubPoint }) {
   const { lead, text, stress } = point;
   let rest: React.ReactNode = text;
 
@@ -144,18 +139,21 @@ function Point({ point }: { point: AbkPoint }) {
    The page
    ------------------------------------------------------------------------- */
 
-export default function AccountingBookkeepingBody({ region }: { region: string }) {
-  const crumbs = [
-    { label: 'Services', href: '/services/' },
-    { label: 'Accounting & Tax', href: '/services/accounting-tax-services/' },
-  ];
+export default function SubServiceTemplateBody({
+  region,
+  content,
+}: {
+  region: string;
+  content: SubServiceTemplateContent;
+}) {
+  const { hero, brief, why, approach, insights, story, band, vision, strip, talk } = content;
 
   return (
     <div className="abk-root" id="main-content">
       {/* ================= 1. HERO ================= */}
       <section className="abk-hero">
         <div className="abk-hero__media abk-zoom">
-          <img src={rimg(region, ABK_HERO.image)} alt={ABK_HERO.alt} fetchPriority="high" />
+          <img src={rimgFirst(region, hero.image)} alt={hero.alt} fetchPriority="high" />
         </div>
         <div className="abk-hero__scrim" aria-hidden="true" />
 
@@ -171,24 +169,22 @@ export default function AccountingBookkeepingBody({ region }: { region: string }
         <div className="abk-hero__wash" aria-hidden="true" />
 
         <div className="abk-hero__inner">
-          {/* One column. The reference put a "Contact us" link opposite the
-              copy; removed by request, and the grid went with it — a two-column
-              grid with nothing in its second track just narrows the paragraph
-              for no reason. */}
+          {/* One column: a two-column grid with nothing in its second track
+              only narrows the paragraph for no reason. */}
           <div className="abk-hero__grid">
             <div>
               <nav className="abk-hero__crumb" aria-label="Breadcrumb">
-                {crumbs.map((c) => (
+                {content.crumbs.map((c) => (
                   <span key={c.href}>
                     <a href={rurl(region, c.href)}>{c.label}</a>
                     <span aria-hidden="true"> /</span>
                   </span>
                 ))}
-                <span>{ABK_HERO.title}</span>
+                <span>{hero.title}</span>
               </nav>
 
-              <h1 className="abk-hero__title">{ABK_HERO.title}</h1>
-              <p className="abk-hero__lede">{ABK_HERO.lede}</p>
+              <h1 className="abk-hero__title">{hero.title}</h1>
+              <p className="abk-hero__lede">{hero.lede}</p>
             </div>
           </div>
         </div>
@@ -199,19 +195,19 @@ export default function AccountingBookkeepingBody({ region }: { region: string }
         <div className="abk-in">
           <div className="abk-brief__grid">
             <div className="abk-brief__copy">
-              <p>{ABK_BRIEF.lede}</p>
-              <p>{ABK_BRIEF.whatIntro}</p>
+              <p>{brief.lede}</p>
+              <p>{brief.whatIntro}</p>
 
               <ul className="abk-brief__list">
-                {ABK_BRIEF.what.map((p) => (
+                {brief.what.map((p) => (
                   <Point key={p.lead} point={p} />
                 ))}
               </ul>
 
-              <p>{ABK_BRIEF.howIntro}</p>
+              <p>{brief.howIntro}</p>
 
               <ul className="abk-brief__list">
-                {ABK_BRIEF.how.map((p) => (
+                {brief.how.map((p) => (
                   <Point key={p.lead} point={p} />
                 ))}
               </ul>
@@ -219,7 +215,7 @@ export default function AccountingBookkeepingBody({ region }: { region: string }
 
             <figure className="abk-panel">
               <div className="abk-panel__media abk-zoom">
-                <img src={rimg(region, ABK_BRIEF.panel.image)} alt={ABK_BRIEF.panel.alt} loading="lazy" />
+                <img src={rimg(region, brief.panel.image)} alt={brief.panel.alt} loading="lazy" />
               </div>
               <div className="abk-panel__glow" aria-hidden="true" />
 
@@ -227,12 +223,12 @@ export default function AccountingBookkeepingBody({ region }: { region: string }
                   in the reference; removed by request — it read as a control
                   that opens nothing. */}
               <div className="abk-panel__top">
-                <span className="abk-panel__mark">{ABK_BRIEF.panel.mark}</span>
+                <span className="abk-panel__mark">{brief.panel.mark}</span>
               </div>
 
               <figcaption className="abk-panel__foot">
-                <p className="abk-panel__title">{ABK_BRIEF.panel.title}</p>
-                <p className="abk-panel__sub">{ABK_BRIEF.panel.sub}</p>
+                <p className="abk-panel__title">{brief.panel.title}</p>
+                <p className="abk-panel__sub">{brief.panel.sub}</p>
               </figcaption>
             </figure>
           </div>
@@ -244,37 +240,33 @@ export default function AccountingBookkeepingBody({ region }: { region: string }
         <div className="abk-in">
           <div className="abk-why__band">
             <div className="abk-why__media abk-zoom">
-              <img src={rimg(region, ABK_WHY.image)} alt={ABK_WHY.alt} loading="lazy" />
+              <img src={rimg(region, why.image)} alt={why.alt} loading="lazy" />
             </div>
             <div className="abk-why__tint" aria-hidden="true" />
 
             <div className="abk-why__card">
-              <span className="abk-why__pill">{ABK_WHY.pill}</span>
+              <span className="abk-why__pill">{why.pill}</span>
 
               {/* A link to the same place the button goes, not a <button> that
                   does nothing. The reference shows a round "+" in the corner;
                   giving it the card's own destination is the one reading of it
                   that leaves no dead control on the page. */}
-              <a
-                className="abk-why__plus"
-                href={rurl(region, ABK_WHY.cta.href)}
-                aria-label={ABK_WHY.cta.label}
-              >
+              <a className="abk-why__plus" href={rurl(region, why.cta.href)} aria-label={why.cta.label}>
                 <Plus />
               </a>
 
               <h2 className="abk-why__title">
-                {ABK_WHY.titleTop}
+                {why.titleTop}
                 <br />
-                {ABK_WHY.titleMid}
+                {why.titleMid}
                 <br />
-                <span className="abk-why__mark">{ABK_WHY.titleMark}</span>
+                <span className="abk-why__mark">{why.titleMark}</span>
               </h2>
 
-              <p className="abk-why__note">{ABK_WHY.note}</p>
+              <p className="abk-why__note">{why.note}</p>
 
-              <a className="abk-why__btn" href={rurl(region, ABK_WHY.cta.href)}>
-                {ABK_WHY.cta.label}
+              <a className="abk-why__btn" href={rurl(region, why.cta.href)}>
+                {why.cta.label}
                 <ArrowRight />
               </a>
             </div>
@@ -286,10 +278,10 @@ export default function AccountingBookkeepingBody({ region }: { region: string }
       <section className="abk-appr">
         <div className="abk-in">
           <div className="abk-appr__rule" aria-hidden="true" />
-          <p className="abk-appr__eyebrow">{ABK_APPROACH.eyebrow}</p>
+          <p className="abk-appr__eyebrow">{approach.eyebrow}</p>
 
           <div className="abk-appr__grid">
-            {ABK_APPROACH.columns.map((c) => (
+            {approach.columns.map((c) => (
               <div className="abk-appr__col" key={c.title}>
                 <h3 className="abk-appr__h">{c.title}</h3>
                 <p className="abk-appr__p">{c.body}</p>
@@ -311,19 +303,19 @@ export default function AccountingBookkeepingBody({ region }: { region: string }
         <div className="abk-in">
           <div className="abk-ins__head">
             <div className="abk-ins__intro">
-              <h2 className="abk-ins__h">{ABK_INSIGHTS.title}</h2>
-              <p className="abk-ins__lede">{ABK_INSIGHTS.lede}</p>
+              <h2 className="abk-ins__h">{insights.title}</h2>
+              <p className="abk-ins__lede">{insights.lede}</p>
             </div>
-            <a className="abk-ins__all" href={rurl(region, ABK_INSIGHTS.all.href)}>
-              {ABK_INSIGHTS.all.label}
+            <a className="abk-ins__all" href={rurl(region, insights.all.href)}>
+              {insights.all.label}
             </a>
           </div>
 
-          {/* Four across, inside the container — no scroller. The count in
-              content.ts is load-bearing: the grid is four columns, so a fifth
-              entry would start a second row holding one card. */}
+          {/* Four across, inside the container — no scroller. The count in the
+              content module is load-bearing: the grid is four columns, so a
+              fifth entry would start a second row holding one card. */}
           <ul className="abk-ins__rail">
-            {ABK_INSIGHTS.cards.map((c) => (
+            {insights.cards.map((c) => (
               <li className="abk-card" key={c.title}>
                 <a className="abk-card__link" href={rurl(region, c.href)}>
                   <span className="abk-card__media">
@@ -343,7 +335,7 @@ export default function AccountingBookkeepingBody({ region }: { region: string }
                     <span className="abk-card__excerpt">{c.excerpt}</span>
 
                     <span className="abk-card__btn">
-                      {ABK_INSIGHTS.all.label}
+                      {insights.all.label}
                       <ArrowRight />
                     </span>
                   </span>
@@ -354,7 +346,6 @@ export default function AccountingBookkeepingBody({ region }: { region: string }
         </div>
       </section>
 
-
       {/* ================= 6. SUCCESS STORY ================= */}
       {/* Two panels, one band. They share a row and a height, and the gap
           between them is narrow so the pair reads as one object split down the
@@ -363,7 +354,7 @@ export default function AccountingBookkeepingBody({ region }: { region: string }
         <div className="abk-in">
           <div className="abk-case__grid">
             <figure className="abk-case__photo">
-              <img src={rimg(region, ABK_CASE.photo)} alt={ABK_CASE.alt} loading="lazy" />
+              <img src={rimg(region, story.photo)} alt={story.alt} loading="lazy" />
 
               {/* Same frosted treatment as the Why Us card — the frost is its
                   own masked layer inside the box, so the panel dissolves into
@@ -372,40 +363,36 @@ export default function AccountingBookkeepingBody({ region }: { region: string }
                 <span className="abk-case__mark" aria-hidden="true">
                   &rdquo;
                 </span>
-                <p className="abk-case__said">{ABK_CASE.quote}</p>
+                <p className="abk-case__said">{story.quote}</p>
                 <footer className="abk-case__by">
                   <span className="abk-case__avatar" aria-hidden="true">
-                    {ABK_CASE.initials}
+                    {story.initials}
                   </span>
                   <span className="abk-case__who">
-                    <b>{ABK_CASE.role}</b>
-                    <i>{ABK_CASE.org}</i>
+                    <b>{story.role}</b>
+                    <i>{story.org}</i>
                   </span>
                 </footer>
               </blockquote>
             </figure>
 
             <div className="abk-case__panel">
-              <a
-                className="abk-case__arrow"
-                href={rurl(region, ABK_CASE.arrow.href)}
-                aria-label={ABK_CASE.arrow.label}
-              >
+              <a className="abk-case__arrow" href={rurl(region, story.arrow.href)} aria-label={story.arrow.label}>
                 <ArrowUpRight />
               </a>
 
-              <span className="abk-case__pill">{ABK_CASE.pill}</span>
-              <h2 className="abk-case__h">{ABK_CASE.title}</h2>
+              <span className="abk-case__pill">{story.pill}</span>
+              <h2 className="abk-case__h">{story.title}</h2>
 
               {/* The result and the button share the panel's foot, which is why
                   they are one row rather than two stacked blocks. */}
               <div className="abk-case__foot">
                 <div className="abk-case__result">
-                  <p className="abk-case__stat">{ABK_CASE.stat}</p>
-                  <p className="abk-case__note">{ABK_CASE.note}</p>
+                  <p className="abk-case__stat">{story.stat}</p>
+                  <p className="abk-case__note">{story.note}</p>
                 </div>
-                <a className="abk-case__cta" href={rurl(region, ABK_CASE.cta.href)}>
-                  {ABK_CASE.cta.label}
+                <a className="abk-case__cta" href={rurl(region, story.cta.href)}>
+                  {story.cta.label}
                 </a>
               </div>
             </div>
@@ -418,16 +405,16 @@ export default function AccountingBookkeepingBody({ region }: { region: string }
         <div className="abk-in">
           <div className="abk-band__box">
             <span className="abk-band__media abk-zoom">
-              <img src={rimg(region, ABK_BAND.image)} alt={ABK_BAND.alt} loading="lazy" />
+              <img src={rimg(region, band.image)} alt={band.alt} loading="lazy" />
             </span>
             <span className="abk-band__tint" aria-hidden="true" />
 
             <div className="abk-band__inner">
-              <h2 className="abk-band__h">{ABK_BAND.title}</h2>
+              <h2 className="abk-band__h">{band.title}</h2>
               <div className="abk-band__side">
-                <p className="abk-band__p">{ABK_BAND.body}</p>
-                <a className="abk-band__cta" href={rurl(region, ABK_BAND.cta.href)}>
-                  {ABK_BAND.cta.label}
+                <p className="abk-band__p">{band.body}</p>
+                <a className="abk-band__cta" href={rurl(region, band.cta.href)}>
+                  {band.cta.label}
                 </a>
               </div>
             </div>
@@ -443,7 +430,7 @@ export default function AccountingBookkeepingBody({ region }: { region: string }
                 read in sequence — which is also what the rail down their left
                 is drawing. */}
             <ol className="abk-vision__steps">
-              {ABK_VISION.steps.map((s) => (
+              {vision.steps.map((s) => (
                 <li className="abk-vision__step" key={s.title}>
                   <span className="abk-vision__ico" aria-hidden="true">
                     <CheckCircle />
@@ -457,8 +444,8 @@ export default function AccountingBookkeepingBody({ region }: { region: string }
             </ol>
 
             <div className="abk-vision__side">
-              <span className="abk-vision__pill">{ABK_VISION.pill}</span>
-              <p className="abk-vision__quote">{ABK_VISION.quote}</p>
+              <span className="abk-vision__pill">{vision.pill}</span>
+              <p className="abk-vision__quote">{vision.quote}</p>
             </div>
           </div>
         </div>
@@ -473,36 +460,48 @@ export default function AccountingBookkeepingBody({ region }: { region: string }
           It sits OUTSIDE .abk-in on purpose: the .vxn-home-svc-section variant
           strips the container's padding and max-width to run the row full
           bleed, edge to edge, with no gaps and no radii. */}
-      <HomeIndustriesRow region={region} items={ABK_STRIP} />
+      <HomeIndustriesRow region={region} items={strip} />
 
       {/* ================= 10. TALK TO AN EXPERT ================= */}
-      {/* Duplicated from /en-ae/services/accounting-tax-services/ by request —
-          same copy, same plate, same squared button. The parent carries its CSS
-          inline under .at-root, which cannot reach this page, so the rules are
-          restated in the stylesheet under .abk-talk with the parent's values
-          resolved rather than its tokens. */}
+      {/* The parent service's closing band, restated. The parent carries its
+          CSS inline under .at-root, which cannot reach this page, so the rules
+          are restated in the stylesheet under .abk-talk with the parent's
+          values resolved rather than its tokens. */}
       <section className="abk-talk" aria-labelledby="abk-talk-head">
         <div className="abk-in">
           <div className="abk-talk__grid">
             {/* Decorative: the copy beside it says what it shows. */}
             <figure className="abk-talk__fig">
-              <img src={rimgFirst(region, ABK_TALK.image)} alt="" loading="lazy" />
+              <img src={rimgFirst(region, talk.image)} alt="" loading="lazy" />
             </figure>
 
             <div className="abk-talk__copy">
               <h2 className="abk-talk__head" id="abk-talk-head">
-                {ABK_TALK.head}
+                {talk.head}
               </h2>
-              <p className="abk-talk__lede">{ABK_TALK.lede}</p>
-              <a className="abk-talk__cta" href={rurl(region, ABK_TALK.cta.href)}>
-                {ABK_TALK.cta.label}
+              <p className="abk-talk__lede">{talk.lede}</p>
+              <a className="abk-talk__cta" href={rurl(region, talk.cta.href)}>
+                {talk.cta.label}
               </a>
             </div>
           </div>
         </div>
       </section>
 
-      <AccountingBookkeepingMotion />
+      <SubServiceTemplateMotion />
     </div>
   );
+}
+
+/**
+ * A body component for one sub-service, ready for the registry in ../index.ts.
+ *
+ * The [service]/[sub] route renders a body as <Body region={…} /> and knows
+ * nothing about content; this closes the content over that shape so the
+ * registry can be built from the six modules in a loop.
+ */
+export function templatedSubBody(content: SubServiceTemplateContent): ComponentType<{ region: string }> {
+  const Body = ({ region }: { region: string }) => <SubServiceTemplateBody region={region} content={content} />;
+  Body.displayName = `SubServiceTemplateBody(${content.service}/${content.slug})`;
+  return Body;
 }

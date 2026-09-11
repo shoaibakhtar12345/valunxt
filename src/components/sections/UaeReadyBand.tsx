@@ -1,20 +1,16 @@
 /**
- * "Ready when you are" — the closing conversion band on /en-ae/.
+ * "Let's begin" — the closing conversion band on /en-ae/.
  *
  * REDESIGNED FROM SCRATCH on client request. It was copy on the left and three
  * floating cards on the right, over a wash of blurred ribbons drifting on long
  * loops. It now reads top to bottom: the statement and its lede share one line,
- * and the three ways to start are the rows of a single white card.
+ * and the ways to start are the rows of a single white card.
  *
- *   ── READY WHEN YOU ARE
- *   Start with a conversation,                   A free consultation, a
- *   not a commitment.                            fixed-fee quote in writing…
+ *   ── LET'S BEGIN
+ *   The Right Advice Starts                      Tell us what you're looking
+ *   With the Right Conversation.                 to achieve. We'll connect…
  *   ┌───────────────────────────────────────────────────────────────────┐
- *   │ (o)  Book a free consultation    No obligation. A partner…   (↗) │
- *   │ ───────────────────────────────────────────────────────────────── │
- *   │ (o)  Get a fixed-fee quote       Scope and fee agreed in…    (↗) │
- *   │ ───────────────────────────────────────────────────────────────── │
- *   │ (o)  Call +971 4 255 4683        Mon – Sat … · Dubai and…    (↗) │
+ *   │ (o)  Book a Free Consultation    Discuss your business, pro…  (↗) │
  *   └───────────────────────────────────────────────────────────────────┘
  *
  * WHY ROWS. The insights carousel directly above is a row of image cards, the
@@ -23,13 +19,15 @@
  * route a full-width target with its note on the same line. Each row is the
  * whole of its link, and fills with the brand ramp when it is pointed at.
  *
- * Every claim restates something the site already publishes: the free
- * consultation, the fee agreed in writing before work starts, and the UAE line,
- * hours and cities from the region registry.
+ * ONE ROW, NOT THREE, since the client's home-page document (20260911): it
+ * names the consultation and nothing else, and its rule is that nothing is
+ * added to it. The fixed-fee quote and the phone row went with the old copy.
+ * The list still takes any number of routes, so restoring one is an entry
+ * below and the words to put in it.
  *
  * Styles: assets/css/valunxt-landing.css (.vxn-ready).
  */
-import { rurl, vxnRegionData, vxnRegionPhone } from '@/lib/region';
+import { rurl } from '@/lib/region';
 
 /** The three glyphs, drawn rather than pulled from the icon font so they share
  *  a stroke weight with the rest of this block. */
@@ -113,26 +111,12 @@ function RouteFace({ route, fill = false }: { route: Route; fill?: boolean }) {
 }
 
 export default function UaeReadyBand({ region }: { region: string }) {
-  const r = vxnRegionData(region);
-
   const routes: Route[] = [
     {
       icon: 'talk',
-      name: 'Book a free consultation',
-      note: 'No obligation. A partner listens first and says what is actually needed.',
+      name: 'Book a Free Consultation',
+      note: 'Discuss your business, property or investment requirements with our team.',
       href: rurl(region, '/free-consultation/'),
-    },
-    {
-      icon: 'quote',
-      name: 'Get a fixed-fee quote',
-      note: 'Scope and fee agreed in writing before any work begins.',
-      href: rurl(region, '/contact/'),
-    },
-    {
-      icon: 'call',
-      name: `Call ${vxnRegionPhone(region)}`,
-      note: `${r.hours} · ${r.cities}`,
-      href: `tel:${r.tel}`,
     },
   ];
 
@@ -141,17 +125,18 @@ export default function UaeReadyBand({ region }: { region: string }) {
       <div className="vxn-ready__inner">
         <div className="vxn-ready__head">
           <div className="vxn-ready__intro">
-            <span className="vxn-ready__eyebrow">Ready when you are</span>
+            <span className="vxn-ready__eyebrow">Let&rsquo;s Begin</span>
             {/* The second clause is an <i>, not a <span> or an <em> — see the
                 note on .vxn-ready__accent for why it is the one inline element
-                that keeps the heading's face. */}
+                that keeps the heading's face. It starts where the document
+                breaks the line. */}
             <h2 id="vxn-ready-title" className="vxn-ready__title">
-              Start with a conversation, <i className="vxn-ready__accent">not a commitment.</i>
+              The Right Advice Starts <i className="vxn-ready__accent">With the Right Conversation.</i>
             </h2>
           </div>
           <p className="vxn-ready__lede">
-            A free consultation, a fixed-fee quote in writing, and a named partner from the first
-            call.
+            Tell us what you&rsquo;re looking to achieve. We&rsquo;ll connect you with the right
+            expertise and a clear way forward.
           </p>
         </div>
 

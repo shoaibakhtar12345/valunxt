@@ -1,17 +1,18 @@
 /**
  * What /en-ae/services/mortgages-services/ says.
  *
- * Written for the service template on client instruction (20260910): the
- * Accounting & Tax page, section for section, with the words changed. The
- * copy draws on what the market already publishes for this desk — the
- * registry's line ("Whole-of-market mortgage structuring for resident,
- * non-resident and corporate borrowers"), the shared template's intro, and
- * the six sub-services vxnServices('en-ae') lists — and states what the desk
- * does and who it is for. Nothing here is an outcome promise; see
- * ../template/types.ts for why.
+ * THE COPY IS THE CLIENT'S page document (20260911), word for word, on the
+ * service template, under the same two rules as the home page: nothing added
+ * to the document or dropped from it, and no em dashes anywhere on the UAE
+ * pages. The document gives this page three proof points where the others
+ * have four; the list takes any count. Every tab's button is the intro's
+ * call, so the tabs name none of their own and take it by default.
  *
  * SUB-SERVICE SLUGS resolve through vxnServices('en-ae'), so every slug below
- * exists in that registry and the strip cannot point at a 404.
+ * exists in that registry and the strip cannot point at a 404. The card names
+ * are the document's ("Mortgage Pre-Approval", "Non-Resident Mortgages"); the
+ * registry still carries the unhyphenated forms for the menu and the
+ * breadcrumbs until those pages' documents arrive.
  */
 import type { ServiceTemplateContent } from '../template/types';
 
@@ -19,106 +20,127 @@ export const MORTGAGES_TEMPLATE: ServiceTemplateContent = {
   slug: 'mortgages-services',
   crumb: 'Mortgages',
   hero: {
-    head: 'Mortgage Services in Dubai for Residents, Non-Residents and Businesses',
-    sub: 'Know what you can borrow. Compare the whole market. Have the approval in place before the offer. Refinance when the terms have moved.',
+    head: 'The Right Mortgage Starts With the Right Guidance.',
+    sub: 'Navigate your financing journey with expert guidance from eligibility and lender comparison through to approval.',
     /* about-us-banner is the plate the old template used for this desk's
        banner: wide, and quiet enough on the left for the copy. */
     image: ['services/mortgages-hero.webp', 'new-folder/about-us-banner.webp'],
     alt: 'The ValuNxt office reception',
   },
   intro: {
-    head: 'One Mortgage Partner from Pre-Approval to Refinance.',
-    lede: 'Property finance structured, packaged and negotiated with UAE lenders — whole-of-market, for resident, non-resident and corporate borrowers alike. Terms are argued on the evidence, not on whichever lender happens to be closest.',
+    head: 'One Mortgage Partner. From First Question to Final Approval.',
+    lede: 'Whether you are buying, refinancing or financing property from overseas, ValuNxt brings the mortgage process together from assessing your requirements to navigating lenders, documentation and approval.',
     proof: [
-      { label: 'Whole of market', note: 'Every UAE lender, not a panel of three' },
-      { label: 'Resident and non-resident', note: 'Salaried, self-employed and corporate borrowers' },
-      { label: 'Packaged for a yes', note: 'Applications prepared the way lenders assess them' },
-      { label: 'Islamic and conventional', note: 'Murabaha and Ijara alongside conventional terms' },
+      { label: 'Know Your Eligibility', note: 'Understand your borrowing position and financing potential.' },
+      { label: 'Find the Right Option', note: 'Explore suitable lenders and mortgage structures for your requirements.' },
+      { label: 'Navigate to Approval', note: 'Get support across documentation, application and approval coordination.' },
     ],
-    chips: ['Whole-of-market comparison', 'Pre-approval before you make an offer'],
-    primary: { label: 'Book a Free Consultation', href: '/free-consultation/' },
+    chips: ['360° Mortgage Support', 'End-to-End Guidance'],
+    primary: { label: 'Speak to a Mortgage Advisor', href: '/free-consultation/' },
     secondary: { label: 'Explore Our Services', href: '#at-services' },
     image: ['services/mortgages-intro.webp', 'new-folder/houzzhunt-mortgage-2.webp'],
   },
   strip: {
-    kicker: 'Explore services',
-    head: 'Find the finance that fits your position',
-    lede: 'Start with the loan you need today — a first mortgage, a commercial facility, a refinance — and add structure as your position changes.',
-    cta: 'Ready to get started?',
+    kicker: 'Explore Services',
+    head: 'Financing for Every Property Move.',
+    lede: 'From buying your first home to refinancing or investing from overseas, find mortgage support built around your requirements.',
+    cta: 'Not sure where to start?',
     subs: [
       {
         name: 'Residential Mortgages',
         slug: 'residential-mortgages',
-        cardText: 'Whole-of-market home loans for UAE residents, structured around income and the property.',
+        cardText: 'Navigate home financing with support across eligibility, lender comparison, documentation and application.',
         figure: ['services/mo-explore-residential-mortgages.webp', 'new-folder/who-we-are-1.webp'],
       },
       {
         name: 'Commercial Mortgages',
         slug: 'commercial-mortgages',
-        cardText: 'Finance for offices, warehouses, retail and mixed-use assets, for owner-occupiers and investors.',
+        cardText: 'Explore financing for offices, retail, warehouses and other commercial property requirements.',
         figure: ['services/mo-explore-commercial-mortgages.webp', 'new-folder/services-4.webp'],
       },
       {
-        name: 'Mortgage Pre Approval',
+        name: 'Mortgage Pre-Approval',
         slug: 'mortgage-pre-approval',
-        cardText: 'An approval in principle before you make an offer, so you negotiate as a funded buyer.',
+        cardText: 'Understand your borrowing capacity and financing position before committing to a property.',
         figure: ['services/mo-explore-mortgage-pre-approval.webp', 'new-folder/services-1.webp'],
       },
       {
         name: 'Refinancing',
         slug: 'refinancing',
-        cardText: 'Existing loans re-priced and restructured when the market or your circumstances have moved.',
+        cardText: 'Review your existing mortgage for better-aligned rates, terms, tenure or financing structures.',
         figure: ['services/mo-explore-refinancing.webp', 'new-folder/insights-2.webp'],
       },
       {
-        name: 'Non Resident Mortgages',
+        name: 'Non-Resident Mortgages',
         slug: 'non-resident-mortgages',
-        cardText: 'UAE property finance for overseas buyers, with income and documents from abroad handled.',
+        cardText: 'Navigate UAE property financing with guidance tailored to overseas and non-resident buyers.',
         figure: ['services/mo-explore-non-resident-mortgages.webp', 'new-folder/client-success-2.webp'],
       },
       {
         name: 'Islamic Finance',
         slug: 'islamic-finance',
-        cardText: 'Sharia-compliant home and commercial finance, compared against conventional terms.',
+        cardText: 'Explore Sharia-compliant property financing structures and compare suitable options with clarity.',
         figure: ['services/mo-explore-islamic-finance.webp', 'new-folder/who-we-are-3.webp'],
       },
     ],
   },
   solution: {
-    head: 'Find the Right Solution',
+    head: 'Find the Right Mortgage Solution',
+    /* The document writes the tab names in capitals; they are set in title
+       case here because the tab strip renders what it is given and every
+       other label on the page is title case. The first tab's steps name three
+       of the sub-services above, but with lines of their own, so they are
+       items here rather than slugs. */
     tabs: [
       {
-        tab: 'Buying a Home',
-        intro:
-          'A purchase is won on the certainty a buyer brings to the table. Pre-approval first, then a whole-of-market comparison, whether the income sits in the UAE or overseas.',
-        slugs: ['residential-mortgages', 'mortgage-pre-approval', 'non-resident-mortgages'],
+        tab: 'Buying a Property',
+        title: 'Start With What You Want to Finance.',
+        intro: 'Whether you are buying a home or commercial property, we help you understand your borrowing position and navigate suitable mortgage options.',
+        items: [
+          { name: 'Residential Mortgages', text: 'Financing guidance for homebuyers and investors, from eligibility through application.' },
+          { name: 'Commercial Mortgages', text: 'Mortgage support shaped around the property, borrower profile and lender criteria.' },
+          { name: 'Mortgage Pre-Approval', text: 'Understand your borrowing capacity before committing to a property.' },
+        ],
       },
       {
-        tab: 'Business Property',
-        intro:
-          'Commercial assets are lent against differently — on the asset, the lease and the borrower together. The application is built the way the credit committee reads it.',
-        slugs: ['commercial-mortgages'],
+        tab: 'Reviewing Your Mortgage',
+        title: 'Make Your Existing Mortgage Work Better.',
+        intro: 'Your financing needs can change. We help you review your current mortgage and explore whether a different structure may suit you better.',
+        items: [
+          { name: 'Refinancing', text: 'Review rates, tenure and financing terms against your current requirements.' },
+          { name: 'Better-Aligned Terms', text: 'Explore revised structures or equity-release options where applicable.' },
+          { name: 'Switch With Support', text: 'Navigate lender requirements, documentation and the refinancing process.' },
+        ],
       },
       {
-        tab: 'Restructuring',
-        intro:
-          'Terms move. A loan that was right at completion may not be right three years on, and an Islamic structure may fit better than the conventional one it replaces.',
-        slugs: ['refinancing', 'islamic-finance'],
+        tab: 'Specialist Financing',
+        title: 'Financing Needs That Require a Different Approach.',
+        intro: 'From buying in the UAE as a non-resident to exploring Sharia-compliant financing, get guidance around the options relevant to you.',
+        items: [
+          { name: 'Non-Resident Mortgages', text: 'Navigate eligibility, documentation and lender options for overseas buyers.' },
+          { name: 'Islamic Finance', text: 'Understand and compare Sharia-compliant property financing structures.' },
+          { name: 'Guided Comparison', text: 'Explore suitable financing routes based on your profile and requirements.' },
+        ],
       },
     ],
     images: [['new-folder/houzzhunt-mortgage-1.webp'], ['new-folder/services-2.webp'], ['new-folder/about-us-1.webp']],
   },
   banner: {
-    head: 'The Finance Agenda from the ValuNxt Mortgage Desk',
-    body: 'Our mortgage desk brings pre-approval, whole-of-market comparison, application packaging and negotiation together under one team, so a buyer or business in the UAE deals with one adviser rather than with each lender in turn.',
-    cta: { label: 'Learn more', href: '#at-services' },
+    head: 'Finance Your Next Move With Clarity',
+    body: 'Mortgage insights that help you understand borrowing, lender options and the financing landscape before you decide.',
+    /* The insights card, as on the real estate page: /blogs/ is where the
+       header's Insights item leads. */
+    cta: { label: 'Get Mortgage Guidance', href: '/blogs/' },
     image: ['services/mortgages-banner.webp', 'banners/uae-slider-2.webp'],
   },
-  related: { head: 'Explore Related Services' },
+  related: {
+    head: 'Explore Related Services',
+    slugs: ['real-estate-transactions', 'valuation-and-advisory', 'research-intelligence'],
+  },
   close: {
-    head: 'Start with the loan you need approved today.',
-    lede: 'Whether you are buying a first home, financing a commercial asset, borrowing from overseas or re-pricing a loan you already hold, ValuNxt can help identify the right place to start.',
-    primary: { label: 'Book a Free Mortgage Consultation', href: '/free-consultation/' },
+    head: 'Your Property Plans Deserve the Right Financing Strategy.',
+    lede: 'Whether you are buying, refinancing or exploring your options, start with a clear understanding of the financing available to you.',
+    primary: { label: 'Speak to a Mortgage Advisor', href: '/free-consultation/' },
     image: ['services/mortgages-talk.webp', 'new-folder/houzzhunt-mortgage-1.webp'],
   },
 };

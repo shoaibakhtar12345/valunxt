@@ -156,7 +156,7 @@ export default function UaeServicesMega({
               <span className="vxn-umega__asidetitle">Services</span>
               <p className="vxn-umega__asidelede">
                 VALUNXT brings accounting, tax, valuation, real estate and technology under one
-                accountable partner — so every number you act on holds up to scrutiny.
+                accountable partner, so every number you act on holds up to scrutiny.
               </p>
               <a className="vxn-umega__asidelink" href={rurl(region, '/services/')} {...tab}>
                 Learn More

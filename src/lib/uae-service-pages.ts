@@ -133,17 +133,17 @@ export function uaeServiceConfig(service: Service, written = false): PageConfig 
 }
 
 /**
- * Stylesheets a single sub-service page wrote for itself, keyed by
- * `<service slug>/<sub slug>` so two services can each have a page of the same
- * name without colliding.
+ * The sub-service template's stylesheet, loaded by every page beneath a
+ * service.
  *
- * These are hand-written sheets under public/assets/css/, not captured
- * Elementor CSS — see `site_css` on PageConfig for where they land in the
- * cascade. Each one is scoped to its page's own root class.
+ * A hand-written sheet under public/assets/css/, not captured Elementor CSS —
+ * see `site_css` on PageConfig for where it lands in the cascade. It is scoped
+ * to the template's root class, `.abk-root`, and was the Accounting &
+ * Bookkeeping page's own sheet until every sub-service took that page's UI;
+ * it was keyed by `<service slug>/<sub slug>` then, and all thirty-three
+ * pages load it now. Bump the query when it changes.
  */
-const SUB_SITE_CSS: Record<string, string[]> = {
-  'accounting-tax-services/accounting-bookkeeping': ['/assets/css/accounting-bookkeeping.css?v=7'],
-};
+const SUB_SITE_CSS = ['/assets/css/valunxt-uae-sub.css?v=8'];
 
 /** The page at /services/<service>/<sub>/. */
 export function uaeSubServiceConfig(
@@ -151,19 +151,16 @@ export function uaeSubServiceConfig(
   sub: SubService,
   written = false,
 ): PageConfig {
-  const key = `${service.slug}/${sub.slug}`;
   return config({
     name: sub.name,
     path: `/services/${service.slug}/${sub.slug}/`,
-    /* The sub-pages borrow the parent's image: they are the same discipline,
-       and a placeholder per page would be thirty more images to art-direct
-       before any of them has copy. A written page sets its own artwork in its
-       body and never reads this. */
+    /* The sub-pages borrow the parent's image for the shared hero band. A
+       written page sets its own artwork in its body and never reads this. */
     heroImage: service.img,
     desc: written
       ? `${sub.name} — part of ${vxnServiceName(service)} at VALUNXT.`
       : `${sub.name} — part of ${vxnServiceName(service)} at VALUNXT. Coming soon.`,
     written,
-    siteCss: SUB_SITE_CSS[key],
+    siteCss: SUB_SITE_CSS,
   });
 }

@@ -6,6 +6,12 @@
  * page, section for section, for the other five, with only the words changed.
  * Adding a service is a content module in this shape and one line below.
  *
+ * ALL THIRTY-THREE SUB-SERVICES DO THE SAME on SubServiceTemplateBody — the
+ * Accounting & Bookkeeping page, section for section — fed by one subs.ts per
+ * service. Adding a sub-service is a SubSpec in the parent's module; the
+ * registry below is built from the six modules in a loop and never has to be
+ * touched.
+ *
  * ServicePageBody and UAE_SERVICE_CONTENT, the five-section template the five
  * used to render through, stay exported: the routes still fall back to them
  * for a slug with content but no body, and a seventh service written that
@@ -19,13 +25,19 @@ import type { ComponentType } from 'react';
 
 import { UAE_SERVICE_CONTENT, type ServicePageContent } from './content';
 import { templatedBody } from './template/ServiceTemplateBody';
+import { templatedSubBody } from './template/SubServiceTemplateBody';
 import { ACCOUNTING_TAX_TEMPLATE } from './accounting-tax/content';
+import { ACCOUNTING_TAX_SUBS } from './accounting-tax/subs';
 import { REAL_ESTATE_TEMPLATE } from './real-estate/content';
+import { REAL_ESTATE_SUBS } from './real-estate/subs';
 import { MORTGAGES_TEMPLATE } from './mortgages/content';
+import { MORTGAGES_SUBS } from './mortgages/subs';
 import { VALUATION_TEMPLATE } from './valuation/content';
+import { VALUATION_SUBS } from './valuation/subs';
 import { RESEARCH_TEMPLATE } from './research/content';
+import { RESEARCH_SUBS } from './research/subs';
 import { TECHNOLOGY_TEMPLATE } from './technology/content';
-import AccountingBookkeepingBody from './accounting-tax/bookkeeping/AccountingBookkeepingBody';
+import { TECHNOLOGY_SUBS } from './technology/subs';
 
 export { UAE_SERVICE_CONTENT };
 export type { ServicePageContent };
@@ -58,23 +70,20 @@ export function uaeServiceIsWritten(slug: string | undefined): boolean {
 }
 
 /**
- * Pages BENEATH a service that have been written, keyed by
- * `<service slug>/<sub slug>`.
- *
- * The twenty-nine sub-services share the coming-soon body until one of them is
- * designed. There is no template equivalent here — a sub-page is written as its
- * own component or it is not written at all — so unlike the services above this
- * is the only registry, and a page that appears in it must also appear in
- * SUB_SITE_CSS in lib/uae-service-pages.ts if it carries a stylesheet.
+ * Every page BENEATH a service, keyed by `<service slug>/<sub slug>`.
  *
  * Keyed by the pair, not by the sub slug alone: two services may each end up
  * with an `accounting-bookkeeping`, and the parent is what tells them apart.
+ * Every entry here loads the sub-service template's stylesheet — see
+ * SUB_SITE_CSS in lib/uae-service-pages.ts, which applies it to all of them.
  */
-const UAE_SUB_BODIES: Record<string, ComponentType<{ region: string }>> = {
-  'accounting-tax-services/accounting-bookkeeping': AccountingBookkeepingBody,
-};
+const UAE_SUB_BODIES: Record<string, ComponentType<{ region: string }>> = Object.fromEntries(
+  [ACCOUNTING_TAX_SUBS, REAL_ESTATE_SUBS, MORTGAGES_SUBS, VALUATION_SUBS, RESEARCH_SUBS, TECHNOLOGY_SUBS].flatMap(
+    (set) => Object.values(set).map((c) => [`${c.service}/${c.slug}`, templatedSubBody(c)] as const),
+  ),
+);
 
-/** The bespoke body for a sub-service, or undefined while it is unwritten. */
+/** The body for a sub-service, or undefined while it is unwritten. */
 export function uaeSubServiceBody(
   service: string | undefined,
   sub: string | undefined,

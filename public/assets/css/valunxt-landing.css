@@ -2689,11 +2689,20 @@
 }
 
 /* The insights containers keep their own Elementor inner, which already
-   centres; they only need the gutter. */
+   centres; it takes the page's width rule here in place of the kit's
+   1280px --content-width. It used to keep the kit's cap and carry the gutter
+   as padding inside it, which made this the one band on the page that did
+   not line up: at 1920 the heading and the carousel ran 368 → 1552 while the
+   trio, the impact card, the mosaic and the ready band all ran 200 → 1720,
+   and at 1536 they started 176px in against everyone else's 48. Same
+   formula as the block above, so the edges now sit on the same lines. Below
+   1280px plus two gutters — every tablet and phone — the two formulas give
+   the same width, so nothing moves there. */
 .vxn-ae-home .elementor-element-c50d7c9 > .e-con-inner,
 .vxn-ae-home .elementor-element-413d07d > .e-con-inner {
-  padding-left: var(--vxn-gutter);
-  padding-right: var(--vxn-gutter);
+  max-width: min(1520px, calc(100% - var(--vxn-gutter) * 2));
+  padding-left: 0;
+  padding-right: 0;
 }
 
 /* The trio carried its spacing as a bottom padding on the section. */

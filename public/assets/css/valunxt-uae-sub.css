@@ -1,11 +1,15 @@
 /* =============================================================================
-   /en-ae/services/accounting-tax-services/accounting-bookkeeping/
+   The UAE sub-service template — every /en-ae/services/<service>/<sub>/
 
-   The page's own stylesheet. It is a real file rather than a <style> block in
-   the component (which is how the parent Accounting & Tax page carries its CSS)
-   because this page was asked for with its stylesheet kept separate — so it is
-   linked from <head> like valunxt-brand.css and valunxt-landing.css are, and
-   the browser can cache it independently of the HTML.
+   The stylesheet behind SubServiceTemplateBody.tsx. It was written for one
+   page, /accounting-tax-services/accounting-bookkeeping/, and every sub-service
+   took that page's UI on client instruction (20260910), so the thirty-three
+   pages share it; the `abk-` prefix is that history. It is a real file rather
+   than a <style> block in the component (which is how the service template
+   carries its CSS) because the page was asked for with its stylesheet kept
+   separate — so it is linked from <head> like valunxt-brand.css and
+   valunxt-landing.css are, and the browser can cache it independently of the
+   HTML.
 
    ---------------------------------------------------------------------------
    WHY EVERY SELECTOR STARTS WITH `.abk-root`
@@ -27,13 +31,17 @@
    `section` rule. Nowhere is it used as a shortcut around specificity.
 
    ---------------------------------------------------------------------------
-   SECTION ORDER (matches AccountingBookkeepingBody.tsx)
+   SECTION ORDER (matches SubServiceTemplateBody.tsx)
 
      1  .abk-hero    full-bleed plate, copy at the foot, progressive blur rising
                      out of the bottom edge
      2  .abk-brief   the editorial column and the blue panel beside it
      3  .abk-why     wide picture band with a frosted card floated on it
      4  .abk-appr    rule, eyebrow, three columns
+     5  .abk-ins     the insights rail          6  .abk-case    the success story
+     7  .abk-band    the band                   8  .abk-vision  focus and vision
+     9  the strip (HomeIndustriesRow, styled in valunxt-brand.css)
+    10  .abk-talk    the parent service's close, restated
 
    ---------------------------------------------------------------------------
    MOTION. Hover states change colour and light, never position. The reveal

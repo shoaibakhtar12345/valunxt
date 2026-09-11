@@ -1,17 +1,18 @@
 /**
  * What /en-ae/services/valuation-and-advisory/ says.
  *
- * Written for the service template on client instruction (20260910): the
- * Accounting & Tax page, section for section, with the words changed. The
- * copy draws on what the market already publishes for this practice — the
- * registry's line ("RICS-aligned property valuation and advisory for lenders,
- * funds, developers and private owners"), the shared template's intro, and
- * the five sub-services vxnServices('en-ae') lists — and states what the
- * practice does and who it is for. Nothing here is an outcome promise; see
- * ../template/types.ts for why.
+ * THE COPY IS THE CLIENT'S page document (20260911), word for word, on the
+ * service template, under the same two rules as the home page: nothing added
+ * to the document or dropped from it, and no em dashes anywhere on the UAE
+ * pages. The figures (48+ years, 200Bn+ USD, 11K+ clients, award-winning)
+ * are the client's own claims about Reliant Surveyors, the group's valuation
+ * firm, which is why that name appears where it does.
  *
- * RICS-regulated property valuation runs through group firm Reliant Surveyors,
- * which is why that name appears where it does and nowhere it does not.
+ * ONE SLOT THE DOCUMENT LEAVES EMPTY: the intro band's two buttons, which the
+ * other service documents give and this one does not. The band keeps them,
+ * labelled with the document's own closing call and the secondary every other
+ * page carries, because the intro's primary is also where the strip's link
+ * and any tab without a button of its own lead. Marked in the report.
  *
  * SUB-SERVICE SLUGS resolve through vxnServices('en-ae'), so every slug below
  * exists in that registry and the strip cannot point at a 404.
@@ -22,100 +23,123 @@ export const VALUATION_TEMPLATE: ServiceTemplateContent = {
   slug: 'valuation-and-advisory',
   crumb: 'Valuation',
   hero: {
-    head: 'Valuation & Advisory in Dubai for Lenders, Investors and Owners',
-    sub: 'Value the business. Value the assets. Document the method. Hold the number when it is questioned.',
+    head: 'Valuation That Stands Behind Every Decision.',
+    sub: 'Independent valuation and advisory backed by rigorous analysis, professional judgement and 48+ years of expertise.',
     /* Reliant Surveyors is the group's valuation firm, so its photograph is
        the one that belongs on this banner. */
     image: ['services/valuation-hero.webp', 'new-folder/reliant-surveyors-1.webp'],
     alt: 'A meeting under the Reliant Surveyors sign',
   },
   intro: {
-    head: 'One Valuation Partner from Instruction to Defence.',
-    lede: 'RICS-compliant real estate valuation runs through group firm Reliant Surveyors, and the method behind every figure is documented rather than asserted — so a number holds up when it is questioned, not just when it is read.',
+    head: 'One Valuation Partner. Decades of Expertise Behind Every Conclusion.',
+    lede: 'Through our Valuation & Advisory partnership with Reliant Surveyors, ValuNxt brings established expertise, market evidence and professional judgement to valuations for transactions, reporting, investment and strategic decisions.',
     proof: [
-      { label: 'RICS-regulated', note: 'Property valuation through group firm Reliant Surveyors' },
-      { label: 'Business and assets', note: 'Companies, plant, machinery and financial instruments' },
-      { label: 'Method documented', note: 'Every assumption written down and sourced' },
-      { label: 'Built for scrutiny', note: 'Banks, auditors, courts and investors' },
+      { label: 'RICS-Regulated Expertise', note: 'Valuations aligned with recognised global standards and professional practice.' },
+      { label: '48+ Years of Experience', note: 'Decades of valuation and advisory expertise through Reliant Surveyors.' },
+      { label: '200Bn+ USD Property Market Value', note: 'Extensive valuation experience across property and asset classes.' },
     ],
-    chips: ['Method documented, not asserted', 'RICS standards through the group'],
-    primary: { label: 'Book a Free Consultation', href: '/free-consultation/' },
+    chips: ['11K+ Clients Served', 'Award-Winning Advisory Firm'],
+    primary: { label: 'Speak to a Valuation Advisor', href: '/free-consultation/' },
     secondary: { label: 'Explore Our Services', href: '#at-services' },
     image: ['services/valuation-intro.webp', 'new-folder/reliant-surveyors-2.webp'],
   },
   strip: {
-    kicker: 'Explore services',
-    head: 'Find the valuation your decision needs',
-    lede: 'Start with the number you need defended today — for a deal, a lender, an auditor or a dispute — and add advisory as the decision develops.',
-    cta: 'Ready to get started?',
+    kicker: 'Explore Services',
+    head: 'Valuation for Every Business Need.',
+    lede: 'From businesses and companies to machinery, assets and financial interests, access credible valuation expertise built around the purpose of your decision.',
+    cta: 'Speak to an Expert',
     subs: [
       {
         name: 'Business Valuation',
         slug: 'business-valuation',
-        cardText: 'Enterprise and equity value for deals, disputes, succession and shareholder events.',
+        cardText: 'Assess the economic value of a business for transactions, planning, restructuring, disputes or strategic decisions.',
         figure: ['services/va-explore-business-valuation.webp', 'new-folder/services-1.webp'],
       },
       {
         name: 'Company Valuation',
         slug: 'company-valuation',
-        cardText: 'Share and company valuations prepared to a standard a buyer, court or regulator can rely on.',
+        cardText: 'Determine company or equity value using financial performance, market evidence, forecasts and relevant valuation approaches.',
         figure: ['services/va-explore-company-valuation.webp', 'new-folder/who-we-are-1.webp'],
       },
       {
         name: 'Plant & Machinery Valuation',
         slug: 'plant-machinery-valuation',
-        cardText: 'Industrial assets valued for lending, insurance, reporting and sale.',
+        cardText: 'Establish the value of machinery, equipment and industrial assets for reporting, insurance, financing and transactions.',
         figure: ['services/va-explore-plant-machinery-valuation.webp', 'homepage/industry-3.webp'],
       },
       {
         name: 'Asset Valuation',
         slug: 'asset-valuation',
-        cardText: 'Property and other fixed assets valued to RICS standards through Reliant Surveyors.',
+        cardText: 'Understand the value of tangible and relevant business assets for reporting, financing, restructuring and transactions.',
         figure: ['services/va-explore-asset-valuation.webp', 'homepage/industry-2.webp'],
       },
       {
         name: 'Financial Valuation',
         slug: 'financial-valuation',
-        cardText: 'Instruments, intangibles and purchase price allocations for financial reporting.',
+        cardText: 'Assess financial interests, instruments and economic rights using appropriate analysis and recognised valuation techniques.',
         figure: ['services/va-explore-financial-valuation.webp', 'new-folder/insights-1.webp'],
       },
     ],
   },
   solution: {
-    head: 'Find the Right Solution',
+    head: 'Find the Right Valuation Solution',
+    /* The document writes the tab names in capitals; they are set in title
+       case here because the tab strip renders what it is given and every
+       other label on the page is title case. Each tab's steps have lines of
+       their own, so they are items rather than slugs. "Request a Valuation"
+       leads to the contact form; the two conversations lead to the
+       consultation. */
     tabs: [
       {
-        tab: 'Businesses',
-        intro:
-          'A business is worth what a defended method says it is worth. Market, income and asset approaches are run and reconciled, and the reasoning travels with the number.',
-        slugs: ['business-valuation', 'company-valuation'],
+        tab: 'Business & Company',
+        title: 'What Is the Business Really Worth?',
+        intro: 'Whether you are preparing for a transaction, restructuring, planning ahead or evaluating an ownership interest, get a clear and supportable view of value.',
+        items: [
+          { name: 'Business Valuation', text: 'Assess the economic value of a business around the purpose of the valuation.' },
+          { name: 'Company Valuation', text: 'Determine company or equity value using financial performance, forecasts and market evidence.' },
+          { name: 'Right Approach, Right Purpose', text: 'Apply the valuation approach best suited to the requirement and intended use.' },
+        ],
+        cta: { label: 'Discuss Your Requirement', href: '/free-consultation/' },
       },
       {
-        tab: 'Assets',
-        intro:
-          'Lenders, insurers and auditors each ask a different question of the same asset. Plant, machinery and property are valued to the basis each of them needs.',
-        slugs: ['plant-machinery-valuation', 'asset-valuation'],
+        tab: 'Assets & Machinery',
+        title: 'Know the Value Behind Your Assets.',
+        intro: 'From operational machinery to wider business assets, establish credible values for reporting, financing, insurance, transactions or asset management.',
+        items: [
+          { name: 'Plant & Machinery Valuation', text: 'Assess machinery, equipment and industrial assets using relevant technical and market considerations.' },
+          { name: 'Asset Valuation', text: 'Determine the value of tangible and relevant business assets around the required purpose.' },
+          { name: 'Evidence-Led Reporting', text: 'Bring methodology, market evidence and professional judgement into a clear valuation conclusion.' },
+        ],
+        cta: { label: 'Request a Valuation', href: '/contact/' },
       },
       {
-        tab: 'Financial Reporting',
-        intro:
-          'IFRS puts fair value on the balance sheet and asks for the workings. Instruments, intangibles and acquisitions are valued to a standard an auditor can test.',
-        slugs: ['financial-valuation'],
+        tab: 'Financial Interests',
+        title: 'When Value Goes Beyond Physical Assets.',
+        intro: 'Financial interests and economic rights require analysis built around financial information, assumptions and appropriate valuation techniques.',
+        items: [
+          { name: 'Financial Valuation', text: 'Assess financial interests, instruments and economic rights.' },
+          { name: 'Financial Analysis', text: 'Evaluate relevant information, assumptions and underlying value drivers.' },
+          { name: 'Defensible Conclusions', text: 'Reach a reasoned conclusion supported by appropriate methodology and analysis.' },
+        ],
+        cta: { label: 'Speak to a Valuation Advisor', href: '/free-consultation/' },
       },
     ],
     images: [['new-folder/who-we-are-3.webp'], ['homepage/industry-3.webp'], ['new-folder/services-2.webp']],
   },
   banner: {
-    head: 'The Valuation Agenda from the ValuNxt Valuation & Advisory Team',
-    body: 'Our valuation practice brings business, asset and financial valuation together under one team, with RICS-regulated property valuation in the group, so a lender, investor or owner in the UAE has one defended number rather than several unconnected opinions.',
-    cta: { label: 'Learn more', href: '#at-services' },
+    head: 'Confidence Starts With a Credible Valuation.',
+    body: 'Independent analysis and established methodology for values that support important business decisions.',
+    cta: { label: 'Request a Valuation', href: '/contact/' },
     image: ['services/valuation-banner.webp', 'banners/uae-slider-4.webp'],
   },
-  related: { head: 'Explore Related Services' },
+  related: {
+    head: 'Explore Related Services',
+    slugs: ['accounting-tax-services', 'research-intelligence', 'technology-data-ai'],
+  },
   close: {
-    head: 'Start with the number you need defended today.',
-    lede: 'Whether you need a business valued for a transaction, plant and machinery valued for a lender, or a fair value that will satisfy an auditor, ValuNxt can help identify the right place to start.',
-    primary: { label: 'Book a Free Valuation Consultation', href: '/free-consultation/' },
+    head: 'Experience Behind the Valuation. Confidence Behind the Decision.',
+    lede: 'Access ValuNxt’s Valuation & Advisory services with the established expertise of Reliant Surveyors, our Valuation & Advisory Partner.',
+    primary: { label: 'Speak to a Valuation Advisor', href: '/free-consultation/' },
     image: ['services/valuation-talk.webp', 'new-folder/who-we-are-1.webp'],
   },
 };

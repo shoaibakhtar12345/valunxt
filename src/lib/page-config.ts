@@ -19,7 +19,7 @@ export interface PageConfig {
   post_css: string[];
   /**
    * Stylesheets written for this conversion rather than captured from
-   * WordPress, as site-root paths (e.g. '/assets/css/accounting-bookkeeping.css').
+   * WordPress, as site-root paths (e.g. '/assets/css/valunxt-uae-sub.css').
    *
    * HeadAssets emits them LAST — after the theme, Elementor, brand and landing
    * sheets — so a page that carries one can style itself with plain selectors

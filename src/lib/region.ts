@@ -215,6 +215,9 @@ export interface Service {
   banner?: string[];
   headline?: string;
   lede?: string;
+  /** The hero slide's pill. Left unset it is the free consultation; a service
+   *  whose slide leads to its own page names the label and the path here. */
+  cta?: { label: string; href: string };
   /** Plain-text name. `title` may carry HTML entities (it is rendered through
    *  <Html>), which a page heading or a breadcrumb cannot use — React writes a
    *  string verbatim, so "Research &amp; Intelligence" would show its entity. */
@@ -238,19 +241,27 @@ export function vxnServices(slug?: string | null): Service[] {
   const region = vxnRegionExists(slug) ? slug : vxnRegionDefault();
 
   if (region === 'en-ae') {
+    /* THE COPY IS THE CLIENT'S (20260911): the names, the accordion sentences
+       (`desc`) and the hero slides (`headline`, `lede`, `cta`) are their home
+       page document, word for word. Two rules came with it: nothing is added
+       to the document or dropped from it, and no em dashes anywhere on the
+       UAE pages, so a sentence that needs a break takes a comma or a full
+       stop, never a dash. Valuation and research sit out of the hero (hero:
+       false), so their headline and lede are still the earlier copy; those
+       show on /services/ until that page's document arrives. */
     return [
       {
-        title: 'Accounting and Tax Services',
-        name: 'Accounting and Tax Services',
+        title: 'Accounting &amp; Tax Services',
+        name: 'Accounting & Tax Services',
         slug: 'accounting-tax-services',
         icon: 'ledger',
         short: 'Accounting &amp; Tax',
         href: '/services/accounting-tax-services/',
-        desc: 'Bookkeeping, statutory accounting, VAT and corporate tax &mdash; compliance handled end to end for UAE entities.',
+        desc: 'From bookkeeping and financial reporting to VAT and Corporate Tax, reliable financial support that keeps your business compliant and decision-ready.',
         img: '/assets/content/uploads/services/accounting-and-tax-services.webp',
         banner: ['banners/uae-slider-5.webp', 'banners/uae-slider-3.webp'],
-        headline: 'Accounting that Inspires Confident Decisions.',
-        lede: 'Bookkeeping, statutory accounts, VAT and corporate tax &mdash; numbers you can act on without second-guessing, at a fee agreed before work begins.',
+        headline: 'Financial Clarity. Confident Decisions.',
+        lede: 'From bookkeeping and financial reporting to VAT and Corporate Tax, get reliable numbers, compliant processes and clearer financial control.',
         /* The eight named in the client's parent-page document (20260905),
            which is also what /services/accounting-tax-services/ now leads
            with. Three of them are new; the other five keep the slugs they
@@ -278,11 +289,12 @@ export function vxnServices(slug?: string | null): Service[] {
         icon: 'building',
         short: 'Real Estate',
         href: '/services/real-estate-transactions/',
-        desc: 'Sourcing, acquisition and disposal across residential and commercial property, with independent advice at every step.',
+        desc: 'Buy, sell, rent and invest in residential and commercial real estate, with expert advisory and market insight at every step.',
         img: '/assets/content/uploads/services/real-estate-transactions.webp',
         banner: ['banners/uae-slider-1.webp'],
-        headline: 'Property Decisions, Independently Advised.',
-        lede: 'Sourcing, acquisition and disposal across residential and commercial property &mdash; advice with no inventory behind it, in Dubai, Abu Dhabi and beyond.',
+        headline: 'Expert Advisory for Smarter Property Decisions.',
+        lede: 'From identifying the right property to navigating the transaction, get expert guidance backed by market insight and investment expertise.',
+        cta: { label: 'Explore Real Estate', href: '/services/real-estate-transactions/' },
         subs: [
           { name: 'Buy Property', slug: 'buy-property' },
           { name: 'Sell & Rent/Lease Property', slug: 'sell-rent-lease-property' },
@@ -290,17 +302,18 @@ export function vxnServices(slug?: string | null): Service[] {
         ],
       },
       {
-        title: 'Mortgages Services',
-        name: 'Mortgages Services',
+        title: 'Mortgage Services',
+        name: 'Mortgage Services',
         slug: 'mortgages-services',
         icon: 'key',
         short: 'Mortgages',
         href: '/services/mortgages-services/',
-        desc: 'Whole-of-market mortgage structuring for resident, non-resident and corporate borrowers.',
+        desc: 'Residential and commercial mortgage solutions, from pre-approval and refinancing to non-resident and Islamic finance, guided from application to completion.',
         img: '/assets/content/uploads/services/mortgage-services.webp',
         banner: ['banners/uae-slider-2.webp'],
-        headline: 'Funding Structured Around Your Position.',
-        lede: 'Whole-of-market mortgage and loan structuring for resident, non-resident and corporate borrowers &mdash; terms negotiated on the evidence.',
+        headline: 'Smarter Financing for Every Property Move.',
+        lede: 'Navigate residential and commercial mortgages, refinancing and property finance with guidance tailored to your requirements.',
+        cta: { label: 'Explore Mortgages', href: '/services/mortgages-services/' },
         subs: [
           { name: 'Residential Mortgages', slug: 'residential-mortgages' },
           { name: 'Commercial Mortgages', slug: 'commercial-mortgages' },
@@ -311,14 +324,14 @@ export function vxnServices(slug?: string | null): Service[] {
         ],
       },
       {
-        title: 'Valuation and Advisory',
-        name: 'Valuation and Advisory',
+        title: 'Valuation &amp; Advisory',
+        name: 'Valuation & Advisory',
         slug: 'valuation-and-advisory',
         icon: 'scales',
         short: 'Valuation',
         hero: false,
         href: '/services/valuation-and-advisory/',
-        desc: 'RICS-aligned property valuation and advisory for lenders, funds, developers and private owners.',
+        desc: 'Independent valuation of businesses, property, plant, machinery and other assets for transactions, financing, reporting and strategic decisions.',
         img: '/assets/content/uploads/services/valuation-and-advisory.webp',
         banner: ['banners/uae-slider-6.webp', 'banners/uae-slider-4.webp'],
         headline: 'Independent Valuations. Defensible Decisions.',
@@ -339,7 +352,7 @@ export function vxnServices(slug?: string | null): Service[] {
         short: 'Research',
         hero: false,
         href: '/services/research-intelligence/',
-        desc: 'Independent, data-driven research and valuation intelligence for clearer, more confident investment decisions.',
+        desc: 'Market research, feasibility studies and investment intelligence that turn supply, demand, pricing and risk into clearer strategic decisions.',
         img: '/assets/content/uploads/services/research-and-intelligences.webp',
         banner: ['banners/uae-slider-3.webp'],
         headline: 'Evidence Before the Commitment.',
@@ -360,11 +373,12 @@ export function vxnServices(slug?: string | null): Service[] {
         icon: 'chip',
         short: 'Technology &amp; AI',
         href: '/services/technology-data-ai/',
-        desc: 'Intelligent platforms, analytics and AI systems that turn market data into better decisions.',
+        desc: 'Integrated systems, automation, data and AI solutions designed to streamline operations, improve visibility and enable smarter business decisions.',
         img: '/assets/content/uploads/services/technology-data-ai.webp',
         banner: ['banners/uae-slider-4.webp'],
-        headline: 'Technology that Turns Finance into Advantage.',
-        lede: 'Digital transformation, enterprise and cloud systems, dashboards and AI tooling that make finance measurable and repeatable.',
+        headline: 'Intelligent Solutions for Modern Business.',
+        lede: 'Transform how your business operates with integrated systems, automation, data intelligence and AI-led solutions.',
+        cta: { label: 'Explore Technology', href: '/services/technology-data-ai/' },
         subs: [
           { name: 'Technology Consulting', slug: 'technology-consulting' },
           { name: 'AI Solutions', slug: 'ai-solutions' },
