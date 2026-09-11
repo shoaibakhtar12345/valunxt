@@ -271,21 +271,24 @@
   background: var(--umega-ramp);
 }
 
-/* THE ABSTRACT (20260911, on client request): the blue silk the home page's
-   spotlight uses, washed over the ramp and faded towards the copy, so the
-   column reads as artwork rather than as a flat fill. A second layer deepens
-   the foot so "Learn More" keeps its contrast. Both sit at z-index -1 inside
-   the column's own stacking context: over its ramp, under its copy. The path
-   is relative to this stylesheet, as the brand sheet's plates are. */
+/* THE PHOTOGRAPH (20260911, on client request, replacing the blue silk the
+   column carried for a day): the clients photograph from uploads/banners,
+   blended into the ramp by luminosity so it reads as a blue duotone of the
+   brand rather than as a picture pasted on a panel, and faded towards the
+   copy so the words sit on plain blue. A second layer deepens the foot so
+   "Learn More" keeps its contrast. Both sit at z-index -1 inside the column's
+   own stacking context: over its ramp, under its copy. The path is relative
+   to this stylesheet, as the brand sheet's plates are. */
 .vxn-umega .vxn-umega__aside::before {
   content: "";
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: url("../content/uploads/homepage/abstract-2.webp") center / cover no-repeat;
-  opacity: 0.62;
-  -webkit-mask-image: linear-gradient(160deg, rgba(0, 0, 0, 0.35) 0%, #000 55%, #000 100%);
-  mask-image: linear-gradient(160deg, rgba(0, 0, 0, 0.35) 0%, #000 55%, #000 100%);
+  background: url("../content/uploads/banners/clients.webp") center / cover no-repeat;
+  opacity: 0.75;
+  mix-blend-mode: luminosity;
+  -webkit-mask-image: linear-gradient(160deg, rgba(0, 0, 0, 0.25) 0%, #000 50%, #000 100%);
+  mask-image: linear-gradient(160deg, rgba(0, 0, 0, 0.25) 0%, #000 50%, #000 100%);
 }
 
 .vxn-umega .vxn-umega__aside::after {
@@ -293,7 +296,7 @@
   position: absolute;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(180deg, rgba(11, 45, 190, 0.08) 0%, rgba(8, 28, 120, 0.55) 100%);
+  background: linear-gradient(180deg, rgba(11, 45, 190, 0.12) 0%, rgba(8, 28, 120, 0.6) 100%);
 }
 
 /* No family of its own. It was Forum, the market's display serif; the UAE runs

@@ -121,8 +121,11 @@ const CSS = `
   color:var(--body)!important;font-size:clamp(15px,1.15vw,17px)!important;line-height:1.7!important;margin:0!important;
 }
 
-/* The grid: the reference's three columns on the page's own gap. */
-.sx-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap);}
+/* The grid: the reference's three columns on the page's own gap, and the
+   reference's width, 1080 for three 349px tiles, so the tiles are tiles and
+   not panels (the client, 20260911: the boxes were too large at 485). Left
+   on the container's line, as the reference leaves its grid. */
+.sx-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap);max-width:1096px;}
 
 /* ---- THE CARD: the reference's tile, measured (20260911) --------------------
    bcg.com/industries/insurance/overview, "Our Insurance Industry Services",
@@ -161,15 +164,13 @@ const CSS = `
 .sx-card__body{
   position:absolute;left:0;right:0;top:68%;height:100%;
   display:flex;flex-direction:column;align-items:flex-start;
-  padding:16px 24px 20px;
+  padding:16px 20px 18px;
   transition:top .75s cubic-bezier(.47,1.64,.41,.8);
 }
-.sx-card__num{
-  display:block;margin:0 0 8px;
-  font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
-}
+/* The title alone at rest, as on the reference (the number over it came off
+   on client instruction). 24px at the tile's width. */
 .at-root .sx-card__title{
-  color:var(--ny)!important;font-size:clamp(20px,1.65vw,26px)!important;
+  color:var(--ny)!important;font-size:clamp(19px,1.5vw,24px)!important;
   line-height:1.2!important;letter-spacing:-.01em!important;margin:0 0 12px!important;
 }
 .sx-card__inner{
@@ -178,12 +179,12 @@ const CSS = `
 }
 .sx-card__desc{
   display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden;
-  color:var(--body);font-size:14px;line-height:1.5;margin:0 0 12px;
+  color:var(--body);font-size:13.5px;line-height:1.5;margin:0 0 10px;
 }
 /* The service's pages, named. Two lines at most; the page itself has the rest. */
 .sx-card__subs{
   display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
-  color:var(--muted);font-size:12.5px;line-height:1.55;margin:0 0 16px;
+  color:var(--muted);font-size:12px;line-height:1.5;margin:0 0 12px;
 }
 /* The button, pinned to the foot as the reference pins its own. It is the
    site's pill, drawn on a span inside the card's link. */
@@ -302,7 +303,7 @@ const CSS = `
 @media(max-width:1024px){
   .sx-lead{grid-template-columns:minmax(0,1fr);gap:12px;}
   .sx-lead__lede{justify-self:start;}
-  .sx-grid{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .sx-grid{grid-template-columns:repeat(2,minmax(0,1fr));max-width:none;}
   /* No pointer to hover with: the tile opens out into a plain card, the
      photograph on top and everything under it in flow. */
   .sx-card{aspect-ratio:auto;display:flex;flex-direction:column;}
@@ -395,9 +396,12 @@ export default function UaeServicesBody({
               <div className="sx-lead">
                 <div className="sx-lead__col">
                   <span className="at-kicker">What we do</span>
-                  {/* The client's home-page heading for the six. */}
+                  {/* "Our Services", as the reference titles its directory
+                      ("Our Capabilities"); the client's home line, "Six
+                      Services. One Integrated Platform.", stood here for a
+                      day and came off because it counts them. */}
                   <h2 className="sx-lead__head" id="sx-lead-head">
-                    Six Services. One Integrated Platform.
+                    Our Services
                   </h2>
                 </div>
                 {/* DRAFTED: the index's earlier proposition line, its dash
@@ -416,23 +420,22 @@ export default function UaeServicesBody({
                   return (
                     <a className="sx-card" href={rurl(region, sv.href)} key={sv.slug ?? sv.href}>
                       {/* Decorative: the title below is the link's label. The
-                          template's related-card photograph for the service,
-                          light files rather than the registry's originals. */}
+                          service's own photograph, the registry's `img`, on
+                          client instruction (20260911); the template's lighter
+                          related-card file is the fallback if it is ever
+                          missing. */}
                       <span className="sx-card__shot">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={rimgFirst(region, [
-                            ...(RELATED_FIGURE[sv.slug ?? ''] ?? []),
                             sv.img.replace('/assets/content/uploads/', ''),
+                            ...(RELATED_FIGURE[sv.slug ?? ''] ?? []),
                           ])}
                           alt=""
                           loading={i < 3 ? 'eager' : 'lazy'}
                         />
                       </span>
                       <span className="sx-card__body">
-                        <span className="sx-card__num">
-                          {String(i + 1).padStart(2, '0')} / {String(services.length).padStart(2, '0')}
-                        </span>
                         <span className="sx-card__title">{name}</span>
                         {/* The hidden block, shown as the panel rises. */}
                         <span className="sx-card__inner">
