@@ -515,24 +515,27 @@
   line-height: 1.65;
 }
 
+/* The one CTA (20260911): was an 8px-radius 15px/500 button with a lift. */
 .vxn-whyus__cta {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 13px 26px;
-  border-radius: 8px;
-  background: var(--vxn-blue);
+  min-height: var(--vxn-cta-h, 46px);
+  padding: 0 var(--vxn-cta-px, 28px);
+  border-radius: var(--vxn-cta-r, 999px);
+  background-image: var(--vxn-cta-grad);
+  background-color: var(--vxn-cta-ink, #0B2DBE);
   color: #FFFFFF !important;
-  font-size: 15px;
-  font-weight: 500;
+  font-size: var(--vxn-cta-fs, 14px);
+  font-weight: var(--vxn-cta-fw, 400);
+  letter-spacing: var(--vxn-cta-ls, .01em);
   line-height: 1;
   text-decoration: none !important;
-  transition: background-color .35s ease, transform .35s var(--vxn-ease);
+  --vxn-cta-sweep: var(--vxn-cta-sweep-dark, #08248F);
 }
 
 .vxn-whyus__cta:hover {
-  background: var(--vxn-blue-dark);
-  transform: translateY(-2px);
+  color: #FFFFFF !important;
 }
 
 .vxn-whyus__cta i {
@@ -917,17 +920,23 @@
   line-height: 1.2;
 }
 
+/* THE ONE CTA (20260911): the geometry is the site's, from the tokens in
+   valunxt-brand.css (46px tall, 28px sides, 14px/600, a full pill); it was an
+   11.5px uppercase pill of its own. The variants below only choose the fill
+   for the ground they sit on, and the hover is the site's wedge, which
+   valunxt-brand.css applies to this class. */
 .vxn-band__pill {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 12px 22px;
-  border-radius: 999px;
+  min-height: var(--vxn-cta-h, 46px);
+  padding: 0 var(--vxn-cta-px, 28px);
+  border-radius: var(--vxn-cta-r, 999px);
   border: 1px solid transparent;
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: .1em;
-  text-transform: uppercase;
+  font-size: var(--vxn-cta-fs, 14px);
+  font-weight: var(--vxn-cta-fw, 400);
+  letter-spacing: var(--vxn-cta-ls, .01em);
+  text-transform: none;
   line-height: 1;
   text-decoration: none;
   white-space: nowrap;
@@ -953,41 +962,44 @@
    mosaic cards are unaffected either way; this keeps the two spellings of the
    same pill rendering identically. */
 
-/* On the dark surfaces — the sky tint is the only value in the palette bright
-   enough to carry a small uppercase label against --vxn-band-dark. */
+/* On the dark surfaces (the impact card, the mosaic cards): the inverse pill,
+   white with the brand ink, and a pale wedge on hover. It was blue on navy. */
 .vxn-band__pill--accent {
-    background: #0053b7;
-    color: #fff !important;
+  background: #FFFFFF;
+  color: var(--vxn-cta-ink, #0B2DBE) !important;
+  --vxn-cta-sweep: var(--vxn-cta-sweep-light, #EAF0FF);
 }
 
 .vxn-band__pill--accent:hover,
 .vxn-band__pill--accent:focus-visible {
-  background: #FFFFFF;
-  color: var(--vxn-ink) !important;
+  color: var(--vxn-cta-ink, #0B2DBE) !important;
 }
 
-/* On the light surfaces. */
+/* On the light surfaces: the gradient, and a deeper blue wedge. */
 .vxn-band__pill--solid {
-  background: var(--vxn-blue);
+  background-image: var(--vxn-cta-grad);
+  background-color: var(--vxn-cta-ink, #0B2DBE);
   color: #FFFFFF !important;
+  --vxn-cta-sweep: var(--vxn-cta-sweep-dark, #08248F);
 }
 
 .vxn-band__pill--solid:hover,
 .vxn-band__pill--solid:focus-visible {
-  background: var(--vxn-blue-dark);
   color: #FFFFFF !important;
 }
 
+/* The outline: the wedge fills it with the gradient. */
 .vxn-band__pill--ghost {
   background: transparent;
-  border-color: rgba(11, 44, 86, .35);
-  color: var(--vxn-ink) !important;
+  border-color: rgba(11, 45, 190, .35);
+  color: var(--vxn-cta-ink, #0B2DBE) !important;
+  --vxn-cta-sweep: var(--vxn-cta-grad);
 }
 
 .vxn-band__pill--ghost:hover,
 .vxn-band__pill--ghost:focus-visible {
-  border-color: var(--vxn-blue);
-  color: var(--vxn-blue) !important;
+  border-color: transparent;
+  color: #FFFFFF !important;
 }
 
 /* --------------------------------------------------------------------------
@@ -1449,10 +1461,10 @@
   }
 
   /* Two full-width pills would read as a stack of buttons; keep them inline
-     and let them shrink instead. */
+     and let them shrink a little at the sides. The height and the type stay
+     the one CTA's. */
   .vxn-band__pill {
-    padding: 11px 18px;
-    letter-spacing: .08em;
+    padding: 0 22px;
   }
 
   .vxn-careers__inset {
@@ -2237,26 +2249,33 @@
 /* Inverted from the version that sat on blue glass: the well is white now, so a
    white pill would disappear into it. It is a submit button rather than a link,
    so it also has to shed the browser's own button styling. */
+/* The one CTA (20260911): the gradient fill, the 14px/600 label and the 46px
+   height (7px of well either side of a 32px chip). It keeps its chip and its
+   26px label inset, because the pill is seated in the field's well and the
+   chip is the arrow. */
 .vxn-sub__cta {
   flex: none;
   display: inline-flex;
   align-items: center;
   gap: 14px;
+  min-height: var(--vxn-cta-h, 46px);
   padding: 7px 7px 7px 26px !important;
   border: 0 !important;
   border-radius: 999px !important;
-  background: #0B2DBE;
+  background-image: var(--vxn-cta-grad);
+  background-color: var(--vxn-cta-ink, #0B2DBE);
   font-family: inherit;
   cursor: pointer;
   text-decoration: none !important;
+  --vxn-cta-sweep: var(--vxn-cta-sweep-dark, #08248F);
   transition: box-shadow .25s var(--vxn-ease), background-color .25s var(--vxn-ease);
 }
 
 /* NO LIFT ON HOVER. The pill sits inside the field's well now; raising it two
-   pixels moved it out of a container it is supposed to be seated in. */
+   pixels moved it out of a container it is supposed to be seated in. The
+   site's wedge does the fill; this only adds the shadow. */
 .vxn-sub__cta:hover,
 .vxn-sub__cta:focus-visible {
-  background: #1740D8;
   box-shadow: 0 10px 24px rgba(4, 16, 34, .28);
 }
 
@@ -2284,10 +2303,10 @@
 
 .vxn-sub__cta-label {
   color: #FFFFFF !important;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
+  font-size: var(--vxn-cta-fs, 14px);
+  font-weight: var(--vxn-cta-fw, 400);
+  letter-spacing: var(--vxn-cta-ls, .01em);
+  text-transform: none;
   line-height: 1;
   white-space: nowrap;
 }
@@ -2295,8 +2314,8 @@
 .vxn-sub__cta-go {
   display: grid;
   place-items: center;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   flex: none;
   border-radius: 50%;
   background: #FFFFFF;
@@ -2757,4 +2776,962 @@
 
 .vxn-klay--six .vxn-klay__panel:nth-child(3) .vxn-klay__label {
   color: #5AA9FF;
+}
+
+/* --------------------------------------------------------------------------
+   17. .vxn-answer / .vxn-ans — "Valunxt Answer", the ask-and-answer band
+
+   Modelled on the "BCG Answer" promo on bcg.com's home page, measured there on
+   20260911 (a 12-column grid with 40px gutters, read at 390, 768, 1024, 1280,
+   1440, 1600 and 1920):
+
+     band     56px 80px at 1440-1600, 72px 80px at 1920, 56px 40px at
+              1024-1280, 40px at 768, 32px 16px at 390, on the accent tint
+     columns  copy in 1-5 and the visual in 6-12 from 1440 up; 6 and 6 from
+              1024; one column below that with the VISUAL FIRST, 40px above
+              the eyebrow at 768 and 24px at 390
+     eyebrow  14px/1 700 uppercase, 24px below
+     title    56px/1 at 1440-1600 (96 at 1920, 48 at 768-1280, 40/48 at 390),
+              24px below
+     lede     20px/26px (18/23.4 at 1024-1280, 17/22 at 768, 16/20.8 at 390)
+     CTA      at the foot of the copy column, so it ends on the visual's bottom
+              edge; 13px 55px 13px 24px with the arrow 24px in from the right,
+              and on hover the padding mirrors (24 / 55) while the arrow leaves
+              to the right and comes back in from the left, .35s ease-in-out
+     visual   16:9, radius 20; a 36px pause control 10px from the right and
+              16px up, #F2F2F2 (#D4D4D4 under the pointer), radius 5, 16px glyph
+
+   Kept as measured: the grid and its breakpoints, the stacking order, the
+   title and lede ramps, the CTA's geometry and arrow sweep, the visual's ratio,
+   radius and control. The house's: the face (so the 300 serif title is the
+   market's 400 sans), the page's eyebrow and solid pill (which carries the
+   sweep), and every colour.
+
+   THE VISUAL. BCG's is a 17-second dotLottie render, 510 frames at 30fps: a
+   question typed into a glass pill, a thinking square, an answer panel with
+   four related-content cards, then a white article card, over 3D spheres.
+   .vxn-ans rebuilds that sequence in the DOM at the same timings (the timeline
+   is in components/sections/UaeAnswerVisual.tsx), so the cards and the
+   article are real links into the six services rather than pixels. Every
+   length inside the stage is in cqw, the stage's own width, so the scene
+   scales as one picture the way the render does; each figure was read off
+   BCG's frames on an 823px-wide stage and is written here as that share.
+   -------------------------------------------------------------------------- */
+
+/* ---- The band ------------------------------------------------------------ */
+.vxn-answer {
+  padding: clamp(32px, 3.9vw, 72px) 0;
+  background: var(--vxn-band-tint);
+}
+
+/* The page's inset (section 15): 1520 wide with the gutter off each side. */
+.vxn-answer__inner {
+  max-width: min(1520px, calc(100% - var(--vxn-gutter, clamp(16px, 4vw, 48px)) * 2));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: auto minmax(0, 1fr);
+  column-gap: 40px;
+  row-gap: 0;
+}
+
+.vxn-answer__copy {
+  grid-column: 1 / span 5;
+  grid-row: 1;
+}
+
+/* The CTA's own cell, under the copy and pushed to its foot, so the button
+   ends on the visual's bottom edge whatever the copy's height. align-items,
+   because a flex column would otherwise stretch the pill to the column. */
+.vxn-answer__foot {
+  grid-column: 1 / span 5;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+}
+
+.vxn-answer__media {
+  grid-column: 6 / span 7;
+  grid-row: 1 / span 2;
+  align-self: start;
+  position: relative;
+  aspect-ratio: 16 / 9;
+  border-radius: 20px;
+  overflow: hidden;
+  isolation: isolate;
+  /* The stage measures itself in cqw; this is what it measures. */
+  container-type: inline-size;
+  background: #BFD3F3;
+}
+
+.vxn-answer .vxn-band__eyebrow {
+  margin-bottom: 24px;
+}
+
+/* (0,2,0): clears the market scale's (0,1,2) h2 rule. The reference's ramp,
+   56 at 1440-1600 down to 40 at 390, with 1920's 96 left out; line-height 1
+   at the top of the ramp as on the reference, 1.2 at the foot. */
+.vxn-ae-home .vxn-answer__title {
+  margin: 0 0 24px;
+  color: var(--vxn-ink) !important;
+  font-weight: 400 !important;
+  font-size: clamp(40px, 4.2vw, 56px) !important;
+  line-height: 1.04 !important;
+  letter-spacing: -.01em;
+}
+
+/* (0,2,0) again, over the scale sheet's paragraph line-height. The
+   line-height is asserted as well: the brand sheet's phone block sets
+   `article p { line-height: 1.6 !important }`, and this band, like the rest
+   of the page, is inside the post's <article>. */
+.vxn-ae-home .vxn-answer__lede {
+  margin: 0;
+  color: var(--vxn-text);
+  font-size: clamp(16px, 1.3vw, 20px);
+  line-height: 1.3 !important;
+}
+
+/* ---- The CTA's arrow sweep -------------------------------------------------
+   The house pill with the reference's hover: the padding mirrors so the label
+   slides right, and the arrow leaves through the right edge and re-enters from
+   the left, .35s ease-in-out, reversed on leave. The lane the arrow sits in is
+   24px wider than the pill's padding on that side, the reference's 55 against
+   24. Every keyframe names both offsets, so the hand-over from right to left
+   happens at the half-way point and nowhere else; the arrow has a width so the
+   two can never stretch it between them. The `back` animation also runs once
+   on load, so the arrow sweeps in with the page, as the reference's does. */
+.vxn-answer__cta {
+  position: relative;
+  overflow: hidden;
+  /* The one CTA's 28px sides, plus the arrow's 24px lane on the side the arrow
+     is on; !important because the site-wide geometry rule is. */
+  padding: 0 52px 0 var(--vxn-cta-px, 28px) !important;
+  transition: padding .35s ease-in-out, background-color .25s var(--vxn-ease), color .25s var(--vxn-ease);
+}
+
+.vxn-answer__cta:hover,
+.vxn-answer__cta:focus-visible {
+  padding: 0 var(--vxn-cta-px, 28px) 0 52px !important;
+}
+
+.vxn-answer__cta i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 20px;
+  left: auto;
+  width: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: vxn-answer-arrow-back .35s ease-in-out forwards;
+}
+
+.vxn-answer__cta:hover i,
+.vxn-answer__cta:focus-visible i {
+  transform: none;
+  animation: vxn-answer-arrow-go .35s ease-in-out forwards;
+}
+
+@keyframes vxn-answer-arrow-go {
+  0% { right: 20px; left: auto; }
+  50% { right: -24px; left: auto; }
+  50.1% { right: auto; left: -24px; }
+  100% { right: auto; left: 20px; }
+}
+
+@keyframes vxn-answer-arrow-back {
+  0% { left: 20px; right: auto; }
+  50% { left: -24px; right: auto; }
+  50.1% { left: auto; right: -24px; }
+  100% { left: auto; right: 20px; }
+}
+
+/* ---- The stage ----------------------------------------------------------- */
+.vxn-ans {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: linear-gradient(135deg, #D7E5F9 0%, #BED2F3 55%, #AAC4EE 100%);
+  color: var(--vxn-ink);
+}
+
+/* The spheres: balls lit from the top left on their own slow drifts, and a
+   dark pocket where the middle ones meet, which is what gives the reference
+   its depth. */
+.vxn-ans__bg {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.vxn-ans__deep {
+  position: absolute;
+  left: 10cqw;
+  top: 16cqw;
+  width: 32cqw;
+  height: 32cqw;
+  border-radius: 50%;
+  background: radial-gradient(circle, #1E5CB8 0%, rgba(30, 92, 184, .55) 40%, rgba(30, 92, 184, 0) 70%);
+}
+
+.vxn-ans__orb {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle at 34% 30%, #F7FAFF 0%, #DCE8FA 28%, #B5CCF0 62%, #86ABE5 100%);
+  box-shadow: 0 1.5cqw 4cqw rgba(0, 53, 132, .22), inset -1cqw -1.5cqw 3cqw rgba(0, 53, 132, .12);
+  animation: vxn-ans-drift 26s ease-in-out infinite alternate;
+}
+
+.vxn-ans__orb--1 { left: -12cqw; top: -26cqw; width: 50cqw; height: 50cqw; }
+.vxn-ans__orb--2 { left: 26cqw; top: -22cqw; width: 42cqw; height: 42cqw; animation-delay: -6s; }
+.vxn-ans__orb--3 { left: 62cqw; top: -16cqw; width: 46cqw; height: 46cqw; animation-delay: -12s; }
+.vxn-ans__orb--4 { left: -14cqw; top: 24cqw; width: 44cqw; height: 44cqw; animation-delay: -3s; }
+.vxn-ans__orb--5 { left: 24cqw; top: 30cqw; width: 40cqw; height: 40cqw; animation-delay: -9s; }
+.vxn-ans__orb--6 { left: 58cqw; top: 26cqw; width: 50cqw; height: 50cqw; animation-delay: -15s; }
+.vxn-ans__orb--7 { left: 44cqw; top: 14cqw; width: 20cqw; height: 20cqw; animation-delay: -18s; }
+
+@keyframes vxn-ans-drift {
+  from { transform: translate(0, 0); }
+  to { transform: translate(1.6cqw, 1.1cqw); }
+}
+
+/* The one box: the pill, the square, the panel, the picture pill and the
+   article card, in turn. Centre-anchored (left/top are its centre) so every
+   phase is a size and a centre, and the pill grows symmetrically as the
+   question is typed, as on the reference. Widths in a phase that types are
+   auto; the script pins the pill in px for one frame before the shrink, since
+   a transition cannot start from auto. */
+.vxn-ans__box {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  height: 6.3cqw;
+  min-width: 4.4cqw;
+  padding: 0 2cqw;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%) scale(.6);
+  border-radius: 1.2cqw;
+  background-color: rgba(255, 255, 255, .58);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, .72);
+  box-shadow: 0 .8cqw 2.4cqw rgba(0, 53, 132, .14);
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 2;
+  transition:
+    width .4s var(--vxn-ease), height .4s var(--vxn-ease),
+    left .4s var(--vxn-ease), top .4s var(--vxn-ease),
+    padding .4s var(--vxn-ease), border-radius .4s var(--vxn-ease),
+    background-color .4s var(--vxn-ease), box-shadow .4s var(--vxn-ease),
+    transform .5s var(--vxn-ease), opacity .3s ease, visibility 0s linear .3s;
+}
+
+/* Between scenes it snaps back to the start, unseen. */
+.vxn-ans[data-phase="idle"] .vxn-ans__box {
+  transition: none;
+}
+
+.vxn-ans:not([data-phase="idle"]):not([data-phase="exit"]) .vxn-ans__box {
+  opacity: 1;
+  visibility: visible;
+}
+
+.vxn-ans[data-phase="cursor"] .vxn-ans__box,
+.vxn-ans[data-phase="typing"] .vxn-ans__box,
+.vxn-ans[data-phase="asked"] .vxn-ans__box,
+.vxn-ans[data-phase="clearing"] .vxn-ans__box {
+  transform: translate(-50%, -50%) scale(1);
+  transition: opacity .3s ease, transform .3s var(--vxn-ease), visibility 0s;
+}
+
+.vxn-ans[data-phase="thinking"] .vxn-ans__box {
+  width: 7.5cqw;
+  height: 7.5cqw;
+  padding: 0;
+  border-radius: 1.1cqw;
+  transform: translate(-50%, -50%);
+  transition-duration: .2s;
+}
+
+.vxn-ans[data-phase="expanding"] .vxn-ans__box,
+.vxn-ans[data-phase="answer"] .vxn-ans__box,
+.vxn-ans[data-phase="collapsing"] .vxn-ans__box {
+  left: 29.8cqw;
+  top: 27.35cqw;
+  width: 46.2cqw;
+  height: 41.3cqw;
+  padding: 0;
+  border-radius: 1.5cqw;
+  transform: translate(-50%, -50%);
+  transition-duration: .4s;
+}
+
+.vxn-ans[data-phase="preview"] .vxn-ans__box {
+  left: 50%;
+  top: 23.7cqw;
+  width: 26.7cqw;
+  height: 7.3cqw;
+  padding: 0;
+  border-radius: 1cqw;
+  background-color: rgba(255, 255, 255, .74);
+  transform: translate(-50%, -50%);
+  transition-duration: .5s;
+}
+
+.vxn-ans[data-phase="card"] .vxn-ans__box,
+.vxn-ans[data-phase="exit"] .vxn-ans__box {
+  left: 50%;
+  top: 28.1cqw;
+  width: 55.5cqw;
+  height: 43.1cqw;
+  padding: 0;
+  border-radius: 1.7cqw;
+  background-color: #FFFFFF;
+  box-shadow: 0 1.2cqw 3.2cqw rgba(0, 53, 132, .18);
+  transform: translate(-50%, -50%);
+  transition-duration: .6s;
+}
+
+.vxn-ans[data-phase="exit"] .vxn-ans__box {
+  transform: translate(-50%, -190%);
+  opacity: 0;
+  transition: transform .5s cubic-bezier(.4, 0, 1, 1), opacity .4s ease .1s;
+}
+
+/* The question, in flow so the pill sizes to it. */
+.vxn-ans__ask {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  white-space: nowrap;
+  font-size: 1.95cqw;
+  line-height: 1;
+  color: var(--vxn-ink);
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+
+.vxn-ans[data-phase="cursor"] .vxn-ans__ask,
+.vxn-ans[data-phase="typing"] .vxn-ans__ask,
+.vxn-ans[data-phase="asked"] .vxn-ans__ask {
+  opacity: 1;
+}
+
+.vxn-ans__caret {
+  display: inline-block;
+  width: .18cqw;
+  min-width: 1px;
+  height: 2.4cqw;
+  margin-left: .35cqw;
+  background: var(--vxn-ink);
+  animation: vxn-ans-blink 1s linear infinite;
+}
+
+.vxn-ans[data-phase="asked"] .vxn-ans__caret,
+.vxn-ans[data-phase="clearing"] .vxn-ans__caret {
+  visibility: hidden;
+}
+
+@keyframes vxn-ans-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* The thinking glyph, stepping round eight spokes like the reference's. */
+.vxn-ans__spin {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2.6cqw;
+  height: 2.6cqw;
+  margin: -1.3cqw 0 0 -1.3cqw;
+  color: var(--vxn-ink);
+  opacity: 0;
+  transition: opacity .15s ease;
+}
+
+.vxn-ans__spin svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: vxn-ans-spin .9s steps(8) infinite;
+}
+
+.vxn-ans[data-phase="thinking"] .vxn-ans__spin {
+  opacity: 1;
+  transition-delay: .15s;
+}
+
+@keyframes vxn-ans-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* The answer panel. */
+.vxn-ans__panel {
+  position: absolute;
+  inset: 0;
+  padding: 2.4cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .3s ease, visibility 0s linear .3s;
+}
+
+.vxn-ans[data-phase="answer"] .vxn-ans__panel.is-active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .3s ease .1s, visibility 0s;
+}
+
+.vxn-ans__mark {
+  display: block;
+  width: 2.4cqw;
+  margin-bottom: 1.4cqw;
+  color: var(--vxn-blue);
+}
+
+.vxn-ans__mark svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.vxn-ans__head {
+  margin: 0 0 1.1cqw;
+  max-width: 92%;
+  font-size: 1.8cqw;
+  line-height: 1.2;
+  color: var(--vxn-ink);
+}
+
+/* (0,2,0) on the paragraph and the list, over the scale sheet's `p` and the
+   kit's list rules; the line-heights asserted over the brand sheet's phone
+   block (`article p`, `article li`, 1.6 !important). */
+.vxn-ans .vxn-ans__text {
+  margin: 0 0 1.2cqw;
+  font-size: .95cqw;
+  line-height: 1.4 !important;
+  color: var(--vxn-text);
+}
+
+.vxn-ans__lbl {
+  margin: 0 0 .5cqw;
+  font-size: .95cqw;
+  line-height: 1.4;
+  font-weight: 700;
+  color: var(--vxn-ink);
+}
+
+.vxn-ans .vxn-ans__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vxn-ans .vxn-ans__line {
+  position: relative;
+  margin: 0 0 .3cqw;
+  padding-left: 1.2cqw;
+  font-size: .95cqw;
+  line-height: 1.4 !important;
+  color: var(--vxn-text);
+  opacity: 0;
+  transform: translateY(.4cqw);
+  transition: opacity .3s ease, transform .3s var(--vxn-ease);
+}
+
+.vxn-ans .vxn-ans__line::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .5cqw;
+  width: .45cqw;
+  height: .45cqw;
+  border-radius: 50%;
+  background: var(--vxn-blue);
+}
+
+.vxn-ans .vxn-ans__line.is-on {
+  opacity: 1;
+  transform: none;
+}
+
+/* The article card. Its picture starts as the thumbnail in the picture pill
+   and grows into the banner as the card opens; the text arrives after. The
+   colour is asserted: the kit's `.elementor-kit-5 a` is white. */
+.vxn-ans .vxn-ans__card {
+  position: absolute;
+  inset: 0;
+  display: block;
+  color: var(--vxn-ink) !important;
+  text-decoration: none !important;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .2s ease, visibility 0s linear .2s;
+}
+
+.vxn-ans[data-phase="preview"] .vxn-ans__card.is-active,
+.vxn-ans[data-phase="card"] .vxn-ans__card.is-active,
+.vxn-ans[data-phase="exit"] .vxn-ans__card.is-active {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .2s ease, visibility 0s;
+}
+
+/* `height` is asserted throughout the stage: `.elementor img { height: auto }`
+   outranks a lone class and would give every picture its own ratio. */
+.vxn-ans .vxn-ans__art {
+  position: absolute;
+  left: .5cqw;
+  top: .5cqw;
+  width: 6.3cqw;
+  height: 6.3cqw !important;
+  object-fit: cover;
+  border-radius: .7cqw;
+  transition:
+    left .6s var(--vxn-ease), top .6s var(--vxn-ease),
+    width .6s var(--vxn-ease), height .6s var(--vxn-ease),
+    border-radius .6s var(--vxn-ease);
+}
+
+.vxn-ans[data-phase="card"] .vxn-ans__art,
+.vxn-ans[data-phase="exit"] .vxn-ans__art {
+  left: 2.4cqw;
+  top: 8.2cqw;
+  width: calc(100% - 4.8cqw);
+  height: 15.4cqw !important;
+  border-radius: .5cqw;
+}
+
+.vxn-ans__cardbody {
+  position: absolute;
+  inset: 0;
+  padding: 2.4cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+
+.vxn-ans[data-phase="card"] .vxn-ans__cardbody {
+  opacity: 1;
+  transition-delay: .3s;
+}
+
+.vxn-ans[data-phase="exit"] .vxn-ans__cardbody {
+  opacity: 1;
+}
+
+.vxn-ans__chip {
+  display: inline-block;
+  box-sizing: border-box;
+  height: 1.5cqw;
+  margin-bottom: .9cqw;
+  padding: 0 .8cqw;
+  border: 1px solid rgba(22, 35, 59, .3);
+  border-radius: 999px;
+  font-size: .7cqw;
+  line-height: calc(1.5cqw - 2px);
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--vxn-ink);
+}
+
+.vxn-ans__cardtitle {
+  display: block;
+  max-width: 100%;
+  margin-bottom: 1.2cqw;
+  font-size: 1.8cqw;
+  line-height: 2.2cqw;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--vxn-ink);
+}
+
+/* Holds the banner's place in the flow; the picture itself is the absolute
+   .vxn-ans__art above, so that it can travel. */
+.vxn-ans__slot {
+  display: block;
+  width: 100%;
+  height: 15.4cqw;
+  margin-bottom: 1.4cqw;
+}
+
+.vxn-ans__para {
+  display: block;
+  margin-bottom: .9cqw;
+  font-size: .95cqw;
+  line-height: 1.4;
+  color: var(--vxn-text);
+}
+
+/* The four related cards, to the right of the panel. */
+.vxn-ans__cards {
+  position: absolute;
+  left: 55.3cqw;
+  top: 10.3cqw;
+  width: 37.7cqw;
+  height: 36cqw;
+  z-index: 2;
+}
+
+.vxn-ans__deck {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+}
+
+.vxn-ans__deck.is-active {
+  visibility: visible;
+}
+
+.vxn-ans .vxn-ans__tile {
+  display: flex;
+  align-items: center;
+  height: 7.5cqw;
+  margin-bottom: 1.6cqw;
+  padding: .3cqw;
+  box-sizing: border-box;
+  border-radius: .85cqw;
+  background: rgba(255, 255, 255, .58);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, .72);
+  box-shadow: 0 .5cqw 1.6cqw rgba(0, 53, 132, .10);
+  color: var(--vxn-ink) !important;
+  text-decoration: none !important;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(1.6cqw);
+  transition: opacity .25s ease, transform .25s var(--vxn-ease), visibility 0s linear .25s, background-color .2s ease;
+}
+
+.vxn-ans .vxn-ans__tile:hover {
+  background: rgba(255, 255, 255, .84);
+}
+
+/* Shown only while the panel is up; .is-on marks the ones that have arrived,
+   and they arrive .1s apart. Leaving the phase fades all four together. */
+.vxn-ans[data-phase="answer"] .vxn-ans__tile.is-on {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition: opacity .25s ease, transform .25s var(--vxn-ease), visibility 0s, background-color .2s ease;
+}
+
+.vxn-ans[data-phase="answer"] .vxn-ans__tile.is-on:nth-child(2) { transition-delay: .1s; }
+.vxn-ans[data-phase="answer"] .vxn-ans__tile.is-on:nth-child(3) { transition-delay: .2s; }
+.vxn-ans[data-phase="answer"] .vxn-ans__tile.is-on:nth-child(4) { transition-delay: .3s; }
+
+.vxn-ans .vxn-ans__thumb {
+  flex: none;
+  width: 6.9cqw;
+  height: 6.9cqw !important;
+  object-fit: cover;
+  border-radius: .6cqw;
+}
+
+.vxn-ans__tiletext {
+  min-width: 0;
+  padding: 0 1.2cqw;
+}
+
+.vxn-ans__kind {
+  display: block;
+  margin-bottom: .35cqw;
+  font-size: .8cqw;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--vxn-ink);
+}
+
+.vxn-ans__ttl {
+  display: block;
+  font-size: 1.2cqw;
+  line-height: 1.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--vxn-ink);
+}
+
+/* The pause control, the reference's: 36px, #F2F2F2, radius 5, 10px in from
+   the right and 16px up, #D4D4D4 under the pointer. In px, not cqw, because
+   it is a control and not part of the picture. The fill is asserted in every
+   state: the theme paints a focused button navy, and the button keeps focus
+   after a click. */
+.vxn-ans .vxn-ans__ctrl,
+.vxn-ans .vxn-ans__ctrl:focus,
+.vxn-ans .vxn-ans__ctrl:active {
+  position: absolute;
+  right: 10px;
+  bottom: 16px;
+  z-index: 3;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 5px;
+  background: #F2F2F2 !important;
+  color: #000000 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: none;
+  transform: none;
+  transition: background-color .2s ease;
+}
+
+.vxn-ans .vxn-ans__ctrl:hover {
+  background: #D4D4D4 !important;
+  color: #000000 !important;
+}
+
+.vxn-ans .vxn-ans__ctrl:focus-visible {
+  outline: 2px solid var(--vxn-blue);
+  outline-offset: 2px;
+}
+
+.vxn-ans__ico {
+  display: block;
+}
+
+.vxn-ans__ico--play,
+.vxn-ans.is-paused .vxn-ans__ico--pause {
+  display: none;
+}
+
+.vxn-ans.is-paused .vxn-ans__ico--play {
+  display: block;
+}
+
+/* Paused, by the control or by leaving the viewport: the clock stops in the
+   script and the looping animations hold here. */
+.vxn-ans.is-paused .vxn-ans__orb,
+.vxn-ans.is-paused .vxn-ans__spin svg,
+.vxn-ans.is-paused .vxn-ans__caret {
+  animation-play-state: paused;
+}
+
+/* ---- Breakpoints, the reference's --------------------------------------- */
+@media (max-width: 1439px) {
+  .vxn-answer__copy,
+  .vxn-answer__foot {
+    grid-column: 1 / span 6;
+  }
+
+  .vxn-answer__media {
+    grid-column: 7 / span 6;
+  }
+}
+
+@media (max-width: 1023px) {
+  .vxn-answer__inner {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: none;
+  }
+
+  /* The visual first, as on the reference. */
+  .vxn-answer__media {
+    grid-column: 1;
+    grid-row: 1;
+    margin-bottom: 40px;
+  }
+
+  .vxn-answer__copy {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .vxn-answer__foot {
+    grid-column: 1;
+    grid-row: 3;
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 767px) {
+  .vxn-answer__media {
+    margin-bottom: 24px;
+  }
+
+  .vxn-answer .vxn-band__eyebrow {
+    margin-bottom: 16px;
+  }
+
+  .vxn-ae-home .vxn-answer__title {
+    margin-bottom: 16px;
+    line-height: 1.2 !important;
+  }
+
+  .vxn-answer__foot {
+    margin-top: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vxn-ans__orb,
+  .vxn-ans__caret,
+  .vxn-answer__cta i {
+    animation: none !important;
+  }
+
+  .vxn-answer__cta,
+  .vxn-answer__cta i {
+    transition: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   18. /en-ae/ — one container, every band (20260911)
+
+   On client instruction: every section of the home page sits on the same
+   measure at every width, min(1520px, 100% - 2 gutters) with the gutter
+   clamp(16px, 4vw, 48px), which section 15 already gives the trio, the
+   Answer, the impact card, the spotlight, the mosaic, the insights and the
+   ready band. Measured before this block, at 1920 those ran 200 -> 1720 and
+   four bands did not: the header (180, its own 1560 measure), the hero (214,
+   1560 with 34px inside), the careers band (86, its own column padding) and
+   the subscribe band (70, likewise), with the services strip full-bleed. The
+   header and the hero are fixed where they are declared (valunxt-brand.css
+   and HomeAeBody); the three below are fixed here.
+
+   THE TWO SPLIT BANDS keep their bleed. Careers is a 60/40 split whose plate
+   runs off the right edge, and the subscribe band is two halves with a bar
+   across the join; what changes is that their copy now starts on the
+   container's line. Both are laid out on a breakout grid: an outer track
+   either side that is never narrower than the gutter, and the container's
+   width between them, so the copy is placed in the container's tracks and
+   the plate spans from the split to the edge. No vw arithmetic, so a
+   scrollbar cannot put the copy a few pixels off the other bands.
+
+   THE SERVICES STRIP is boxed to the container too, with the impact card's
+   radius, so its first label sits on the same line as every heading. It was
+   the one full-bleed band; one rule (max-width: none; border-radius: 0) puts
+   it back.
+   -------------------------------------------------------------------------- */
+.vxn-ae-home .vxn-home-svc-section .vxn-klay {
+  max-width: min(1520px, calc(100% - var(--vxn-gutter) * 2));
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+/* Careers: ten container columns of 152px (1520 at full width, shrinking
+   together below it), the copy in the first six, the plate from the seventh
+   to the edge. Lines: 1 the left edge, 2 the container's start, 12 its end,
+   13 the right edge. */
+.vxn-ae-home .vxn-careers {
+  grid-template-columns:
+    minmax(var(--vxn-gutter), 1fr)
+    repeat(10, minmax(0, 152px))
+    minmax(var(--vxn-gutter), 1fr);
+}
+
+.vxn-ae-home .vxn-careers__copy {
+  grid-column: 2 / 8;
+  padding-left: 0;
+  padding-right: clamp(24px, 4vw, 64px);
+}
+
+.vxn-ae-home .vxn-careers__media {
+  grid-column: 8 / 14;
+}
+
+/* The lede ran the full width of the copy column: one line of 150 characters
+   at 1920. Capped at a measure. */
+.vxn-ae-home .vxn-careers__lede {
+  max-width: 62ch;
+}
+
+/* Subscribe: the gradient half spans from the left edge to the join and is a
+   subgrid of the band's columns, so its label and headline sit in the
+   container's first half while the gradient still runs to the edge. The
+   photograph takes the other half to the right edge. */
+.vxn-ae-home .vxn-sub {
+  grid-template-columns:
+    minmax(var(--vxn-gutter), 1fr)
+    repeat(2, minmax(0, 760px))
+    minmax(var(--vxn-gutter), 1fr);
+}
+
+.vxn-ae-home .vxn-sub__panel {
+  grid-column: 1 / 3;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.vxn-ae-home .vxn-sub__panel > * {
+  grid-column: 2;
+  padding-right: clamp(24px, 4vw, 70px);
+}
+
+.vxn-ae-home .vxn-sub__shot {
+  grid-column: 3 / 5;
+}
+
+/* The bar sits on the container's own edges. */
+.vxn-ae-home .vxn-sub__bar {
+  left: max(var(--vxn-gutter), calc((100% - 1520px) / 2));
+  right: max(var(--vxn-gutter), calc((100% - 1520px) / 2));
+}
+
+@media (max-width: 1024px) {
+
+  /* Stacked: one container track between the gutters. The plates bleed to
+     both edges; the copy and the bar sit on the container. */
+  .vxn-ae-home .vxn-careers,
+  .vxn-ae-home .vxn-sub {
+    grid-template-columns:
+      minmax(var(--vxn-gutter), 1fr)
+      minmax(0, 1520px)
+      minmax(var(--vxn-gutter), 1fr);
+  }
+
+  .vxn-ae-home .vxn-careers__copy {
+    grid-column: 2;
+    padding: 40px 0;
+  }
+
+  .vxn-ae-home .vxn-careers__media {
+    grid-column: 1 / -1;
+  }
+
+  .vxn-ae-home .vxn-sub__panel {
+    grid-column: 1 / -1;
+  }
+
+  .vxn-ae-home .vxn-sub__panel > * {
+    padding-right: 0;
+  }
+
+  .vxn-ae-home .vxn-sub__shot,
+  .vxn-ae-home .vxn-sub__bar {
+    grid-column: 1 / -1;
+  }
+
+  .vxn-ae-home .vxn-sub__bar {
+    padding-left: var(--vxn-gutter);
+    padding-right: var(--vxn-gutter);
+  }
 }

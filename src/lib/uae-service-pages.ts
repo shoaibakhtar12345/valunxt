@@ -143,7 +143,7 @@ export function uaeServiceConfig(service: Service, written = false): PageConfig 
  * it was keyed by `<service slug>/<sub slug>` then, and all thirty-three
  * pages load it now. Bump the query when it changes.
  */
-const SUB_SITE_CSS = ['/assets/css/valunxt-uae-sub.css?v=8'];
+const SUB_SITE_CSS = ['/assets/css/valunxt-uae-sub.css?v=10'];
 
 /** The page at /services/<service>/<sub>/. */
 export function uaeSubServiceConfig(

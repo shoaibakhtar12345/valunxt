@@ -134,10 +134,11 @@ const CSS = `
 .vxn-com__acts{display:flex;flex-wrap:wrap;gap:14px;}
 /* Both fill by wedge on hover — mechanism in valunxt-brand.css; each variant
    only names the colour it sweeps. */
-.vxn-com__btn{display:inline-flex;align-items:center;gap:10px;padding:13px 26px;border-radius:40px;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;}
-.vxn-com__btn--solid{background:linear-gradient(90deg,var(--gd) 0%,var(--gd2) 100%);color:#fff!important;--vxn-cta-sweep:linear-gradient(90deg,var(--ny2) 0%,var(--ny) 100%);}
-.vxn-com__btn--ghost{border:1.5px solid var(--ny);color:var(--ny)!important;--vxn-cta-sweep:var(--ny);}
-.vxn-com__btn--ghost:hover{color:#fff!important;}
+/* The one CTA (20260911): the site's pill geometry, its gradient and its outline; was a 40px-radius uppercase pair. */
+.vxn-com__btn{display:inline-flex;align-items:center;gap:10px;min-height:var(--vxn-cta-h,46px);padding:0 var(--vxn-cta-px,28px);border-radius:var(--vxn-cta-r,999px);font-size:var(--vxn-cta-fs,14px);font-weight:var(--vxn-cta-fw,400);letter-spacing:var(--vxn-cta-ls,.01em);text-transform:none;line-height:1;text-decoration:none;}
+.vxn-com__btn--solid{background-image:var(--vxn-cta-grad);background-color:var(--vxn-cta-ink,#0B2DBE);color:#fff!important;--vxn-cta-sweep:var(--vxn-cta-sweep-dark,#08248F);}
+.vxn-com__btn--ghost{border:1px solid rgba(11,45,190,.35);color:var(--vxn-cta-ink,#0B2DBE)!important;--vxn-cta-sweep:var(--vxn-cta-grad);}
+.vxn-com__btn--ghost:hover{border-color:transparent;color:#fff!important;}
 .vxn-com__btn svg{width:16px;height:16px;flex:0 0 auto;}
 
 /* ---- Carousel ------------------------------------------------------------- */
@@ -184,7 +185,9 @@ const CSS = `
 .vxn-com__cta{background:linear-gradient(90deg,#0053B7 0%,#0E355F 100%);text-align:center;padding:56px 24px 60px;}
 .vxn-com__cta h2{font-family:"Forum",serif;font-weight:400;color:#fff;font-size:clamp(28px,3.4vw,44px);line-height:1.1;margin:0 0 14px;}
 .vxn-com__cta p{max-width:600px;margin:0 auto 26px;color:#cdd6de;font-size:16px;line-height:1.7;}
-.vxn-com__cta .vxn-com__btn--solid{padding:15px 34px;}
+/* On the blue band the pill is the inverse finish: white with the ink, so it does not vanish into its own colour. */
+.vxn-com__cta .vxn-com__btn--solid{background-image:none;background-color:#fff;color:var(--vxn-cta-ink,#0B2DBE)!important;--vxn-cta-sweep:var(--vxn-cta-sweep-light,#EAF0FF);}
+.vxn-com__cta .vxn-com__btn--solid:hover{color:var(--vxn-cta-ink,#0B2DBE)!important;}
 
 /* ---- Disclaimer ----------------------------------------------------------- */
 .vxn-com__disc{background:#fff;padding:38px 0 46px;}

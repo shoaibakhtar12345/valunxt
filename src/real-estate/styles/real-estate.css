@@ -274,31 +274,39 @@
 
 .re-muted { color: var(--re-muted); }
 
-/* ---- Buttons ---- */
+/* ---- Buttons ----
+   THE ONE CTA (20260911): the site's pill, 46px tall with 28px sides at
+   14px/600, filled with the site's gradient, white with the ink on a dark
+   ground, or outlined. The values are written out because this module does
+   not load the brand sheet that declares the tokens. The hover keeps this
+   module's sheen (below), which is its sweep. */
 .re-root .re-btn {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  padding: 14px 26px;
+  min-height: 46px;
+  padding: 0 28px;
   border: 1px solid transparent;
-  border-radius: 8px;
-  background: var(--re-blue);
+  border-radius: 999px;
+  background-image: linear-gradient(150deg, #0E3FA8 0%, #1436D8 48%, #0B2DBE 100%);
+  background-color: #0B2DBE;
   color: #FFF;
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: .01em;
   line-height: 1;
-  transition: background-color .3s ease, transform .3s var(--re-ease), border-color .3s ease;
+  transition: background-color .3s ease, border-color .3s ease, box-shadow .3s ease;
 }
 
-.re-root .re-btn:hover { background: var(--re-blue-dark); transform: translateY(-2px); }
+.re-root .re-btn:hover { box-shadow: 0 10px 24px -8px rgba(0, 64, 140, .55); }
 .re-root .re-btn:focus-visible { outline: 2px solid var(--re-blue); outline-offset: 3px; }
 .re-root .re-btn svg { width: 15px; height: 15px; flex: none; transition: transform .3s var(--re-ease); }
 .re-root .re-btn:hover svg { transform: translateX(4px); }
 
-.re-root .re-btn--ghost { background: transparent; border-color: var(--re-line); color: var(--re-ink); }
-.re-root .re-btn--ghost:hover { background: var(--re-ink); border-color: var(--re-ink); color: #FFF; }
-.re-root .re-btn--light { background: #FFF; color: var(--re-blue); }
-.re-root .re-btn--light:hover { background: var(--re-cream); color: var(--re-blue-dark); }
+.re-root .re-btn--ghost { background-image: none; background-color: transparent; border-color: rgba(11, 45, 190, .35); color: #0B2DBE; }
+.re-root .re-btn--ghost:hover { background-color: #0B2DBE; border-color: #0B2DBE; color: #FFF; }
+.re-root .re-btn--light { background-image: none; background-color: #FFF; color: #0B2DBE; }
+.re-root .re-btn--light:hover { background-color: #EAF0FF; color: #0B2DBE; }
 
 /* ---- The round corner arrow, reused across cards ---- */
 .re-root .re-go {
@@ -676,7 +684,8 @@
 .re-hx[style*='--grow'] .re-offer { transition: background-color .4s ease, border-color .4s ease; }
 
 /* ---- A compact button, for the header bar ---- */
-.re-root .re-btn--sm { padding: 10px 16px; font-size: 13.5px; border-radius: 7px; }
+/* The header's pill is the same size as every other since 20260911 (it was 10px 16px at 13.5px, 7px radius). */
+.re-root .re-btn--sm { padding: 0 28px; font-size: 14px; border-radius: 999px; }
 .re-root .re-btn--sm svg { width: 13px; height: 13px; }
 
 /* ---- Beat 1: intro block ---- */

@@ -125,7 +125,9 @@ const CSS = `
 .vxn-faq__ctap{margin:0;color:rgba(255,255,255,.82);font-size:15px;line-height:1.7;}
 /* Sweeps to white on hover, keeping its navy label — mechanism in
    valunxt-brand.css, this only names the colour it sweeps. */
-.vxn-faq__btn{flex:0 0 auto;display:inline-block;padding:15px 28px;background:var(--gd);color:var(--ny)!important;font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-radius:4px;--vxn-cta-sweep:#fff;}
+/* The one CTA (20260911) in its inverse finish, white with the ink on the blue band; was a blue 4px-radius uppercase button on blue. */
+.vxn-faq__btn{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:var(--vxn-cta-h,46px);padding:0 var(--vxn-cta-px,28px);background:#fff;color:var(--vxn-cta-ink,#0B2DBE)!important;font-size:var(--vxn-cta-fs,14px);font-weight:var(--vxn-cta-fw,400);letter-spacing:var(--vxn-cta-ls,.01em);text-transform:none;line-height:1;text-decoration:none;border-radius:var(--vxn-cta-r,999px);--vxn-cta-sweep:var(--vxn-cta-sweep-light,#EAF0FF);}
+.vxn-faq__btn:hover{color:var(--vxn-cta-ink,#0B2DBE)!important;}
 
 @media(max-width:640px){
     .vxn-faq{padding:46px 0 54px;}

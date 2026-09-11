@@ -136,7 +136,8 @@ const CSS = `
 .vxn-plat__cta{padding:60px 0 72px;text-align:center;}
 /* The hover fill sweeps in as a wedge — mechanism in valunxt-brand.css, this
    only names the colour it sweeps. */
-.vxn-plat__btn{display:inline-block;margin-top:22px;padding:16px 34px;background:var(--ny);color:#fff!important;font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;border-radius:4px;--vxn-cta-sweep:var(--ny2);}
+/* The one CTA (20260911): the site's pill and gradient; was a 4px-radius uppercase button. */
+.vxn-plat__btn{display:inline-flex;align-items:center;justify-content:center;margin-top:22px;min-height:var(--vxn-cta-h,46px);padding:0 var(--vxn-cta-px,28px);background-image:var(--vxn-cta-grad);background-color:var(--vxn-cta-ink,#0B2DBE);color:#fff!important;font-size:var(--vxn-cta-fs,14px);font-weight:var(--vxn-cta-fw,400);letter-spacing:var(--vxn-cta-ls,.01em);text-transform:none;line-height:1;text-decoration:none;border-radius:var(--vxn-cta-r,999px);--vxn-cta-sweep:var(--vxn-cta-sweep-dark,#08248F);}
 
 @media(max-width:960px){
     .vxn-plat__kpis{grid-template-columns:repeat(2,1fr);}

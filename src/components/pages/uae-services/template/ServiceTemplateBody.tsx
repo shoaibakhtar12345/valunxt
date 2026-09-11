@@ -83,7 +83,7 @@ import type { ServiceTemplateContent, TemplateSub } from "./types";
  * of the other five; a service line with no entry still renders — it falls
  * through to its registry image, heavy but not missing.
  */
-const RELATED_FIGURE: Record<string, string[]> = {
+export const RELATED_FIGURE: Record<string, string[]> = {
   "accounting-tax-services": [
     "services/at-related-accounting-tax-services.webp",
     "new-folder/who-we-are-2.webp",
@@ -195,7 +195,16 @@ const SOLUTION_IDS: TabIds[] = [
 /** The blur layers template 7162 renders inside the first tab's pane. */
 const TEMPLATE_BLUR = ["37bc217", "7aa6fbd", "5500eb5", "ba4229b", "0df9fbc"];
 
-const CSS = `
+/**
+ * EXPORTED (20260911) for the UAE services index, UaeServicesBody, which
+ * opens on this template's hero and sets its sections in this template's
+ * kicker, headings, buttons and reveal rules, so the index and the six pages
+ * it indexes read as one section of the site. The whole sheet goes with it
+ * rather than a hero-only extract: every rule is scoped to .at-root or an
+ * at- class, so the unused ones are inert there, and one copy of the hero is
+ * one place to change it.
+ */
+export const CSS = `
 .at-root{
   /* Palette */
   --ny:#0E355F;
@@ -303,21 +312,32 @@ const CSS = `
 }
 .at-sec__head{margin-bottom:var(--headgap);}
 /* ---- Buttons ------------------------------------------------------------
-   No transform on hover anywhere. The arrow travels because the flex gap
-   opens, not because the glyph is moved. */
+   THE ONE CTA (20260911): the site's geometry from the tokens in
+   valunxt-brand.css (46px tall, 28px sides, 14px/600, a full pill) and its
+   gradient. The hover is the site's wedge, which that sheet applies to
+   .at-btn; the gap still opens so the arrow travels with it. */
 .at-btn{
   display:inline-flex;align-items:center;gap:10px;
-  padding:15px 28px;border-radius:999px;
-  font-size:15px;font-weight:600;line-height:1;text-decoration:none!important;
+  min-height:var(--vxn-cta-h,46px);padding:0 var(--vxn-cta-px,28px);border-radius:var(--vxn-cta-r,999px);
+  font-size:var(--vxn-cta-fs,14px);font-weight:var(--vxn-cta-fw,400);letter-spacing:var(--vxn-cta-ls,.01em);
+  line-height:1;text-decoration:none!important;
   transition:background-color .25s ease,color .25s ease,border-color .25s ease,
              box-shadow .3s ease,gap .3s cubic-bezier(.22,.61,.36,1);
 }
 .at-btn:hover{gap:16px;}
-.at-btn--solid{background:var(--ny2);color:#fff!important;border:1px solid var(--ny2);}
-.at-btn--solid:hover{background:var(--ny3);border-color:var(--ny3);box-shadow:0 14px 30px -14px rgba(0,64,140,.7);}
-/* The intro band's second button. The page is down to two button finishes. */
-.at-btn--line{background:transparent;color:var(--ny2)!important;border:1px solid rgba(0,83,183,.4);}
-.at-btn--line:hover{background:rgba(0,83,183,.07);border-color:var(--ny2);}
+.at-btn--solid{
+  background-image:var(--vxn-cta-grad);background-color:var(--vxn-cta-ink,#0B2DBE);
+  color:#fff!important;border:1px solid transparent;
+  --vxn-cta-sweep:var(--vxn-cta-sweep-dark,#08248F);
+}
+.at-btn--solid:hover{color:#fff!important;box-shadow:0 14px 30px -14px rgba(0,64,140,.7);}
+/* The intro band's second button: the outline, which the wedge fills with the
+   gradient. The page is down to two button finishes. */
+.at-btn--line{
+  background:transparent;color:var(--vxn-cta-ink,#0B2DBE)!important;border:1px solid rgba(11,45,190,.35);
+  --vxn-cta-sweep:var(--vxn-cta-grad);
+}
+.at-btn--line:hover{border-color:transparent;color:#fff!important;}
 
 /* ==========================================================================
    HERO — a photograph, and the copy at its foot.
@@ -502,11 +522,12 @@ const CSS = `
   position:relative;border-top:1px solid var(--line);
   padding:14px 0 15px 22px;
 }
-/* A square, not a disc, and the one warm mark on a page of blues. It has to
-   read at 9px, which is what rules the disc out. */
+/* A blue dot (20260911, on client instruction: the same dot on every service
+   page). It was an 8px gold square, the one warm mark on the page; the dot is
+   the chips' blue, so the list and the chips beneath it read as one set. */
 .at-intro__point::before{
   content:"";position:absolute;left:0;top:21px;width:8px;height:8px;
-  background:var(--gold);
+  border-radius:50%;background:var(--ny2);
 }
 /* Same reason as .at-intro__head — this was rendering at the h3 scale's 27px,
    which is most of why the band read as oversized for a four-item list. */
@@ -659,24 +680,28 @@ const CSS = `
    foot with margin-top:auto, so the gap still opens above it as the card
    grows; only the horizontal anchor changed. align-self:flex-end puts it back
    in the corner if that is wanted. */
+/* The one CTA (20260911) in its inverse finish, white on the photograph, at
+   the site's 46px (7px of pill either side of a 32px chip) and 14px/600. It
+   keeps its chip and its 26px label inset because the chip is the arrow. The
+   wedge is the site's, in the pale value an inverse pill takes. */
 .at-prob__cta{
   align-self:flex-start;margin-top:auto;
   display:inline-flex;align-items:center;gap:14px;
-  padding:7px 7px 7px 26px;border-radius:999px;
-  background:#fff;color:var(--ny)!important;
-  font-size:15px;font-weight:600;line-height:1;
+  min-height:var(--vxn-cta-h,46px);padding:7px 7px 7px 26px;border-radius:var(--vxn-cta-r,999px);
+  background:#fff;color:var(--vxn-cta-ink,#0B2DBE)!important;
+  font-size:var(--vxn-cta-fs,14px);font-weight:var(--vxn-cta-fw,400);letter-spacing:var(--vxn-cta-ls,.01em);line-height:1;
   text-decoration:none!important;white-space:nowrap;
   box-shadow:0 16px 36px -20px rgba(3,14,58,.7);
+  --vxn-cta-sweep:var(--vxn-cta-sweep-light,#EAF0FF);
   transition:background-color .3s ease,box-shadow .3s ease,gap .3s cubic-bezier(.22,.61,.36,1);
 }
 .at-prob__cta i{
   display:inline-flex;align-items:center;justify-content:center;
-  width:40px;height:40px;border-radius:50%;flex:0 0 auto;
-  background:var(--ny2);color:#fff;
+  width:32px;height:32px;border-radius:50%;flex:0 0 auto;
+  background-image:var(--vxn-cta-grad);background-color:var(--vxn-cta-ink,#0B2DBE);color:#fff;
   transition:background-color .3s ease;
 }
-.at-prob__cta:hover{background:var(--tint);gap:20px;box-shadow:0 20px 40px -20px rgba(3,14,58,.8);}
-.at-prob__cta:hover i{background:var(--ny);}
+.at-prob__cta:hover{gap:20px;box-shadow:0 20px 40px -20px rgba(3,14,58,.8);color:var(--vxn-cta-ink,#0B2DBE)!important;}
 
 /* ==========================================================================
    THE SERVICE STRIP — the sub-services, one open.
@@ -766,7 +791,9 @@ const CSS = `
 }
 .at-acc__panel{
   position:relative;flex:1 1 0;min-width:0;
-  padding-right:8px;text-decoration:none!important;
+  /* 24px between the pictures (20260911, on client feedback, twice: 8 to 16,
+     then to 24). Still padding, not a gap, for the reason above. */
+  padding-right:24px;text-decoration:none!important;
   transition:flex-grow 1.35s var(--ease);
 }
 .at-acc__panel:last-child{padding-right:0;}
@@ -1011,14 +1038,17 @@ const CSS = `
   color:var(--body)!important;font-size:15px!important;line-height:1.7!important;
   margin:0 0 26px!important;max-width:52ch;
 }
+/* The one CTA (20260911). It was the page's one squared button, 3px; every
+   CTA on the site is the same pill now. */
 .at-talk__cta{
-  display:inline-flex;align-items:center;
-  padding:14px 26px;border-radius:3px;
-  background:var(--ny2);color:#fff!important;
-  font-size:13px;font-weight:600;text-decoration:none!important;
-  transition:background-color .3s ease;
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:var(--vxn-cta-h,46px);padding:0 var(--vxn-cta-px,28px);border-radius:var(--vxn-cta-r,999px);
+  background-image:var(--vxn-cta-grad);background-color:var(--vxn-cta-ink,#0B2DBE);color:#fff!important;
+  font-size:var(--vxn-cta-fs,14px);font-weight:var(--vxn-cta-fw,400);letter-spacing:var(--vxn-cta-ls,.01em);
+  line-height:1;text-decoration:none!important;
+  --vxn-cta-sweep:var(--vxn-cta-sweep-dark,#08248F);
 }
-.at-talk__cta:hover{background:var(--ny);}
+.at-talk__cta:hover{color:#fff!important;}
 
 /* ==========================================================================
    RESPONSIVE — four steps, and the scale tokens do most of the work.
@@ -1044,7 +1074,7 @@ const CSS = `
      Every state rule has to be restated with its full selector. The mechanism
      above is written at three, four and five classes deep, so a bare
      .at-acc__card in here would lose to it. */
-  .at-acc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;height:auto;}
+  .at-acc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;height:auto;}
   .at-acc__panel{padding-right:0;}
   .at-acc__inner{height:300px;}
   .at-acc__title,

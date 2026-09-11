@@ -29,7 +29,9 @@ export interface PageConfig {
   site_css?: string[];
   /** Which captured Elementor header template to render ('139' | '3134' | '3837' | 'none'). */
   header: string;
-  /** Which captured Elementor footer template to render ('2094' | '3425' | 'none'). */
+  /** '2094' | '3425' | 'uae' | 'none'. Since 20260911 every value but 'none'
+   *  renders the same footer, FooterUae, in both markets; the ids are kept so
+   *  no config had to change. */
   footer: string;
   /** True on templates that render their own full-bleed shell (no #page wrapper). */
   canvas?: boolean;

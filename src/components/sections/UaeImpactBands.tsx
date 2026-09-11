@@ -1,6 +1,8 @@
 /**
- * Four feature bands that run between the services accordion and the insights
- * carousel on /en-ae/ only.
+ * The feature bands that run between the services accordion and the insights
+ * carousel on /en-ae/ only: a dark impact strip, a three-card mosaic and a
+ * careers band. A fourth, the split spotlight, is still written here but no
+ * longer rendered; see the default export.
  *
  * The layouts are the ones supplied as reference (a dark impact strip, a split
  * spotlight, a three-card mosaic and a careers band). The palette is not: every
@@ -280,12 +282,17 @@ export function CareersBand({ region }: { region: string }) {
 
 /* -------------------------------------------------------------------------- */
 
-/** All four, in the order they run on the page. */
+/**
+ * The bands the page runs, in order. THREE, not four, since 20260911: the
+ * spotlight ("Intelligence Behind Every Decision.") came off the home page on
+ * client instruction. SpotlightBand stays exported above, and its styles stay
+ * in the stylesheet, so putting it back is the one line between the impact
+ * strip and the mosaic.
+ */
 export default function UaeImpactBands({ region }: { region: string }) {
   return (
     <>
       <ImpactBand region={region} />
-      <SpotlightBand region={region} />
       <MosaicBand region={region} />
       <CareersBand region={region} />
     </>

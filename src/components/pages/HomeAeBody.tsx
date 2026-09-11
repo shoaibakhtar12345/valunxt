@@ -12,6 +12,7 @@ import ClientScript from '@/components/ClientScript';
 import type { PageConfig } from '@/lib/page-config';
 import { LogoXClipDefs } from '@/components/brand/LogoX';
 import WhoWeAreTrio from '@/components/sections/WhoWeAreTrio';
+import UaeAnswerBand from '@/components/sections/UaeAnswerBand';
 import UaeImpactBands from '@/components/sections/UaeImpactBands';
 import UaeReadyBand from '@/components/sections/UaeReadyBand';
 import UaeSubscribeBand from '@/components/sections/UaeSubscribeBand';
@@ -170,11 +171,15 @@ export default function HomeAeBody({ page, region }: { page: PageConfig; region:
       			linear-gradient(180deg, rgba(6, 17, 26, .34) 0%, rgba(6, 17, 26, 0) 30%, rgba(6, 17, 26, .30) 100%);
       	}
 
+      	/* The page's container (20260911): every band on this page runs to
+      	   min(1520px, 100% - 2 gutters), and the hero used to be on 1560 with 34px
+      	   inside it, so its headline sat 14px right of the trio at 1920 and 14px
+      	   left of it at 1440. The gutter is the one declared on .vxn-ae-home. */
       	.vxae-hero__inner {
       		width: 100%;
-      		max-width: 1560px;
+      		max-width: min(1520px, calc(100% - var(--vxn-gutter, clamp(16px, 4vw, 48px)) * 2));
       		margin: 0 auto;
-      		padding: 0 34px;
+      		padding: 0;
       	}
 
       	.vxae-hero__copy {
@@ -228,38 +233,40 @@ export default function HomeAeBody({ page, region }: { page: PageConfig; region:
       		flex-wrap: wrap;
       	}
 
+      	/* The one CTA (20260911) in its inverse finish: white with the brand ink
+      	   on the photograph, the site's 46px / 28px / 14px geometry from the
+      	   tokens in valunxt-brand.css. The wedge sweeping it on hover is defined
+      	   there for every CTA; a white pill takes the pale wedge and keeps its
+      	   ink, so the label never has to turn. It was 54px tall at 15px. */
       	.vxae-hero__cta {
       		display: inline-flex;
       		align-items: center;
-      		height: 54px;
-      		padding: 0 32px;
-      		border-radius: 999px;
+      		min-height: var(--vxn-cta-h, 46px);
+      		padding: 0 var(--vxn-cta-px, 28px);
+      		border-radius: var(--vxn-cta-r, 999px);
       		background: #fff;
-      		color: #0053B7 !important;
-      		font-size: 15px;
-      		font-weight: 600;
-      		letter-spacing: .01em;
+      		color: var(--vxn-cta-ink, #0B2DBE) !important;
+      		font-size: var(--vxn-cta-fs, 14px);
+      		font-weight: var(--vxn-cta-fw, 400);
+      		letter-spacing: var(--vxn-cta-ls, .01em);
       		text-decoration: none;
-      		/* The white pill fills with brand blue on hover — as a wedge sweeping in
-      		   from the left, not a straight swap. The wedge itself and the lift are
-      		   defined once for every CTA on the site in valunxt-brand.css; all this
-      		   pill has to say is which colour it fills with. */
-      		--vxn-cta-sweep: #0053B7;
+      		--vxn-cta-sweep: var(--vxn-cta-sweep-light, #EAF0FF);
       	}
 
       	.vxae-hero__cta:hover,
       	.vxae-hero__cta:focus-visible {
-      		color: #fff !important;
+      		color: var(--vxn-cta-ink, #0B2DBE) !important;
       	}
 
+      	/* The ring beside the pill matches the pill's height. */
       	.vxae-hero__go {
       		display: inline-flex;
       		align-items: center;
       		justify-content: center;
-      		width: 54px;
-      		height: 54px;
+      		width: var(--vxn-cta-h, 46px);
+      		height: var(--vxn-cta-h, 46px);
       		border-radius: 50%;
-      		background-image: var(--vxn-grad-gold);
+      		background-image: var(--vxn-cta-grad);
       		color: #fff !important;
       		text-decoration: none;
       		transition: transform .25s ease, filter .25s ease;
@@ -285,9 +292,10 @@ export default function HomeAeBody({ page, region }: { page: PageConfig; region:
       		grid-auto-columns: 1fr;
       		gap: 10px;
       		width: 100%;
-      		max-width: 1560px;
+      		/* The page's container, as .vxae-hero__inner. */
+      		max-width: min(1520px, calc(100% - var(--vxn-gutter, clamp(16px, 4vw, 48px)) * 2));
       		margin: 0 auto;
-      		padding: 0 34px;
+      		padding: 0;
       	}
 
       	.vxae-hero__tab {
@@ -340,7 +348,9 @@ export default function HomeAeBody({ page, region }: { page: PageConfig; region:
 
       	@media (max-width: 1024px) {
       		.vxae-hero { min-height: 0; padding: calc(var(--vxae-hdr) + 90px) 0 250px; }
-      		.vxae-hero__inner, .vxae-hero__tabs { padding: 0 18px; }
+      		/* No 18px inset of its own here any more: the container formula above
+      		   already gives 4vw at these widths, 16px at the narrowest, which is what
+      		   every other band on the page has. */
       		.vxae-hero__copy { min-height: 300px; }
       		.vxae-hero__scrim { background: linear-gradient(180deg, rgba(6, 17, 26, .62) 0%, rgba(6, 17, 26, .44) 45%, rgba(6, 17, 26, .70) 100%); }
       		.vxae-hero__tabs { grid-auto-flow: row; grid-template-columns: repeat(2, 1fr); gap: 8px; bottom: 22px; }
@@ -349,8 +359,7 @@ export default function HomeAeBody({ page, region }: { page: PageConfig; region:
 
       	@media (max-width: 560px) {
       		.vxae-hero__copy { min-height: 340px; }
-      		.vxae-hero__cta { height: 50px; padding: 0 24px; }
-      		.vxae-hero__go { width: 50px; height: 50px; }
+      		/* The pill and the ring keep the one CTA's size on phones too. */
       	}
 
       	@media (prefers-reduced-motion: reduce) {
@@ -533,8 +542,13 @@ export default function HomeAeBody({ page, region }: { page: PageConfig; region:
       								))}
       							</nav>
       						</div>
-      						{/* The four feature bands, between the services accordion and the
-      						    insights carousel. UAE only — India does not render them. */}
+      						{/* Valunxt Answer, the ask-and-answer band modelled on bcg.com's
+      						    "BCG Answer" promo (20260911). It follows the six services because
+      						    every question it answers is one of theirs. UAE only. */}
+      						<UaeAnswerBand region={region} />
+      						{/* The feature bands (impact, mosaic, careers; the spotlight came off on
+      						    20260911), between the Answer band and the insights carousel. UAE only —
+      						    India does not render them. */}
       						<UaeImpactBands region={region} />
       						<div className="elementor-element elementor-element-c50d7c9 e-flex e-con-boxed e-con e-parent" data-id="c50d7c9" data-element_type="container" data-e-type="container">
       							<div className="e-con-inner">

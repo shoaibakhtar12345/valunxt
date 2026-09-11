@@ -1,14 +1,21 @@
 /**
- * The UAE home page footer.
+ * The site footer, both markets.
  *
  * A flat, single-panel footer on the brand blue — logo and practice links on
  * one row, a rule, then the positioning line beside the social row, and the
- * legal links and copyright below. Selected per page: /en-ae/ carries
- * `"footer": "uae"` in page-configs.json, so every other page (and the India
- * home) keeps footer 2094 untouched.
+ * legal links and copyright below. Built for the UAE home (`"footer": "uae"`
+ * in page-configs.json); since 20260911, on client instruction, PageShell
+ * renders it on every page of both markets, in place of the captured
+ * Elementor footers 2094 and 3425.
  *
- * The wrapper elements and ids are the ones PageShell's other footers use, so
- * the theme's layout rules and the back-to-top offset behave the same.
+ * WHAT CHANGES BY MARKET. Every link goes through rurl(), so it stays in the
+ * visitor's edition, and the positioning line names that market's practices:
+ * the UAE's six (the client's line) or India's four. The India line is drafted
+ * here from the registry's names and is the one piece of copy in this file
+ * the client has not supplied. No em dashes in either.
+ *
+ * The wrapper elements and ids are the ones the captured footers used, so the
+ * theme's layout rules and the back-to-top offset behave the same.
  *
  * The social accounts are still unpublished — footer 2094 records why the icons
  * were captured without hrefs — so they render here as unlinked marks rather
@@ -16,9 +23,17 @@
  *
  * Styles: assets/css/valunxt-landing.css (.vxn-foot).
  */
-import { BASE, rurl } from '@/lib/region';
+import { BASE, rurl, vxnRegion } from '@/lib/region';
 import { vxnEmail, vxnYear } from '@/lib/site-data';
 import SocialIcons, { type SocialItem } from './SocialIcons';
+
+/** The positioning line, per market. */
+const BLURB: Record<string, string> = {
+  'en-ae':
+    'We are a senior team of accountants, tax advisers and valuers bringing accounting and tax, transactions, mortgages, valuation, research and technology together under one accountable partner, so every number you act on holds up to scrutiny.',
+  'en-in':
+    'We are a senior team of advisers bringing real estate investment advisory, capital advisory, research and intelligence, and technology and AI together under one accountable partner, so every number you act on holds up to scrutiny.',
+};
 
 const SOCIAL: readonly SocialItem[] = [
   { network: 'linkedin-in', repeater: 'elementor-repeater-item-01247a2' },
@@ -44,6 +59,7 @@ const LEGAL: readonly (readonly [string, string])[] = [
 ];
 
 export default function FooterUae({ region }: { region: string }) {
+  const blurb = BLURB[vxnRegion(region)] ?? BLURB['en-ae'];
   return (
     <div data-wpr-lazyrender="1" className="footer-wrapper">
       <footer id="main-footer" className="main-footer">
@@ -71,11 +87,7 @@ export default function FooterUae({ region }: { region: string }) {
             <hr className="vxn-foot__rule" />
 
             <div className="vxn-foot__mid">
-              <p className="vxn-foot__blurb">
-                We are a senior team of accountants, tax advisers and valuers bringing accounting
-                and tax, transactions, mortgages, valuation, research and technology together under
-                one accountable partner, so every number you act on holds up to scrutiny.
-              </p>
+              <p className="vxn-foot__blurb">{blurb}</p>
               <div className="vxn-foot__social">
                 <SocialIcons items={SOCIAL} />
               </div>

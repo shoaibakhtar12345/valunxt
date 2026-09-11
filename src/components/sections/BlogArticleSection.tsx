@@ -74,7 +74,8 @@ const CSS = `
 .vxn-side-topics a:hover{border-color:#0053B7;}
 /* Fills by wedge on hover — mechanism in valunxt-brand.css, this only names
    the colour it sweeps. */
-.vxn-side-cta{display:block;text-align:center;margin:24px 0;padding:15px;background:#0E355F;color:#fff!important;font-weight:600;font-size:12px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border-radius:2px;--vxn-cta-sweep:#0053B7;}
+/* The one CTA (20260911): the site's pill and gradient, at the sidebar's full width; was a 2px-radius uppercase block. */
+.vxn-side-cta{display:flex;align-items:center;justify-content:center;margin:24px 0;min-height:var(--vxn-cta-h,46px);padding:0 var(--vxn-cta-px,28px);background-image:var(--vxn-cta-grad);background-color:var(--vxn-cta-ink,#0B2DBE);color:#fff!important;font-weight:var(--vxn-cta-fw,400);font-size:var(--vxn-cta-fs,14px);letter-spacing:var(--vxn-cta-ls,.01em);text-transform:none;line-height:1;text-decoration:none;border-radius:var(--vxn-cta-r,999px);--vxn-cta-sweep:var(--vxn-cta-sweep-dark,#08248F);}
 .vxn-side-related{display:flex;flex-direction:column;gap:20px;}
 .vxn-rel{display:block;text-decoration:none;color:inherit;}
 .vxn-rel__thumb{position:relative;width:100%;aspect-ratio:16/10;border-radius:5px;overflow:hidden;background:#eef0f2;}

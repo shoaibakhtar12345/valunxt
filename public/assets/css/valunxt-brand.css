@@ -52,6 +52,27 @@
      flat, a violet accent has nothing to belong to, so it is the fill one step
      darker. The violet itself stays defined above for the logo. */
   --vxn-gold-dark: #00408C;
+
+  /* ---- THE ONE CTA (20260911) --------------------------------------------
+     Every pill on the site draws its geometry from these, and the fill from
+     one of three finishes: the gradient on a light ground, white with the ink
+     on a dark or photographic ground, and an outline. The geometry is enforced
+     at the foot of this file (THE ONE CTA) on every button class the site
+     renders; the per-section sheets read the same tokens so the two agree.
+     The wedge that sweeps a CTA on hover (CTA HOVER, below) takes the dark
+     value on a filled pill and the light one on an inverse pill. */
+  --vxn-cta-grad: linear-gradient(150deg, #0E3FA8 0%, #1436D8 48%, #0B2DBE 100%);
+  --vxn-cta-ink: #0B2DBE;
+  --vxn-cta-h: 46px;
+  --vxn-cta-px: 28px;
+  --vxn-cta-fs: 14px;
+  /* Regular, on client instruction (20260911): the pills were 600, which in
+     Sanomat Sans, with no 600 cut, drew the Bold face. */
+  --vxn-cta-fw: 400;
+  --vxn-cta-ls: .01em;
+  --vxn-cta-r: 999px;
+  --vxn-cta-sweep-dark: #08248F;
+  --vxn-cta-sweep-light: #EAF0FF;
 }
 
 .elementor-button:not(.elementor-button-info):not(.elementor-button-success):not(.elementor-button-warning):not(.elementor-button-danger),
@@ -61,11 +82,13 @@ a.elementor-button:not(.elementor-button-info):not(.elementor-button-success):no
 .vamtam-button,
 .vamtam-btn,
 form.elementor-form button[type="submit"] {
-  background-image: var(--vxn-grad-gold) !important;
-  background-color: var(--vxn-gold) !important;
+  /* The one CTA gradient (20260911); was the flat --vxn-grad-gold. */
+  background-image: var(--vxn-cta-grad) !important;
+  background-color: var(--vxn-cta-ink) !important;
   color: #fff !important;
-  fill: var(--vxn-navy-dark) !important;
+  fill: #fff !important;
   border-color: transparent !important;
+  --vxn-cta-sweep: var(--vxn-cta-sweep-dark);
 }
 
 .elementor-button:not(.elementor-button-info):not(.elementor-button-success):not(.elementor-button-warning):not(.elementor-button-danger):hover,
@@ -3161,14 +3184,18 @@ nav.elementor-nav-menu--dropdown .vxn-mega__panel .vxn-mega__circ svg {
   gap: 10px;
 }
 
+/* The one CTA (20260911): the same pill as everywhere else, in its filled and
+   outline finishes. The wedge does the hover; nothing swaps underneath it. */
 .vxn-cookie__btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 13px 24px !important;
-  border-radius: 10px;
-  font-size: 14.5px !important;
-  font-weight: 600 !important;
+  min-height: var(--vxn-cta-h) !important;
+  padding: 0 var(--vxn-cta-px) !important;
+  border-radius: var(--vxn-cta-r);
+  font-size: var(--vxn-cta-fs) !important;
+  font-weight: var(--vxn-cta-fw) !important;
+  letter-spacing: var(--vxn-cta-ls);
   line-height: 1 !important;
   white-space: nowrap;
   cursor: pointer;
@@ -3177,27 +3204,26 @@ nav.elementor-nav-menu--dropdown .vxn-mega__panel .vxn-mega__circ svg {
 
 .vxn-cookie__btn--primary {
   border: 1px solid transparent !important;
-  background-image: var(--vxn-grad-gold) !important;
-  background-color: var(--vxn-gold) !important;
+  background-image: var(--vxn-cta-grad) !important;
+  background-color: var(--vxn-cta-ink) !important;
   color: #fff !important;
+  --vxn-cta-sweep: var(--vxn-cta-sweep-dark);
 }
 
 .vxn-cookie__btn--primary:hover {
-  background-image: var(--vxn-grad-navy) !important;
-  background-color: var(--vxn-navy) !important;
-  color: #F6F4EF !important;
+  color: #fff !important;
 }
 
 .vxn-cookie__btn--ghost {
-  border: 1px solid rgba(14, 53, 95, 0.28) !important;
+  border: 1px solid rgba(11, 45, 190, 0.35) !important;
   background: transparent !important;
   background-image: none !important;
-  color: var(--vxn-navy-dark) !important;
+  color: var(--vxn-cta-ink) !important;
+  --vxn-cta-sweep: var(--vxn-cta-grad);
 }
 
 .vxn-cookie__btn--ghost:hover {
-  border-color: var(--vxn-navy) !important;
-  background: var(--vxn-navy) !important;
+  border-color: transparent !important;
   color: #ffffff !important;
 }
 
@@ -3843,6 +3869,31 @@ html.vxn-nav-stuck .vamtam-sticky-header--transparent-header:not(.vamtam-sticky-
   padding-inline: 34px !important;
 }
 
+/* ON THE UAE PAGES THE BAR TAKES THE PAGE'S CONTAINER (20260911). The home
+   page's bands all run to min(1520px, 100% - 2 gutters) — see the .vxn-ae-home
+   block in valunxt-landing.css — and the bar was the one thing above them on
+   its own measure: 1560 with 34px inside it, so the logo sat 14px left of
+   every heading at 1920 and 18px right of them at 1440. Same formula here, at
+   (0,3,1), which also clears the two narrower-desktop paddings below. The
+   gutter is read with its fallback because the bar is outside .vxn-ae-home. */
+body.vxn-uae-face .elementor-location-header .e-con-inner {
+  max-width: min(1520px, calc(100% - var(--vxn-gutter, clamp(16px, 4vw, 48px)) * 2)) !important;
+  padding-inline: 0 !important;
+}
+
+/* The inner box's 100% is its Elementor container's CONTENT width, and that
+   container pads itself 30px a side (20 and 15 on the narrower steps), which
+   put the bar's content 30px further in than the formula says at every width
+   but 1920. Measured: 78 at 1600 against the bands' 48. The container's own
+   side padding goes to zero on these pages, so the formula is the whole
+   inset. */
+body.vxn-uae-face .elementor-location-header .e-con.e-parent {
+  --padding-left: 0;
+  --padding-right: 0;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
 @media (max-width: 1024px) {
   .elementor-location-header .e-con-inner {
     padding-inline: 18px !important;
@@ -3908,11 +3959,14 @@ html.vxn-nav-stuck .vamtam-sticky-header--transparent-header:not(.vamtam-sticky-
    button with an arrow chip; the arrow is dropped here so the control reads as
    one calm shape next to the country switcher. */
 .elementor-location-header .elementor-widget-button .elementor-button {
-  border-radius: 999px !important;
-  padding: 13px 26px !important;
-  font-size: 14px !important;
-  font-weight: 600;
-  letter-spacing: .01em;
+  /* The one CTA's geometry (20260911), stated here as well as at the foot of
+     the file so the header pill and the page pills cannot drift apart. */
+  border-radius: var(--vxn-cta-r) !important;
+  min-height: var(--vxn-cta-h) !important;
+  padding: 0 var(--vxn-cta-px) !important;
+  font-size: var(--vxn-cta-fs) !important;
+  font-weight: var(--vxn-cta-fw);
+  letter-spacing: var(--vxn-cta-ls);
   line-height: 1;
   white-space: nowrap;
   box-shadow: none !important;
@@ -3949,10 +4003,8 @@ html.vxn-nav-stuck .vamtam-sticky-header--transparent-header:not(.vamtam-sticky-
     padding-inline: 24px !important;
   }
 
-  .elementor-location-header .elementor-widget-button .elementor-button {
-    padding: 11px 18px !important;
-    font-size: 13px !important;
-  }
+  /* The pill used to shave to 11px 18px / 13px here. It keeps the one CTA's
+     size now (20260911); the row makes room by giving up the country name. */
 
   /* Country name gives way to the code so the menu keeps its full row. */
   .vxn-region__name {
@@ -6416,4 +6468,226 @@ nav.elementor-nav-menu--dropdown .vxn-mega__grouprow::before {
   max-height: calc(100vh - var(--vxn-navh, 94px));
   overflow-y: auto;
   overscroll-behavior: contain;
+}
+
+/* ==========================================================================
+   THE ONE CTA (2026-09-11)
+
+   On client instruction every call to action on the site is the same pill:
+   46px tall, 28px at the sides, 14px/600 with a hair of tracking, no
+   capitals, a full radius, filled with one gradient. Three finishes, chosen
+   by the ground the pill sits on:
+
+     filled    the gradient, a white label          light and tinted grounds
+     inverse   white, the ink for a label           navy, blue and photographs
+     outline   a hairline and the ink; the wedge    beside a filled pill
+               brings the gradient on hover
+
+   The tokens are at the head of this file. This block is the ENFORCEMENT of
+   the geometry: it names every button class the site renders and asserts the
+   tokens with !important, because the Elementor kit sizes its buttons per
+   widget (.elementor-17 .elementor-element-x .elementor-button, at 0,3,0) and
+   a plain rule cannot reach them all. The bespoke sheets and the page bodies
+   were rewritten to read the same tokens, so what they say and what this
+   says agree; this is the backstop, not the only copy.
+
+   NOT pills, and left alone: the round icon buttons (the hero ring, the
+   trio's and the ready band's arrows), the ready band's rows, the text links
+   with an arrow (the service strip's "Explore More", "View all", the mega
+   menu's links), the two composite pills that carry a chip (the subscribe
+   field's and the service pages' banner CTA, which keep their 7px seat and
+   take the height, the type and the fill from the same tokens), and the
+   three Elementor buttons that are really text links, re-asserted below.
+
+   The hover is the wedge above, applied to every class here as well, with
+   the dark value on a filled pill and the light one on an inverse pill.
+   ========================================================================== */
+.elementor-button:not(.elementor-button-info):not(.elementor-button-success):not(.elementor-button-warning):not(.elementor-button-danger),
+a.elementor-button:not(.elementor-button-info):not(.elementor-button-success):not(.elementor-button-warning):not(.elementor-button-danger),
+.elementor-cta__button,
+.wp-block-button__link,
+.vamtam-button,
+.vamtam-btn,
+form.elementor-form button[type="submit"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center;
+  padding-left: var(--vxn-cta-px) !important;
+  padding-right: var(--vxn-cta-px) !important;
+}
+
+.elementor-button:not(.elementor-button-info):not(.elementor-button-success):not(.elementor-button-warning):not(.elementor-button-danger),
+a.elementor-button:not(.elementor-button-info):not(.elementor-button-success):not(.elementor-button-warning):not(.elementor-button-danger),
+.elementor-cta__button,
+.wp-block-button__link,
+.vamtam-button,
+.vamtam-btn,
+form.elementor-form button[type="submit"],
+.vxae-hero__cta,
+.vxn-band__pill,
+.vxn-whyus__cta,
+.vxn-cookie__btn,
+.at-btn,
+.at-talk__cta,
+.abk-root .abk-why__btn,
+.abk-root .abk-card__btn,
+.abk-root .abk-case__cta,
+.abk-root .abk-band__cta,
+.abk-root .abk-talk__cta,
+.svcx-btn,
+.vxn-plat__btn,
+.vxn-rd__btn,
+.vxn-com__btn,
+.vxn-faq__btn,
+.vxn-coming__cta,
+.vxn-side-cta {
+  box-sizing: border-box;
+  min-height: var(--vxn-cta-h) !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  border-radius: var(--vxn-cta-r) !important;
+  font-size: var(--vxn-cta-fs) !important;
+  font-weight: var(--vxn-cta-fw) !important;
+  letter-spacing: var(--vxn-cta-ls) !important;
+  text-transform: none !important;
+  line-height: 1 !important;
+  text-decoration: none !important;
+}
+
+/* The composite pills: the height, the type and the fill, not the sides. */
+.vxn-sub__cta,
+.at-prob__cta {
+  min-height: var(--vxn-cta-h) !important;
+  border-radius: var(--vxn-cta-r) !important;
+}
+
+/* ---- The wedge, on the classes the block above added --------------------- */
+.vxn-band__pill,
+.vxn-whyus__cta,
+.vxn-cookie__btn,
+.at-btn,
+.at-talk__cta,
+.at-prob__cta,
+.abk-root .abk-why__btn,
+.abk-root .abk-card__btn,
+.abk-root .abk-case__cta,
+.abk-root .abk-band__cta,
+.abk-root .abk-talk__cta,
+.svcx-btn,
+.vxn-sub__cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: color .2s ease .15s, transform .35s ease, box-shadow .35s ease;
+}
+
+.vxn-band__pill::before,
+.vxn-whyus__cta::before,
+.vxn-cookie__btn::before,
+.at-btn::before,
+.at-talk__cta::before,
+.at-prob__cta::before,
+.abk-root .abk-why__btn::before,
+.abk-root .abk-card__btn::before,
+.abk-root .abk-case__cta::before,
+.abk-root .abk-band__cta::before,
+.abk-root .abk-talk__cta::before,
+.svcx-btn::before,
+.vxn-sub__cta::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50px;
+  width: 0;
+  height: 100%;
+  background: var(--vxn-cta-sweep, #08248F);
+  transform: skewX(45deg);
+  transform-origin: top left;
+  z-index: -1;
+  pointer-events: none;
+  transition: width .7s cubic-bezier(.25, .8, .25, 1);
+}
+
+.vxn-band__pill:hover::before,
+.vxn-band__pill:focus-visible::before,
+.vxn-whyus__cta:hover::before,
+.vxn-cookie__btn:hover::before,
+.at-btn:hover::before,
+.at-talk__cta:hover::before,
+.at-prob__cta:hover::before,
+.abk-root .abk-why__btn:hover::before,
+.abk-root .abk-card__btn:hover::before,
+.abk-root .abk-case__cta:hover::before,
+.abk-root .abk-band__cta:hover::before,
+.abk-root .abk-talk__cta:hover::before,
+.svcx-btn:hover::before,
+.vxn-sub__cta:hover::before {
+  width: 250%;
+}
+
+.vxn-band__pill:hover,
+.vxn-whyus__cta:hover,
+.vxn-cookie__btn:hover,
+.at-btn:hover,
+.at-talk__cta:hover,
+.at-prob__cta:hover,
+.abk-root .abk-why__btn:hover,
+.abk-root .abk-card__btn:hover,
+.abk-root .abk-case__cta:hover,
+.abk-root .abk-band__cta:hover,
+.abk-root .abk-talk__cta:hover,
+.svcx-btn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 10px 24px -8px rgba(0, 64, 140, .55);
+}
+
+/* Seated in the field's well: the wedge, no lift. */
+.vxn-sub__cta:hover {
+  transform: none;
+}
+
+/* The three Elementor buttons that are text links keep their shape: no fill,
+   no pill, no height. Each selector outranks the enforcement above. */
+.elementor-248 .elementor-element-7ab26c9 .elementor-element-26edf8b a.elementor-button.elementor-button-link,
+:is(.page-id-250, .page-id-252, .page-id-254, .page-id-256) .elementor-widget-button.elementor-align-justify.vamtam-content-align-space-between a.elementor-button.elementor-button-link,
+.elementor-2281 .elementor-element-10f841ea a.elementor-button.elementor-button-link.elementor-size-sm {
+  min-height: 0 !important;
+  padding: 6px 0 !important;
+  border-radius: 0 !important;
+  background-image: none !important;
+  background-color: transparent !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .vxn-band__pill::before,
+  .vxn-whyus__cta::before,
+  .vxn-cookie__btn::before,
+  .at-btn::before,
+  .at-talk__cta::before,
+  .at-prob__cta::before,
+  .abk-root .abk-why__btn::before,
+  .abk-root .abk-card__btn::before,
+  .abk-root .abk-case__cta::before,
+  .abk-root .abk-band__cta::before,
+  .abk-root .abk-talk__cta::before,
+  .svcx-btn::before,
+  .vxn-sub__cta::before {
+    transition: none;
+  }
+
+  .vxn-band__pill:hover,
+  .vxn-whyus__cta:hover,
+  .vxn-cookie__btn:hover,
+  .at-btn:hover,
+  .at-talk__cta:hover,
+  .at-prob__cta:hover,
+  .abk-root .abk-why__btn:hover,
+  .abk-root .abk-card__btn:hover,
+  .abk-root .abk-case__cta:hover,
+  .abk-root .abk-band__cta:hover,
+  .abk-root .abk-talk__cta:hover,
+  .svcx-btn:hover {
+    transform: none;
+  }
 }

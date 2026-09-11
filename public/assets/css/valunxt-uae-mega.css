@@ -71,7 +71,8 @@
     right: 0;
     left: 0;
     z-index: 9999;
-    padding: 0 24px 40px;
+    /* No side padding: the sheet's inner box takes the page's container. */
+    padding: 0 0 40px;
     /* A sheet taller than the space under the bar was being cut off at the
        viewport's foot with no way to reach the rest. Capped and scrolled
        instead — it only engages on short windows. */
@@ -220,7 +221,10 @@
   /* z-index over the scrim, which is the panel's other child. */
   position: relative;
   z-index: 1;
-  max-width: 95%;
+  /* THE PAGE'S CONTAINER (20260911): the sheet's edges are the same lines the
+     bar's logo and pill and every band on the home page sit on, rather than
+     95% of the viewport. Same formula as .vxn-ae-home. */
+  max-width: min(1520px, calc(100% - clamp(16px, 4vw, 48px) * 2));
   margin: 0 auto;
   overflow: hidden;
   background: #fff;
@@ -258,18 +262,47 @@
 /* The bottom padding matches the pane's, which is what puts "Learn More" on the
    same line as "View all" across the join. Change one, change both. */
 .vxn-umega .vxn-umega__aside {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   padding: 36px 32px 32px;
   background: var(--umega-ramp);
 }
 
+/* THE ABSTRACT (20260911, on client request): the blue silk the home page's
+   spotlight uses, washed over the ramp and faded towards the copy, so the
+   column reads as artwork rather than as a flat fill. A second layer deepens
+   the foot so "Learn More" keeps its contrast. Both sit at z-index -1 inside
+   the column's own stacking context: over its ramp, under its copy. The path
+   is relative to this stylesheet, as the brand sheet's plates are. */
+.vxn-umega .vxn-umega__aside::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: url("../content/uploads/homepage/abstract-2.webp") center / cover no-repeat;
+  opacity: 0.62;
+  -webkit-mask-image: linear-gradient(160deg, rgba(0, 0, 0, 0.35) 0%, #000 55%, #000 100%);
+  mask-image: linear-gradient(160deg, rgba(0, 0, 0, 0.35) 0%, #000 55%, #000 100%);
+}
+
+.vxn-umega .vxn-umega__aside::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(11, 45, 190, 0.08) 0%, rgba(8, 28, 120, 0.55) 100%);
+}
+
 /* No family of its own. It was Forum, the market's display serif; the UAE runs
-   one face now, set on <body> by valunxt-uae-face.css, and this inherits it. */
+   one face now, set on <body> by valunxt-uae-face.css, and this inherits it.
+   Sizes up on client feedback (20260911): 30px over 26, the lede 15 over 13. */
 .vxn-umega .vxn-umega__asidetitle {
   display: block;
-  margin: 0 0 12px;
-  font-size: 26px;
+  margin: 0 0 14px;
+  font-size: 30px;
   font-weight: 400;
   line-height: 1.1;
   letter-spacing: -0.01em;
@@ -278,9 +311,10 @@
 
 .vxn-umega .vxn-umega__asidelede {
   margin: 0;
-  font-size: 13px;
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.9);
+  max-width: 30ch;
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.92);
 }
 
 /* margin-top:auto pins it to the foot of the column, which is what makes the
@@ -293,8 +327,11 @@
   gap: 8px;
   margin-top: auto;
   padding-top: 20px;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 14px;
+  /* 500, not 600: Sanomat Sans has no 600 cut, so 600 drew the Bold face and
+     the whole sheet read heavy (client, 20260911). The tabs, this link and
+     "View all" sit at Medium; the links themselves at Regular. */
+  font-weight: 500;
   color: #fff !important;
   text-decoration: none !important;
 }
@@ -339,15 +376,18 @@
   display: flex;
   flex: 0 1 auto;
   align-items: center;
-  padding: 0 30px !important;
+  padding: 0 26px !important;
   border: 0;
   /* The active marker. Transparent at rest rather than absent, so selecting a
      tab does not move the row by 3px. */
   border-bottom: 3px solid transparent;
   background: transparent;
   font-family: inherit;
-  font-size: 13.5px;
-  font-weight: 600;
+  /* 15px over 13.5, on client feedback (20260911); six tabs at this size
+     take ~880px of the 1010 the row has at 1600. Medium, not 600: there is
+     no 600 cut and it drew Bold. */
+  font-size: 15px;
+  font-weight: 500;
   line-height: 1.25;
   white-space: nowrap;
   color: var(--umega-ink) !important;
@@ -359,9 +399,11 @@
     color 0.25s ease;
 }
 
+/* A tab under the pointer lights a paler tint than the selected one, so the
+   preview and the selection read as two states rather than one. */
 .vxn-umega .vxn-umega__panel a.vxn-umega__tab:hover,
 .vxn-umega .vxn-umega__panel a.vxn-umega__tab:focus-visible {
-  background: transparent;
+  background: #EEF3FF;
   color: var(--umega-blue) !important;
 }
 
@@ -533,7 +575,9 @@
   grid-auto-flow: column;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   grid-template-rows: repeat(3, auto);
-  gap: 22px 20px;
+  /* The links carry 10px of their own above and below now (the highlight
+     needs a shape), so the row gap is smaller than the 22 it was. */
+  gap: 10px 20px;
   margin: 0 0 28px;
   padding: 0;
   list-style: none;
@@ -544,19 +588,36 @@
   min-width: 0;
 }
 
+/* THE LINKS (20260911, on client feedback): 15px medium over 13.5 regular,
+   and a highlight under the pointer, a tinted pill that the link's own
+   padding gives a shape to. The pill is pulled 14px left so the text stays on
+   the column's line at rest and the highlight grows outward. The padding is
+   asserted because the anchor reset above (10px 0 !important) would flatten
+   it; written against the panel at (0,3,1), as the tabs are. */
+.vxn-umega .vxn-umega__panel a.vxn-umega__link {
+  padding: 10px 14px !important;
+}
+
 .vxn-umega .vxn-umega__link {
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  font-size: 13.5px;
+  gap: 8px;
+  margin-left: -14px;
+  border-radius: 10px;
+  font-size: 15px;
+  /* Regular: Medium at this size read as bold beside the tabs (client). */
   font-weight: 400;
   line-height: 1.35;
   color: var(--umega-ink) !important;
   text-decoration: none !important;
-  transition: color 0.25s ease;
+  transition:
+    color 0.22s ease,
+    background-color 0.22s ease;
 }
 
-.vxn-umega .vxn-umega__link:hover {
+.vxn-umega .vxn-umega__link:hover,
+.vxn-umega .vxn-umega__link:focus-visible {
+  background: var(--umega-tint);
   color: var(--umega-blue) !important;
 }
 
@@ -565,8 +626,9 @@
   transition: transform 0.3s ease;
 }
 
-.vxn-umega .vxn-umega__link:hover .vxn-umega__chev {
-  transform: translateX(3px);
+.vxn-umega .vxn-umega__link:hover .vxn-umega__chev,
+.vxn-umega .vxn-umega__link:focus-visible .vxn-umega__chev {
+  transform: translateX(4px);
 }
 
 /* Pinned to the foot of the pane by the auto margin, level with "Learn More"
@@ -579,10 +641,16 @@
   align-self: flex-start;
   gap: 8px;
   margin-top: auto;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 14.5px;
+  font-weight: 500;
   color: var(--umega-blue) !important;
   text-decoration: none !important;
+  text-underline-offset: 4px;
+}
+
+.vxn-umega .vxn-umega__viewall:hover,
+.vxn-umega .vxn-umega__viewall:focus-visible {
+  text-decoration: underline !important;
 }
 
 .vxn-umega .vxn-umega__viewall .vxn-umega__chev {
@@ -704,8 +772,8 @@
   }
 
   .vxn-umega .vxn-umega__panel a.vxn-umega__tab {
-    padding: 0 13px !important;
-    font-size: 12.5px;
+    padding: 0 18px !important;
+    font-size: 14px;
   }
 }
 
@@ -728,7 +796,7 @@
 
   .vxn-umega .vxn-umega__panel a.vxn-umega__tab {
     border-bottom-width: 2px;
-    padding: 8px 11px !important;
+    padding: 8px 14px !important;
   }
 }
 

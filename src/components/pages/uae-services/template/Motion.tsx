@@ -61,7 +61,19 @@ const GROUPS: { sel: string; variant: string; stagger?: boolean }[] = [
   { sel: '.at-talk__copy > *', variant: 'up', stagger: true },
 ];
 
-export default function ServiceTemplateMotion() {
+/** One reveal group: what matches `sel` arrives with `variant`. */
+export interface MotionGroup {
+  sel: string;
+  variant: string;
+  stagger?: boolean;
+}
+
+/**
+ * `extra` (20260911): groups a page on this template adds to the table above,
+ * so the UAE services index can reveal its own sections with the same engine
+ * rather than carrying a second copy of it.
+ */
+export default function ServiceTemplateMotion({ extra = [] }: { extra?: MotionGroup[] }) {
   useEffect(() => {
     const root = document.querySelector<HTMLElement>('.at-root');
     if (!root) return;
@@ -98,7 +110,7 @@ export default function ServiceTemplateMotion() {
     cleanups.push(() => io.disconnect());
 
     const pending: HTMLElement[] = [];
-    for (const g of GROUPS) {
+    for (const g of [...GROUPS, ...extra]) {
       const els = [...root.querySelectorAll<HTMLElement>(g.sel)];
       /* Stagger is per parent: two card grids on the page each count from
          their own first child rather than the second grid starting at the
@@ -193,7 +205,7 @@ export default function ServiceTemplateMotion() {
     return () => {
       for (const fn of cleanups) fn();
     };
-  }, []);
+  }, [extra]);
 
   return null;
 }

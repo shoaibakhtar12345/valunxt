@@ -59,13 +59,14 @@ const CSS = `
 .vxn-rd__sidediv{display:block;height:1px;background:var(--line);margin:22px 0 26px;}
 /* Both fill by wedge on hover — mechanism in valunxt-brand.css; each variant
    only names the colour it sweeps. */
-.vxn-rd__btn{display:flex;align-items:center;justify-content:center;gap:11px;width:100%;padding:16px 20px;font-size:12.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;}
+/* The one CTA (20260911): the site's pill geometry, gradient and outline; the sidebar's two buttons keep their full width. */
+.vxn-rd__btn{display:flex;align-items:center;justify-content:center;gap:11px;width:100%;min-height:var(--vxn-cta-h,46px);padding:0 var(--vxn-cta-px,28px);border-radius:var(--vxn-cta-r,999px);font-size:var(--vxn-cta-fs,14px);font-weight:var(--vxn-cta-fw,400);letter-spacing:var(--vxn-cta-ls,.01em);text-transform:none;line-height:1;text-decoration:none;}
 .vxn-rd__btn svg{width:17px;height:17px;flex:0 0 auto;}
-.vxn-rd__btn--solid{background:var(--ny);color:#fff!important;border:1px solid var(--ny);--vxn-cta-sweep:var(--ny2);}
-.vxn-rd__btn--solid:hover{border-color:var(--ny2);}
+.vxn-rd__btn--solid{background-image:var(--vxn-cta-grad);background-color:var(--vxn-cta-ink,#0B2DBE);color:#fff!important;border:1px solid transparent;--vxn-cta-sweep:var(--vxn-cta-sweep-dark,#08248F);}
+.vxn-rd__btn--solid:hover{color:#fff!important;}
 .vxn-rd__btn--solid[aria-disabled="true"]{opacity:.55;pointer-events:none;}
-.vxn-rd__btn--ghost{background:#fff;color:var(--ny)!important;border:1px solid var(--ny);margin-top:14px;--vxn-cta-sweep:var(--ny);}
-.vxn-rd__btn--ghost:hover{color:#fff!important;}
+.vxn-rd__btn--ghost{background:transparent;color:var(--vxn-cta-ink,#0B2DBE)!important;border:1px solid rgba(11,45,190,.35);margin-top:14px;--vxn-cta-sweep:var(--vxn-cta-grad);}
+.vxn-rd__btn--ghost:hover{border-color:transparent;color:#fff!important;}
 
 /* ---- Responsive ----------------------------------------------------------- */
 @media(max-width:960px){
