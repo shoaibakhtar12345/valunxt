@@ -93,6 +93,11 @@ function ArrowUpRight() {
   );
 }
 
+/** A paragraph or a list of them, as the content modules may give either. */
+function paras(text: string | string[]): string[] {
+  return Array.isArray(text) ? text : [text];
+}
+
 function CheckCircle() {
   return (
     <svg viewBox="0 0 22 22" fill="none" aria-hidden="true" focusable="false">
@@ -195,7 +200,9 @@ export default function SubServiceTemplateBody({
         <div className="abk-in">
           <div className="abk-brief__grid">
             <div className="abk-brief__copy">
-              <p>{brief.lede}</p>
+              {paras(brief.lede).map((p) => (
+                <p key={p}>{p}</p>
+              ))}
               <p>{brief.whatIntro}</p>
 
               <ul className="abk-brief__list">
@@ -322,13 +329,17 @@ export default function SubServiceTemplateBody({
                     <img src={rimg(region, c.image)} alt={c.alt} loading="lazy" />
                   </span>
 
-                  <span className="abk-card__pill">{c.category}</span>
+                  {/* Optional since 20260912: an empty pill is a visible blob, so
+                      a card without a category gets none at all. */}
+                  {c.category && <span className="abk-card__pill">{c.category}</span>}
 
                   <span className="abk-card__glass">
-                    <span className="abk-card__meta">
-                      <b>{c.kind}</b>
-                      <i>{c.date}</i>
-                    </span>
+                    {(c.kind || c.date) && (
+                      <span className="abk-card__meta">
+                        {c.kind && <b>{c.kind}</b>}
+                        {c.date && <i>{c.date}</i>}
+                      </span>
+                    )}
 
                     <span className="abk-card__title">{c.title}</span>
 
@@ -364,15 +375,21 @@ export default function SubServiceTemplateBody({
                   &rdquo;
                 </span>
                 <p className="abk-case__said">{story.quote}</p>
-                <footer className="abk-case__by">
-                  <span className="abk-case__avatar" aria-hidden="true">
-                    {story.initials}
-                  </span>
-                  <span className="abk-case__who">
-                    <b>{story.role}</b>
-                    <i>{story.org}</i>
-                  </span>
-                </footer>
+                {/* Optional since 20260912: a quote the document leaves
+                    unattributed stands alone rather than over an invented role. */}
+                {(story.initials || story.role || story.org) && (
+                  <footer className="abk-case__by">
+                    {story.initials && (
+                      <span className="abk-case__avatar" aria-hidden="true">
+                        {story.initials}
+                      </span>
+                    )}
+                    <span className="abk-case__who">
+                      {story.role && <b>{story.role}</b>}
+                      {story.org && <i>{story.org}</i>}
+                    </span>
+                  </footer>
+                )}
               </blockquote>
             </figure>
 
@@ -381,7 +398,7 @@ export default function SubServiceTemplateBody({
                 <ArrowUpRight />
               </a>
 
-              <span className="abk-case__pill">{story.pill}</span>
+              {story.pill && <span className="abk-case__pill">{story.pill}</span>}
               <h2 className="abk-case__h">{story.title}</h2>
 
               {/* The result and the button share the panel's foot, which is why

@@ -50,11 +50,13 @@ export type SubColumn = { title: string; body: string };
 
 /** One card in the insights rail. EXACTLY FOUR per page — the grid is four across. */
 export type SubInsight = {
-  /** The pill over the artwork. Shown at rest, faded out on hover. */
-  category: string;
+  /** The pill over the artwork. Shown at rest, faded out on hover. Optional
+   *  since 20260912: a client document that names a card without a category,
+   *  kind or date leaves those off rather than inventing them. */
+  category?: string;
   /** Small caps line above the title: kind, then date. */
-  kind: string;
-  date: string;
+  kind?: string;
+  date?: string;
   /** Clamped to three lines at rest; shown whole on hover. */
   title: string;
   /** Revealed on hover only. Four lines at the card's width. */
@@ -97,11 +99,14 @@ export interface SubStory {
   alt: string;
   quote: string;
   /** Initials, not a photograph: a stock headshot attached to a named role reads
-   *  as a real person who did not say this. */
-  initials: string;
-  role: string;
-  org: string;
-  pill: string;
+   *  as a real person who did not say this. All three optional since 20260912:
+   *  a client document that gives a quote without an attribution shows the
+   *  quote alone rather than a made-up role. */
+  initials?: string;
+  role?: string;
+  org?: string;
+  /** Optional for the same reason: a panel the document does not label gets no pill. */
+  pill?: string;
   title: string;
   /** The whole point of the panel. Everything else on it is caption. */
   stat: string;
@@ -133,7 +138,9 @@ export interface SubTalk {
 }
 
 export interface SubBrief {
-  lede: string;
+  /** One paragraph, or several (20260912: the client documents open the brief
+   *  with two). */
+  lede: string | string[];
   whatIntro: string;
   what: SubPoint[];
   howIntro: string;

@@ -18,6 +18,11 @@
      7. .vxn-mosaic     a tall card beside two stacked
      8. .vxn-careers    the split careers band
 
+   And two more, added 2026-09 from supplied reference artwork, /en-ae/ only:
+
+    19. .vxn-figs       the figures band, a glass panel on flowing ribbons
+    20. .vxn-post       the poster trio, three portrait panels with the glass
+
    The recurring device is the wordmark's "x" used as a window onto a
    photograph — see components/brand/LogoX.tsx for why the glyph is taken from
    the logo outline rather than drawn.
@@ -2619,10 +2624,12 @@
 
 .vxn-ae-home .vxn-trio-solo,
 .vxn-ae-home .vxn-home-svc-section,
+.vxn-ae-home .vxn-figs,
 .vxn-ae-home .vxn-impact,
 .vxn-ae-home .vxn-spotlight,
 .vxn-ae-home .vxn-mosaic,
 .vxn-ae-home .vxn-careers,
+.vxn-ae-home .vxn-post,
 .vxn-ae-home .vxn-ready,
 .vxn-ae-home .elementor-element-c50d7c9,
 .vxn-ae-home .elementor-element-413d07d {
@@ -2648,9 +2655,11 @@
    max-width stays 1520px and the gutter is taken out of the available width, so
    the content column is exactly what it was before — the padding simply lives
    on a different box. */
+.vxn-ae-home .vxn-figs__card,
 .vxn-ae-home .vxn-impact__card,
 .vxn-ae-home .vxn-spotlight__inner,
 .vxn-ae-home .vxn-mosaic__grid,
+.vxn-ae-home .vxn-post__grid,
 .vxn-ae-home .vxn-ready__inner,
 .vxn-ae-home .vxn-trio-solo .vxn-trio {
   max-width: min(1520px, calc(100% - var(--vxn-gutter) * 2));
@@ -3733,5 +3742,704 @@
   .vxn-ae-home .vxn-sub__bar {
     padding-left: var(--vxn-gutter);
     padding-right: var(--vxn-gutter);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   19. .vxn-figs — the figures band (20260912)
+   components/sections/UaeFigureBand.tsx
+
+   Built to the reference supplied that day, measured off it: one rounded card
+   at roughly 3.3:1, a lead panel inset about 3.5% from the left and taking
+   just over a quarter of the card's width, and three figures filling the rest
+   with a hairline between each. The reference's background is a set of broad
+   blue ribbons, which is homepage/abstract-2.webp almost exactly, so that is
+   the artwork here rather than anything new; the fill under it and the tint of
+   the glass are the brand's.
+
+   THE LEAD PANEL IS GLASS, as the reference's is, with the site's own recipe
+   (see .vxn-whyus__panel, section 3) and the same opaque fallback where
+   backdrop-filter is unavailable. It is the only panel on this page whose
+   glass sits on a dark ground, so the tint is white rather than cream.
+
+   THE FIGURES ROLL UP on arrival, driven by UaeBandMotion.tsx. The values are
+   in the markup, so the roll only ever replaces a number with itself and the
+   band reads correctly with the script blocked.
+   -------------------------------------------------------------------------- */
+.vxn-figs {
+  background: #fff;
+}
+
+.vxn-figs__card {
+  position: relative;
+  /* The reference's card is 3.27:1. The content is shorter than that, so the
+     min-height is what holds the proportion: 28.7vw against the container's
+     own width keeps the card between 3.22:1 and 3.30:1 from 1280 to 1920. */
+  min-height: clamp(330px, 28.7vw, 460px);
+  padding: clamp(26px, 3.3vw, 52px);
+  border-radius: 24px;
+  overflow: hidden;
+  isolation: isolate;
+  /* The band's own fill, deeper at the left so the glass panel has something
+     to sit on and brighter where the ribbons run. */
+  background: linear-gradient(112deg, #06184F 0%, #0B2DBE 52%, #1436D8 100%);
+  display: grid;
+  grid-template-columns: minmax(0, 28%) minmax(0, 1fr);
+  gap: clamp(22px, 3vw, 54px);
+  align-items: stretch;
+}
+
+/* The ribbons. Full bleed, as in the reference: the panel is translucent and
+   they run behind it. */
+.vxn-figs__texture {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  /* !important: .elementor img { height: auto } is a class plus a type and
+     outranks a single class of ours. */
+  height: 100% !important;
+  object-fit: cover;
+  /* Subordinate, as in the reference: at .78 the brightest ribbon ran straight
+     under the third caption and took it to about 2:1. */
+  opacity: .56;
+}
+
+/* Three painted lights: the first darkens the ground under the glass panel so
+   the type on it holds, the second is a veil across the figures for the same
+   reason, and the third lifts the ribbons away from the fill at the top right,
+   where nothing is set. */
+.vxn-figs__glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(124% 146% at 4% 50%, rgba(3, 12, 44, .76) 0%, rgba(3, 12, 44, .34) 42%, rgba(3, 12, 44, 0) 72%),
+    linear-gradient(180deg, rgba(4, 16, 56, 0) 18%, rgba(4, 16, 56, .30) 52%, rgba(4, 16, 56, .12) 100%),
+    radial-gradient(78% 116% at 88% 10%, rgba(126, 174, 255, .26) 0%, rgba(126, 174, 255, 0) 64%);
+}
+
+/* ---- The lead panel ---- */
+.vxn-figs__lead {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* Top aligned, as the reference's panel is: its figure sits near the top and
+     the clear space falls at the foot, about a third of the panel. Centred, the
+     block floated and the panel read as a box with a caption in the middle. */
+  justify-content: flex-start;
+  gap: 11px;
+  padding: clamp(20px, 2.2vw, 34px);
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .10);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, .24);
+  box-shadow: 0 18px 46px rgba(3, 12, 44, .34);
+}
+
+/* Without backdrop-filter the panel is a flat wash over the ribbons and the
+   copy on it is unreadable, so it becomes opaque. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+
+  .vxn-figs__lead {
+    background: rgba(8, 30, 94, .82);
+  }
+}
+
+.vxn-figs__rank {
+  display: block;
+  color: #FFFFFF;
+  font-size: clamp(48px, 5.2vw, 88px);
+  font-weight: 400;
+  line-height: .92;
+  letter-spacing: -.02em;
+}
+
+/* TWO CLASSES, NOT ONE. The market's type scale sets `body.vxn-uae-type h2` at
+   (0,1,2) with !important, which beats a lone class however important it is, so
+   this heading came out at the scale's 42px and broke the panel to three lines.
+   (0,2,0) clears it; valunxt-uae-type.css names this as the way a band that
+   sizes a heading on purpose is meant to opt out. Same below for the poster
+   titles, which were arriving at the h3 step's 27px. */
+.vxn-figs .vxn-figs__leadTitle {
+  margin: 0;
+  color: #FFFFFF !important;
+  font-weight: 500 !important;
+  font-size: clamp(17px, 1.35vw, 22px) !important;
+  line-height: 1.24 !important;
+  letter-spacing: 0;
+}
+
+.vxn-figs__leadCopy {
+  margin: 0;
+  color: rgba(255, 255, 255, .74);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+/* A text link, not a pill: the band sits directly above the services section
+   and a filled CTA here would compete with it. Text links are outside the one
+   CTA system for that reason. */
+.vxn-figs .vxn-figs__leadLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  color: #BFD6FF !important;
+  font-size: 13.5px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color .25s var(--vxn-ease);
+}
+
+.vxn-figs .vxn-figs__leadLink i {
+  font-size: 12px;
+  transition: transform .25s var(--vxn-ease);
+}
+
+.vxn-figs .vxn-figs__leadLink:hover {
+  color: #FFFFFF !important;
+  text-decoration: underline;
+  text-underline-offset: .22em;
+}
+
+.vxn-figs .vxn-figs__leadLink:hover i {
+  transform: translateX(4px);
+}
+
+/* ---- The three figures ---- */
+/* TWO ROWS SHARED BY ALL THREE, not three independent stacks. The reference
+   sets its figures on one line and its captions on another; with each stat
+   laid out on its own, a caption that wrapped to three lines pushed its figure
+   up and the row of numbers stopped being a row. The stat is a grid item that
+   takes the parent's two rows as its own (subgrid), so the figures share a
+   line and the captions start on one whatever they wrap to, and the stat keeps
+   the padding and the rule down its left edge. Where subgrid is unsupported
+   the declaration is dropped and the stats fall back to stacking, which is
+   what they did before. */
+.vxn-figs__stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: auto auto;
+  align-content: center;
+  margin: 0;
+  padding: clamp(4px, 1vw, 18px) 0;
+}
+
+.vxn-figs__stat {
+  display: grid;
+  grid-row: span 2;
+  grid-template-rows: subgrid;
+  row-gap: clamp(10px, 1.1vw, 16px);
+  align-content: start;
+  padding: 0 clamp(16px, 2.4vw, 40px);
+  /* Between the figures only, as in the reference: the first is separated from
+     the lead panel by the grid gap instead. */
+  border-left: 1px solid rgba(255, 255, 255, .22);
+}
+
+.vxn-figs__stat:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+
+.vxn-figs__stat:last-child {
+  padding-right: 0;
+}
+
+.vxn-figs__num {
+  margin: 0;
+  color: #FFFFFF;
+  font-size: clamp(32px, 3.4vw, 58px);
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -.015em;
+  /* The roll rewrites this text sixty times a second; without tabular figures
+     the column would jitter as the digit widths changed. */
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.vxn-figs__lbl {
+  margin: 0;
+  max-width: 26ch;
+  color: rgba(255, 255, 255, .76);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+/* ---- Arrival ----
+   The stylesheet's default is visible. The hidden state exists only under
+   [data-anim='pending'], which UaeBandMotion.tsx sets, so a blocked or broken
+   bundle leaves the band on the page. */
+.vxn-figs__lead[data-anim='pending'],
+.vxn-figs__stat[data-anim='pending'] {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.vxn-figs__lead[data-anim='in'],
+.vxn-figs__stat[data-anim='in'] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity .7s var(--vxn-ease) var(--vxn-anim-d, 0ms),
+    transform .7s var(--vxn-ease) var(--vxn-anim-d, 0ms);
+}
+
+@media (max-width: 1180px) {
+
+  /* The panel goes above the figures rather than beside them: at a quarter of
+     a 1100px card it was 260px wide and the headline broke to four lines. */
+  .vxn-figs__card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vxn-figs__stats {
+    padding: 0;
+  }
+}
+
+@media (max-width: 720px) {
+
+  .vxn-figs__stats {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
+  }
+
+  .vxn-figs__stat {
+    padding: 20px 0 0;
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, .22);
+  }
+
+  .vxn-figs__stat:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .vxn-figs__lbl {
+    max-width: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   20. .vxn-post — the poster trio (20260912)
+   components/sections/UaePosterTrio.tsx
+
+   Three portrait panels at 4:5, the proportion of the reference's own posters,
+   with its rhythm kept: a dark panel carrying a chevron, a photograph, and a
+   flat colour. The colour is the site's CTA gradient and the chevron is the
+   wordmark's x, the device this page already uses, so the set reads as this
+   brand rather than as the reference's.
+
+   THE GLASS IS THE POINT OF THIS SECTION and was the explicit ask. Each card
+   carries a frosted plate along its foot holding the call and the wordmark,
+   and a specular sheen crosses the card once as it arrives and again on hover.
+   Both are decoration on elements that hold nothing else, and the plate has
+   the opaque fallback the site's other glass panels have.
+
+   THE CARD DOES NOT MOVE ON HOVER. Its arrival transition carries the stagger
+   delay, and a hover transform on the same element would inherit that delay on
+   the way back; the feedback is the plate lifting, the photograph zooming, the
+   sheen and the shadow instead. Same reason the service template reveals
+   .at-acc__inner rather than the panel that owns its transition.
+   -------------------------------------------------------------------------- */
+.vxn-post {
+  background: #fff;
+}
+
+.vxn-post__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 1.6vw, 26px);
+}
+
+.vxn-post__card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  aspect-ratio: 4 / 5;
+  padding: clamp(22px, 2.4vw, 38px);
+  border-radius: 24px;
+  overflow: hidden;
+  isolation: isolate;
+  text-decoration: none;
+  box-shadow: 0 10px 30px rgba(6, 20, 54, .10);
+  transition: box-shadow .5s var(--vxn-ease);
+}
+
+.vxn-post__card:hover {
+  box-shadow: 0 26px 60px rgba(6, 20, 54, .26);
+}
+
+/* 1. The chevron panel. The first gradient is the ghost the reference sets
+      behind its own chevron. */
+.vxn-post__card--mark {
+  background-image:
+    linear-gradient(152deg, rgba(11, 45, 190, .34) 0%, rgba(11, 45, 190, 0) 46%),
+    linear-gradient(160deg, #111C31 0%, #0B1424 56%, #0A1A34 100%);
+}
+
+/* Parked high and bled off the left edge, so what shows is the chevron half of
+   the glyph running down the side, which is where the reference puts its own.
+   Centred and full width it sat squarely behind the statement and the underline
+   crossed it. */
+.vxn-post__chev {
+  position: absolute;
+  z-index: -1;
+  left: -26%;
+  top: 30%;
+  width: 88%;
+  transform: translateY(-50%);
+  color: #1436D8;
+}
+
+.vxn-post__chev svg {
+  display: block;
+  width: 100%;
+  height: auto !important;
+}
+
+/* The statement sits over the mark's lower arm whatever the card's height, so
+   the foot of the panel is darkened the way the photograph's is. */
+.vxn-post__card--mark::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(180deg,
+      rgba(8, 16, 32, 0) 38%,
+      rgba(8, 16, 32, .58) 70%,
+      rgba(8, 16, 32, .86) 100%);
+}
+
+/* 2. The photograph. */
+.vxn-post__media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100% !important;
+  object-fit: cover;
+  transition: transform 1.2s var(--vxn-ease);
+}
+
+.vxn-post__card--photo:hover .vxn-post__media {
+  transform: scale(1.06);
+}
+
+.vxn-post__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg,
+      rgba(5, 16, 40, .26) 0%,
+      rgba(5, 16, 40, .12) 32%,
+      rgba(5, 16, 40, .70) 74%,
+      rgba(5, 16, 40, .88) 100%);
+}
+
+/* 3. The flat colour, with its statement at the top as the reference sets it. */
+.vxn-post__card--fill {
+  justify-content: space-between;
+  background-image: var(--vxn-cta-grad, linear-gradient(150deg, #0E3FA8 0%, #1436D8 48%, #0B2DBE 100%));
+}
+
+/* ---- The statement ---- */
+.vxn-post__body {
+  position: relative;
+  z-index: 2;
+}
+
+/* Two classes, for the reason given at .vxn-figs__leadTitle: the market's type
+   scale sets `body.vxn-uae-type h3` at (0,1,2) !important and these arrived at
+   its 27px step, half the size the reference's posters set. */
+.vxn-post .vxn-post__title {
+  margin: 0;
+  color: #FFFFFF !important;
+  font-weight: 400 !important;
+  font-size: clamp(24px, 2.2vw, 34px) !important;
+  line-height: 1.18 !important;
+  letter-spacing: -.005em;
+}
+
+/* The flat panel carries the largest type of the three, as the reference's
+   does: it has no photograph and no mark, so the statement is the artwork. */
+.vxn-post .vxn-post__card--fill .vxn-post__title {
+  font-size: clamp(28px, 2.8vw, 44px) !important;
+  line-height: 1.14 !important;
+}
+
+/* The reference underlines the emphasised words in its accent; this is the
+   brand's sky, which holds 8.6:1 on the dark panel. The bright panel takes a
+   lighter tint of the same family for the same reason: 5.8:1 there, against
+   2.6:1 if it kept the sky. */
+.vxn-post__hl {
+  font-style: normal;
+  color: var(--vxn-sky, #8FB7FF);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: .16em;
+}
+
+.vxn-post__card--fill .vxn-post__hl {
+  color: #BFD6FF;
+}
+
+.vxn-post__cap {
+  margin: 14px 0 0;
+  max-width: 32ch;
+  color: rgba(255, 255, 255, .78);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ---- The glass plate ---- */
+.vxn-post__foot {
+  position: relative;
+  z-index: 2;
+  overflow: hidden;
+  margin-top: clamp(16px, 1.8vw, 26px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px 12px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .12);
+  -webkit-backdrop-filter: blur(14px) saturate(150%);
+  backdrop-filter: blur(14px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, .26);
+  box-shadow: 0 14px 34px rgba(4, 14, 40, .26);
+  transition:
+    transform .5s var(--vxn-ease),
+    background-color .5s var(--vxn-ease),
+    border-color .5s var(--vxn-ease);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+
+  .vxn-post__foot {
+    background: rgba(8, 24, 58, .72);
+  }
+}
+
+.vxn-post__card:hover .vxn-post__foot {
+  transform: translateY(-5px);
+  background-color: rgba(255, 255, 255, .2);
+  border-color: rgba(255, 255, 255, .42);
+}
+
+/* The gloss that crosses the plate itself, so the glass reads as glass rather
+   than as a flat translucent box. */
+.vxn-post__foot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(118deg,
+      rgba(255, 255, 255, 0) 34%,
+      rgba(255, 255, 255, .28) 50%,
+      rgba(255, 255, 255, 0) 66%);
+  background-size: 260% 100%;
+  background-position: 124% 0;
+  opacity: 0;
+  transition: opacity .4s ease;
+}
+
+.vxn-post__card:hover .vxn-post__foot::after {
+  opacity: 1;
+  animation: vxn-post-gloss 1.2s var(--vxn-ease) 1 both;
+}
+
+@keyframes vxn-post-gloss {
+
+  from {
+    background-position: 124% 0;
+  }
+
+  to {
+    background-position: -64% 0;
+  }
+}
+
+.vxn-post__note {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #FFFFFF;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.vxn-post__note i {
+  font-size: 12px;
+  transition: transform .3s var(--vxn-ease);
+}
+
+.vxn-post__card:hover .vxn-post__note i {
+  transform: translateX(4px);
+}
+
+.vxn-post__logo {
+  flex: none;
+  width: clamp(74px, 6vw, 96px);
+  height: auto !important;
+  opacity: .9;
+}
+
+/* ---- The sheen ----
+   Two keyframe names, not one: an animation already applied under its own name
+   with the `both` fill will not restart when a second rule asks for the same
+   name, so hovering a card that had already played its arrival sweep would do
+   nothing. The hover rule is declared after the arrival rule because the two
+   match at the same specificity. */
+.vxn-post__sheen {
+  position: absolute;
+  z-index: 1;
+  top: -18%;
+  bottom: -18%;
+  left: 0;
+  width: 44%;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-170%) skewX(-16deg);
+  background: linear-gradient(100deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, .10) 40%,
+      rgba(255, 255, 255, .28) 52%,
+      rgba(255, 255, 255, .10) 64%,
+      rgba(255, 255, 255, 0) 100%);
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+}
+
+.vxn-post__card[data-anim='in'] .vxn-post__sheen {
+  animation: vxn-post-sheen-in 1.5s var(--vxn-ease) var(--vxn-anim-d, 0ms) 1 both;
+}
+
+.vxn-post__card:hover .vxn-post__sheen {
+  animation: vxn-post-sheen-hover 1.1s var(--vxn-ease) 1 both;
+}
+
+@keyframes vxn-post-sheen-in {
+
+  0% {
+    opacity: 0;
+    transform: translateX(-170%) skewX(-16deg);
+  }
+
+  14% {
+    opacity: 1;
+  }
+
+  86% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(330%) skewX(-16deg);
+  }
+}
+
+@keyframes vxn-post-sheen-hover {
+
+  0% {
+    opacity: 0;
+    transform: translateX(-170%) skewX(-16deg);
+  }
+
+  14% {
+    opacity: 1;
+  }
+
+  86% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(330%) skewX(-16deg);
+  }
+}
+
+/* ---- Arrival ----
+   Same safety rule as section 19: visible unless the script says pending. The
+   box-shadow is restated without the stagger delay so the hover shadow does
+   not wait for it. */
+.vxn-post__card[data-anim='pending'] {
+  opacity: 0;
+  transform: translateY(26px);
+}
+
+.vxn-post__card[data-anim='in'] {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity .8s var(--vxn-ease) var(--vxn-anim-d, 0ms),
+    transform .8s var(--vxn-ease) var(--vxn-anim-d, 0ms),
+    box-shadow .5s var(--vxn-ease);
+}
+
+@media (max-width: 1100px) {
+
+  .vxn-post__card {
+    aspect-ratio: 3 / 4;
+  }
+}
+
+@media (max-width: 860px) {
+
+  .vxn-post__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+  }
+
+  .vxn-post__card {
+    aspect-ratio: auto;
+    min-height: clamp(360px, 76vw, 480px);
+  }
+
+  .vxn-post__chev {
+    width: 58%;
+    left: -10%;
+  }
+}
+
+/* Nothing here is load bearing, so with motion reduced every card is simply
+   where it lands: no stagger, no sweep, no zoom, no lift. */
+@media (prefers-reduced-motion: reduce) {
+
+  .vxn-figs__lead[data-anim='pending'],
+  .vxn-figs__stat[data-anim='pending'],
+  .vxn-post__card[data-anim='pending'] {
+    opacity: 1;
+    transform: none;
+  }
+
+  .vxn-post__sheen,
+  .vxn-post__foot::after {
+    display: none;
+  }
+
+  .vxn-post__card[data-anim='in'] .vxn-post__sheen,
+  .vxn-post__card:hover .vxn-post__sheen,
+  .vxn-post__card:hover .vxn-post__foot::after {
+    animation: none;
+  }
+
+  .vxn-post__card--photo:hover .vxn-post__media,
+  .vxn-post__card:hover .vxn-post__foot {
+    transform: none;
   }
 }

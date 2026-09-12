@@ -12,8 +12,11 @@ import ClientScript from '@/components/ClientScript';
 import type { PageConfig } from '@/lib/page-config';
 import { LogoXClipDefs } from '@/components/brand/LogoX';
 import WhoWeAreTrio from '@/components/sections/WhoWeAreTrio';
+import UaeFigureBand from '@/components/sections/UaeFigureBand';
 import UaeAnswerBand from '@/components/sections/UaeAnswerBand';
 import UaeImpactBands from '@/components/sections/UaeImpactBands';
+import UaePosterTrio from '@/components/sections/UaePosterTrio';
+import UaeBandMotion from '@/components/sections/UaeBandMotion';
 import UaeReadyBand from '@/components/sections/UaeReadyBand';
 import UaeSubscribeBand from '@/components/sections/UaeSubscribeBand';
 
@@ -500,6 +503,10 @@ export default function HomeAeBody({ page, region }: { page: PageConfig; region:
       						<section className="vxn-trio-solo">
       							<WhoWeAreTrio region={region} />
       						</section>
+      						{/* The figures band (20260912), built to the reference supplied that
+      						    day. It sits between the trio and the six services so the proof
+      						    is read before the offer. UAE only. */}
+      						<UaeFigureBand region={region} />
       						<div className="vxn-home-svc-section">
       							<div className="elementor-element elementor-element-85963b4 e-flex e-con-boxed e-con e-parent" data-id="85963b4" data-element_type="container" data-e-type="container">
       								<div className="e-con-inner">
@@ -550,6 +557,13 @@ export default function HomeAeBody({ page, region }: { page: PageConfig; region:
       						    20260911), between the Answer band and the insights carousel. UAE only —
       						    India does not render them. */}
       						<UaeImpactBands region={region} />
+      						{/* The poster trio (20260912), the second of that day's two
+      						    references. It closes the middle of the page, before the
+      						    insights carousel. UAE only. */}
+      						<UaePosterTrio region={region} />
+      						{/* One motion layer for both of the day's bands: the figure roll
+      						    and the staggered arrival. Renders nothing. */}
+      						<UaeBandMotion />
       						<div className="elementor-element elementor-element-c50d7c9 e-flex e-con-boxed e-con e-parent" data-id="c50d7c9" data-element_type="container" data-e-type="container">
       							<div className="e-con-inner">
       								<div className="elementor-element elementor-element-9317f8a e-con-full e-flex e-con e-child" data-id="9317f8a" data-element_type="container" data-e-type="container">

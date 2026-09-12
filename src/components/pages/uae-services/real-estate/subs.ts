@@ -4,6 +4,14 @@
  * Practice-level sections once, page-level copy per sub-service; the names
  * and slugs are the registry's. See ../template/subTypes.ts for the shape,
  * the length rules and the note on the success story being a placeholder.
+ *
+ * BUY PROPERTY IS THE CLIENT'S page document (20260912), word for word, under
+ * the same two rules as the home and service pages: nothing added to the
+ * document or dropped from it, and no em dashes anywhere on the UAE pages.
+ * The document writes every one of the eight practice-level sections for this
+ * page in its own words, so the page carries them all in `override` and the
+ * PARENT below is what the other two pages show until their documents arrive.
+ * Where the document and a slot did not meet, the call is marked at the line.
  */
 import { buildSubs, type SubParent, type SubSpec } from '../template/subTypes';
 import {
@@ -19,7 +27,8 @@ import { REAL_ESTATE_TEMPLATE } from './content';
 
 const PARENT: SubParent = {
   service: 'real-estate-transactions',
-  crumb: 'Real Estate',
+  /* The Buy Property document writes the breadcrumb out in full. */
+  crumb: 'Real Estate Transactions',
   hero: { image: REAL_ESTATE_TEMPLATE.hero.image, alt: REAL_ESTATE_TEMPLATE.hero.alt },
   panel: PANEL_PLATE,
   why: {
@@ -112,26 +121,144 @@ const SPECS: SubSpec[] = [
   {
     slug: 'buy-property',
     title: 'Buy Property',
-    lede:
-      'We help buyers find, assess and secure the right property across Dubai and Abu Dhabi — residential and commercial, ready or off-plan. Whether you are buying a first home, an investment apartment or a commercial unit for your business, we bring independent sourcing, evidence-based pricing and a negotiation run on your side of the table only.',
+    lede: 'Your next home or investment starts with the right opportunity. Explore the UAE property market with expertise guiding every move.',
     brief: {
-      lede:
-        'We partner with buyers to run a purchase as a decision rather than a search. The approach is built on acquisitions handled across freehold Dubai and Abu Dhabi, which has shown that a good purchase needs both the right asset and a process that tests the price, the title and the terms before the deposit is paid.',
-      whatIntro: 'The what covers what a buyer needs settled before committing, including:',
+      lede: [
+        'Buying property should feel exciting, not complicated. Whether it is a place to call home or an investment for the future, ValuNxt brings the search, market perspective and transaction support together to make the journey easier from the start.',
+        'Tell us what you are looking for. We help you narrow the market, explore the right opportunities and move forward when the right property comes along.',
+      ],
+      /* The document heads each list; the brief has a plain paragraph before
+         each list and no heading, so the heading is set as that paragraph. */
+      whatIntro: 'A Property Search Built Around You',
+      /* The document's points are a title over a sentence. The list renders a
+         bold lead-in followed by the rest on one line, so a full stop closes
+         each lead, as the how-lists on the other pages do. */
       what: [
-        { lead: 'A brief, not a wish list', text: 'setting budget, use, location, yield or lifestyle priorities and the constraints — visa, financing, timing — that narrow the search.', stress: 'the constraints' },
-        { lead: 'Independent sourcing', text: 'across the whole market, on and off portal, with no inventory of our own to steer you towards.' },
-        { lead: 'Pricing on evidence', text: 'from transaction comparables and the group’s RICS-regulated valuers, so an offer is a number you can defend.' },
-        { lead: 'Diligence on the asset', text: 'title, service charges, developer and building history, mortgage clearance and community rules, before the MOU.' },
+        { lead: 'Properties That Fit.', text: 'Explore homes and investment opportunities matched to your location, budget and priorities.' },
+        { lead: 'More Relevant Options.', text: 'Compare apartments, villas, townhouses and investment properties without getting lost in endless listings.' },
+        { lead: 'Market Perspective.', text: 'Understand the location, pricing and market dynamics behind the properties you are considering.' },
+        { lead: '100% Transparency.', text: 'Stay informed on the property, price, process and next steps throughout your purchase.' },
       ],
-      howIntro: 'The how runs the purchase through to keys:',
+      howIntro: 'From Search to Keys',
       how: [
-        { lead: 'One adviser throughout.', text: 'The person who sourced the property negotiates it, manages the paperwork and is there at transfer.', stress: 'One adviser' },
-        { lead: 'Negotiation with a plan.', text: 'A target, a walk-away and the evidence for both, agreed with you before the first offer is made.' },
-        { lead: 'Finance in step.', text: 'The group’s mortgage desk runs pre-approval and the loan alongside, so the offer is a funded one.' },
-        { lead: 'Completion managed.', text: 'NOC, transfer, trustee appointment and handover coordinated, with the timeline published and tracked.' },
+        { lead: 'Curated Viewings.', text: 'View properties worth your time, selected around what you are actually looking for.' },
+        { lead: 'Confident Negotiation.', text: 'Move into offers with market context and support when price and terms matter.' },
+        { lead: 'Hassle-Free Coordination.', text: 'Navigate documentation, approvals and transaction requirements without chasing every step yourself.' },
+        { lead: 'Seamless Closure.', text: 'From an accepted offer to transfer and handover, we help keep everything moving until the keys are yours.' },
       ],
-      panel: { title: 'Buy-Side Advisory', sub: 'Independent sourcing, evidence-based pricing and negotiation for buyers across Dubai and Abu Dhabi.' },
+      panel: {
+        title: 'Buying Property, Made Effortless.',
+        sub: 'From finding the right property to negotiating the right terms and completing the transaction, we stay with you through every move.',
+      },
+    },
+    override: {
+      why: {
+        pill: 'Why us?',
+        /* Two lines in the document, three in the card, the last of them
+           highlighted: the second line is split so the highlight lands on its
+           final word. */
+        titleTop: 'Your Property Search.',
+        titleMid: 'Without the',
+        titleMark: 'Guesswork.',
+        note: 'From the right opportunities to the right terms, we bring transparency, market insight and dedicated support to every move.',
+        /* The document gives the buttons labels but no destinations; the
+           search buttons lead where every other UAE consultation button does. */
+        cta: { label: 'Find My Property', href: '/free-consultation/' },
+        ...WHY_PHOTO,
+      },
+      approach: {
+        eyebrow: 'Our approach',
+        columns: [
+          {
+            title: 'Understand What Matters',
+            /* The commas around "today and over the longer term" stand where
+               the document's dashes were. */
+            body: 'We start by understanding what you want from the property, today and over the longer term, before shaping the search around you.',
+          },
+          {
+            title: 'Explore With Perspective',
+            body: 'We help you compare opportunities beyond the surface, bringing greater context to the properties and communities you are considering.',
+          },
+          {
+            title: 'Move With Confidence',
+            body: 'When the right opportunity stands out, we help turn consideration into action with clear guidance through the decisions that follow.',
+          },
+        ],
+      },
+      insights: {
+        title: 'Know the Market. Spot the Opportunity.',
+        lede: 'Explore the locations, trends and market intelligence shaping smarter property decisions across the UAE.',
+        /* /blogs/ is where the header's Insights item leads. The document's
+           four cards are topics, not published articles, so each leads there
+           too and carries no category, kind or date. The plates are the four
+           the site's articles use. */
+        all: { label: 'Explore Market Insights', href: '/blogs/' },
+        cards: [
+          { title: 'Where Buyers Are Looking', excerpt: 'Communities gaining attention and why.', href: '/blogs/', image: 'blogs/blog-1.webp', alt: '' },
+          { title: 'Ready vs Off-Plan', excerpt: 'Which route fits your property goals?', href: '/blogs/', image: 'blogs/blog-2.webp', alt: '' },
+          { title: 'What Drives Property Value?', excerpt: 'The factors influencing what a property is worth.', href: '/blogs/', image: 'blogs/blog-3.webp', alt: '' },
+          { title: 'Before You Buy', excerpt: 'The insights worth knowing before you commit.', href: '/blogs/', image: 'blogs/blog-4.webp', alt: '' },
+        ],
+      },
+      story: {
+        ...STORY_PHOTO,
+        alt: 'An adviser reviewing a property file',
+        /* The document gives the quote no speaker and the panel no label, so
+           the attribution row and the pill are left off rather than invented. */
+        quote: 'ValuNxt made our property search much more focused. We explored the right options, understood the market better and had support throughout the purchase.',
+        title: 'More Choice. One Focused Property Search.',
+        stat: '50K+',
+        note: 'property listings giving buyers access to opportunities across the UAE market.',
+        cta: { label: 'Find Your Property', href: '/free-consultation/' },
+        arrow: { href: '/services/real-estate-transactions/', label: 'More about Real Estate' },
+      },
+      band: {
+        ...BAND_PHOTO,
+        /* The document sets a kicker over a headline; the band has one heading
+           and one paragraph, so the kicker is the heading and the headline
+           opens the paragraph. Its own paragraph was tried first and sat as a
+           stray short line in the right-aligned side column. */
+        title: 'VALUNXT Property Intelligence',
+        body: 'More Clarity Behind Every Property Choice. Go beyond the listing with a clearer view of location, pricing, market movement and investment potential so you understand the opportunity before you make your move.',
+        cta: { label: 'Get in Touch', href: '/contact/' },
+      },
+      vision: {
+        /* Each step in the document is a title, a one-line lead and a
+           sentence; a step has a title and a body, so the lead opens the body. */
+        steps: [
+          {
+            title: 'Property Selection',
+            body: 'More relevant from the start. Explore opportunities aligned with your location, budget, lifestyle and investment priorities.',
+          },
+          {
+            title: 'Market Intelligence',
+            body: 'Know what sits behind the price. Understand pricing trends, demand, community dynamics and the market signals influencing your decision.',
+          },
+          {
+            title: 'Connected Expertise',
+            body: 'More support when you need it. Access valuation, mortgage and research expertise alongside your property journey when the decision calls for it.',
+          },
+        ],
+        pill: 'Our Vision',
+        /* The comma after "clearer" stands where the document's dash was. */
+        quote: 'To make every property decision clearer, connecting the right opportunity with the insight to recognise its potential.',
+      },
+      /* "Explore by Property" heads the strip in the document; the row's
+         heading block is hidden by the home page's CSS, so nothing shows it. */
+      strip: stripOf('real-estate-transactions', [
+        'Apartments',
+        'Villas',
+        'Townhouses',
+        'Waterfront Homes',
+        'Investment Properties',
+        'Ready Properties',
+      ]),
+      talk: {
+        head: 'Your Next Property Move Starts Here.',
+        lede: 'Ready to turn your property plans into your next address? Start the conversation with ValuNxt.',
+        cta: { label: 'Start Your Search', href: '/free-consultation/' },
+        image: REAL_ESTATE_TEMPLATE.close.image,
+      },
     },
   },
   {
