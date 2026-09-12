@@ -51,11 +51,13 @@ const QUESTIONS: Record<string, string> = {
 };
 
 /**
- * The stage's ground: the brand's dark pleated-blue artwork, the one abstract
- * in uploads that no other band on this page uses (the ribbons, abstract-2,
- * carry the practices band and the impact card; abstract-3 the impact band).
+ * The stage's ground: the brand's cobalt field with folded ribbons in its
+ * lower right, banners/uae-slider-4 (1920x1080, so it covers the landscape
+ * stage with almost no crop and the folds land under the answer card).
+ * Rehman's call, 20260912; the pleats, abstract-1, and then the diagonal
+ * texture-1 were here earlier that day.
  */
-const TEXTURE = 'homepage/abstract-1.webp';
+const TEXTURE = 'banners/uae-slider-4.webp';
 
 /**
  * Registry strings are authored for <Html> and may carry entities; the stage
