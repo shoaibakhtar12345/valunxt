@@ -6,7 +6,7 @@
  * of copy and the email field on the bar.
  *
  * THE COPY IS THE CLIENT'S ONE SENTENCE (20260911), split across the slots the
- * layout gives it. The document reads "Stay Ahead With ValuNxt Insights —
+ * layout gives it. The document reads "Stay Ahead With Valunxt Insights —
  * perspectives on business, property, markets and the decisions shaping the
  * UAE.", and it is the same words here: the name is the label, what the list
  * covers is the headline, and the call is the line on the bar. Splitting at
@@ -32,7 +32,7 @@ export default function UaeSubscribeBand({ region }: { region: string }) {
   return (
     <section className="vxn-sub" aria-labelledby="vxn-sub-title">
       <div className="vxn-sub__panel">
-        <span className="vxn-sub__eyebrow">ValuNxt Insights</span>
+        <span className="vxn-sub__eyebrow">Valunxt Insights</span>
         <h2 className="vxn-sub__head" id="vxn-sub-title">
           Perspectives on business, property, markets and the decisions shaping the UAE.
         </h2>
@@ -59,7 +59,7 @@ export default function UaeSubscribeBand({ region }: { region: string }) {
           photograph — which is the whole reason the two halves meet at a hard
           edge rather than blending. */}
       <div className="vxn-sub__bar">
-        <p className="vxn-sub__copy">Stay Ahead With ValuNxt Insights</p>
+        <p className="vxn-sub__copy">Stay Ahead With Valunxt Insights</p>
 
         <UaeSubscribeForm />
       </div>

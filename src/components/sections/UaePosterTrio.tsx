@@ -1,144 +1,108 @@
 /**
- * The poster trio on /en-ae/ (20260912).
+ * The bento on /en-ae/ (20260912; rebuilt the same day from the poster trio).
  *
- * Built to the reference supplied that day: three portrait panels side by side,
- * each a single statement, read as one set because the three grounds differ.
- * The reference's are a dark panel with the brand's chevron cut across it, a
- * photograph, and a flat colour with the statement in dark type. This keeps
- * that rhythm and changes the palette for the brand's: the chevron is the
- * wordmark's own x (components/brand/LogoX.tsx, the device the rest of this page
- * already uses), the flat panel is the CTA gradient, and the accent under the
- * emphasised words is the brand's sky rather than the reference's green.
+ * Built to the reference supplied that afternoon: a two-row grid of four
+ * cards on a three-column track, the top row a wide photograph beside a
+ * narrow colour card, the bottom row a narrow dark card beside a wide pale
+ * one. The reference's cards are a customer story with a serif quote over
+ * the photograph, a "facts and numbers" card with one large figure, a dark
+ * story card with a photograph along its foot, and a review card carrying a
+ * serif line and two buttons. Each is kept as a shape and given this brand's
+ * content and colours: the blue is the CTA ramp, the pale card is the site's
+ * cream, the type is the market's one face, Sanomat Sans.
  *
- * THE GLASS. Every card carries a frosted plate along its foot holding the
- * call and the wordmark, and a specular sheen that crosses the card once as it
- * arrives and again on hover. That was the explicit ask for this section. The
- * plate has an opaque fallback where backdrop-filter is unavailable, as the
- * other two glass panels on the site do, and the sheen is a decoration on a
- * pseudo element, so nothing here is load bearing.
+ * THE FILE KEEPS ITS NAME AND ITS PREFIX. UaeBandMotion.tsx reveals
+ * .vxn-post__card by selector and section 15 of the stylesheet lists
+ * .vxn-post in the page rhythm; renaming either would mean touching both for
+ * no gain. The glass plates and the sheen of the trio are gone with it: the
+ * reference has neither.
  *
- * THE COPY IS NOT THE CLIENT'S. The home document was written before this
- * section was asked for, so the three statements, the three foot lines and the
- * photograph's caption are drafted here in the document's register, to be
- * replaced when the client supplies theirs. The links are not drafted: each
- * card leads to a page this site already publishes. No em dashes, as on every
- * UAE page.
+ * THE COPY IS NOT THE CLIENT'S, as the trio's was not: the three statements
+ * are the trio's own, drafted in the home document's register, and the
+ * figure is the client's 48+ years from the careers band's lede. The card
+ * labels are drafted here. Every link leads to a page this site already
+ * publishes. No em dashes, as on every UAE page.
  *
- * WHERE IT SITS. After the careers band and before the insights carousel, as
- * the closing statement of the middle of the page. India renders none of it.
+ * WHERE IT SITS. After the careers band and before the insights carousel.
+ * India renders none of it.
  *
  * Motion: components/sections/UaeBandMotion.tsx. Styles:
  * assets/css/valunxt-landing.css (section 20, .vxn-post).
  */
-import { BASE, rurl } from '@/lib/region';
+import { rurl } from '@/lib/region';
 import { rimgFirst } from '@/lib/region-assets';
-import { LogoXGlyph } from '@/components/brand/LogoX';
 
-/** One panel. `lead`/`mark`/`tail` split the statement so the middle words can
- *  take the underline the reference draws under its own. */
-interface Poster {
-  kind: 'mark' | 'photo' | 'fill';
-  lead: string;
-  mark: string;
-  tail: string;
-  /** The line in the frosted plate, which is also the card's call. */
-  note: string;
-  href: string;
-  /** Photo cards only, in preference order. */
-  images?: string[];
-  alt?: string;
-  /** Photo cards only: the small caption the reference sets above the plate. */
-  caption?: string;
+function Arrow() {
+  return (
+    <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+      <path d="M2.5 8h11M9 3.5 13.5 8 9 12.5" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
 }
-
-const POSTERS: Poster[] = [
-  {
-    kind: 'mark',
-    lead: 'Advice that ',
-    mark: 'protects',
-    tail: ' what you are building.',
-    note: 'About VALUNXT',
-    href: '/about/',
-  },
-  {
-    kind: 'photo',
-    lead: 'We work ',
-    mark: 'beside the people',
-    tail: ' making the decision.',
-    note: 'Talk to an Adviser',
-    href: '/free-consultation/',
-    images: ['new-folder/about-us-1.webp', 'banners/careers.webp'],
-    alt: 'Two colleagues reviewing figures together',
-    caption: 'Founders, businesses, investors and developers across the UAE',
-  },
-  {
-    kind: 'fill',
-    lead: 'Complete financial ',
-    mark: 'advisory',
-    tail: ', in one place.',
-    note: 'Explore Our Services',
-    href: '/services/',
-  },
-];
 
 export default function UaePosterTrio({ region }: { region: string }) {
   return (
-    <section className="vxn-post" aria-label="What VALUNXT stands for">
+    <section className="vxn-post" aria-label="What Valunxt stands for">
       <div className="vxn-post__grid">
-        {POSTERS.map((p) => (
-          <a
-            className={`vxn-post__card vxn-post__card--${p.kind}`}
-            href={rurl(region, p.href)}
-            key={p.href}
-          >
-            {p.kind === 'photo' ? (
-              <>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  className="vxn-post__media"
-                  src={rimgFirst(region, p.images ?? [])}
-                  alt={p.alt ?? ''}
-                  loading="lazy"
-                />
-                <span className="vxn-post__scrim" aria-hidden="true" />
-              </>
-            ) : null}
+        {/* 1. The story: a photograph, the statement over its foot. */}
+        <a className="vxn-post__card vxn-post__card--story" href={rurl(region, '/free-consultation/')}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            className="vxn-post__media"
+            src={rimgFirst(region, ['new-folder/about-us-1.webp', 'banners/careers.webp'])}
+            alt="Two colleagues reviewing figures together"
+            loading="lazy"
+          />
+          <span className="vxn-post__scrim" aria-hidden="true" />
+          <span className="vxn-post__eyebrow">Who we work with</span>
+          <div className="vxn-post__body">
+            <h3 className="vxn-post__quote">We work beside the people making the decision.</h3>
+            <p className="vxn-post__by">Founders, businesses, investors and developers across the UAE</p>
+          </div>
+          <span className="vxn-post__disc" aria-hidden="true">
+            <Arrow />
+          </span>
+        </a>
 
-            {p.kind === 'mark' ? (
-              <span className="vxn-post__chev" aria-hidden="true">
-                <LogoXGlyph />
-              </span>
-            ) : null}
+        {/* 2. The figure: the client's own, from the careers band. */}
+        <div className="vxn-post__card vxn-post__card--fact">
+          <span className="vxn-post__eyebrow">Facts and numbers</span>
+          <div className="vxn-post__body">
+            <span className="vxn-post__big">48+</span>
+            <p className="vxn-post__fact">years of expertise behind every valuation, report and recommendation.</p>
+          </div>
+        </div>
 
-            <div className="vxn-post__body">
-              <h3 className="vxn-post__title">
-                {p.lead}
-                <em className="vxn-post__hl">{p.mark}</em>
-                {p.tail}
-              </h3>
-              {p.caption ? <p className="vxn-post__cap">{p.caption}</p> : null}
+        {/* 3. The dark card: the statement above, a photograph along the foot. */}
+        <a className="vxn-post__card vxn-post__card--dark" href={rurl(region, '/about/')}>
+          <span className="vxn-post__eyebrow">About Valunxt</span>
+          <h3 className="vxn-post__title">Advice that protects what you are building.</h3>
+          <span className="vxn-post__band" aria-hidden="true">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              className="vxn-post__media"
+              src={rimgFirst(region, ['new-folder/who-we-are-1.webp', 'new-folder/career-1.webp', 'new-folder/about-us-1.webp'])}
+              alt=""
+              loading="lazy"
+            />
+          </span>
+        </a>
+
+        {/* 4. The pale card: the line and the two calls. */}
+        <div className="vxn-post__card vxn-post__card--review">
+          <span className="vxn-post__eyebrow">Our services</span>
+          <div className="vxn-post__body">
+            <h3 className="vxn-post__say">Complete financial advisory, in one place.</h3>
+            <div className="vxn-post__ctas">
+              <a className="vxn-post__btn vxn-post__btn--solid" href={rurl(region, '/services/')}>
+                Explore Our Services
+              </a>
+              <a className="vxn-post__btn vxn-post__btn--line" href={rurl(region, '/free-consultation/')}>
+                Book a Free Consultation
+              </a>
             </div>
-
-            <div className="vxn-post__foot">
-              <span className="vxn-post__note">
-                {p.note}
-                <i aria-hidden="true" className="vamtamtheme- vamtam-theme-arrow-right" />
-              </span>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                className="vxn-post__logo"
-                src={`${BASE}/assets/content/uploads/logo/valunxt-white.svg`}
-                alt=""
-                aria-hidden="true"
-                width={410}
-                height={82}
-                loading="lazy"
-              />
-            </div>
-
-            <span className="vxn-post__sheen" aria-hidden="true" />
-          </a>
-        ))}
+          </div>
+        </div>
       </div>
     </section>
   );

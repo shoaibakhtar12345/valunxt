@@ -45,7 +45,6 @@ const GROUPS: { sel: string; variant: string; stagger?: boolean }[] = [
   { sel: '.at-hero__copy > *', variant: 'up', stagger: true },
   { sel: '.at-intro__top > *', variant: 'up', stagger: true },
   { sel: '.at-intro__point', variant: 'up', stagger: true },
-  { sel: '.at-intro__chips, .at-intro__ctas', variant: 'up', stagger: true },
   { sel: '.at-intro__figure', variant: 'right' },
   { sel: '.at-prob__panel > *', variant: 'up', stagger: true },
   /* THE INNER, NOT THE PANEL. Revealing .at-acc__panel put data-anim on the

@@ -124,7 +124,7 @@ const SPECS: SubSpec[] = [
     lede: 'Your next home or investment starts with the right opportunity. Explore the UAE property market with expertise guiding every move.',
     brief: {
       lede: [
-        'Buying property should feel exciting, not complicated. Whether it is a place to call home or an investment for the future, ValuNxt brings the search, market perspective and transaction support together to make the journey easier from the start.',
+        'Buying property should feel exciting, not complicated. Whether it is a place to call home or an investment for the future, Valunxt brings the search, market perspective and transaction support together to make the journey easier from the start.',
         'Tell us what you are looking for. We help you narrow the market, explore the right opportunities and move forward when the right property comes along.',
       ],
       /* The document heads each list; the brief has a plain paragraph before
@@ -205,7 +205,7 @@ const SPECS: SubSpec[] = [
         alt: 'An adviser reviewing a property file',
         /* The document gives the quote no speaker and the panel no label, so
            the attribution row and the pill are left off rather than invented. */
-        quote: 'ValuNxt made our property search much more focused. We explored the right options, understood the market better and had support throughout the purchase.',
+        quote: 'Valunxt made our property search much more focused. We explored the right options, understood the market better and had support throughout the purchase.',
         title: 'More Choice. One Focused Property Search.',
         stat: '50K+',
         note: 'property listings giving buyers access to opportunities across the UAE market.',
@@ -255,7 +255,7 @@ const SPECS: SubSpec[] = [
       ]),
       talk: {
         head: 'Your Next Property Move Starts Here.',
-        lede: 'Ready to turn your property plans into your next address? Start the conversation with ValuNxt.',
+        lede: 'Ready to turn your property plans into your next address? Start the conversation with Valunxt.',
         cta: { label: 'Start Your Search', href: '/free-consultation/' },
         image: REAL_ESTATE_TEMPLATE.close.image,
       },

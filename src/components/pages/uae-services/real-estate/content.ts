@@ -34,7 +34,7 @@ export const REAL_ESTATE_TEMPLATE: ServiceTemplateContent = {
   },
   intro: {
     head: 'One Real Estate Partner. For Every Step of the Transaction.',
-    lede: 'From finding the right property to negotiating terms and completing the transaction, ValuNxt brings market guidance and execution together under one team.',
+    lede: 'From finding the right property to negotiating terms and completing the transaction, Valunxt brings market guidance and execution together under one team.',
     proof: [
       { label: 'Market-Led Guidance', note: 'Insight grounded in current property market dynamics.' },
       { label: 'Property Search & Selection', note: 'Opportunities aligned with your requirements and objectives.' },

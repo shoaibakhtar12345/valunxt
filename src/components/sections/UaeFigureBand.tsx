@@ -1,68 +1,59 @@
 /**
- * The figures band on /en-ae/ (20260912).
+ * The practices band on /en-ae/ (20260912, simplified the same day).
  *
  * Built to the reference supplied that day: one wide rounded card on a blue
  * gradient with flowing ribbons across it, a lead panel held apart on the left
- * carrying the headline figure, and three more figures beside it with a hairline
- * between each. The reference's palette is not used; every surface here is the
- * brand's own, and the ribbons are homepage/abstract-2.webp, the artwork already
- * in uploads that the reference's background happens to be a near match for.
+ * and three points beside it with a hairline between each. The reference's
+ * palette is not used; every surface here is the brand's own, and the ribbons
+ * are homepage/abstract-2.webp, the artwork already in uploads that the
+ * reference's background happens to be a near match for.
  *
- * THE FIGURES ARE THE CLIENT'S, all four of them, and none is new to the site:
- * six practices is the services registry's own count, and 48+ years, 200+ years
- * combined and 10+ industries are the three the home document gives the band
- * below ("Expertise Measured in Decades."). THE SENTENCES UNDER THEM ARE MINE,
- * drafted in the document's register because the document states the figures as
- * one line of prose and gives no caption for any of them. Same for the lead
- * panel's title and paragraph. All of it is a slot to be replaced when the
- * client supplies captions. No em dashes, as on every UAE page.
+ * NO FIGURES. The first build carried four numbers (six practices, 48+ years,
+ * 200+ years combined, 10+ industries) rolled up on arrival. Rehman asked for
+ * the number content to go and simple headings to take its place, at a smaller
+ * size, so each cell is now a short heading over one line of prose and the
+ * roll is gone. The three points still say what the three figures said, in
+ * words; the numbers themselves remain in the band below ("Expertise Measured
+ * in Decades."), which is client copy and was left alone.
  *
- * THE BAND BELOW STILL CARRIES THE SAME THREE NUMBERS in its lede, which is
- * client copy and so was left alone; flagged for the client rather than edited
- * here.
+ * THE WORDING IS MINE, drafted in the home document's register, because the
+ * document gives no caption for any of it. A slot to be replaced when the
+ * client supplies copy. No em dashes, as on every UAE page.
  *
  * WHERE IT SITS. Straight after the "Who We Are" trio and before the six
  * services, so the proof is read before the offer. India renders none of it.
  *
- * Motion: components/sections/UaeBandMotion.tsx rolls each figure up to its
- * value once the card is on screen; the values are in the markup, so with the
- * script blocked or motion reduced they simply render.
+ * Motion: components/sections/UaeBandMotion.tsx fades the panel and the three
+ * points in once the card is on screen; nothing here depends on it.
  *
  * Styles: assets/css/valunxt-landing.css (section 19, .vxn-figs).
  */
 import { rimg } from '@/lib/region-assets';
-import { rurl, vxnServices } from '@/lib/region';
+import { rurl } from '@/lib/region';
 
-/** One figure and the line under it. `value` is what renders; `from` is where
- *  the roll starts, so 200+ does not count through 199 uninteresting steps. */
-interface Figure {
-  value: string;
+/** One point: a short heading and the line under it. */
+interface Point {
+  title: string;
   label: string;
 }
 
-/* Drafted captions, see the header. The three figures are the home document's
-   own; the wording under them is not. */
-const FIGURES: Figure[] = [
+/* Drafted, see the header. */
+const POINTS: Point[] = [
   {
-    value: '48+',
-    label: 'Years of expertise behind every valuation, report and recommendation.',
+    title: 'Decades of Expertise',
+    label: 'Experience behind every valuation, report and recommendation.',
   },
   {
-    value: '200+',
-    label: 'Years of combined experience across the advisory team.',
+    title: 'A Senior Advisory Team',
+    label: 'Accountants, tax advisers and valuers working as one team.',
   },
   {
-    value: '10+',
-    label: 'Industries served, held to the same standard of evidence in each.',
+    title: 'Every Industry, One Standard',
+    label: 'Each sector served to the same standard of evidence.',
   },
 ];
 
 export default function UaeFigureBand({ region }: { region: string }) {
-  /* The lead figure is counted, not typed: the services registry is the one
-     list the hero, the accordion and the header menu all read, so the panel
-     cannot claim a number the page does not show. */
-  const practices = vxnServices(region).length;
-
   return (
     <section className="vxn-figs" aria-labelledby="vxn-figs-title">
       <div className="vxn-figs__card" data-vxn-figs="">
@@ -79,9 +70,6 @@ export default function UaeFigureBand({ region }: { region: string }) {
         <span className="vxn-figs__glow" aria-hidden="true" />
 
         <div className="vxn-figs__lead">
-          <span className="vxn-figs__rank" data-vxn-count={String(practices)}>
-            {practices}
-          </span>
           <h2 id="vxn-figs-title" className="vxn-figs__leadTitle">
             Connected Practices for Businesses
           </h2>
@@ -95,16 +83,14 @@ export default function UaeFigureBand({ region }: { region: string }) {
           </a>
         </div>
 
-        <dl className="vxn-figs__stats">
-          {FIGURES.map((f) => (
-            <div className="vxn-figs__stat" key={f.value}>
-              <dt className="vxn-figs__num" data-vxn-count={f.value}>
-                {f.value}
-              </dt>
-              <dd className="vxn-figs__lbl">{f.label}</dd>
-            </div>
+        <ul className="vxn-figs__stats">
+          {POINTS.map((p) => (
+            <li className="vxn-figs__stat" key={p.title}>
+              <h3 className="vxn-figs__num">{p.title}</h3>
+              <p className="vxn-figs__lbl">{p.label}</p>
+            </li>
           ))}
-        </dl>
+        </ul>
       </div>
     </section>
   );

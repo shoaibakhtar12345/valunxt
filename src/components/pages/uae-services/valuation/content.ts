@@ -32,7 +32,7 @@ export const VALUATION_TEMPLATE: ServiceTemplateContent = {
   },
   intro: {
     head: 'One Valuation Partner. Decades of Expertise Behind Every Conclusion.',
-    lede: 'Through our Valuation & Advisory partnership with Reliant Surveyors, ValuNxt brings established expertise, market evidence and professional judgement to valuations for transactions, reporting, investment and strategic decisions.',
+    lede: 'Through our Valuation & Advisory partnership with Reliant Surveyors, Valunxt brings established expertise, market evidence and professional judgement to valuations for transactions, reporting, investment and strategic decisions.',
     proof: [
       { label: 'RICS-Regulated Expertise', note: 'Valuations aligned with recognised global standards and professional practice.' },
       { label: '48+ Years of Experience', note: 'Decades of valuation and advisory expertise through Reliant Surveyors.' },
@@ -138,7 +138,7 @@ export const VALUATION_TEMPLATE: ServiceTemplateContent = {
   },
   close: {
     head: 'Experience Behind the Valuation. Confidence Behind the Decision.',
-    lede: 'Access ValuNxt’s Valuation & Advisory services with the established expertise of Reliant Surveyors, our Valuation & Advisory Partner.',
+    lede: 'Access Valunxt’s Valuation & Advisory services with the established expertise of Reliant Surveyors, our Valuation & Advisory Partner.',
     primary: { label: 'Speak to a Valuation Advisor', href: '/free-consultation/' },
     image: ['services/valuation-talk.webp', 'new-folder/who-we-are-1.webp'],
   },

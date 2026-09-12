@@ -382,7 +382,7 @@ export const ABK_TALK = {
   head: 'Start with the finance problem you need solved today.',
   lede:
     'Whether you need monthly bookkeeping, better management information, help planning ahead, ' +
-    'VAT or Corporate Tax support, audit preparation or CFO-level guidance, ValuNxt can help ' +
+    'VAT or Corporate Tax support, audit preparation or CFO-level guidance, Valunxt can help ' +
     'identify the right place to start.',
   cta: { label: 'Book a Free Accounting & Tax Consultation', href: '/free-consultation/' },
   /* The same first-that-exists pair the parent page uses, so both pages pick up

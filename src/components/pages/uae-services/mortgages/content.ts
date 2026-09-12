@@ -25,11 +25,11 @@ export const MORTGAGES_TEMPLATE: ServiceTemplateContent = {
     /* about-us-banner is the plate the old template used for this desk's
        banner: wide, and quiet enough on the left for the copy. */
     image: ['services/mortgages-hero.webp', 'new-folder/about-us-banner.webp'],
-    alt: 'The ValuNxt office reception',
+    alt: 'The Valunxt office reception',
   },
   intro: {
     head: 'One Mortgage Partner. From First Question to Final Approval.',
-    lede: 'Whether you are buying, refinancing or financing property from overseas, ValuNxt brings the mortgage process together from assessing your requirements to navigating lenders, documentation and approval.',
+    lede: 'Whether you are buying, refinancing or financing property from overseas, Valunxt brings the mortgage process together from assessing your requirements to navigating lenders, documentation and approval.',
     proof: [
       { label: 'Know Your Eligibility', note: 'Understand your borrowing position and financing potential.' },
       { label: 'Find the Right Option', note: 'Explore suitable lenders and mortgage structures for your requirements.' },

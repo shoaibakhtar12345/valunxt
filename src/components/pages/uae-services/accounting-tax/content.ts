@@ -59,7 +59,7 @@ export const AT_SERVICES: AtService[] = [
     head: 'Keep Your Books Current Without Building a Full Accounting Team',
     body: [
       'When the books fall behind, reporting, tax and management visibility become harder.',
-      'ValuNxt manages day-to-day accounting, reconciliations and financial-record maintenance so the business has a more reliable financial foundation.',
+      'Valunxt manages day-to-day accounting, reconciliations and financial-record maintenance so the business has a more reliable financial foundation.',
     ],
     bestFor: 'Startups, SMEs and growing businesses needing regular accounting support.',
     outcome: 'Know where the business stands without waiting until year-end.',
@@ -90,7 +90,7 @@ export const AT_SERVICES: AtService[] = [
     body: [
       'Your accounts tell you the result.',
       'Management reporting helps explain what changed, why it changed and what deserves attention next.',
-      'ValuNxt turns accounting data into decision-focused financial information for leadership.',
+      'Valunxt turns accounting data into decision-focused financial information for leadership.',
     ],
     bestFor: 'Businesses needing better management visibility.',
     outcome: 'Get financial information early enough to act on.',
@@ -118,7 +118,7 @@ export const AT_SERVICES: AtService[] = [
       'Structured preparation and review of financial statements and supporting schedules.',
     head: 'Financial Statements Management Can Rely On',
     body: [
-      'ValuNxt supports the preparation and review of financial statements and supporting schedules based on properly maintained accounting records and applicable reporting requirements.',
+      'Valunxt supports the preparation and review of financial statements and supporting schedules based on properly maintained accounting records and applicable reporting requirements.',
     ],
     bestFor:
       'Businesses needing structured financial statements for management and relevant stakeholders.',
@@ -134,14 +134,14 @@ export const AT_SERVICES: AtService[] = [
     head: 'Don’t Start Preparing for the Audit After the Auditor Arrives',
     body: [
       'External audits become harder when reconciliations are unresolved, schedules are incomplete or supporting information is difficult to locate.',
-      'ValuNxt sits on your side of the audit process, helping finance prepare schedules, reconciliations and supporting information and manage auditor queries.',
+      'Valunxt sits on your side of the audit process, helping finance prepare schedules, reconciliations and supporting information and manage auditor queries.',
     ],
     bestFor: 'Businesses preparing for an external audit.',
     outcome: 'Reduce last-minute finance disruption and make the audit easier to manage.',
     /* The source states this immediately under the service and again in the
        FAQ. It is a scope limit, not a marketing line, so it travels with the
        service wherever the service is shown. */
-    caveat: 'ValuNxt supports the audit. It does not act as the statutory external auditor.',
+    caveat: 'Valunxt supports the audit. It does not act as the statutory external auditor.',
   },
   {
     name: 'Corporate Tax Filing',
@@ -153,7 +153,7 @@ export const AT_SERVICES: AtService[] = [
     body: [
       'A Corporate Tax Return is not simply a form.',
       'It begins with the financial records and accounting result behind the calculation.',
-      'ValuNxt supports preparation, review and filing based on the applicable scope and financial information.',
+      'Valunxt supports preparation, review and filing based on the applicable scope and financial information.',
     ],
     bestFor: 'UAE businesses preparing for Corporate Tax filing.',
     outcome: 'Improve filing preparedness and reduce last-minute Corporate Tax pressure.',
@@ -168,7 +168,7 @@ export const AT_SERVICES: AtService[] = [
     head: 'VAT Compliance Depends on More Than the Return',
     body: [
       'VAT starts with the underlying transactions—sales, purchases, invoices, payments and supporting evidence.',
-      'ValuNxt supports VAT compliance and advisory requirements while connecting the VAT position with the accounting records behind it.',
+      'Valunxt supports VAT compliance and advisory requirements while connecting the VAT position with the accounting records behind it.',
     ],
     bestFor: 'UAE businesses needing VAT compliance or specialist guidance.',
     outcome: 'Improve consistency between transactions, books and VAT reporting.',
@@ -179,7 +179,7 @@ export const AT_SERVICES: AtService[] = [
 
 export const AT_HERO = {
   head: 'Accounting & Tax Services in Dubai for Growing Businesses',
-  lede: 'From monthly bookkeeping and financial reporting to VAT, Corporate Tax, forecasting and CFO-level support, ValuNxt brings the finance capabilities growing UAE businesses need together under one team.',
+  lede: 'From monthly bookkeeping and financial reporting to VAT, Corporate Tax, forecasting and CFO-level support, Valunxt brings the finance capabilities growing UAE businesses need together under one team.',
   sub: 'Get the books right. Understand the numbers. Plan ahead. Stay tax-ready. Add senior finance support when you need it.',
   chips: ['Fixed-fee scope agreed upfront', 'Bookkeeping from AED 2,000/month'],
   primary: { label: 'Book a Free Consultation', href: '/free-consultation/' },
@@ -215,7 +215,7 @@ export const AT_PROOF: { label: string; note: string; icon: string }[] = [
    paragraph of roughly forty words. Replace them here and the section follows;
    nothing else reads these two fields. */
 export const AT_BANNER = {
-  head: 'The Finance Agenda from the ValuNxt Accounting & Tax Team',
+  head: 'The Finance Agenda from the Valunxt Accounting & Tax Team',
   body:
     'Our accounting and tax practice brings bookkeeping, reporting, VAT and Corporate Tax together under one team, so a growing UAE business has a single finance function behind it rather than a set of separate suppliers.',
   cta: { label: 'Learn more', href: '#at-services' },
@@ -301,7 +301,7 @@ export const AT_WHY_CLOSE = 'One Finance Partner from Bookkeeping to Boardroom D
 
 export const AT_CLOSE = {
   head: 'Start with the finance problem you need solved today.',
-  lede: 'Whether you need monthly bookkeeping, better management information, help planning ahead, VAT or Corporate Tax support, audit preparation or CFO-level guidance, ValuNxt can help identify the right place to start.',
+  lede: 'Whether you need monthly bookkeeping, better management information, help planning ahead, VAT or Corporate Tax support, audit preparation or CFO-level guidance, Valunxt can help identify the right place to start.',
   primary: { label: 'Book a Free Accounting & Tax Consultation', href: '/free-consultation/' },
   secondary: { label: 'Explore Our Services', href: '#at-services' },
   tertiary: { label: 'Request Fixed-Fee Pricing', href: '/contact/' },
@@ -363,7 +363,7 @@ export const ACCOUNTING_TAX_TEMPLATE: ServiceTemplateContent = {
     chips: AT_HERO.chips,
     primary: AT_HERO.primary,
     secondary: AT_HERO.secondary,
-    /* who-we-are-2 is the one library shot with ValuNxt's own branding in it;
+    /* who-we-are-2 is the one library shot with Valunxt's own branding in it;
        services-1 shows at the top of the strip, and the same photograph twice
        inside one screen of scrolling read as a mistake. */
     image: ['services/accounting-tax-intro.webp', 'new-folder/who-we-are-2.webp'],

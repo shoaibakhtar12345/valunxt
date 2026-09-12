@@ -66,13 +66,13 @@ export default function UaeSubscribeForm() {
         className="vxn-sub__form"
         method="post"
         action={`${BASE}/form-handler/`}
-        name="ValuNxt Insights"
-        aria-label="Subscribe to ValuNxt Insights"
+        name="Valunxt Insights"
+        aria-label="Subscribe to Valunxt Insights"
         onSubmit={onSubmit}
       >
         <input type="hidden" name="form_id" value="uae-insights" />
         <input type="hidden" name="post_id" value="uae-home" />
-        <input type="hidden" name="referer_title" value="ValuNxt Insights" />
+        <input type="hidden" name="referer_title" value="Valunxt Insights" />
 
         {/* The placeholder is not the label: it disappears on the first
             keystroke and never reaches a screen reader as a name. */}

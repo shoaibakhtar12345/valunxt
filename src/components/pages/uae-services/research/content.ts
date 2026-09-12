@@ -26,7 +26,7 @@ export const RESEARCH_TEMPLATE: ServiceTemplateContent = {
   },
   intro: {
     head: 'One Intelligence Partner. From Market Data to Strategic Direction.',
-    lede: 'ValuNxt brings research, market intelligence and analytical expertise together to help investors, developers and businesses understand market conditions, evaluate opportunities and plan what comes next.',
+    lede: 'Valunxt brings research, market intelligence and analytical expertise together to help investors, developers and businesses understand market conditions, evaluate opportunities and plan what comes next.',
     proof: [
       { label: 'Market Research & Benchmarking', note: 'Track market trends, pricing shifts, sector performance and competitive positioning.' },
       { label: 'Feasibility & Product Analysis', note: 'Assess market potential, product positioning, pricing and commercial viability.' },

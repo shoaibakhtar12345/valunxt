@@ -1,32 +1,42 @@
 /**
- * "Valunxt Answer", the ask-and-answer band on /en-ae/ (20260911).
+ * "Valunxt Answer", the ask-and-answer band on /en-ae/ (20260911, restaged
+ * 20260912, pared back the same day).
  *
- * Modelled on "BCG Answer", the promo on bcg.com's home page: an eyebrow, a
- * display title, a lede and a call to action on the left, and on the right a
- * 16:9 visual of a question being asked and answered. The measurements are in
- * the stylesheet (section 17 of assets/css/valunxt-landing.css) and the visual
- * itself, with its timeline, is UaeAnswerVisual.tsx. This file is the section's
- * copy and the six scenes the visual plays, one per service.
+ * The band began as a restaging of "BCG Answer", the promo on bcg.com's home
+ * page, and was flagged as too close to it. It is now its own thing: the
+ * stage sits on the LEFT, on the brand's dark pleated-blue artwork, and holds
+ * a rail of the six questions (buttons, one lit and timed), an ask field
+ * across the top and the answer card under it; the copy and the call to
+ * action sit on the right. The measurements are in the stylesheet (section
+ * 17 of assets/css/valunxt-landing.css) and the stage itself, with its
+ * timeline and what the visitor can do with it, is UaeAnswerVisual.tsx. This
+ * file is the section's copy and the six scenes the stage plays, one per
+ * service.
+ *
+ * PARED BACK on client feedback: the first stage was cluttered. The answer
+ * card carried a picture, a chip, a headline, the answer, a "Where to start"
+ * label, three page links with thumbnails and the service link; it now
+ * carries the picture, the chip, the headline, the answer and the one link,
+ * and the rail lost its counter. The lede is one sentence. The motion (the
+ * typing, the progress bar, the card sliding up) is what remains, with more
+ * room around it.
  *
  * THE COPY IS NOT THE CLIENT'S. Every other band on this page carries the home
  * document word for word; this band was asked for after that document was
- * written, so its eyebrow, title, lede, button and the six questions are
+ * written, so its eyebrow, title, lede and button (rewritten 20260912 on
+ * client feedback: "Valunxt Answer" went), the rail's "Pick a question"
+ * label, the card's "Explore <service>" link and the six questions are
  * drafted here, in the document's register, to be replaced when the client
- * supplies theirs (QUESTIONS and the four strings in the JSX below are the
- * whole of it). Everything else the visual shows is the registry's: each
- * answer is the service's own accordion sentence, the list under it names the
- * service's first three pages, the four cards are those pages and the service
- * itself, and the closing card is the service's headline, its accordion
- * sentence and the names of all its pages. (The hero sentence was the card's
- * second paragraph at first; for accounting it opens with the same nine words
- * as the first, so the page list took its place.) No em dashes, as on every
- * UAE page: plain() turns any that reach it into a comma.
+ * supplies theirs. Everything else the stage shows is the registry's: each
+ * answer is the service's own accordion sentence, the card's title is the
+ * service's headline and the picture is the service's own. No em dashes, as
+ * on every UAE page: plain() turns any that reach it into a comma.
  *
  * WHERE IT SITS. After the six services and before the impact strip, because
  * every question it answers is one of theirs. India renders nothing of this.
  */
 import { rurl, vxnServiceName, vxnServices } from '@/lib/region';
-import { rimg, rimgFirst } from '@/lib/region-assets';
+import { rimg } from '@/lib/region-assets';
 
 import UaeAnswerVisual, { type AnswerScene } from './UaeAnswerVisual';
 
@@ -41,31 +51,14 @@ const QUESTIONS: Record<string, string> = {
 };
 
 /**
- * Thumbnails for the three page cards under each service, in the order the
- * registry lists the pages. Photographs already in uploads; the service's own
- * picture is the fourth card and the fallback for anything missing here.
+ * The stage's ground: the brand's dark pleated-blue artwork, the one abstract
+ * in uploads that no other band on this page uses (the ribbons, abstract-2,
+ * carry the practices band and the impact card; abstract-3 the impact band).
  */
-const THUMBS: Record<string, string[]> = {
-  /* Bookkeeping: a desk with a tablet and a pen. CFO: a presentation of the
-     figures. Reporting: a dashboard on a tablet. */
-  'accounting-tax-services': ['new-folder/client-1.webp', 'new-folder/client-success-2.webp', 'new-folder/services-4.webp'],
-  /* Buy: the Dubai skyline. Sell and rent: a tower. Off plan: a facade. */
-  'real-estate-transactions': ['new-folder/dubai.webp', 'new-folder/who-we-are-3.webp', 'blogs/blog-1.webp'],
-  /* Residential: the group's mortgage desk. Commercial: a handshake.
-     Pre-approval: an adviser with a client. */
-  'mortgages-services': ['new-folder/houzzhunt-mortgage-1.webp', 'new-folder/who-we-are-1.webp', 'new-folder/home-banner.webp'],
-  /* Business: the group's valuation firm. Company: figures on a tablet.
-     Plant and machinery: an industrial abstract. */
-  'valuation-and-advisory': ['new-folder/reliant-surveyors-1.webp', 'homepage/capital.webp', 'blogs/blog-3.webp'],
-  /* Real estate research: a city at night. Market and investment research:
-     analysts at their screens. */
-  'research-intelligence': ['homepage/Core-Markets.webp', 'new-folder/research-intelligence-1.webp', 'new-folder/research-intelligence-2.webp'],
-  /* Consulting: a dashboard in hand. AI: server racks. ERP: charts. */
-  'technology-data-ai': ['new-folder/technology-ai-1.webp', 'homepage/industry-3.webp', 'new-folder/services-2.webp'],
-};
+const TEXTURE = 'homepage/abstract-1.webp';
 
 /**
- * Registry strings are authored for <Html> and may carry entities; the visual
+ * Registry strings are authored for <Html> and may carry entities; the stage
  * renders text, so they are decoded here. The dash rule is applied at the
  * same time: an em or en dash, entity or character, becomes a comma.
  */
@@ -73,7 +66,7 @@ function plain(v: string | undefined): string {
   return String(v ?? '')
     .replace(/\s*(?:&mdash;|&#8212;|&ndash;|&#8211;|—|–)\s*/g, ', ')
     .replace(/&amp;/g, '&')
-    .replace(/&nbsp;/g, ' ')
+    .replace(/&nbsp;/g, ' ')
     .replace(/&rsquo;|&#8217;/g, '’')
     .replace(/&lsquo;|&#8216;/g, '‘')
     .replace(/&ldquo;|&#8220;/g, '“')
@@ -85,41 +78,19 @@ export default function UaeAnswerBand({ region }: { region: string }) {
   const scenes: AnswerScene[] = vxnServices(region).map((sv) => {
     const slug = sv.slug ?? sv.href;
     const name = vxnServiceName(sv);
-    const short = plain(sv.short);
-    const picture = rimg(region, sv.img.replace('/assets/content/uploads/', ''));
-    const pages = (sv.subs ?? []).slice(0, 3);
-    const thumbs = THUMBS[slug] ?? [];
-    /* "Includes A, B and C.": the service's pages, in the registry's order. */
-    const names = (sv.subs ?? []).map((p) => p.name);
-    const includes =
-      names.length > 1
-        ? `Includes ${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}.`
-        : names.length === 1
-          ? `Includes ${names[0]}.`
-          : '';
+    const file = sv.img.replace('/assets/content/uploads/', '');
 
     return {
       key: slug,
       question: QUESTIONS[slug] ?? `What can ${name} do for my business?`,
       answer: plain(sv.desc),
-      label: 'Where to start:',
-      starts: pages.map((p) => p.name),
-      tiles: [
-        ...pages.map((p, i) => ({
-          kind: short,
-          title: p.name,
-          href: rurl(region, `${sv.href}${p.slug}/`),
-          img: thumbs[i] ? rimgFirst(region, [thumbs[i], sv.img.replace('/assets/content/uploads/', '')]) : picture,
-        })),
-        { kind: 'Service', title: name, href: rurl(region, sv.href), img: picture },
-      ],
-      card: {
-        chip: short,
-        title: plain(sv.headline) || name,
+      service: {
+        name,
+        short: plain(sv.short),
+        headline: plain(sv.headline) || name,
         href: rurl(region, sv.href),
-        img: picture,
+        img: rimg(region, file),
         alt: name,
-        paras: [plain(sv.desc), includes].filter(Boolean),
       },
     };
   });
@@ -127,33 +98,30 @@ export default function UaeAnswerBand({ region }: { region: string }) {
   return (
     <section className="vxn-answer" aria-labelledby="vxn-answer-title">
       <div className="vxn-answer__inner">
+        {/* Copy first in the source for readers; the grid puts the stage on
+            the left of it. */}
         <div className="vxn-answer__copy">
-          <span className="vxn-band__eyebrow">Ask VALUNXT</span>
+          <span className="vxn-band__eyebrow">Your Questions, Answered</span>
           <h2 id="vxn-answer-title" className="vxn-answer__title">
-            Valunxt Answer
+            Start With the Question on Your Mind
           </h2>
           <p className="vxn-answer__lede">
-            Discover the answer to your most important business, property and finance questions.
-            Valunxt Answer brings together six connected practices, accounting and tax, real estate,
-            mortgages, valuation, research and technology, and guides you to the expertise that
-            matters most right now.
+            Six connected practices, one team. Choose the question closest to yours to see which
+            practice answers it and where the work begins.
           </p>
         </div>
 
         {/* Its own cell, so the button sits at the foot of the copy column and
-            ends level with the visual, as on the reference. */}
+            ends level with the stage. The house pill, unaltered. */}
         <div className="vxn-answer__foot">
-          <a
-            className="vxn-band__pill vxn-band__pill--solid vxn-answer__cta"
-            href={rurl(region, '/free-consultation/')}
-          >
-            Ask Us a Question
+          <a className="vxn-band__pill vxn-band__pill--solid vxn-answer__cta" href={rurl(region, '/free-consultation/')}>
+            Ask Your Question
             <i aria-hidden="true" className="vamtamtheme- vamtam-theme-arrow-right" />
           </a>
         </div>
 
         <div className="vxn-answer__media">
-          <UaeAnswerVisual scenes={scenes} />
+          <UaeAnswerVisual scenes={scenes} texture={rimg(region, TEXTURE)} />
         </div>
       </div>
     </section>

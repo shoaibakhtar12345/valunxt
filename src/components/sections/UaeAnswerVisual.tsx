@@ -2,202 +2,175 @@
 
 /* eslint-disable @next/next/no-img-element -- the site serves every image
    verbatim out of /public (next.config: images.unoptimized), as every other
-   section does; the thumbnails here are no different. */
+   section does; the pictures here are no different. */
 
 /**
- * The Valunxt Answer visual: a question typed into a glass pill, a thinking
- * square, an answer panel with four cards, then an article card, over drifting
- * spheres. One scene per service, played end to end and looped.
+ * The Valunxt Answer stage (rebuilt 20260912, pared back the same day): a
+ * rail of six questions down the left, an ask field across the top right,
+ * and under it the answer card for the question that is lit. The rail plays
+ * itself, one question after another, and the visitor can take over at any
+ * point. The card is the service's picture, its chip, its headline, the
+ * answer and one link; the three page links with thumbnails and the rail's
+ * counter that the first build carried went on client feedback, so the
+ * stage has room around what is left.
  *
- * WHY THE DOM AND NOT A VIDEO. The reference (bcg.com's "BCG Answer", read on
- * 20260911) is a dotLottie render: 510 frames at 30fps, 17.0 seconds, drawn on
- * a canvas with a scroll-to-play observer, a pause control and a loop. It is a
- * picture of a chat. Rebuilding it in the DOM keeps the sequence and the
- * timings while the cards and the article are real links into the six
- * services, the copy is the registry's, and the whole thing weighs a few
- * kilobytes rather than a .lottie plus a WASM player.
+ * WHY THIS SHAPE. The first build (20260911) restaged bcg.com's "BCG Answer"
+ * render beat for beat: a question typed into a glass pill over pastel
+ * spheres, a thinking square, a panel that opened into four cards, then a
+ * white article card. Rehman flagged it as too close to the source. What is
+ * kept from that build is the data (one scene per service: its question, its
+ * accordion sentence, its first three pages and its picture) and the typing
+ * of the question; everything the eye reads is new. The stage is the brand's
+ * dark pleated-blue artwork rather than spheres, the six questions are on
+ * screen at once and are buttons, the answer is one card that slides up under
+ * the field, and the control is a round glass button beside the field rather
+ * than a grey square in the corner.
  *
- * THE TIMELINE, per scene, read frame by frame off the reference:
+ * THE SEQUENCE, per scene:
  *
- *   0.0s   spheres only
- *   0.2s   the pill appears (grows in over .3s)
- *   0.8s   typing begins: 44 characters in 1.5s, fast at first and slowing
- *          towards the end (one a frame, then one every three)
- *   2.3s   the question holds for 1.4s
- *   3.7s   the text fades (.3s), then the pill shrinks to a square (.2s)
- *   4.2s   the square thinks (a stepping spinner) for 3.8s
- *   8.0s   it opens into the panel (.4s); the answer fades in
- *   9.0s   the four cards arrive, .1s apart
- *   9.6s   the answer's list reveals line by line
- *  12.4s   panel and cards fade (.3s); the first card's picture is left
- *  12.7s   it becomes a small pill at the top of the stage (.5s)
- *  13.4s   which opens into the white article card (.6s); text fades in
- *  16.4s   the card slides up and out (.5s)
- *  17.0s   next scene
+ *   0.00s  the rail lights the question and its progress bar starts; the
+ *          field is empty; the previous card has gone
+ *   0.25s  the caret appears and the question is typed, 22ms a character at
+ *          the start slowing to 62ms at the end (about 1.5s for 44 characters)
+ *   typed  the send button lights
+ *   +0.55s the card slides up; its parts (chip, title, answer, the service
+ *          link) fade in one after another
+ *   +7.10s the card lifts away
+ *   +7.55s next scene
  *
- * Everything a scene needs is in the DOM before it starts; the timeline only
- * sets data-phase on the stage, .is-active on the scene's parts, .is-on on the
- * cards and list lines, and writes the question one character at a time. The
- * geometry of every phase lives in the stylesheet (assets/css/
- * valunxt-landing.css, section 17); the one thing the script measures is the
- * pill's width before it shrinks, because a transition cannot start from auto.
+ * The rail's progress bar is a CSS animation whose duration is that scene's
+ * length, written on the button by sceneLength() at render, so the bar and
+ * the clock agree without the script touching it each frame.
+ *
+ * WHAT THE VISITOR CAN DO. Press a question: the stage jumps to that scene
+ * and plays it. Rest the pointer anywhere on the stage: the clock holds, so
+ * the card can be read and its links followed, and it resumes on leaving.
+ * Press the control: the stage stays paused until it is pressed again, and
+ * a press on a question while paused shows that question answered, without
+ * the typing. Scrolling the stage out of view or hiding the tab holds it
+ * too. Under prefers-reduced-motion nothing plays on its own: the first
+ * question is shown answered, the rail switches between finished answers,
+ * and the control offers to play.
  *
  * THE SCHEDULER is one sorted list of steps with absolute times and a single
  * timeout that fires the next due step. Pausing records the elapsed time and
- * stops the timeout; resuming rebases the clock and carries on, so a pause in
- * the middle of typing resumes mid-word, as the reference's canvas does. CSS
- * transitions already in flight run to their end (at most .6s); the spheres,
- * the caret and the spinner are held with animation-play-state.
+ * stops the timeout; resuming rebases the clock and carries on, so a hold in
+ * the middle of typing resumes mid-word. Seeking sets the elapsed time to a
+ * scene's start and runs its first step at once.
  *
- * WHAT PLAYS IT, as on the reference: an IntersectionObserver starts it when
- * the stage comes into view and freezes it when it leaves; a hidden tab
- * freezes it too; the control pauses it until pressed again, and a manual
- * pause is not undone by scrolling. Under prefers-reduced-motion nothing
- * moves: the stage shows the first scene's finished card and the control
- * offers to play, which is one better than the reference, whose canvas stays
- * blank.
+ * The stage's geometry is in assets/css/valunxt-landing.css, section 17.
  */
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, type CSSProperties } from 'react';
 
 import { LogoXGlyph } from '@/components/brand/LogoX';
 
-export interface AnswerTile {
-  /** The small uppercase label above the title: the practice, or "Service". */
-  kind: string;
-  title: string;
-  href: string;
-  img: string;
-}
-
-export interface AnswerCard {
-  chip: string;
-  title: string;
-  href: string;
-  img: string;
-  alt: string;
-  paras: string[];
-}
-
 export interface AnswerScene {
   key: string;
+  /** The question typed into the field and listed on the rail. */
   question: string;
+  /** The answer: the service's own accordion sentence. */
   answer: string;
-  /** The label over the list, "Where to start:". */
-  label: string;
-  starts: string[];
-  tiles: AnswerTile[];
-  card: AnswerCard;
+  service: {
+    name: string;
+    short: string;
+    headline: string;
+    href: string;
+    img: string;
+    alt: string;
+  };
 }
 
-type Phase =
-  | 'idle'
-  | 'cursor'
-  | 'typing'
-  | 'asked'
-  | 'clearing'
-  | 'thinking'
-  | 'expanding'
-  | 'answer'
-  | 'collapsing'
-  | 'preview'
-  | 'card'
-  | 'exit';
+type Phase = 'idle' | 'typing' | 'sent' | 'answer' | 'exit';
 
 interface Step {
   at: number;
   run: () => void;
 }
 
-/* The reference's beats, in ms. The first three are from the scene's start;
-   the rest are from the end of typing, which moves with the question's length
-   (the reference's 44 characters end at 2.3s). */
+/* The beats, in ms. `start` is from the scene's start; the rest are from the
+   end of typing, which moves with the question's length. */
 const BEAT = {
-  pill: 200,
-  type: 800,
-  asked: 0,
-  clearing: 1400,
-  thinking: 1700,
-  expanding: 5700,
-  answer: 6100,
-  cards: 6600,
-  lines: 7200,
-  lineGap: 400,
-  collapsing: 10100,
-  preview: 10400,
-  card: 11100,
-  exit: 14100,
-  end: 14700,
+  start: 250,
+  answer: 550,
+  exit: 7100,
+  end: 7550,
 };
 
 /* One keystroke's delay: 22ms at the start of the question rising to 62ms at
-   its end, which averages the reference's 35ms a character and reproduces
-   its slowing-down. */
+   its end, so the typing slows as a hand would. */
 function keyDelay(k: number, n: number): number {
   const p = k / n;
   return 22 + 40 * p * p;
 }
 
-/** The eight-spoke "thinking" glyph, stepping round like the reference's. */
-function Spinner() {
-  return (
-    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-      {Array.from({ length: 8 }, (_, i) => (
-        <line
-          key={i}
-          x1="12"
-          y1="2.5"
-          x2="12"
-          y2="7"
-          stroke="currentColor"
-          strokeWidth="2.2"
-          strokeLinecap="round"
-          opacity={(i + 1) / 8}
-          transform={`rotate(${i * 45} 12 12)`}
-        />
-      ))}
-    </svg>
-  );
+/** A scene's whole length in ms, for the rail's progress bar. */
+export function sceneLength(question: string): number {
+  let t = BEAT.start;
+  const n = question.length;
+  for (let k = 1; k <= n; k++) t += keyDelay(k, n);
+  return t + BEAT.end;
 }
 
-export default function UaeAnswerVisual({ scenes }: { scenes: AnswerScene[] }) {
+function pad(i: number): string {
+  return String(i).padStart(2, '0');
+}
+
+export default function UaeAnswerVisual({ scenes, texture }: { scenes: AnswerScene[]; texture: string }) {
   const stageRef = useRef<HTMLDivElement>(null);
-  const boxRef = useRef<HTMLDivElement>(null);
   const qRef = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const stage = stageRef.current;
-    const box = boxRef.current;
     const q = qRef.current;
-    if (!stage || !box || !q || scenes.length === 0) return;
+    if (!stage || !q || scenes.length === 0) return;
+
+    const rail = stage.querySelector<HTMLElement>('.vxn-ans__qs');
+    const buttons = Array.from(stage.querySelectorAll<HTMLButtonElement>('.vxn-ans__q'));
+    const cards = Array.from(stage.querySelectorAll<HTMLElement>('.vxn-ans__card'));
 
     const setPhase = (p: Phase) => {
       stage.dataset.phase = p;
     };
     const setActive = (i: number) => {
-      stage.querySelectorAll<HTMLElement>('[data-scene]').forEach((el) => {
-        el.classList.toggle('is-active', Number(el.dataset.scene) === i);
+      buttons.forEach((b, k) => {
+        b.classList.toggle('is-active', k === i);
+        b.style.setProperty('--vxn-ans-skip', '0ms');
+        if (k === i) b.setAttribute('aria-current', 'true');
+        else b.removeAttribute('aria-current');
       });
+      cards.forEach((c, k) => c.classList.toggle('is-active', k === i));
+      /* On the phone the rail is a row that scrolls sideways: bring the lit
+         question into view, sideways only, never by scrolling the page. */
+      if (rail && rail.scrollWidth > rail.clientWidth + 1) {
+        const b = buttons[i];
+        rail.scrollTo({ left: Math.max(0, b.offsetLeft - 16), behavior: 'smooth' });
+      }
     };
-    const turnOn = (i: number, selector: string, at: number) => {
-      const el = stage.querySelectorAll<HTMLElement>(`[data-scene="${i}"] ${selector}`)[at];
-      if (el) el.classList.add('is-on');
+    /* A scene shown finished, for a press while paused or under reduced
+       motion: the question in the field, the card up, no typing. */
+    const showFinished = (i: number) => {
+      setActive(i);
+      q.textContent = scenes[i].question;
+      setPhase('answer');
     };
 
     /* ---- The steps ------------------------------------------------------ */
     const steps: Step[] = [];
+    const starts: number[] = [];
+    /* When each scene's card is up, for a press that skips the typing. */
+    const answerAt: number[] = [];
     let t0 = 0;
     scenes.forEach((scene, i) => {
       const at = (offset: number, run: () => void) => steps.push({ at: t0 + offset, run });
+      starts.push(t0);
 
       at(0, () => {
         setPhase('idle');
         q.textContent = '';
         setActive(i);
-        stage.querySelectorAll('.is-on').forEach((el) => el.classList.remove('is-on'));
       });
-      at(BEAT.pill, () => setPhase('cursor'));
 
-      let t = BEAT.type;
+      let t = BEAT.start;
       const n = scene.question.length;
       for (let k = 1; k <= n; k++) {
         t += keyDelay(k, n);
@@ -209,28 +182,9 @@ export default function UaeAnswerVisual({ scenes }: { scenes: AnswerScene[] }) {
       }
       const typed = t;
 
-      at(typed + BEAT.asked, () => setPhase('asked'));
-      at(typed + BEAT.clearing, () => setPhase('clearing'));
-      at(typed + BEAT.thinking, () => {
-        /* A transition cannot start from width:auto, so the pill's width is
-           pinned in px for one frame and released once the square is asked
-           for; the stylesheet then animates px to cqw. */
-        box.style.width = `${box.getBoundingClientRect().width}px`;
-        void box.offsetWidth;
-        setPhase('thinking');
-        box.style.width = '';
-      });
-      at(typed + BEAT.expanding, () => setPhase('expanding'));
+      at(typed, () => setPhase('sent'));
       at(typed + BEAT.answer, () => setPhase('answer'));
-      at(typed + BEAT.cards, () => {
-        for (let c = 0; c < scene.tiles.length; c++) turnOn(i, '.vxn-ans__tile', c);
-      });
-      scene.starts.forEach((_, line) => {
-        at(typed + BEAT.lines + line * BEAT.lineGap, () => turnOn(i, '.vxn-ans__line', line));
-      });
-      at(typed + BEAT.collapsing, () => setPhase('collapsing'));
-      at(typed + BEAT.preview, () => setPhase('preview'));
-      at(typed + BEAT.card, () => setPhase('card'));
+      answerAt.push(t0 + typed + BEAT.answer);
       at(typed + BEAT.exit, () => setPhase('exit'));
 
       t0 += typed + BEAT.end;
@@ -245,12 +199,14 @@ export default function UaeAnswerVisual({ scenes }: { scenes: AnswerScene[] }) {
     let timer: ReturnType<typeof setTimeout> | null = null;
     let playing = false;
 
-    const tick = () => {
-      const now = performance.now() - startedAt;
+    const runDue = (now: number) => {
       while (next < steps.length && steps[next].at <= now) {
         steps[next].run();
         next++;
       }
+    };
+    const tick = () => {
+      runDue(performance.now() - startedAt);
       if (next >= steps.length) {
         /* The loop: rebase the clock at the end of the last scene. */
         startedAt += total;
@@ -274,30 +230,52 @@ export default function UaeAnswerVisual({ scenes }: { scenes: AnswerScene[] }) {
       timer = null;
       elapsed = performance.now() - startedAt;
     };
+    /* Jump to a scene's start and run its first step at once. The scene's
+       button loses and regains .is-active in that step, which restarts its
+       progress bar even when it was the lit one already. */
+    const seek = (i: number) => {
+      pause();
+      elapsed = starts[i];
+      next = steps.findIndex((s) => s.at >= starts[i]);
+      buttons[i].classList.remove('is-active');
+      void buttons[i].offsetWidth;
+      runDue(elapsed);
+    };
+    /* Jump to the moment a scene's card is up and show it finished: for a
+       press while paused, or while the pointer rests on the stage. The clock
+       carries on from there when it runs again, so the card holds for the
+       rest of its beat and the next question is typed after it. The progress
+       bar is started that far along with a negative delay. */
+    const skipTo = (i: number) => {
+      pause();
+      elapsed = answerAt[i];
+      next = steps.findIndex((s) => s.at > answerAt[i]);
+      buttons[i].classList.remove('is-active');
+      void buttons[i].offsetWidth;
+      showFinished(i);
+      buttons[i].style.setProperty('--vxn-ans-skip', `-${Math.round(answerAt[i] - starts[i])}ms`);
+    };
 
     /* ---- What plays it -------------------------------------------------- */
     const button = stage.querySelector<HTMLButtonElement>('.vxn-ans__ctrl');
     const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let inView = false;
+    let held = false;
     let manual = still;
 
     const label = () => {
       if (!button) return;
-      const paused = manual || !playing;
-      button.setAttribute('aria-label', paused ? 'Play the animation' : 'Pause the animation');
-      stage.classList.toggle('is-paused', paused);
+      button.setAttribute('aria-label', manual ? 'Play the questions' : 'Pause the questions');
+      stage.classList.toggle('is-manual', manual);
     };
+    const wants = () => inView && !manual && !held && !document.hidden;
     const sync = () => {
-      if (inView && !manual && !document.hidden) play();
+      if (wants()) play();
       else pause();
       label();
     };
 
-    if (still) {
-      /* Nothing moves until asked: the first scene's finished card. */
-      setActive(0);
-      setPhase('card');
-    }
+    if (still) showFinished(0);
 
     const onButton = () => {
       manual = !manual;
@@ -310,6 +288,34 @@ export default function UaeAnswerVisual({ scenes }: { scenes: AnswerScene[] }) {
       sync();
     };
     button?.addEventListener('click', onButton);
+
+    const onQuestion = (e: Event) => {
+      const b = (e.currentTarget as HTMLElement).closest<HTMLButtonElement>('.vxn-ans__q');
+      if (!b) return;
+      const i = buttons.indexOf(b);
+      if (i < 0) return;
+      /* Paused, or the pointer resting on the stage (a mouse press leaves it
+         there): the answer at once. Otherwise the scene from its start. */
+      if (manual || held) skipTo(i);
+      else seek(i);
+      sync();
+    };
+    buttons.forEach((b) => b.addEventListener('click', onQuestion));
+
+    /* A pointer resting on the stage holds the clock so the card can be read
+       and its links followed. Touch has no rest, so it is the mouse only. */
+    const onEnter = (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse') return;
+      held = true;
+      sync();
+    };
+    const onLeave = (e: PointerEvent) => {
+      if (e.pointerType !== 'mouse') return;
+      held = false;
+      sync();
+    };
+    stage.addEventListener('pointerenter', onEnter);
+    stage.addEventListener('pointerleave', onLeave);
 
     const io = new IntersectionObserver(
       (entries) => {
@@ -328,6 +334,9 @@ export default function UaeAnswerVisual({ scenes }: { scenes: AnswerScene[] }) {
       pause();
       io.disconnect();
       button?.removeEventListener('click', onButton);
+      buttons.forEach((b) => b.removeEventListener('click', onQuestion));
+      stage.removeEventListener('pointerenter', onEnter);
+      stage.removeEventListener('pointerleave', onLeave);
       document.removeEventListener('visibilitychange', onVisibility);
     };
   }, [scenes]);
@@ -338,94 +347,81 @@ export default function UaeAnswerVisual({ scenes }: { scenes: AnswerScene[] }) {
       data-phase="idle"
       ref={stageRef}
       role="region"
-      aria-label="Valunxt Answer, an animated demonstration"
+      aria-label="Six questions and where each is answered"
     >
-      {/* The spheres. Seven balls, a dark pocket where they meet, all drifting
-          on their own slow loops. */}
+      {/* The ground: the brand's pleated-blue artwork, breathing slowly, under
+          a wash that darkens the rail's side. */}
       <div className="vxn-ans__bg" aria-hidden="true">
-        <i className="vxn-ans__deep" />
-        {Array.from({ length: 7 }, (_, i) => (
-          <i className={`vxn-ans__orb vxn-ans__orb--${i + 1}`} key={i} />
-        ))}
+        <img className="vxn-ans__weave" src={texture} alt="" decoding="async" />
+        <i className="vxn-ans__wash" />
       </div>
 
-      {/* The one box that is, in turn, the pill, the square, the panel, the
-          picture pill and the article card. */}
-      <div className="vxn-ans__box" ref={boxRef}>
-        <span className="vxn-ans__ask" aria-hidden="true">
-          <span className="vxn-ans__q" ref={qRef} />
-          <i className="vxn-ans__caret" />
-        </span>
-
-        <span className="vxn-ans__spin" aria-hidden="true">
-          <Spinner />
-        </span>
-
-        {scenes.map((s, i) => (
-          <div className={`vxn-ans__panel${i === 0 ? ' is-active' : ''}`} data-scene={i} key={`p-${s.key}`}>
-            <span className="vxn-ans__mark" aria-hidden="true">
-              <LogoXGlyph />
-            </span>
-            <div className="vxn-ans__head">{s.question}</div>
-            <p className="vxn-ans__text">{s.answer}</p>
-            <div className="vxn-ans__lbl">{s.label}</div>
-            <ul className="vxn-ans__list">
-              {s.starts.map((line) => (
-                <li className="vxn-ans__line" key={line}>
-                  {line}
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-
-        {scenes.map((s, i) => (
-          <a
-            className={`vxn-ans__card${i === 0 ? ' is-active' : ''}`}
-            data-scene={i}
-            href={s.card.href}
-            key={`c-${s.key}`}
-          >
-            <img className="vxn-ans__art" src={s.card.img} alt="" loading="lazy" decoding="async" />
-            <span className="vxn-ans__cardbody">
-              <span className="vxn-ans__chip">{s.card.chip}</span>
-              <span className="vxn-ans__cardtitle">{s.card.title}</span>
-              <span className="vxn-ans__slot" aria-hidden="true" />
-              {s.card.paras.map((p, j) => (
-                <span className="vxn-ans__para" key={j}>
-                  {p}
-                </span>
-              ))}
-            </span>
-          </a>
-        ))}
+      {/* The rail: the six questions, each a button, the lit one carrying the
+          progress bar for its scene. */}
+      <div className="vxn-ans__rail">
+        <div className="vxn-ans__railhead">
+          <span className="vxn-ans__railtitle">Pick a question</span>
+        </div>
+        <ol className="vxn-ans__qs">
+          {scenes.map((s, i) => (
+            <li className="vxn-ans__qi" key={s.key}>
+              <button
+                type="button"
+                className={`vxn-ans__q${i === 0 ? ' is-active' : ''}`}
+                aria-current={i === 0 ? 'true' : undefined}
+                style={{ '--vxn-ans-dur': `${Math.round(sceneLength(s.question))}ms` } as CSSProperties}
+              >
+                <span className="vxn-ans__num">{pad(i + 1)}</span>
+                <span className="vxn-ans__qtext">{s.question}</span>
+              </button>
+            </li>
+          ))}
+        </ol>
       </div>
 
-      {/* The related cards, to the right of the panel. */}
-      <div className="vxn-ans__cards">
+      {/* The ask field and, beside it, the control. */}
+      <div className="vxn-ans__top">
+        <div className="vxn-ans__field" aria-hidden="true">
+          <span className="vxn-ans__mark">
+            <LogoXGlyph />
+          </span>
+          <span className="vxn-ans__typed">
+            <span className="vxn-ans__qtyped" ref={qRef} />
+            <i className="vxn-ans__caret" />
+          </span>
+          <span className="vxn-ans__send">
+            <svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+              <path d="M8 13.5V3M3.5 7.5 8 3l4.5 4.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+        </div>
+        <button type="button" className="vxn-ans__ctrl" aria-label="Pause the questions">
+          <svg className="vxn-ans__ico vxn-ans__ico--pause" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+            <path d="M3.5 2.5h3.2v11H3.5zM9.3 2.5h3.2v11H9.3z" fill="currentColor" />
+          </svg>
+          <svg className="vxn-ans__ico vxn-ans__ico--play" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+            <path d="M4.4 2.6v10.8L13.2 8z" fill="currentColor" />
+          </svg>
+        </button>
+      </div>
+
+      {/* The answer cards, one per scene, stacked; the lit scene's is shown. */}
+      <div className="vxn-ans__view">
         {scenes.map((s, i) => (
-          <div className={`vxn-ans__deck${i === 0 ? ' is-active' : ''}`} data-scene={i} key={`d-${s.key}`}>
-            {s.tiles.map((tile) => (
-              <a className="vxn-ans__tile" href={tile.href} key={tile.href}>
-                <img className="vxn-ans__thumb" src={tile.img} alt="" loading="lazy" decoding="async" />
-                <span className="vxn-ans__tiletext">
-                  <span className="vxn-ans__kind">{tile.kind}</span>
-                  <span className="vxn-ans__ttl">{tile.title}</span>
-                </span>
+          <article className={`vxn-ans__card${i === 0 ? ' is-active' : ''}`} key={s.key}>
+            <img className="vxn-ans__art" src={s.service.img} alt="" loading="lazy" decoding="async" />
+            <div className="vxn-ans__body">
+              <span className="vxn-ans__chip">{s.service.short}</span>
+              <h3 className="vxn-ans__title">{s.service.headline}</h3>
+              <p className="vxn-ans__text">{s.answer}</p>
+              <a className="vxn-ans__more" href={s.service.href}>
+                Explore {s.service.name}
+                <i aria-hidden="true" className="vamtamtheme- vamtam-theme-arrow-right" />
               </a>
-            ))}
-          </div>
+            </div>
+          </article>
         ))}
       </div>
-
-      <button type="button" className="vxn-ans__ctrl" aria-label="Pause the animation">
-        <svg className="vxn-ans__ico vxn-ans__ico--pause" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
-          <path d="M3.5 2.5h3.2v11H3.5zM9.3 2.5h3.2v11H9.3z" fill="currentColor" />
-        </svg>
-        <svg className="vxn-ans__ico vxn-ans__ico--play" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
-          <path d="M4.4 2.6v10.8L13.2 8z" fill="currentColor" />
-        </svg>
-      </button>
     </div>
   );
 }

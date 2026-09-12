@@ -14,6 +14,11 @@
  * here from the registry's names and is the one piece of copy in this file
  * the client has not supplied. No em dashes in either.
  *
+ * THE SERVICES ROW (20260912, on client instruction) lists the UAE's six main
+ * services under the positioning line, read from the services registry so
+ * the footer can never disagree with the header menu or the home page. UAE
+ * only: India was not part of that instruction.
+ *
  * The wrapper elements and ids are the ones the captured footers used, so the
  * theme's layout rules and the back-to-top offset behave the same.
  *
@@ -23,7 +28,7 @@
  *
  * Styles: assets/css/valunxt-landing.css (.vxn-foot).
  */
-import { BASE, rurl, vxnRegion } from '@/lib/region';
+import { BASE, rurl, vxnRegion, vxnServiceName, vxnServices } from '@/lib/region';
 import { vxnEmail, vxnYear } from '@/lib/site-data';
 import SocialIcons, { type SocialItem } from './SocialIcons';
 
@@ -59,7 +64,9 @@ const LEGAL: readonly (readonly [string, string])[] = [
 ];
 
 export default function FooterUae({ region }: { region: string }) {
-  const blurb = BLURB[vxnRegion(region)] ?? BLURB['en-ae'];
+  const market = vxnRegion(region);
+  const blurb = BLURB[market] ?? BLURB['en-ae'];
+  const services = market === 'en-ae' ? vxnServices(market) : [];
   return (
     <div data-wpr-lazyrender="1" className="footer-wrapper">
       <footer id="main-footer" className="main-footer">
@@ -92,6 +99,21 @@ export default function FooterUae({ region }: { region: string }) {
                 <SocialIcons items={SOCIAL} />
               </div>
             </div>
+
+            {services.length ? (
+              <nav className="vxn-foot__services" aria-labelledby="vxn-foot-services-title">
+                <span id="vxn-foot-services-title" className="vxn-foot__servicesTitle">
+                  Our Services
+                </span>
+                <ul className="vxn-foot__servicesList">
+                  {services.map((sv) => (
+                    <li key={sv.href}>
+                      <a href={rurl(region, sv.href)}>{vxnServiceName(sv)}</a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            ) : null}
 
             <div className="vxn-foot__legal">
               {LEGAL.map(([href, label]) => (

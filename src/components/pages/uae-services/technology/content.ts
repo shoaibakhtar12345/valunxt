@@ -23,7 +23,7 @@ export const TECHNOLOGY_TEMPLATE: ServiceTemplateContent = {
   },
   intro: {
     head: 'One Technology Partner. From Digital Strategy to Business Performance.',
-    lede: 'ValuNxt brings technology consulting, data intelligence and AI together to help businesses modernise operations, connect information and build systems designed around how they work.',
+    lede: 'Valunxt brings technology consulting, data intelligence and AI together to help businesses modernise operations, connect information and build systems designed around how they work.',
     proof: [
       { label: 'Technology & Digital Strategy', note: 'Align technology investments with operational priorities and business objectives.' },
       { label: 'Data, Automation & AI', note: 'Turn fragmented processes and information into connected, intelligent workflows.' },

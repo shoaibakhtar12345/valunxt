@@ -484,14 +484,18 @@ export const CSS = `
   background:#fff;
   padding:clamp(34px,3.8vw,54px) 0 clamp(36px,4vw,58px)!important;
 }
-.at-intro .at-in{max-width:min(1180px,calc(100% - var(--gutter) * 2));}
-/* Bottom-aligned, so the lede's last line and the heading's last line share a
-   baseline row. The gap is generous on purpose: the two columns are meant to
-   read as a statement and its gloss, not as a heading that ran out of room. */
+/* ONE MEASURE (20260912, client instruction): this band took a 1140 box of
+   its own for a while; every band on the page now shares .at-in, so the
+   list and the photograph line up with the strip below and the hero above
+   at every width. */
+/* CENTRED (20260912, to the reference supplied that afternoon): the
+   statement on two lines over its gloss, both on the band's centre line, and
+   the list and the photograph under them. The head row was a statement on
+   the left with the gloss on the right; the reference stacks them. */
 .at-intro__top{
-  display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);
-  gap:clamp(20px,4vw,72px);align-items:end;
-  margin:0 0 clamp(22px,2.6vw,34px);
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  gap:16px;
+  margin:0 0 clamp(40px,5.2vw,76px);
 }
 /* Scoped to .at-root so it beats the UAE type scale. valunxt-uae-type.css sets
    "body.vxn-uae-type h2" at (0,1,2) with !important; a bare .at-intro__head is
@@ -500,19 +504,20 @@ export const CSS = `
    documents for a heading a page sizes on purpose. */
 .at-root .at-intro__head{
   font-weight:300!important;
-  color:#16233C!important;font-size:clamp(24px,2.7vw,36px)!important;
-  line-height:1.18!important;letter-spacing:-.012em!important;margin:0!important;
+  color:#16233C!important;font-size:clamp(30px,3.5vw,48px)!important;
+  line-height:1.24!important;letter-spacing:-.01em!important;margin:0!important;
+  max-width:70%;
 }
-/* The right-hand column, pushed to its far edge. text-wrap:pretty keeps a lone
-   word off the last line, which matters more than usual on a paragraph that is
-   set against a heading's baseline. */
+/* text-wrap:pretty keeps a lone word off the last line. */
 .at-intro__lede{
-  color:var(--muted)!important;font-size:15px!important;line-height:1.6!important;
-  margin:0!important;max-width:46ch;justify-self:end;text-wrap:pretty;
+  color:var(--muted)!important;font-size:16px!important;line-height:1.6!important;
+  margin:0!important;max-width:78ch;text-wrap:pretty;
 }
+/* The reference's columns: the list a little wider than the photograph, and
+   a wide gutter between them, about a tenth of the measure. */
 .at-intro__grid{
-  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);
-  gap:clamp(22px,2.8vw,44px);align-items:stretch;
+  display:grid;grid-template-columns:minmax(0,1.04fr) minmax(0,.96fr);
+  gap:clamp(32px,7.5vw,120px);align-items:stretch;
 }
 .at-intro__copy{display:flex;flex-direction:column;}
 .at-intro__points{
@@ -520,45 +525,29 @@ export const CSS = `
 }
 .at-intro__point{
   position:relative;border-top:1px solid var(--line);
-  padding:14px 0 15px 22px;
+  padding:20px 0 24px 24px;
 }
-/* A blue dot (20260911, on client instruction: the same dot on every service
-   page). It was an 8px gold square, the one warm mark on the page; the dot is
-   the chips' blue, so the list and the chips beneath it read as one set. */
+/* The reference's marker: a small square in the brand's gold, set on the
+   title's first line. (It was a blue dot on 20260911's instruction; the
+   reference supplied on 20260912 draws the square, so the square is back.
+   One line to change if the dot is wanted after all.) */
 .at-intro__point::before{
-  content:"";position:absolute;left:0;top:21px;width:8px;height:8px;
-  border-radius:50%;background:var(--ny2);
+  content:"";position:absolute;left:0;top:28px;width:8px;height:8px;
+  border-radius:1px;background:#0b2dbe;
 }
-/* Same reason as .at-intro__head — this was rendering at the h3 scale's 27px,
-   which is most of why the band read as oversized for a four-item list. */
+/* The title. The reference sets its own in a serif; the UAE market runs one
+   face, Sanomat Sans, on client instruction (20260910, valunxt-uae-face.css),
+   so the size and the weight carry the reference's emphasis instead. Two
+   classes, over the h3 scale (27px). */
 .at-root .at-intro__label{
   font-weight:400!important;
-  color:var(--ny)!important;font-size:18px!important;line-height:1.3!important;
-  letter-spacing:0!important;text-transform:none!important;margin:0 0 4px!important;
+  color:#1F2933!important;font-size:21px!important;line-height:1.3!important;
+  letter-spacing:0!important;text-transform:none!important;margin:0 0 8px!important;
 }
 .at-intro__note{
-  color:var(--body)!important;font-size:13.5px!important;line-height:1.6!important;
+  color:var(--muted)!important;font-size:14px!important;line-height:1.55!important;
   margin:0!important;
 }
-/* The chips and the buttons follow the list in flow. They were pinned to the
-   rail's bottom line with margin-top:auto, which is the right move when the
-   rail is the shorter of the two columns — and the wrong one here, because
-   the rail is what sets the row height and the photograph stretches to it. All
-   the pin did was open a hole between the chips and the buttons. */
-.at-intro__chips{
-  display:flex;flex-wrap:wrap;gap:10px;
-  margin:20px 0 18px;padding:0;list-style:none;
-}
-.at-intro__chip{
-  display:inline-flex;align-items:center;gap:9px;
-  padding:9px 17px;border-radius:999px;
-  background:rgba(0,83,183,.06);border:1px solid rgba(0,83,183,.2);
-  color:var(--ny);font-size:13.5px;font-weight:500;
-}
-.at-intro__chip i{
-  width:6px;height:6px;border-radius:50%;background:var(--ny2);flex:0 0 auto;
-}
-.at-intro__ctas{display:flex;flex-wrap:wrap;gap:14px;}
 /* THE PHOTOGRAPH MUST NOT SET THE ROW HEIGHT. As an in-flow child with
    height:100% against an auto-height figure, an image resolves to its own
    intrinsic height, so a near-square plate asked the grid for more than the
@@ -575,11 +564,24 @@ export const CSS = `
    narrow breakpoints below swap it for an aspect-ratio, which still works
    because a figure with no in-flow content is exactly what aspect-ratio sizes. */
 .at-intro__figure{
-  position:relative;margin:0;overflow:hidden;border-radius:3px;min-height:270px;
+  position:relative;margin:0;overflow:hidden;border-radius:0;min-height:300px;
 }
 .at-intro__figure img{
   position:absolute;inset:0;display:block;width:100%;height:100%;
   object-fit:cover;object-position:center 28%;
+}
+
+/* ==========================================================================
+   THE CHOOSER TAKES THE PAGE MEASURE (20260912, client instruction: one
+   container width for every section). post-17.css gives its outer container
+   a 1400px content width and 30px side padding (20px below 1024), so the
+   chooser sat 60px inside the other bands at 1920 and 18px outside them at
+   1280. The two custom properties Elementor reads are set here to the same
+   formula .at-in uses; nothing else about the captured markup changes.
+   ========================================================================== */
+.at-root .elementor-17 .elementor-element.elementor-element-d50462f{
+  --padding-left:0px!important;--padding-right:0px!important;
+  --content-width:min(var(--maxw),calc(100% - var(--gutter) * 2))!important;
 }
 
 /* ==========================================================================
@@ -740,27 +742,56 @@ export const CSS = `
    is still clearly the open one.
    ========================================================================== */
 .at-services{background:var(--tint);}
-/* Heading left, the invitation right, both on the strip's own edges. */
+/* THE HEAD ROW, to the reference supplied on 20260912: a plain eyebrow and a
+   large heading on the left, its last word underlined by a drawn stroke; the
+   gloss and one dark pill with a white disc on the right, top-aligned with
+   the heading. */
 .at-services__head{
-  display:flex;align-items:flex-end;justify-content:space-between;
-  gap:var(--gap);margin:0 0 var(--headgap);
+  display:grid;grid-template-columns:minmax(0,1.25fr) minmax(280px,.75fr);
+  align-items:start;gap:clamp(24px,4vw,64px);margin:0 0 var(--headgap);
 }
 .at-services__head .at-sec__head{margin:0!important;}
-.at-services__cta{
-  display:inline-flex;align-items:center;gap:13px;flex:0 0 auto;
-  color:var(--ny)!important;text-decoration:none!important;
-  font-size:14px;font-weight:500;padding-bottom:4px;
+/* The eyebrow is a word here, not the badge the rest of the page uses: the
+   reference sets it as plain small caps. */
+.at-services .at-kicker{
+  background:none;border:0;padding:0!important;margin:0 0 16px!important;
+  letter-spacing:.16em!important;
 }
-.at-services__cta i{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:40px;height:40px;border-radius:50%;flex:0 0 auto;
-  border:1px solid rgba(0,83,183,.34);color:var(--ny2);
-  transition:background-color .3s ease,border-color .3s ease,color .3s ease;
+.at-services .at-kicker::before{display:none;}
+.at-root .at-services__h2{
+  font-size:clamp(30px,3.6vw,50px)!important;line-height:1.1!important;
+  margin:0!important;max-width:20ch;
 }
-.at-services__cta:hover i{background:var(--brand);border-color:#1436D8;color:#fff;}
+.at-services__aside{
+  display:flex;flex-direction:column;align-items:flex-start;gap:20px;
+  justify-self:end;max-width:380px;padding-top:clamp(8px,2vw,34px);
+}
+.at-services__lede{font-size:15.5px!important;line-height:1.55!important;margin:0!important;}
+/* The call is the house pill (.at-btn--solid), on client feedback
+   (20260912): the reference's disc pill was one more button shape than the
+   site has. */
+.at-services__cta{flex:0 0 auto;}
+/* The stroke under the heading's last word: an SVG behind the word, wider
+   than it on the right, drawn in over .9s once the head row has arrived.
+   Visible by default; only the pending state hides it, so a blocked bundle
+   leaves the heading underlined rather than bare. */
+.at-swash{position:relative;display:inline-block;white-space:nowrap;isolation:isolate;}
+.at-swash__ink{
+  position:absolute;left:-2%;bottom:-.16em;width:118%;height:.42em;
+  z-index:-1;overflow:visible;color:#9DC1F5;
+}
+.at-swash__ink path{stroke-dasharray:1;stroke-dashoffset:0;}
+.at-sec__head[data-anim='pending'] .at-swash__ink path{stroke-dashoffset:1;}
+.at-sec__head[data-anim='in'] .at-swash__ink path{
+  animation:at-swash-draw .9s cubic-bezier(.22,.61,.36,1) .5s both;
+}
+@keyframes at-swash-draw{from{stroke-dashoffset:1;}to{stroke-dashoffset:0;}}
 
 .at-acc{
-  --open:3.2;
+  /* 4.4, not 3.2 (20260912): the open panel is a card of copy beside a
+     photograph now and needs the room; at eight panels the closed ones are
+     still 117px, enough for one line of their name set on its side. */
+  --open:4.4;
 
   /* ---- THE TIMING, IN ONE PLACE --------------------------------------
      --ease is a long deceleration (an ease-out quint): it leaves fast and
@@ -799,7 +830,7 @@ export const CSS = `
 .at-acc__panel:last-child{padding-right:0;}
 .at-acc__inner{
   position:relative;display:block;height:100%;overflow:hidden;
-  border-radius:12px;background:var(--brand);isolation:isolate;
+  border-radius:22px;background:#EEF3FB;isolation:isolate;
   contain:layout paint;
 }
 .at-acc__img{
@@ -809,66 +840,72 @@ export const CSS = `
 }
 .at-acc:hover .at-acc__img,
 .at-acc:focus-within .at-acc__img{will-change:transform;}
+/* THE PHOTOGRAPHS ARE SHOWN AS THEY ARE (20260912, client instruction). The
+   blue tint on the closed panels and the pale wash on the open one both
+   came off; what remains on a closed panel is a dark gradient up from the
+   foot, only as far as the name set on its side needs, and the open panel's
+   copy sits on a white card of its own instead of on a washed picture. The
+   gradient is ::after, on in the closed state and off in the open one. */
 .at-acc__inner::after{
   content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
-  background:#061428;opacity:.34;
+  background:linear-gradient(180deg,rgba(5,18,52,0) 34%,rgba(5,18,52,.34) 62%,rgba(5,18,52,.72) 100%);
+  opacity:1;
   transition:opacity 1.2s ease;
 }
-.at-acc__scrim{
-  position:absolute;inset:0;z-index:-1;pointer-events:none;
-  background:linear-gradient(180deg,rgba(6,22,44,.62) 0%,rgba(6,22,44,.14) 34%,rgba(6,22,44,0) 56%,rgba(6,22,44,.52) 100%);
-}
-/* The closed panel's whole content, so it is set narrow and allowed to wrap as
-   far down as the name needs. */
+/* The closed panel's name, set on its side and read from the foot up, as the
+   reference sets its narrow cards. It is one line; a name longer than the
+   panel is tall is cut with an ellipsis rather than wrapped. */
 .at-acc__title{
-  position:absolute;left:18px;right:15px;top:18px;
-  color:#fff;font-size:13.5px;font-weight:500;line-height:1.34;
+  position:absolute;left:50%;bottom:24px;
+  translate:-50% 0;rotate:180deg;writing-mode:vertical-rl;
+  max-height:calc(100% - 64px);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  color:#fff;font-size:clamp(17px,1.5vw,24px);font-weight:500;line-height:1.1;
   opacity:1;transform:none;
   /* This is the title ARRIVING — a panel closing behind you — so it waits for
      the card it is replacing to clear out first. Leaving is the fast rule on
      the open states below. */
   transition:opacity .6s ease .3s,transform .6s var(--ease) .3s;
 }
+/* The open panel's copy: a white card, top left, over the photograph. */
 .at-acc__card{
-  position:absolute;left:16px;bottom:16px;
-  width:clamp(206px,22vw,332px);
-  padding:20px 20px 18px;border-radius:10px;
-  background:var(--brand);
+  position:absolute;left:24px;top:24px;
+  width:clamp(230px,25vw,360px);
+  padding:22px 22px 20px;border-radius:16px;
+  background:#fff;box-shadow:0 14px 36px rgba(6,20,54,.16);
   opacity:0;transform:translateY(18px);
   /* The base is the card LEAVING: quick, and immediately. */
   transition:opacity .34s ease,transform .46s var(--ease);
 }
 .at-acc__head{
-  display:block;color:#fff!important;
-  font-size:16px!important;font-weight:600!important;line-height:1.3!important;
-  letter-spacing:0!important;margin:0 0 9px!important;
+  display:block;color:#16233C!important;
+  font-size:clamp(20px,1.8vw,27px)!important;font-weight:500!important;line-height:1.2!important;
+  letter-spacing:0!important;margin:0 0 10px!important;
 }
 .at-acc__text{
-  display:block;color:rgba(255,255,255,.86);font-size:12.5px;line-height:1.6;
-  margin:0 0 17px;
+  display:block;color:var(--body);font-size:14px;line-height:1.55;
+  margin:0 0 18px;
 }
-/* Later than the card, so the invitation arrives after the panel it sits on. */
+/* Later than the card, so the invitation arrives after the panel it sits on.
+   The house pill (the .at-btn--solid geometry and ramp), on client
+   instruction: the white tile with a disc was one more button shape. The
+   gap opens on hover as every .at-btn does. */
 .at-acc__more{
-  display:inline-flex;align-items:center;gap:11px;
-  color:#fff;font-size:13px;font-weight:500;
-  opacity:0;transition:opacity .28s ease;
+  display:inline-flex;align-items:center;gap:10px;
+  min-height:var(--vxn-cta-h,46px);padding:0 var(--vxn-cta-px,28px);border-radius:var(--vxn-cta-r,999px);
+  background-image:var(--vxn-cta-grad,var(--brand));background-color:#0B2DBE;
+  color:#fff;font-size:var(--vxn-cta-fs,14px);font-weight:var(--vxn-cta-fw,400);letter-spacing:var(--vxn-cta-ls,.01em);
+  line-height:1;
+  opacity:0;transition:opacity .28s ease,gap .3s cubic-bezier(.22,.61,.36,1);
 }
-.at-acc__more i{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:32px;height:32px;border-radius:50%;flex:0 0 auto;
-  border:1px solid rgba(255,255,255,.42);
-  transition:background-color .3s ease,border-color .3s ease,color .3s ease;
-}
-.at-acc__panel:hover .at-acc__more i{
-  background:#fff;border-color:#fff;color:#1436D8;
-  transition:background-color .5s ease .62s,border-color .5s ease .62s,color .5s ease .62s;
-}
+.at-acc__panel:hover .at-acc__more{gap:16px;}
+/* The number, a frosted disc in the top corner in both states. */
 .at-acc__num{
-  position:absolute;right:14px;bottom:14px;
+  position:absolute;right:16px;top:16px;
   display:inline-flex;align-items:center;justify-content:center;
-  width:34px;height:34px;border-radius:50%;
-  background:var(--brand);color:#fff;
-  font-size:11.5px;font-weight:600;letter-spacing:.04em;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(5,18,52,.42);border:1px solid rgba(255,255,255,.34);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  color:#fff;font-size:11.5px;font-weight:600;letter-spacing:.04em;
 }
 
 /* ---- OPEN, at rest ------------------------------------------------------ */
@@ -890,7 +927,7 @@ export const CSS = `
 .at-acc:hover .at-acc__panel .at-acc__img,
 .at-acc:focus-within .at-acc__panel .at-acc__img{transform:scale(1.04);}
 .at-acc:hover .at-acc__panel .at-acc__inner::after,
-.at-acc:focus-within .at-acc__panel .at-acc__inner::after{opacity:.34;}
+.at-acc:focus-within .at-acc__panel .at-acc__inner::after{opacity:1;}
 .at-acc:hover .at-acc__panel .at-acc__title,
 .at-acc:focus-within .at-acc__panel .at-acc__title{opacity:1;transform:none;}
 .at-acc:hover .at-acc__panel .at-acc__card,
@@ -1055,9 +1092,8 @@ export const CSS = `
    ========================================================================== */
 @media(max-width:1180px){
   .at-root{--gap:20px;--cardpad:24px;--headgap:36px;}
-  .at-acc{--open:3;height:clamp(340px,34vw,420px);}
-  .at-acc__title{left:15px;right:13px;top:15px;font-size:12.5px;}
-  .at-services__head{align-items:flex-start;}
+  .at-acc{--open:4;height:clamp(340px,34vw,420px);}
+  .at-acc__title{bottom:20px;font-size:16px;}
   /* One rail. The figure loses its stretch height with the row it was
      stretching to, so it takes an aspect ratio instead of a min-height —
      a 340px band under the list would crop the photograph to a strip. */
@@ -1086,7 +1122,7 @@ export const CSS = `
   .at-acc:hover .at-acc__panel:hover .at-acc__card,
   .at-acc:focus-within .at-acc__panel .at-acc__card,
   .at-acc:focus-within .at-acc__panel:focus-visible .at-acc__card{
-    opacity:1;transform:none;width:auto;right:16px;
+    opacity:1;transform:none;width:auto;left:16px;top:16px;right:16px;
   }
   .at-acc__more,
   .at-acc__panel:first-child .at-acc__more,
@@ -1106,9 +1142,14 @@ export const CSS = `
   .at-acc:hover .at-acc__panel:hover .at-acc__inner::after,
   .at-acc:focus-within .at-acc__panel .at-acc__inner::after,
   .at-acc:focus-within .at-acc__panel:focus-visible .at-acc__inner::after{opacity:0;}
+  /* The head row stacks: the gloss and the pill under the heading. */
+  .at-services__head{grid-template-columns:minmax(0,1fr);}
+  .at-services__aside{justify-self:start;padding-top:0;max-width:60ch;}
   /* The card has the bottom of the panel to itself now, so the number moves
      up rather than fighting it for the corner. */
-  .at-acc__num{top:14px;bottom:auto;}
+  /* The card runs the full width of the panel here and the badge sat on
+     its corner, so the badge goes. */
+  .at-acc__num{display:none;}
   /* One column: the picture becomes a band under the copy rather than half the
      card. The 50/50 split is a two-column idea and there is only one column
      here, so the halves become top and bottom. */
@@ -1116,8 +1157,8 @@ export const CSS = `
   .at-prob__art{aspect-ratio:16/6;}
   /* The head row stacks: a heading and a paragraph side by side need the
      measure they have above this width. */
-  .at-intro__top{grid-template-columns:minmax(0,1fr);gap:12px;}
-  .at-intro__lede{justify-self:start;max-width:60ch;}
+  .at-intro__top{gap:12px;}
+  .at-intro__lede{max-width:60ch;}
   .at-talk__grid{grid-template-columns:minmax(0,1fr);gap:calc(var(--gap) * 1.5);}
   .at-talk__fig{aspect-ratio:16/9;}
 }
@@ -1153,7 +1194,7 @@ export const CSS = `
   .at-rel__card:first-child .at-rel__title{font-size:17px;}
   .at-rel__card:first-child .at-rel__desc{font-size:13px;max-width:none;}
   .at-talk__cta{width:100%;justify-content:center;}
-  .at-services__head{flex-direction:column;align-items:flex-start;gap:18px;}
+  .at-services__head{gap:18px;}
   /* Full width, the label at one end and the disc at the other, because a
      pill hanging off the left of a full-width paragraph reads as an orphan at
      this measure. */
@@ -1199,6 +1240,30 @@ export const CSS = `
   .at-btn:hover{gap:inherit;}
 }
 `;
+
+/**
+ * The strip's heading with its last word underlined by a hand-drawn stroke,
+ * the device the reference draws under one word of its own heading. The
+ * stroke is an SVG path with pathLength 1, so the stylesheet can draw it in
+ * on arrival with a dash offset; without the motion script it is simply
+ * there. The word keeps its punctuation ("Move." is underlined whole).
+ */
+function Swash({ text }: { text: string }) {
+  const t = text.trimEnd();
+  const i = t.lastIndexOf(" ");
+  if (i < 0) return <>{t}</>;
+  return (
+    <>
+      {t.slice(0, i + 1)}
+      <span className="at-swash">
+        {t.slice(i + 1)}
+        <svg className="at-swash__ink" viewBox="0 0 200 24" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+          <path d="M3 18 C 52 6, 122 2, 197 9" fill="none" stroke="currentColor" strokeWidth="5" strokeLinecap="round" pathLength="1" />
+        </svg>
+      </span>
+    </>
+  );
+}
 
 /** The arrow that ends every CTA on the page. */
 function Arrow() {
@@ -1376,7 +1441,7 @@ export default function ServiceTemplateBody({
                 <div className="at-intro__copy">
                   {/* The proof points read as terms, so they are headings with
                       a note under each rather than an icon rail. */}
-                  <ul className="at-intro__points" aria-label={`What working with ValuNxt means`}>
+                  <ul className="at-intro__points" aria-label={`What working with Valunxt means`}>
                     {intro.proof.map((pr) => (
                       <li className="at-intro__point" key={pr.label}>
                         <h3 className="at-intro__label">{pr.label}</h3>
@@ -1385,25 +1450,12 @@ export default function ServiceTemplateBody({
                     ))}
                   </ul>
 
-                  <ul className="at-intro__chips">
-                    {intro.chips.map((c) => (
-                      <li className="at-intro__chip" key={c}>
-                        <i aria-hidden="true" />
-                        {c}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="at-intro__ctas">
-                    <a className="at-btn at-btn--solid" href={rurl(region, intro.primary.href)}>
-                      {intro.primary.label}
-                      <Arrow />
-                    </a>
-                    <a className="at-btn at-btn--line" href={rurl(region, intro.secondary.href)}>
-                      {intro.secondary.label}
-                      <Arrow />
-                    </a>
-                  </div>
+                  {/* The chips and the two buttons that followed the list came
+                      off on client feedback (20260912): the band is the
+                      statement, the list and the photograph, as the
+                      reference has it. intro.chips, intro.primary and
+                      intro.secondary stay in the content: the strip's call and
+                      the chooser's tabs still read intro.primary. */}
                 </div>
 
                 {/* Decorative: the points beside it say what it shows. */}
@@ -1425,17 +1477,19 @@ export default function ServiceTemplateBody({
               <div className="at-services__head">
                 <div className="at-sec__head">
                   <span className="at-kicker">{strip.kicker}</span>
-                  <h2 className="at-h2" id="at-services-head">
-                    {strip.head}
+                  <h2 className="at-h2 at-services__h2" id="at-services-head">
+                    <Swash text={strip.head} />
                   </h2>
-                  <p className="at-lede">{strip.lede}</p>
                 </div>
-                <a className="at-services__cta" href={rurl(region, intro.primary.href)}>
-                  <i aria-hidden="true">
+                {/* The gloss and the call, top-aligned with the heading on the
+                    right, as the reference sets them. */}
+                <div className="at-services__aside">
+                  <p className="at-lede at-services__lede">{strip.lede}</p>
+                  <a className="at-btn at-btn--solid at-services__cta" href={rurl(region, intro.primary.href)}>
+                    {strip.cta}
                     <Arrow />
-                  </i>
-                  {strip.cta}
-                </a>
+                  </a>
+                </div>
               </div>
 
               <div className="at-acc">
@@ -1444,7 +1498,6 @@ export default function ServiceTemplateBody({
                     <span className="at-acc__inner">
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img className="at-acc__img" src={rimgFirst(region, sv.figure)} alt="" loading="lazy" />
-                      <span className="at-acc__scrim" aria-hidden="true" />
                       {/* The closed panel's label. It repeats the heading in
                           the card below it, so it is hidden from assistive
                           technology — the h3 is always in the accessibility
@@ -1456,10 +1509,8 @@ export default function ServiceTemplateBody({
                         <h3 className="at-acc__head">{sv.name}</h3>
                         <span className="at-acc__text">{sv.cardText}</span>
                         <span className="at-acc__more">
-                          <i aria-hidden="true">
-                            <Arrow />
-                          </i>
                           Explore More
+                          <Arrow />
                         </span>
                       </span>
                       <span className="at-acc__num" aria-hidden="true">
