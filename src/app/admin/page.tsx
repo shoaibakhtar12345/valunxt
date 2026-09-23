@@ -79,7 +79,7 @@ export default async function AdminLoginPage() {
           <div className="form-logo">
             {/* Shown only on narrow screens; lazy, so wide ones never fetch it. */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={ADMIN_LOGO_DARK} alt="Valunxt" width={150} height={30} loading="lazy" />
+            <img src={ADMIN_LOGO_DARK} alt="" width={150} height={30} loading="lazy" />
           </div>
 
           <h2>Welcome back</h2>
