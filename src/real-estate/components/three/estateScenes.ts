@@ -15,12 +15,15 @@
  *   globe    a dotted globe with flight arcs running out of Dubai
  *   lattice  a mashrabiya screen of eight-point stars rippling in the light
  *
+ *   ridges   stacked ridgelines of light rolling toward the viewer (the
+ *            enquiry form's, used nowhere else)
+ *
  * EstateCanvas.tsx owns the renderer, resize and render loop; each builder
  * returns the scene, its camera, a per-frame update and a dispose.
  */
 import * as THREE from 'three';
 
-export type EstateVariant = 'skyline' | 'dunes' | 'arches' | 'globe' | 'lattice';
+export type EstateVariant = 'skyline' | 'dunes' | 'arches' | 'globe' | 'lattice' | 'ridges';
 
 export interface EstateScene {
   scene: THREE.Scene;
@@ -762,12 +765,106 @@ function buildLattice(): EstateScene {
   };
 }
 
+/* ==========================================================================
+   RIDGES — stacked ridgelines of light, rolling toward the viewer.
+   ========================================================================== */
+function buildRidges(): EstateScene {
+  const bin = tracker();
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(36, 16 / 9, 0.1, 120);
+  scene.add(backdrop(bin, { top: '#04104F', bottom: '#010426', glow: '#3A66FF', at: [0.7, 0.62], amount: 0.55, horizon: 0.5 }));
+
+  const ROWS = 80;
+  const COLS = 180;
+  const segs = ROWS * (COLS - 1);
+  const pos = new Float32Array(segs * 2 * 3);
+  const rowAttr = new Float32Array(segs * 2);
+  let k = 0;
+  for (let r = 0; r < ROWS; r++) {
+    for (let c = 0; c < COLS - 1; c++) {
+      for (let e = 0; e < 2; e++) {
+        const x = ((c + e) / (COLS - 1) - 0.5) * 44;
+        pos[k * 3] = x;
+        pos[k * 3 + 1] = 0;
+        pos[k * 3 + 2] = -r * 0.5;
+        rowAttr[k] = r / (ROWS - 1);
+        k++;
+      }
+    }
+  }
+  const geo = bin.add(new THREE.BufferGeometry());
+  geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+  geo.setAttribute('aRow', new THREE.BufferAttribute(rowAttr, 1));
+
+  const mat = bin.add(
+    new THREE.ShaderMaterial({
+      transparent: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+      uniforms: {
+        uTime: { value: 0 },
+        uDeep: { value: raw('#4F7BFF') },
+        uHi: { value: raw('#D6E4FF') },
+      },
+      vertexShader: `
+        attribute float aRow;
+        uniform float uTime;
+        varying float vH; varying float vRow;
+        void main() {
+          vec3 p = position;
+          float x = p.x; float z = p.z;
+          float h = sin(x * 0.32 + uTime * 0.55 + z * 0.18) * 1.25
+                  + sin(x * 0.7 - uTime * 0.8 + z * 0.4) * 0.55
+                  + sin(x * 0.12 + z * 0.3 - uTime * 0.3) * 1.6;
+          /* Ridges calm toward the edges so the field has a heart. */
+          h *= 0.35 + 0.65 * exp(-pow(x * 0.07, 2.0));
+          p.y = h;
+          vH = h; vRow = aRow;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 uDeep; uniform vec3 uHi;
+        varying float vH; varying float vRow;
+        void main() {
+          float crest = smoothstep(-0.4, 2.2, vH);
+          vec3 c = mix(uDeep, uHi, crest);
+          float a = (1.0 - vRow * 0.85) * (0.6 + 0.4 * crest);
+          gl_FragColor = vec4(c * a, a);
+        }
+      `,
+    }),
+  );
+  const lines = new THREE.LineSegments(geo, mat);
+  lines.frustumCulled = false;
+  scene.add(lines);
+
+  return {
+    scene,
+    camera,
+    update(t) {
+      mat.uniforms.uTime.value = t;
+      /* Tall panels take a wider lens and a steeper look-down so the ridges fill them. */
+      const tall = camera.aspect < 1;
+      const fov = tall ? 58 : 36;
+      if (camera.fov !== fov) {
+        camera.fov = fov;
+        camera.updateProjectionMatrix();
+      }
+      camera.position.set(Math.sin(t * 0.08) * 2.2, (tall ? 7.5 : 5.2) + Math.sin(t * 0.11) * 0.5, tall ? 6 : 9);
+      camera.lookAt(0, tall ? -0.5 : 0.4, tall ? -9 : -14);
+    },
+    dispose: () => bin.dispose(),
+  };
+}
+
 const BUILDERS: Record<EstateVariant, () => EstateScene> = {
   skyline: buildSkyline,
   dunes: buildDunes,
   arches: buildArches,
   globe: buildGlobe,
   lattice: buildLattice,
+  ridges: buildRidges,
 };
 
 export function buildEstateScene(variant: EstateVariant): EstateScene {

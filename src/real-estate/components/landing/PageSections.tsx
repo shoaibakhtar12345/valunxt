@@ -21,7 +21,7 @@ import type { EstateVariant } from '../three/estateScenes';
 import { ArrowRight } from '../icons';
 import LiveAbstract from './LiveAbstract';
 import PropertyGrid from './PropertyGrid';
-import { IcCheck, IcStar, SectionHead } from './shared';
+import { IcCheck, IcStar, Label, SectionHead } from './shared';
 
 function Head({ eyebrow, title, lede }: { eyebrow: string; title: string; lede?: string }) {
   return (
@@ -168,7 +168,7 @@ export function Band({ variant, eyebrow, title, body }: { variant: EstateVariant
         <div className="re-l-band" data-rv="clip">
           <LiveAbstract variant={variant} className="re-l-band__live" />
           <div className="re-l-band__copy">
-            <span className="re-l-eyebrow re-l-eyebrow--ghost">{eyebrow}</span>
+            <Label light>{eyebrow}</Label>
             <h2>{title}</h2>
             <p>{body}</p>
             <a className="re-btn re-btn--light" href="#enquire">

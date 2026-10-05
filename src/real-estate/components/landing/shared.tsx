@@ -13,7 +13,7 @@
  * once an arrival has played, so a card's hover lift is its own again.
  */
 import { useEffect, useRef, type ReactNode } from 'react';
-import { animate, inView, motionValue } from 'framer-motion';
+import { animate, inView, motion, motionValue } from 'framer-motion';
 
 const EASE_OUT: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const FROM: Record<string, Record<string, unknown>> = {
@@ -173,6 +173,47 @@ export function useTilt<T extends HTMLElement>(max = 6) {
   return ref;
 }
 
+/**
+ * A line of type that rises into place a word at a time, each word masked by
+ * its own overflow box. Used by the service pages' hero.
+ *
+ * It lived in Hero.tsx until the landing hero was rebuilt and stopped needing
+ * it; it sits here now so the one component still using it does not import
+ * from a sibling page's hero.
+ */
+export function Words({ text, delay = 0 }: { text: string; delay?: number }) {
+  const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
+  return (
+    <>
+      {text.split(' ').map((w, i) => (
+        <span key={i}>
+          <span className="re-l-w">
+            <motion.span className="re-l-w__i" initial={{ y: '115%' }} animate={{ y: '0%' }} transition={{ duration: 1, ease: EASE, delay: delay + i * 0.06 }}>
+              {w}
+            </motion.span>
+          </span>{' '}
+        </span>
+      ))}
+    </>
+  );
+}
+
+/**
+ * The section label — a dot and a few words, nothing else.
+ *
+ * It replaced a bordered uppercase pill: at six or seven per page the pills
+ * read as buttons and fought the headings they were meant to introduce. The
+ * text is written sentence case in the data and is NOT uppercased here.
+ */
+export function Label({ children, className, light }: { children: ReactNode; className?: string; light?: boolean }) {
+  return (
+    <span className={`re-l-label${light ? ' re-l-label--light' : ''}${className ? ` ${className}` : ''}`} data-rv="up">
+      <i aria-hidden="true" />
+      {children}
+    </span>
+  );
+}
+
 export function SectionHead({
   eyebrow,
   title,
@@ -190,9 +231,7 @@ export function SectionHead({
 }) {
   return (
     <div className={`re-l-head${light ? ' re-l-head--light' : ''}${align === 'center' ? ' re-l-head--center' : ''}`}>
-      <span className="re-l-eyebrow" data-rv="up">
-        {eyebrow}
-      </span>
+      <Label light={light}>{eyebrow}</Label>
       <h2 className="re-l-h2" data-rv="up" data-rv-i="1">
         {title}
       </h2>

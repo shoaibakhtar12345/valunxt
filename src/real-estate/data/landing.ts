@@ -47,6 +47,24 @@ export interface Listing {
 const IMG = '/assets/content/uploads';
 const RE = `${IMG}/services/sub/real-estate-transactions`;
 const PH = (name: string) => `/real-estate/listings/${name}.webp`;
+const HERO_IMG = '/real-estate/hero';
+
+/** A hero carousel slide. `layout` picks the design; see HERO.slides. */
+export interface HeroSlide {
+  layout: 'centre' | 'rail' | 'portal' | 'index';
+  tag: string;
+  eyebrow: string;
+  /** `em` is set in the display italic; `lead` in the sans. */
+  title: { lead: string; em: string };
+  lede: string;
+  image: string;
+  alt: string;
+  caption: string;
+  cta: { label: string; target: string };
+  stat: { value: string; label: string };
+  /** portal only — the payment split, in per cent. */
+  plan?: { during: number; handover: number };
+}
 
 export const HERO = {
   eyebrow: 'Dubai Real Estate',
@@ -56,14 +74,74 @@ export const HERO = {
     "Dubai property, handled the Valunxt way: independent advice, the numbers in front of you, and one accountable team from the first search to the keys. Tax-free income, freehold ownership, and a city built for the way you want to live.",
   image: `${IMG}/services/real-estate-hero.webp`,
   imageAlt: 'Dubai Marina from above — the towers and the yachts',
-  /** The lifestyle reel behind the headline: one scene at a time, cross-faded
-      with a slow drift. The first is the LCP image; keep it the strongest. */
+  /** THE HERO CAROUSEL — four curated slides, four different designs.
+   *
+   * All four share the same typographic voice: a short two-line headline whose
+   * second phrase is set in the display italic, one line of copy, and one pill
+   * action. What changes between them is the composition:
+   *
+   *   centre  Buy      — full-bleed night skyline, everything centred.
+   *   rail    Rent     — full-bleed dusk skyline, copy on a hairline bottom
+   *                      rail with the figure at the far end of it.
+   *   portal  Off-Plan — the photograph contained in a tall arch on a navy
+   *                      field, copy beside it, the payment plan as a bar.
+   *   index   Invest   — duotone aerial, copy left, the yield set oversized.
+   *
+   * Photography is Dubai the city, not a particular property, and lives in
+   * /real-estate/hero/ (Pexels, free licence). The first image is the LCP
+   * image; keep it the strongest.
+   */
   slides: [
-    { image: `${IMG}/services/real-estate-hero.webp`, caption: 'Dubai Marina, from above' },
-    { image: `${RE}/buy-property-hero.webp`, caption: 'Villa living, at sunset' },
-    { image: `${IMG}/services/re-explore-buy-property.webp`, caption: 'A private pool, all year' },
-    { image: `${IMG}/services/real-estate-transactions-solution-2.webp`, caption: 'Home, on the fiftieth floor' },
-  ],
+    {
+      layout: 'centre',
+      tag: 'Buy',
+      eyebrow: 'Buy in Dubai',
+      title: { lead: 'Own Dubai Property', em: 'With Confidence.' },
+      lede: 'Freehold ownership, tax-free income and advice that is ours, not a developer’s.',
+      image: `${HERO_IMG}/dubai-skyline-night.webp`,
+      alt: 'The Dubai skyline at night, Burj Khalifa above the lit highways',
+      caption: 'Downtown Dubai',
+      cta: { label: 'See Property', target: 'listings' },
+      stat: { value: '0%', label: 'Income tax' },
+    },
+    {
+      layout: 'rail',
+      tag: 'Rent',
+      eyebrow: 'Rent in Dubai',
+      title: { lead: 'Rent a Home That', em: 'Fits Your Life.' },
+      lede: 'Verified homes in the communities families actually choose.',
+      image: `${HERO_IMG}/dubai-skyline-dusk.webp`,
+      alt: 'Dubai’s skyline at dusk seen across the water',
+      caption: 'Dubai, at dusk',
+      cta: { label: 'See Rentals', target: 'listings' },
+      stat: { value: '1 wk', label: 'Typical move-in' },
+    },
+    {
+      layout: 'portal',
+      tag: 'Off-Plan',
+      eyebrow: 'Off-Plan Launches',
+      title: { lead: 'Buy Early Into a', em: 'Futuristic Skyline.' },
+      lede: 'Launch prices, escrow-protected, on a plan that spreads the cost.',
+      image: `${HERO_IMG}/dubai-future-museum.webp`,
+      alt: 'The Museum of the Future in Dubai, lit at night',
+      caption: 'Museum of the Future',
+      cta: { label: 'View Off-Plan', target: 'listings' },
+      stat: { value: '60/40', label: 'Typical payment plan' },
+      plan: { during: 60, handover: 40 },
+    },
+    {
+      layout: 'index',
+      tag: 'Invest',
+      eyebrow: 'Invest & Relocate',
+      title: { lead: 'Invest Where the', em: 'World Is Moving.' },
+      lede: 'We model the numbers before you commit a dirham.',
+      image: `${HERO_IMG}/dubai-aerial-dusk.webp`,
+      alt: 'Dubai from the air at dusk — towers and interchanges',
+      caption: 'Sheikh Zayed Road',
+      cta: { label: 'Talk to the Dubai desk', target: 'enquire' },
+      stat: { value: '6–9%', label: 'Gross yields, typical*' },
+    },
+  ] as HeroSlide[],
   stats: [
     { value: '0%', label: 'Income tax' },
     { value: '6–9%', label: 'Gross yields, typical*' },
@@ -347,6 +425,33 @@ export const LISTINGS: Listing[] = [
     tags: ['Ready', 'Full floor', 'Private lift'],
   },
 ];
+
+/* -------------------------------------------------------------------------- */
+/* About — the desk, in one paragraph and three figures.
+ *
+ * EVERY FIGURE HERE IS ALREADY PUBLISHED ELSEWHERE ON THE SITE; none is new.
+ *   48+   data/home.ts ABOUT.stat — years of market expertise.
+ *   RICS  data/pages.ts and PROCESS below — the valuation standard.
+ *   10    the length of AREAS, the communities this page maps.
+ * If the desk wants different figures here, they must be true of the desk —
+ * do not invent customer or unit counts to fill the row. */
+
+export const ABOUT = {
+  eyebrow: 'About us',
+  /** Set in ink; the rest of the paragraph runs muted behind it. */
+  lead: 'Valunxt is the group’s Dubai property desk — independent advice, the numbers in front of you, and one accountable team from the first search to the keys.',
+  rest: 'We are not a developer’s sales floor. Valuations are RICS and RERA-aligned, diligence is done before you commit, and the brief stays yours.',
+  stats: [
+    { value: '48+', label: 'Years of market expertise' },
+    { value: 'RICS', label: '& RERA-aligned valuations' },
+    { value: '10', label: 'Dubai communities mapped' },
+  ],
+  /** Two views of the city, not two properties — the same rule as the hero. */
+  shots: [
+    { image: `${HERO_IMG}/about-dubai-towers.webp`, alt: 'Dubai’s towers against a clear sky', caption: 'Downtown and the Marina', note: 'Where most of our mandates sit' },
+    { image: `${HERO_IMG}/about-dubai-night.webp`, alt: 'Dubai at night, palms along a lit avenue', caption: 'Sheikh Zayed Road, after dark', note: 'A city that does not close' },
+  ],
+};
 
 export const LISTINGS_HEAD = {
   eyebrow: 'Featured, indicative',

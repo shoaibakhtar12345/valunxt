@@ -27,6 +27,7 @@ import { useRevealEngine } from './shared';
 import { scrollToId } from './enquiry';
 import Hero from './Hero';
 import Ticker from './Ticker';
+import About from './About';
 import Listings from './Listings';
 import WhyDubai from './WhyDubai';
 import Areas from './Areas';
@@ -118,6 +119,7 @@ export default function LandingBody({ locale, posts }: { locale: Locale; posts: 
       <div className="re-land" ref={root}>
         <Hero />
         <Ticker />
+        <About />
         <Listings />
         <WhyDubai />
         <Areas locale={locale} />
@@ -125,7 +127,7 @@ export default function LandingBody({ locale, posts }: { locale: Locale; posts: 
         <Calculators />
         <Process cta={{ label: 'How we buy', href: url(locale, '/buy-property/') }} />
         <Insights posts={posts} locale={locale} />
-        <Enquire interest={search.mode === 'rent' ? 'Renting' : search.mode === 'offplan' ? 'Off-plan' : 'Buying'} about={enquiryAbout} onClearAbout={() => setEnquiryAbout('')} />
+        <Enquire image="/real-estate/hero/abstract-facade.webp" interest={search.mode === 'rent' ? 'Renting' : search.mode === 'offplan' ? 'Off-plan' : 'Buying'} about={enquiryAbout} onClearAbout={() => setEnquiryAbout('')} />
         <Faq />
       </div>
     </SearchContext.Provider>

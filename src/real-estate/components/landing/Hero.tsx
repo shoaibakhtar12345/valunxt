@@ -1,143 +1,257 @@
 'use client';
 
 /**
- * The hero sells the lifestyle: a reel of Dubai scenes behind the headline,
- * one at a time, cross-faded with a slow drift (a CSS animation restarted
- * per scene), white type on the left, and the search bar sitting on the
- * hero's bottom edge the way the home page's practice tabs do. The copy
- * sinks and fades as the page leaves; the reel pauses while the tab is
- * hidden and under reduced motion.
+ * THE HERO — a carousel of four curated slides, each with its own composition
+ * rather than one template re-skinned.
+ *
+ * All four speak the same language: a short two-line headline whose second
+ * phrase is set in the display italic, one line of copy, one pill action, and
+ * Dubai the city behind it — never a particular property. What differs is the
+ * composition, chosen per slide by `layout` in HERO.slides:
+ *
+ *   centre   Buy       full-bleed night skyline, everything centred.
+ *   rail     Rent      full-bleed dusk skyline, copy on a hairline bottom rail
+ *                      with the figure at the far end of it.
+ *   portal   Off-Plan  the photograph contained in a tall arch on a navy
+ *                      field, copy beside it, the payment plan as a bar.
+ *   index    Invest    duotone aerial, copy left, the yield set oversized.
+ *
+ * The track slides sideways; it auto-advances, and pauses on hover/focus,
+ * while the tab is hidden and under reduced motion. The search card sits on
+ * the hero's bottom edge, overlapping it.
  *
  * While the hero fills the screen the module's header runs transparent with
  * light type — it reads `data-re-on-video` on <html>, the hook the module's
  * header already had, so nothing in Header.tsx had to change.
  */
 import { useEffect, useRef, useState } from 'react';
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 
-import { AREAS, HERO, SEARCH } from '../../data/landing';
-import { ArrowRight } from '../icons';
+import { AREAS, HERO, SEARCH, type HeroSlide } from '../../data/landing';
+import { scrollToId } from './enquiry';
 import { useSearch } from './LandingBody';
-import { IcArrow, useHeaderOverHero } from './shared';
+import { IcArrow, IcArrowUp, useHeaderOverHero } from './shared';
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
-export function Words({ text, delay = 0 }: { text: string; delay?: number }) {
-  return (
+/** The headline: sans lead, display italic accent. */
+function Title({ s, first }: { s: HeroSlide; first: boolean }) {
+  const inner = (
     <>
-      {text.split(' ').map((w, i) => (
-        <span key={i}>
-          <span className="re-l-w">
-            <motion.span className="re-l-w__i" initial={{ y: '115%' }} animate={{ y: '0%' }} transition={{ duration: 1, ease: EASE, delay: delay + i * 0.06 }}>
-              {w}
-            </motion.span>
-          </span>{' '}
-        </span>
-      ))}
+      {s.title.lead} <em>{s.title.em}</em>
     </>
+  );
+  return first ? <h1 className="re-l-car__title">{inner}</h1> : <h2 className="re-l-car__title">{inner}</h2>;
+}
+
+function Cta({ s }: { s: HeroSlide }) {
+  return (
+    <button type="button" className="re-l-car__cta" onClick={() => scrollToId(s.cta.target)}>
+      {s.cta.label}
+      <IcArrowUp />
+    </button>
+  );
+}
+
+function Stat({ s }: { s: HeroSlide }) {
+  return (
+    <div className="re-l-car__stat">
+      <strong>{s.stat.value}</strong>
+      <span>{s.stat.label}</span>
+    </div>
+  );
+}
+
+function Shot({ s, first, className }: { s: HeroSlide; first: boolean; className: string }) {
+  return (
+    <div className={className}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src={s.image} alt={s.alt} {...(first ? { fetchPriority: 'high' as const } : {})} />
+    </div>
+  );
+}
+
+function Slide({ s, first }: { s: HeroSlide; first: boolean }) {
+  /* 1 — centre: the photograph carries it, the type sits in the middle. */
+  if (s.layout === 'centre') {
+    return (
+      <div className="re-l-car__in re-l-centre">
+        <Shot s={s} first={first} className="re-l-centre__shot" />
+        <span className="re-l-centre__wash" aria-hidden="true" />
+        <div className="re-wrap re-l-centre__in">
+          <span className="re-l-label re-l-label--light">
+            <i aria-hidden="true" />
+            {s.eyebrow}
+          </span>
+          <Title s={s} first={first} />
+          <p className="re-l-car__lede">{s.lede}</p>
+          <Cta s={s} />
+        </div>
+        <span className="re-l-centre__cap">{s.caption}</span>
+      </div>
+    );
+  }
+
+  /* 2 — rail: everything sits on one hairline at the foot of the frame. */
+  if (s.layout === 'rail') {
+    return (
+      <div className="re-l-car__in re-l-rail">
+        <Shot s={s} first={first} className="re-l-rail__shot" />
+        <span className="re-l-rail__wash" aria-hidden="true" />
+        <div className="re-wrap re-l-rail__in">
+          <span className="re-l-rail__cap">{s.caption}</span>
+          <div className="re-l-rail__foot">
+            <div className="re-l-car__copy">
+              <span className="re-l-label re-l-label--light">
+                <i aria-hidden="true" />
+                {s.eyebrow}
+              </span>
+              <Title s={s} first={first} />
+              <p className="re-l-car__lede">{s.lede}</p>
+              <Cta s={s} />
+            </div>
+            <Stat s={s} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  /* 3 — portal: the photograph is held inside an arch, not bled off the edge. */
+  if (s.layout === 'portal') {
+    const plan = s.plan ?? { during: 60, handover: 40 };
+    return (
+      <div className="re-l-car__in re-l-portal">
+        <div className="re-wrap re-l-portal__in">
+          <div className="re-l-car__copy">
+            <span className="re-l-label re-l-label--light">
+              <i aria-hidden="true" />
+              {s.eyebrow}
+            </span>
+            <Title s={s} first={first} />
+            <p className="re-l-car__lede">{s.lede}</p>
+            <Cta s={s} />
+            <div className="re-l-portal__plan">
+              <span className="re-l-portal__bar">
+                <i style={{ width: `${plan.during}%` }} />
+              </span>
+              <span className="re-l-portal__keys">
+                <span>
+                  <strong>{plan.during}%</strong> during construction
+                </span>
+                <span>
+                  <strong>{plan.handover}%</strong> on handover
+                </span>
+              </span>
+            </div>
+          </div>
+          <figure className="re-l-portal__arch">
+            <Shot s={s} first={first} className="re-l-portal__shot" />
+            <figcaption>{s.caption}</figcaption>
+          </figure>
+        </div>
+      </div>
+    );
+  }
+
+  /* 4 — index: duotone aerial, the yield set as the slide's one graphic. */
+  return (
+    <div className="re-l-car__in re-l-index">
+      <Shot s={s} first={first} className="re-l-index__shot" />
+      <span className="re-l-index__wash" aria-hidden="true" />
+      <div className="re-wrap re-l-index__in">
+        <div className="re-l-car__copy">
+          <span className="re-l-label re-l-label--light">
+            <i aria-hidden="true" />
+            {s.eyebrow}
+          </span>
+          <Title s={s} first={first} />
+          <p className="re-l-car__lede">{s.lede}</p>
+          <Cta s={s} />
+        </div>
+        <div className="re-l-index__fig">
+          <strong>{s.stat.value}</strong>
+          <span>{s.stat.label}</span>
+        </div>
+      </div>
+      <span className="re-l-index__cap">{s.caption}</span>
+    </div>
   );
 }
 
 export default function Hero() {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
-  const { search, set, results, goToResults, enquire } = useSearch();
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const copyY = useTransform(scrollYProgress, [0, 1], [0, 140]);
-  const copyOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
-  const bgY = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
+  const { search, set, results, goToResults } = useSearch();
 
   useHeaderOverHero(ref);
 
-  /* The reel. */
+  /* The carousel: auto-advances, pauses on hover/focus and while the tab is hidden. */
+  const slides = HERO.slides;
+  const n = slides.length;
   const [slide, setSlide] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const go = (i: number) => setSlide(((i % n) + n) % n);
   useEffect(() => {
-    if (reduce) return;
-    const n = HERO.slides.length;
-    let t = 0;
-    const arm = () => {
-      window.clearInterval(t);
-      t = window.setInterval(() => {
-        if (!document.hidden) setSlide((i) => (i + 1) % n);
-      }, 6500);
-    };
-    arm();
+    if (reduce || paused) return;
+    const t = window.setInterval(() => {
+      if (!document.hidden) setSlide((i) => (i + 1) % n);
+    }, 7000);
     return () => window.clearInterval(t);
-  }, [reduce, slide]);
+  }, [reduce, paused, slide, n]);
 
   const budgets = SEARCH.budgets[search.mode];
 
   return (
     <>
-      <section className="re-l-hero" ref={ref} aria-label="Dubai real estate">
-        <motion.div className="re-l-hero__bg" style={reduce ? undefined : { y: bgY }}>
-          {HERO.slides.map((s, i) => (
-            <div className={`re-l-hero__slide${i === slide ? ' is-on' : ''}`} key={s.image} aria-hidden={i === slide ? undefined : 'true'}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={s.image} alt={i === 0 ? HERO.imageAlt : ''} {...(i === 0 ? { fetchPriority: 'high' as const } : {})} />
-            </div>
-          ))}
-        </motion.div>
-        <span className="re-l-hero__scrim" aria-hidden="true" />
-
-        <div className="re-l-hero__reel" aria-label="Scenes">
-          <span className="re-l-hero__caption" key={slide}>
-            {HERO.slides[slide]?.caption}
-          </span>
-          <span className="re-l-hero__dots" role="tablist">
-            {HERO.slides.map((s, i) => (
-              <button type="button" key={s.image} role="tab" aria-selected={i === slide} aria-label={s.caption} className={i === slide ? 'is-on' : ''} onClick={() => setSlide(i)} />
+      <section
+        className="re-l-hero re-l-car"
+        ref={ref}
+        aria-roledescription="carousel"
+        aria-label="Dubai real estate"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+        onFocus={() => setPaused(true)}
+        onBlur={() => setPaused(false)}
+      >
+        <div className="re-l-car__viewport">
+          <div className="re-l-car__track" style={{ transform: `translateX(-${slide * 100}%)` }}>
+            {slides.map((s, i) => (
+              <div
+                className={`re-l-car__slide${i === slide ? ' is-on' : ''}`}
+                key={s.tag}
+                role="group"
+                aria-roledescription="slide"
+                aria-label={`${i + 1} of ${n}`}
+                aria-hidden={i === slide ? undefined : 'true'}
+                {...(i === slide ? {} : { inert: true })}
+              >
+                <Slide s={s} first={i === 0} />
+              </div>
             ))}
-          </span>
+          </div>
         </div>
 
-        <div className="re-wrap re-l-hero__inner">
-          <motion.div className="re-l-hero__copy" style={reduce ? undefined : { y: copyY, opacity: copyOpacity }}>
-            <motion.span className="re-l-eyebrow re-l-eyebrow--ghost" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}>
-              {HERO.eyebrow}
-            </motion.span>
-            <h1 className="re-l-hero__title">
-              {mounted ? (
-                <>
-                  <Words text={HERO.titleA} delay={0.2} />
-                  <br />
-                  <span className="re-l-hero__accent">
-                    <Words text={HERO.titleB} delay={0.5} />
-                  </span>
-                </>
-              ) : (
-                <>
-                  {HERO.titleA}
-                  <br />
-                  <span className="re-l-hero__accent">{HERO.titleB}</span>
-                </>
-              )}
-            </h1>
-            <motion.p className="re-l-hero__lede" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE, delay: 0.7 }}>
-              {HERO.lede}
-            </motion.p>
-            <motion.div className="re-l-hero__actions" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.9, ease: EASE, delay: 0.85 }}>
-              <a className="re-btn re-btn--light" href="#listings">
-                Explore Properties
-                <ArrowRight />
-              </a>
-              <button type="button" className="re-l-hero__go" onClick={() => enquire()}>
-                Talk to the Dubai desk
-                <IcArrow />
+        <div className="re-wrap re-l-car__ctrl">
+          <div className="re-l-car__dots" role="tablist" aria-label="Choose a slide">
+            {slides.map((s, i) => (
+              <button type="button" key={s.tag} role="tab" aria-selected={i === slide} className={i === slide ? 'is-on' : ''} onClick={() => go(i)}>
+                <span className="re-l-car__num">0{i + 1}</span>
+                {s.tag}
+                <i key={`${i}-${i === slide ? slide : ''}`} style={i === slide && !reduce && !paused ? { animation: 're-l-prog 7s linear forwards' } : undefined} />
               </button>
-            </motion.div>
-            <motion.ul className="re-l-hero__stats" initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1, delayChildren: 1 } } }} aria-label="Why Dubai">
-              {HERO.stats.map((s) => (
-                <motion.li key={s.label} variants={{ hidden: { opacity: 0, y: 14 }, show: { opacity: 1, y: 0 } }} transition={{ duration: 0.8, ease: EASE }}>
-                  <strong>{s.value}</strong>
-                  <span>{s.label}</span>
-                </motion.li>
-              ))}
-            </motion.ul>
-          </motion.div>
+            ))}
+          </div>
+          <div className="re-l-car__arrows">
+            <button type="button" aria-label="Previous slide" onClick={() => go(slide - 1)}>
+              <span className="re-l-car__flip">
+                <IcArrow />
+              </span>
+            </button>
+            <button type="button" aria-label="Next slide" onClick={() => go(slide + 1)}>
+              <IcArrow />
+            </button>
+          </div>
         </div>
       </section>
 

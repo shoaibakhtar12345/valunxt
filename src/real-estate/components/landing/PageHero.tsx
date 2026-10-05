@@ -11,8 +11,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion
 
 import type { Stat } from '../../lib/types';
 import { ArrowRight } from '../icons';
-import { Words } from './Hero';
-import { IcArrow, useHeaderOverHero } from './shared';
+import { IcArrow, Words, useHeaderOverHero } from './shared';
 
 const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
@@ -54,7 +53,7 @@ export default function PageHero({
 
       <div className="re-wrap re-l-hero__inner">
         <motion.div className="re-l-hero__copy" style={reduce ? undefined : { y: copyY, opacity: copyOpacity }}>
-          <motion.span className="re-l-eyebrow re-l-eyebrow--ghost" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}>
+          <motion.span className="re-l-label re-l-label--light" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, ease: EASE, delay: 0.1 }}>
             {eyebrow}
           </motion.span>
           <h1 className="re-l-hero__title">
